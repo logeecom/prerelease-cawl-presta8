@@ -1,0 +1,14 @@
+parameters:
+    level: 6
+    paths:
+        - src
+    excludePaths:
+        - src/node_modules
+        - src/BusinessLogic/AdminConfig/Resources/*
+        - src/mock-api/*
+        - src/Branding/node_modules
+    ignoreErrors:
+        - '#Unsafe usage of new static\(\)#'
+        - '#with no value type specified in iterable type array\.$#'
+        - '#return type has no value type specified in iterable type array\.$#'
+    treatPhpDocTypesAsCertain: false

@@ -1,0 +1,59 @@
+{
+  "name": "online-payments/prestashop",
+  "description": "Online Payments plugin PrestaShop",
+  "type": "prestashop-plugin",
+  "keywords": [
+    "online payments",
+    "payment",
+    "payment platform"
+  ],
+  "homepage": "https://docs.direct.worldline-solutions.com",
+  "license": "MIT",
+  "extra": {
+    "installer-name": "OnlinePayments"
+  },
+  "authors": [
+    {
+      "name": "OnlinePayments",
+      "homepage": "https://docs.direct.worldline-solutions.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "OnlinePayments\\Classes\\": "classes",
+      "OnlinePayments\\Controllers\\": "controllers"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "OnlinePayments\\Core\\Tests\\Infrastructure\\": "vendor/worldline/integration-core/tests/Infrastructure",
+      "OnlinePayments\\Core\\Tests\\BusinessLogic\\": "vendor/worldline/integration-core/tests/BusinessLogic",
+      "OnlinePayments\\Core\\Tests\\Bootstrap\\": "vendor/worldline/integration-core/tests/Bootstrap",
+      "OnlinePayments\\Tests\\": "tests"
+    }
+  },
+  "require": {
+    "php": "^7.4|^8.0||^8.1",
+    "ext-json": "*",
+    "ext-zip": "*",
+    "worldline/integration-core": "dev-master",
+    "ext-simplexml": "*",
+    "ext-openssl": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.5"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "prepend-autoloader": false
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "no-api": true,
+      "url": "git@github.com:logeecom/worldline-direct-core.git"
+    }
+  ]
+}

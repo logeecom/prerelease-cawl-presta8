@@ -1,0 +1,97 @@
+//noinspection SassScssResolvedByNameOnly
+@mixin op-payment-component {
+  display: flex;
+  box-shadow: 0 0 3px 3px #EAEAEA;
+  border-radius: 4px;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  margin-bottom: 30px;
+
+  .op-payment-logo {
+    width: 40px;
+    height: 26px;
+  }
+
+  .op-payment-details-wrapper {
+    flex-grow: 1;
+
+    .op-payment-details {
+      display: flex;
+      gap: 5px;
+
+      .op-payment-name {
+        font-weight: 600;
+        font-size: $op-font-size--header-tab;
+        color: $op-color--online-payments-black;
+      }
+
+      .op-integration-type {
+        padding: 3px 9px;
+        border-radius: 4px;
+        font-size: $op-font-size--integration-type;
+        line-height: 9px;
+        height: max-content;
+      }
+
+      .op-redirect {
+        background-color: $op-color--yellow-redirect;
+      }
+
+      .op-tokenization {
+        color: $op-color--white;
+        background-color: $op-color--blue-tokenization;
+      }
+
+      .op-hosted {
+        background-color: $op-color--orange-hosted;
+      }
+    }
+
+    .op-payment-group {
+      font-size: $op-font-size--payment-group;
+      color: $op-color-green--dark;
+    }
+  }
+
+  .op-more-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .op-more-actions-button {
+      width: 100%;
+      padding: 0 8px;
+      display: flex;
+      background-color: #fff;
+      line-height: normal;
+    }
+
+    .opp-field-component {
+      line-height: normal;
+    }
+
+    .op-toggle-field-component {
+      line-height: normal
+    }
+
+    .op-toggle {
+      line-height: normal;
+      margin-bottom: 0;
+    }
+
+    .opp-dropdown-list {
+      box-shadow: 0px 1px 5px 2px rgba(0, 0, 0, 0.1);
+      z-index: 5;
+      margin-left: 0;
+      width: max-content;
+      padding: 0 10px;
+      right: 0;
+      top: 40px;
+    }
+
+    .opp-dropdown-list-item-icon-before {
+      font-size: 15px;
+    }
+  }
+}

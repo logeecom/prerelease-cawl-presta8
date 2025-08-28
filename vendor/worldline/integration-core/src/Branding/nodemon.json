@@ -1,0 +1,16 @@
+{
+  "ignore": [
+    ".git",
+    "../BusinessLogic/AdminConfig/Resources/test/resources/**",
+    "node_modules/**/node_modules"
+  ],
+  "verbose": true,
+  "watch": [
+    "../BusinessLogic/AdminConfig/Resources/src/",
+    "../BusinessLogic/AdminConfig/Resources/test/"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "js,json,scss,html"
+}

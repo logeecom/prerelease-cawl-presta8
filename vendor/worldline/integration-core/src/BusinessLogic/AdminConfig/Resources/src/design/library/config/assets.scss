@@ -1,0 +1,4 @@
+@function op-get-assets-root() {
+  $assets: './../../../BusinessLogic/AdminConfig/Resources/src/design/assets' !default;
+  @return $assets;
+}

@@ -1,0 +1,40 @@
+{
+  "brands": {
+    "WOP": {
+      "code": "WOP",
+      "name": "Worldline Online Payments",
+      "liveApiEndpoint": "https://payment.direct.worldline-solutions.com",
+      "testApiEndpoint": "https://payment.preprod.direct.worldline-solutions.com",
+      "liveUrl": "https://merchant-portal.prod.worldline-solutions.com",
+      "testUrl": "https://merchant-portal.preprod.worldline-solutions.com",
+      "paymentMethodName": "Worldline"
+    },
+    "CAWL": {
+      "code": "CAWL",
+      "name": "CAWL",
+      "liveApiEndpoint": "https://payment.ca.cawl-solutions.fr",
+      "testApiEndpoint": "https://payment.preprod.ca.cawl-solutions.fr",
+      "liveUrl": "https://portail.prod.ca.cawl-solutions.fr",
+      "testUrl": "https://portail.preprod.ca.cawl-solutions.fr",
+      "paymentMethodName": "CAWL"
+    },
+    "PO": {
+      "code": "PO",
+      "name": "PAYONE",
+      "liveApiEndpoint": "https://payment.payone.com",
+      "testApiEndpoint": "https://payment.preprod.payone.com",
+      "liveUrl": "https://payment.payone.com",
+      "testUrl": "https://payment.preprod.payone.com",
+      "paymentMethodName": "PAYONE"
+    },
+    "ANZ": {
+      "code": "ANZ",
+      "name": "ANZ",
+      "liveApiEndpoint": "https://payment.anzworldline-solutions.com.au",
+      "testApiEndpoint": "https://payment.preprod.anzworldline-solutions.com.au",
+      "liveUrl": "https://payment.anzworldline-solutions.com.au",
+      "testUrl": "https://payment.preprod.anzworldline-solutions.com.au",
+      "paymentMethodName": "ANZ"
+    }
+  }
+}

@@ -1,0 +1,158 @@
+<?php
+
+namespace OnlinePayments\Core\Bootstrap\Sdk;
+
+use Exception;
+use OnlinePayments\Core\Branding\Brand\ActiveBrandProviderInterface;
+use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\GeneralSettingsService;
+use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidLogRecordsLifetimeException;
+use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\ContextLogProvider;
+use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\MonitoringLog;
+use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\MonitoringLogRepositoryInterface;
+use OnlinePayments\Core\Infrastructure\ServiceRegister;
+use OnlinePayments\Sdk\Communication\CommunicatorLoggerHelper as SdkCommunicatorLoggerHelper;
+use OnlinePayments\Sdk\Communication\ConnectionResponseInterface;
+use OnlinePayments\Sdk\Logging\CommunicatorLogger;
+
+class CommunicatorLoggerHelper extends SdkCommunicatorLoggerHelper
+{
+    public function logRequest(CommunicatorLogger $communicatorLogger, $requestId, $requestMethod, $requestUri, array $requestHeaders, $requestBody = ''): void
+    {
+        if ($this->isDebugEnabled()) {
+            parent::logRequest($communicatorLogger, $requestId, $requestMethod, $requestUri, $requestHeaders, $requestBody);
+
+            $endpoint = $this->getEndpoint($requestUri);
+
+            $obfuscatedRequest = $this->getHttpObfuscator()->getRawObfuscatedRequest(
+                $requestMethod,
+                $this->getRelativeUriPathWithRequestParameters($requestUri),
+                $requestHeaders,
+                $requestBody
+            );
+
+            $message = sprintf(
+                "Outgoing request to %s (requestId='%s')\n%s",
+                $endpoint,
+                $requestId,
+                $obfuscatedRequest
+            );
+
+            $this->getLogRepository()->saveMonitoringLog(
+                new MonitoringLog(
+                    ContextLogProvider::getInstance()->getCurrentOrder() ?? '-',
+                    ContextLogProvider::getInstance()->getPaymentNumber() ?? '-',
+                    'DEBUG',
+                    $message,
+                    new \DateTime(),
+                    $requestMethod,
+                    $endpoint,
+                    $obfuscatedRequest,
+                    '',
+                    '',
+                    ContextLogProvider::getInstance()->getPaymentNumber() ?
+                        $this->getUrl() . '/' . ContextLogProvider::getInstance()->getPaymentNumber() : ''
+                )
+            );
+        }
+    }
+
+    public function logResponse(CommunicatorLogger $communicatorLogger, $requestId, $requestUri, ConnectionResponseInterface $response): void
+    {
+        if ($this->isDebugEnabled()) {
+            parent::logResponse($communicatorLogger, $requestId, $requestUri, $response);
+
+            $endpoint = $this->getEndpoint($requestUri);
+            $obfuscatedResponse = $this->getHttpObfuscator()->getRawObfuscatedResponse($response);
+
+            $message = sprintf(
+                "Incoming response from %s (requestId='%s')\n%s",
+                $endpoint,
+                $requestId,
+                $obfuscatedResponse
+            );
+
+            $this->getLogRepository()->saveMonitoringLog(
+                new MonitoringLog(
+                    ContextLogProvider::getInstance()->getCurrentOrder() ?? '-',
+                    ContextLogProvider::getInstance()->getPaymentNumber() ?? '-',
+                    'DEBUG',
+                    $message,
+                    new \DateTime(),
+                    '',
+                    $endpoint,
+                    '',
+                    (string)$response->getHttpStatusCode(),
+                    $obfuscatedResponse,
+                    ContextLogProvider::getInstance()->getPaymentNumber() ?
+                        $this->getUrl() . '/' . ContextLogProvider::getInstance()->getPaymentNumber() : ''
+                )
+            );
+        }
+    }
+
+    public function logException(CommunicatorLogger $communicatorLogger, $requestId, $requestUri, Exception $exception): void
+    {
+        parent::logException($communicatorLogger, $requestId, $requestUri, $exception);
+
+        $endpoint = $this->getEndpoint($requestUri);
+
+        $message = sprintf(
+            "Error occurred while executing request to %s (requestId='%s')",
+            $endpoint,
+            $requestId
+        );
+
+        $this->getLogRepository()->saveMonitoringLog(
+            new MonitoringLog(
+                ContextLogProvider::getInstance()->getCurrentOrder() ?? '-',
+                ContextLogProvider::getInstance()->getPaymentNumber() ?? '-',
+                'ERROR',
+                $message,
+                new \DateTime(),
+                '',
+                $endpoint,
+                '',
+                '',
+                '',
+                ContextLogProvider::getInstance()->getPaymentNumber() ?
+                    $this->getUrl() . '/' . ContextLogProvider::getInstance()->getPaymentNumber() : ''
+            )
+        );
+    }
+
+    private function getUrl(): string
+    {
+        /** @var ActiveBrandProviderInterface $activeBrandProvider */
+        $activeBrandProvider = ServiceRegister::getService(ActiveBrandProviderInterface::class);
+
+        return $activeBrandProvider->getTransactionUrl();
+    }
+
+    /**
+     * @return bool
+     *
+     * @throws InvalidLogRecordsLifetimeException
+     */
+    private function isDebugEnabled(): bool
+    {
+        $generalSettings = $this->getGeneralSettingsService()->getLogSettings();
+
+        return $generalSettings->isDebugMode();
+    }
+
+    /**
+     * @return MonitoringLogRepositoryInterface
+     */
+    private function getLogRepository(): MonitoringLogRepositoryInterface
+    {
+        return ServiceRegister::getService(MonitoringLogRepositoryInterface::class);
+    }
+
+    /**
+     * @return GeneralSettingsService
+     */
+    private function getGeneralSettingsService(): GeneralSettingsService
+    {
+        return ServiceRegister::getService(GeneralSettingsService::class);
+    }
+}

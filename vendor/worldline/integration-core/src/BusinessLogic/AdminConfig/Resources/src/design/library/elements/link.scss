@@ -1,0 +1,27 @@
+//noinspection SassScssResolvedByNameOnly
+@mixin link() {
+  position: relative;
+  margin-right: 8px;
+  color: $op-color-green--dark;
+  @include font-weight--regular;
+  font-size: 15px;
+  text-decoration: none;
+  transition: color .2s;
+  display: inline-flex;
+  flex-direction: row;
+  gap: 8px;
+
+  &:hover {
+    span {
+      text-decoration: underline;
+    }
+  }
+
+  &[target="_blank"] {
+    text-decoration: underline;
+  }
+
+  &.opt--underlined span {
+    text-decoration: underline;
+  }
+}

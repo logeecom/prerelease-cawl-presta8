@@ -1,0 +1,111 @@
+@mixin op-toaster {
+  width: fit-content;
+  max-width: 420px;
+
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 9px 12px 16px;
+  border-radius: 8px;
+  background-color: $op-color--online-payments-black;
+  position: fixed;
+  top: 300px;
+  right: 3%;
+  gap: 20px;
+  align-items: center;
+
+  &.ops--closed {
+    display: none;
+  }
+
+  .opp-toaster-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    @include font-weight--semi-bold;
+    font-size: $op-font-size--main;
+    color: $op-color--white;
+    line-height: 21px;
+  }
+
+  &.op-error {
+    .op-cross-icon {
+      position: relative;
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background-color: $op-color--online-payments-black;
+      border: 2px solid $op-color--error;
+    }
+    .op-cross-icon::before,
+    .op-cross-icon::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 10px;
+      height: 2px;
+      background: $op-color--error;
+      transform-origin: center;
+    }
+    .op-cross-icon::before {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+    .op-cross-icon::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
+
+  &.op-success {
+    .opp-toaster-title {
+      &:before {
+        font-family: op-icons;
+        content: '\e90d';
+        width: 18px;
+        height: 18px;
+        background-color: $op-color--online-payments-black;
+        color: $op-color--success;
+        border-radius: 50%;
+
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        font-size: 20px;
+      }
+    }
+  }
+
+  &.op-info {
+    .opp-toaster-title {
+      &:before {
+        font-family: op-icons;
+        content: '\e910';
+        width: 18px;
+        height: 18px;
+        background-color: $op-color--online-payments-black;
+        color: $op-color--alert;
+        border-radius: 50%;
+
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        font-size: 20px;
+      }
+    }
+  }
+
+  .op-button {
+    padding: 7px;
+
+    span {
+      &:before {
+        font-family: op-icons;
+        content: '\e90b';
+        color: $op-color--grey-60;
+      }
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+    "packages": [
+        {
+            "name": "robtimus/multipart",
+            "version": "1.0.1",
+            "version_normalized": "1.0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robtimus/php-multipart.git",
+                "reference": "98977024f1261185d139c9df0aaecbf28cb131f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robtimus/php-multipart/zipball/98977024f1261185d139c9df0aaecbf28cb131f4",
+                "reference": "98977024f1261185d139c9df0aaecbf28cb131f4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4"
+            },
+            "time": "2023-01-16T18:51:47+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Robtimus\\Multipart\\": [
+                        "src/Robtimus/Multipart"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Spoor",
+                    "email": "robtimus@users.noreply.github.com"
+                }
+            ],
+            "description": "A library to support (streaming) multiparts",
+            "homepage": "https://github.com/robtimus/php-multipart",
+            "keywords": [
+                "multipart",
+                "streaming"
+            ],
+            "support": {
+                "issues": "https://github.com/robtimus/php-multipart/issues",
+                "source": "https://github.com/robtimus/php-multipart/tree/1.0.1"
+            },
+            "install-path": "../robtimus/multipart"
+        },
+        {
+            "name": "wl-online-payments-direct/sdk-php",
+            "version": "6.2.0",
+            "version_normalized": "6.2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wl-online-payments-direct/sdk-php.git",
+                "reference": "342e76315110ed1c8ec2c1e7968eb2cae9e6003f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wl-online-payments-direct/sdk-php/zipball/342e76315110ed1c8ec2c1e7968eb2cae9e6003f",
+                "reference": "342e76315110ed1c8ec2c1e7968eb2cae9e6003f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=7.4",
+                "robtimus/multipart": "~1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~9"
+            },
+            "time": "2025-06-17T11:32:28+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "OnlinePayments\\Sdk\\": [
+                        "src/OnlinePayments/Sdk",
+                        "lib/OnlinePayments/Sdk"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "OnlinePayments"
+                }
+            ],
+            "description": "PHP SDK to communicate with the payment platform server-to-server API",
+            "keywords": [
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/wl-online-payments-direct/sdk-php/issues",
+                "source": "https://github.com/wl-online-payments-direct/sdk-php/tree/6.2.0"
+            },
+            "install-path": "../wl-online-payments-direct/sdk-php"
+        },
+        {
+            "name": "worldline/integration-core",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:logeecom/worldline-direct-core.git",
+                "reference": "cb0d76bd649d7143047e42990c4e59ffefa9672a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/logeecom/worldline-direct-core/zipball/cb0d76bd649d7143047e42990c4e59ffefa9672a",
+                "reference": "cb0d76bd649d7143047e42990c4e59ffefa9672a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-json": "*",
+                "php": ">=7.4",
+                "wl-online-payments-direct/sdk-php": "6.2.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.9",
+                "php-parallel-lint/php-parallel-lint": "^1.3",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^8.5",
+                "symfony/console": "^5.4"
+            },
+            "time": "2025-08-27T15:48:34+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "OnlinePayments\\Core\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "OnlinePayments\\Core\\Tests\\": "tests"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "description": "Core Worldline integration library",
+            "install-path": "../worldline/integration-core"
+        }
+    ],
+    "dev": false,
+    "dev-package-names": []
+}

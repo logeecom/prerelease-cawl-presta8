@@ -1,0 +1,40 @@
+$assets: '/../assets';
+@import "../../../../../Branding/WOP/design/index.scss";
+
+body {
+  padding: 30px;
+  overflow: auto;
+  max-height: unset;
+  height: auto;
+  box-sizing: border-box;
+
+  h1 {
+    margin-bottom: 40px;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+
+  section {
+    margin-bottom: 60px;
+  }
+
+  h2 {
+    margin-bottom: 18px;
+  }
+
+  p {
+    margin-bottom: 8px;
+
+    &:not(:first-child) {
+      margin-top: 16px;
+    }
+  }
+}
+
+.opm--icon span:before {
+  @include op-font-icon--content(plus);
+}

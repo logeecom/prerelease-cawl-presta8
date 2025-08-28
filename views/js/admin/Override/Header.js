@@ -1,0 +1,110 @@
+if (!window.OnlinePaymentsFE) {
+    window.OnlinePaymentsFE = {};
+}
+
+if (!window.OnlinePaymentsFE.components) {
+    window.OnlinePaymentsFE.components = {};
+}
+
+(function () {
+    const preventDefaults = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
+    /**
+     * @typedef HeaderModel
+     *
+     * @property {string?} brand
+     * @property {LinkDropDownComponentModel?} linkDropDown
+     * @property {string} page
+     * @property {string} mode
+     * */
+
+    /**
+     * Header component.
+     *
+     * @param {HeaderModel} params
+     * @returns {HTMLElement}
+     * @constructor
+     */
+    const Header = ({
+                        brand,
+                        linkDropDown,
+                        page,
+                        mode
+                    }) => {
+        const { elementGenerator: generator, translationService } = OnlinePaymentsFE;
+        const header = generator.createElement('div');
+        const navigation = generator.createElement('div', 'op-main-header-navigation');
+        const leftPart = generator.createElement('div', 'op-main-header-left');
+        const logoWrapper = generator.createElement('div', 'op-main-logo');
+        if (window.innerWidth <= 1280) {
+            logoWrapper.appendChild(generator.createElement('img', '', '', {'alt': 'logo', 'src': window.location.protocol +
+                    '//' + window.location.host + OnlinePaymentsFE.baseImgUrl + '/' + brand + '-small.svg'}));
+        } else {
+            logoWrapper.appendChild(generator.createElement('img', '', '', {'alt': 'logo', 'src': window.location.protocol +
+                    '//' + window.location.host + OnlinePaymentsFE.baseImgUrl + '/' + brand + '.svg'}));
+        }
+
+        const badge = generator.createElement('span', 'op-header-badge', translationService.translate('general.direct').toUpperCase());
+        const documentationWrapper = generator.createElement('div', 'op-link-dropdown');
+        const documentation = generator.createLinkDropdownField(linkDropDown);
+        documentationWrapper.appendChild(documentation);
+        const rightPart = generator.createElement('div', 'op-main-header-right');
+        const paymentsTab = generator.createElement('a', 'op-header-tab op-header-payment', translationService.translate('general.payments'));
+        paymentsTab.href = '#payments';
+        const monitoringTab = generator.createElement('a', 'op-header-tab op-header-monitoring', translationService.translate('general.monitoring'));
+        monitoringTab.href = '#monitoring';
+        const settingsTab = generator.createElement('a', 'op-header-tab op-header-settings', translationService.translate('general.settings'));
+        settingsTab.href = '#settings';
+
+        rightPart.appendChild(paymentsTab);
+        rightPart.appendChild(monitoringTab);
+        rightPart.appendChild(settingsTab);
+
+        leftPart.appendChild(logoWrapper);
+        leftPart.appendChild(badge);
+        leftPart.appendChild(documentationWrapper);
+
+        navigation.appendChild(leftPart);
+        navigation.appendChild(rightPart);
+
+        const titleHeader = generator.createElement('div', 'op-main-title-header');
+        const title = generator.createElement('div', 'op-main-title', '');
+        const state = generator.createElement('div', 'op-status');
+        state.id = 'op-status';
+
+        if (mode !== undefined) {
+            const modeDiv = generator.createElement('div', 'op-mode');
+            const indicator = generator.createElement('span', 'op-icon');
+
+            if (mode === 'test') {
+                indicator.classList.add('op-sandbox');
+            } else {
+                indicator.classList.add('op-live');
+            }
+
+            const modeText = generator.createElement('p', 'op-mode-text', 'general.mode.' + mode);
+            modeDiv.appendChild(indicator);
+            modeDiv.appendChild(modeText);
+            state.appendChild(modeDiv);
+        }
+
+        titleHeader.appendChild(title);
+        titleHeader.appendChild(state);
+
+        header.appendChild(navigation);
+        header.appendChild(titleHeader);
+
+        return header;
+    };
+
+    OnlinePaymentsFE.components.Header = {
+        /**
+         * @param {HeaderModel} config
+         * @returns {HTMLElement}
+         */
+        create: (config) => Header(config)
+    };
+})();

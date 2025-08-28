@@ -1,0 +1,37 @@
+$op-media-query-screen-variants: (narrow, medium, wide, wider);
+
+$op-media-query--screen--narrow: '(max-width: 767.98px)'; // < 768px
+$op-media-query--screen--narrow-medium: '(max-width: 1280.98px)';
+$op-media-query--screen--medium: '(min-width: 768px) and (max-width: 1280.98px)'; // 768px - 1280px
+$op-media-query--screen--medium-wide: '(min-width: 768px)'; // > 768px
+$op-media-query--screen--wide: '(min-width: 1281px)'; // > 1280px
+
+@mixin op-screen--narrow {
+  @media #{$op-media-query--screen--narrow} {
+    @content;
+  }
+}
+
+@mixin op-screen--narrow-medium {
+  @media #{$op-media-query--screen--narrow-medium} {
+    @content;
+  }
+}
+
+@mixin op-screen--medium {
+  @media #{$op-media-query--screen--medium} {
+    @content;
+  }
+}
+
+@mixin op-screen--medium-wide {
+  @media #{$op-media-query--screen--medium-wide} {
+    @content;
+  }
+}
+
+@mixin op-screen--wide {
+  @media #{$op-media-query--screen--wide} {
+    @content;
+  }
+}

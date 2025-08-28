@@ -1,0 +1,175 @@
+//noinspection SassScssResolvedByNameOnly
+.op-main-header-navigation {
+  background-color: $op-color-green--light;
+  display: flex;
+  width: 100%;
+  height: 65px;
+  align-items: center;
+  padding: 20px;
+
+  .op-main-header-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+
+    .op-link-dropdown .opp-dropdown-list-item {
+      padding: 6px 16px;
+    }
+  }
+
+  .op-main-logo {
+    height: 25px;
+
+    img {
+      height: 25px;
+    }
+  }
+
+  .op-header-badge {
+    background-color: $op-color-green--dark;
+    border-radius: 4px;
+    color: $op-color--white;
+    font-size: 13px;
+    padding: 1px 7px;
+  }
+
+  .op-main-header-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-grow: 1;
+    gap: 20px;
+
+    .op-header-tab {
+      color: $op-color-green--dark;
+      font-size: $op-font-size--header-tab;
+      gap: 4px;
+      align-items: center;
+
+      &.op-header-payment {
+        &:before {
+          content: "\e93f";
+          font-family: op-icons;
+        }
+      }
+
+      &.op-header-monitoring {
+        &:before {
+          content: "\e905";
+          font-family: op-icons;
+        }
+      }
+
+      &.op-header-settings {
+        &:before {
+          content: "\e903";
+          font-family: op-icons;
+          font-size: 19px;
+        }
+      }
+    }
+  }
+}
+
+#op-main-header .op-main-title-header {
+  background-color: $op-color-green--dark;
+  display: flex;
+  width: 100%;
+  height: 65px;
+  align-items: center;
+  padding: 20px;
+
+  .op-main-title {
+    color: $op-color--white;
+    font-size: $op-font-size--header-title;
+  }
+
+  .op-status {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: flex-end;
+    gap: 20px;
+
+    .op-mode {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;
+
+      .op-icon {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+
+      .op-sandbox {
+        border: 1px solid $op-color--sandbox;
+        background: $op-color--sandbox;
+      }
+
+      .op-live {
+        border: 1px solid $op-color--live;
+        background: $op-color--live;
+      }
+
+      .op-mode-text {
+        color: $op-color--white;
+        font-size: $op-font-size--environment-mode;
+      }
+    }
+
+    .op-store-selector {
+      @include op-link-dropdown;
+
+      & > .opp-dropdown-list {
+        display: none;
+        position: absolute;
+        max-height: 180px;
+        flex-direction: column;
+        gap: 0;
+        border-top: none;
+        border-radius: 6px;
+        background-color: #fff;
+        color: #00112c;
+        box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, .1);
+        z-index: 5;
+        height: max-content;
+        overflow-y: scroll;
+        scrollbar-width: thin;
+        margin-left: 0;
+        width: 160px;
+      }
+
+      .opp-store {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 8px 16px;
+        font-size: $op-font-size--main;
+        @include font-weight--light;
+        line-height: 1.6;
+        color: $op-color--online-payments-black;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $op-color--grey-10;
+        }
+
+        &.ops--selected {
+          position: relative;
+        }
+      }
+
+      .opp-dropdown-button {
+        min-width: 160px;
+
+        span {
+          font-size: $op-font-size--paragraph;
+          color: $op-color--subtext;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1049 @@
+{
+  "stores": [
+    {
+      "storeId": "store_1",
+      "storeName": "DE Store",
+      "maintenanceMode": true,
+      "current": true,
+      "state": "dashboard",
+      "connection": {
+        "mode": "sandbox",
+        "sandboxData": {
+          "pspid": "asd",
+          "apiKey": "asd",
+          "apiSecret": "asd",
+          "webhooksKey": "asd",
+          "webhooksSecret": "asd"
+        }
+      },
+      "merchants": [
+        {
+          "merchantName": "S1 Merchant 1",
+          "merchantId": "s1_merchant1"
+        },
+        {
+          "merchantName": "S1 Merchant 2",
+          "merchantId": "s1_merchant2"
+        }
+      ],
+      "generalSettings": {
+        "basketItemSync": true,
+        "retentionPeriod": 344,
+        "capture": "delayed",
+        "captureDelay": 1,
+        "shipmentStatus": "shipped"
+      },
+      "activeMethods": [
+        {
+          "methodId": "applepay",
+          "code": "applepay",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "name": "Apple Pay",
+          "description": "Adyen Apple Pay",
+          "surchargeType": "combined",
+          "percentSurcharge": "",
+          "fixedSurcharge": "",
+          "surchargeLimit": "5",
+          "additionalData": {
+            "merchantId": "asdf",
+            "merchantName": "asdf",
+            "displayButtonOn": true
+          }
+        },
+        {
+          "methodId": "mastercard",
+          "code": "scheme",
+          "logo": "https://e7.pngegg.com/pngimages/116/678/png-clipart-mastercard-mastercard-logo-cdr-text-thumbnail.png",
+          "name": "Credit card",
+          "description": "Adyen Credit card",
+          "surchargeType": "none",
+          "percentSurcharge": "",
+          "fixedSurcharge": "",
+          "surchargeLimit": "",
+          "additionalData": {
+            "showLogos": true,
+            "singleClickPayment": true,
+            "sendBasket": true,
+            "installments": true,
+            "installmentAmounts": false,
+            "numberOfInstallments": "5,10",
+            "installmentCountries": [
+              "ANY"
+            ],
+            "minimumAmount": 5
+          }
+        }
+      ],
+      "adyenGiving": {
+        "enableAdyenGiving": true,
+        "charityName": "h",
+        "charityDescription": "gh",
+        "charityMerchantAccount": "hg9ols",
+        "charityWebsite": "",
+        "donationAmount": "34,35.65,80,5,287",
+        "logo": "https://localhost:3750/1678389060649.png",
+        "backgroundImage": "https://localhost:3750/1678389060654.png"
+      },
+      "orderStatusMapping": {
+        "inProgress": "inProgress",
+        "pending": null,
+        "paid": null,
+        "failed": null,
+        "refunded": null,
+        "partiallyRefunded": null,
+        "cancelled": null,
+        "new": null,
+        "chargeBack": null
+      },
+      "shopNotifications": [
+        {
+          "orderId": "#0001",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order change has not been synchronized.",
+          "details": "Order total has been changed. This change was not synchronized to Adyen."
+        },
+        {
+          "orderId": "#0002",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order has been deleted.",
+          "details": "Paid order has been deleted from the shop. This change cannot be synchronized to Adyen."
+        },
+        {
+          "orderId": "#0003",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order change has not been synchronized.",
+          "details": "Order total has been changed. This change was not synchronized to Adyen."
+        },
+        {
+          "orderId": "#0004",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order has been deleted.",
+          "details": "Paid order has been deleted from the shop. This change cannot be synchronized to Adyen."
+        },
+        {
+          "orderId": "#0005",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order change has not been synchronized.",
+          "details": "Order total has been changed. This change was not synchronized to Adyen."
+        },
+        {
+          "orderId": "#0006",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order has been deleted.",
+          "details": "Paid order has been deleted from the shop. This change cannot be synchronized to Adyen."
+        },
+        {
+          "orderId": "#0007",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order change has not been synchronized.",
+          "details": "Order total has been changed. This change was not synchronized to Adyen."
+        },
+        {
+          "orderId": "#0008",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order has been deleted.",
+          "details": "Paid order has been deleted from the shop. This change cannot be synchronized to Adyen."
+        },
+        {
+          "orderId": "#0009",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order change has not been synchronized.",
+          "details": "Order total has been changed. This change was not synchronized to Adyen."
+        },
+        {
+          "orderId": "#0010",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order has been deleted.",
+          "details": "Paid order has been deleted from the shop. This change cannot be synchronized to Adyen."
+        },
+        {
+          "orderId": "#0011",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order change has not been synchronized.",
+          "details": "Order total has been changed. This change was not synchronized to Adyen."
+        },
+        {
+          "orderId": "#0012",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order has been deleted.",
+          "details": "Paid order has been deleted from the shop. This change cannot be synchronized to Adyen."
+        },
+        {
+          "orderId": "#0013",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order change has not been synchronized.",
+          "details": "Order total has been changed. This change was not synchronized to Adyen."
+        },
+        {
+          "orderId": "#0014",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order has been deleted.",
+          "details": "Paid order has been deleted from the shop. This change cannot be synchronized to Adyen."
+        },
+        {
+          "orderId": "#0015",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order change has not been synchronized.",
+          "details": "Order total has been changed. This change was not synchronized to Adyen."
+        },
+        {
+          "orderId": "#0016",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "Order has been deleted.",
+          "details": "Paid order has been deleted from the shop. This change cannot be synchronized to Adyen."
+        }
+      ]
+    },
+    {
+      "storeId": "store_2",
+      "storeName": "EN store",
+      "maintenanceMode": false,
+      "current": false,
+      "state": "dashboard",
+      "connection": {
+        "mode": "live",
+        "liveData": {
+          "pspid": "asd",
+          "apiKey": "kjkj",
+          "apiSecret": "asd",
+          "webhooksKey": "asdsdf",
+          "webhooksSecret": "asd"
+        }
+      },
+      "merchants": [
+        {
+          "merchantName": "S2 Merchant 1",
+          "merchantId": "s2_merchant1"
+        }
+      ],
+      "generalSettings": {
+        "basketItemSync": true,
+        "retentionPeriod": 60,
+        "capture": "manual",
+        "captureDelay": null,
+        "shipmentStatus": "paid"
+      },
+      "orderStatusMapping": {
+        "inProgress": "pending",
+        "pending": "failed",
+        "paid": "inProgress",
+        "failed": "inProgress",
+        "refunded": "",
+        "partiallyRefunded": "",
+        "cancelled": "",
+        "new": "",
+        "chargeBack": ""
+      },
+      "adyenGiving": {
+        "enableAdyenGiving": true,
+        "charityName": "asd2",
+        "charityDescription": "asdf",
+        "charityMerchantAccount": "fdfd",
+        "charityWebsite": "",
+        "donationAmount": "1",
+        "logo": "https://localhost:3750/1676994493228.png",
+        "backgroundImage": "https://localhost:3750/1676994493229.png"
+      },
+      "shopNotifications": [
+        {
+          "orderId": "#0001",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedPaymentAuthorizationMessage",
+          "details": "event.failedPaymentAuthorizationDetails"
+        },
+        {
+          "orderId": "#0002",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCancellationEventMessage",
+          "details": "event.failedCancellationEventDetails"
+        },
+        {
+          "orderId": "#0003",
+          "paymentMethod": "ApplePay",
+          "severity": "info",
+          "dateAndTime": "11-02-2022 14:33",
+          "message": "event.successfulCancellationEventMessage",
+          "details": "event.successfulCancellationEventDetails"
+        },
+        {
+          "orderId": "#0004",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCancellationEventMessage",
+          "details": "event.failedCancellationEventDetails"
+        },
+        {
+          "orderId": "#0005",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-05-2022 14:33",
+          "message": "event.failedPaymentAuthorizationMessage",
+          "details": "event.failedPaymentAuthorizationDetails"
+        },
+        {
+          "orderId": "#0006",
+          "paymentMethod": "Klarna",
+          "severity": "info",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.successfulCancellationEventMessage",
+          "details": "event.successfulCancellationEventDetails"
+        },
+        {
+          "orderId": "#0007",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedPaymentAuthorizationMessage",
+          "details": "event.failedPaymentAuthorizationDetails"
+        },
+        {
+          "orderId": "#0008",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCaptureEventMessage",
+          "details": "event.failedCaptureEventDetails"
+        },
+        {
+          "orderId": "#0009",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedPaymentAuthorizationMessage",
+          "details": "event.failedPaymentAuthorizationDetails"
+        },
+        {
+          "orderId": "#0010",
+          "paymentMethod": "Klarna",
+          "severity": "info",
+          "dateAndTime": "07-11-2022 14:33",
+          "message": "event.successfulCaptureEventMessage",
+          "details": "event.successfulCaptureEventDetails"
+        },
+        {
+          "orderId": "#0011",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCaptureEventMessage",
+          "details": "event.failedCaptureEventDetails"
+        },
+        {
+          "orderId": "#0012",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCancellationEventMessage",
+          "details": "event.failedCancellationEventDetails"
+        },
+        {
+          "orderId": "#0013",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCaptureEventMessage",
+          "details": "event.failedCaptureEventDetails"
+        },
+        {
+          "orderId": "#0014",
+          "paymentMethod": "Klarna",
+          "severity": "info",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.successfulCaptureEventMessage",
+          "details": "event.successfulCaptureEventDetails"
+        },
+        {
+          "orderId": "#0015",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCaptureEventMessage",
+          "details": "event.failedCaptureEventDetails"
+        },
+        {
+          "orderId": "#0016",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedRefundRequestEventMessage",
+          "details": "event.failedRefundRequestEventDetails"
+        },
+        {
+          "orderId": "#0017",
+          "paymentMethod": "ApplePay",
+          "severity": "info",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.successfulCaptureEventMessage",
+          "details": "event.successfulCaptureEventDetails"
+        },
+        {
+          "orderId": "#0018",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedRefundEventMessage",
+          "details": "event.failedRefundEventDetails"
+        },
+        {
+          "orderId": "#0019",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCaptureEventMessage",
+          "details": "event.failedCaptureEventDetails"
+        },
+        {
+          "orderId": "#0020",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCaptureRequestEventMessage",
+          "details": "event.failedCaptureRequestEventDetails"
+        },
+        {
+          "orderId": "#0021",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCaptureEventMessage",
+          "details": "event.failedCaptureEventDetails"
+        },
+        {
+          "orderId": "#0022",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedRefundEventMessage",
+          "details": "event.failedRefundEventDetails"
+        },
+        {
+          "orderId": "#0023",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCaptureEventMessage",
+          "details": "event.failedCaptureEventDetails"
+        },
+        {
+          "orderId": "#0024",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCaptureRequestEventMessage",
+          "details": "event.failedCaptureRequestEventDetails"
+        },
+        {
+          "orderId": "#0025",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCaptureEventMessage",
+          "details": "event.failedCaptureEventDetails"
+        },
+        {
+          "orderId": "#0026",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCaptureRequestEventMessage",
+          "details": "event.failedCaptureRequestEventDetails"
+        },
+        {
+          "orderId": "#0027",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCaptureEventMessage",
+          "details": "event.failedCaptureEventDetails"
+        },
+        {
+          "orderId": "#0028",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCancellationRequestEventMessage",
+          "details": "event.failedCancellationRequestEventDetails"
+        },
+        {
+          "orderId": "#0029",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCancellationRequestEventMessage",
+          "details": "event.failedCancellationRequestEventDetails"
+        },
+        {
+          "orderId": "#0030",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCancellationRequestEventMessage",
+          "details": "event.failedCancellationRequestEventDetails"
+        },
+        {
+          "orderId": "#0031",
+          "paymentMethod": "ApplePay",
+          "severity": "error",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCancellationRequestEventMessage",
+          "details": "event.failedCancellationRequestEventDetails"
+        },
+        {
+          "orderId": "#0032",
+          "paymentMethod": "Klarna",
+          "severity": "warning",
+          "dateAndTime": "11-11-2022 14:33",
+          "message": "event.failedCancellationRequestEventMessage",
+          "details": "event.failedCancellationRequestEventDetails"
+        }
+      ],
+      "webhookNotifications": [
+        {
+          "orderId": "#0001",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id1",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "AUTHORISATION",
+          "successful": true,
+          "status": "created",
+          "hasDetails": true,
+          "details": {
+            "description": "Notification details",
+            "reason": "Risk management refused capture for some reason.",
+            "failureDescription": "Payment status cannot be updated from complete to captured",
+            "adyenLink": "https://www.youtube.com/",
+            "shopLink": "https://www.youtube.com/"
+          }
+        },
+        {
+          "orderId": "#0002",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1280px-PayPal.svg.png",
+          "paymentMethod": "Klarna",
+          "notificationID": "id2",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "AUTHORISATION",
+          "successful": true,
+          "status": "queued",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0003",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id3",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0004",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1280px-PayPal.svg.png",
+          "paymentMethod": "AmazonPay",
+          "notificationID": "id4",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "aborted",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0005",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id5",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0006",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id6",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "aborted",
+          "hasDetails": true,
+          "details": {
+            "description": "Notification details",
+            "reason": "Risk management refused capture for some reason.",
+            "failureDescription": "Payment status cannot be updated from complete to captured",
+            "adyenLink": "https://www.youtube.com/",
+            "shopLink": "https://www.youtube.com/"
+          }
+        },
+        {
+          "orderId": "#0007",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id7",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0008",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id8",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0009",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id9",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": true,
+          "status": "completed",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0010",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id10",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0011",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id11",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0012",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id12",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0013",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id13",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0014",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id14",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0015",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id15",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0016",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id16",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0017",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id17",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0018",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id18",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0019",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id19",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0020",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id20",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0021",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id21",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        },
+        {
+          "orderId": "#0022",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+          "paymentMethod": "ApplePay",
+          "notificationID": "id22",
+          "dateAndTime": "2005-08-15T15:52:01+00:00",
+          "code": "CAPTURE",
+          "successful": false,
+          "status": "in_progress",
+          "hasDetails": false
+        }
+      ],
+      "activeMethods": [
+        {
+          "methodId": "oney",
+          "code": "oney",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1280px-PayPal.svg.png",
+          "name": "3x 4x Oney",
+          "description": "Adyen 3x 4x Oney",
+          "surchargeType": "none",
+          "percentSurcharge": "",
+          "fixedSurcharge": "",
+          "surchargeLimit": "",
+          "additionalData": {
+            "supportedInstallments": [
+              "4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "storeId": "store_3",
+      "storeName": "RS store",
+      "maintenanceMode": false,
+      "current": false,
+      "state": "onboarding",
+      "merchants": [
+        {
+          "merchantName": "S3 Merchant 1",
+          "merchantId": "s3_merchant1"
+        }
+      ],
+      "connection": {
+        "mode": "sandbox",
+        "testData": {
+          "apiKey": "asdfasdf",
+          "merchantId": null
+        }
+      }
+    }
+  ],
+  "systemInfo": {
+    "debugMode": true
+  },
+  "orderStatuses": [
+    {
+      "statusId": "inProgress",
+      "statusName": "In progress"
+    },
+    {
+      "statusId": "pending",
+      "statusName": "Pending"
+    },
+    {
+      "statusId": "paid",
+      "statusName": "Paid"
+    },
+    {
+      "statusId": "failed",
+      "statusName": "Failed"
+    },
+    {
+      "statusId": "refunded",
+      "statusName": "Refunded"
+    },
+    {
+      "statusId": "cancelled",
+      "statusName": "Cancelled"
+    },
+    {
+      "statusId": "partiallyRefunded",
+      "statusName": "Partially refunded"
+    },
+    {
+      "statusId": "new",
+      "statusName": "New"
+    },
+    {
+      "statusId": "chargeBack",
+      "statusName": "Charge back"
+    }
+  ],
+  "paymentMethods": [
+    {
+      "methodId": "applepay",
+      "code": "applepay",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1280px-Apple_Pay_logo.svg.png",
+      "name": "Apple Pay",
+      "status": true,
+      "currencies": [
+        "EUR",
+        "USD",
+        "CHF",
+        "EUR",
+        "USD",
+        "CHF",
+        "CHF",
+        "EUR",
+        "USD",
+        "CHF",
+        "CHF",
+        "EUR",
+        "USD",
+        "CHF",
+        "EUR",
+        "USD",
+        "CHF"
+      ],
+      "countries": [
+        "NL",
+        "DE"
+      ],
+      "paymentType": "wallet"
+    },
+    {
+      "methodId": "amazonpay",
+      "code": "amazon-pay",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/2/29/Amazon_Pay_logo.svg",
+      "name": "Amazon Pay",
+      "status": true,
+      "currencies": [
+        "AUD",
+        "GBP",
+        "DKK",
+        "EUR",
+        "HKD",
+        "JPY",
+        "NZD",
+        "NOK",
+        "ZAR",
+        "USD"
+      ],
+      "countries": [
+        "NL",
+        "DE",
+        "FR",
+        "SP"
+      ],
+      "paymentType": "wallet"
+    },
+    {
+      "methodId": "googlepay",
+      "code": "google-pay",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/512px-Google_Pay_Logo.svg.png?20221017164555",
+      "name": "Google Pay",
+      "status": true,
+      "currencies": [
+        "AUD",
+        "GBP",
+        "DKK",
+        "EUR",
+        "HKD",
+        "JPY",
+        "NZD",
+        "NOK",
+        "ZAR",
+        "USD"
+      ],
+      "countries": [
+        "NL",
+        "DE",
+        "FR",
+        "SP"
+      ],
+      "paymentType": "wallet"
+    },
+    {
+      "methodId": "mastercard",
+      "code": "scheme",
+      "logo": "https://e7.pngegg.com/pngimages/116/678/png-clipart-mastercard-mastercard-logo-cdr-text-thumbnail.png",
+      "name": "Credit card",
+      "status": true,
+      "currencies": [
+        "ANY"
+      ],
+      "countries": [
+        "ANY"
+      ],
+      "paymentType": "creditOrDebitCard"
+    },
+    {
+      "methodId": "paypal",
+      "code": "paypal",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1280px-PayPal.svg.png",
+      "name": "Paypal",
+      "status": false,
+      "currencies": [
+        "EUR"
+      ],
+      "countries": [
+        "NL",
+        "BE",
+        "DE",
+        "USA"
+      ],
+      "paymentType": "onlinePayments"
+    },
+    {
+      "methodId": "oney",
+      "code": "oney",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1280px-PayPal.svg.png",
+      "name": "3x 4x Oney",
+      "status": "true",
+      "currencies": [
+        "EUR"
+      ],
+      "countries": [
+        "FR",
+        "ES"
+      ],
+      "paymentType": "buyNowPayLater"
+    },
+    {
+      "methodId": "eps",
+      "code": "eps",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1280px-PayPal.svg.png",
+      "name": "EPS",
+      "status": "true",
+      "currencies": [
+        "EUR"
+      ],
+      "countries": [
+        "AT"
+      ],
+      "paymentType": "onlinePayments"
+    },
+    {
+      "methodId": "ideal",
+      "code": "ideal",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1280px-PayPal.svg.png",
+      "name": "iDeal",
+      "status": "true",
+      "currencies": [
+        "EUR"
+      ],
+      "countries": [
+        "SP"
+      ],
+      "paymentType": "onlinePayments"
+    },
+    {
+      "methodId": "online-banking-thailand",
+      "code": "online-banking-thailand",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1280px-PayPal.svg.png",
+      "name": "Online banking Thailand",
+      "status": "true",
+      "currencies": [
+        "THB"
+      ],
+      "countries": [
+        "TH"
+      ],
+      "paymentType": "onlinePayments"
+    }
+  ]
+}

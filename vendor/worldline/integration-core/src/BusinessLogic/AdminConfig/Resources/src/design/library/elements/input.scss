@@ -1,0 +1,168 @@
+//noinspection SassScssResolvedByNameOnly
+@mixin op-input-field {
+  height: initial;
+  padding: 8px 16px;
+
+  @include font-weight--light;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+
+  color: $op-color--black;
+  background-color: $op-color--white;
+
+  border: 1px solid $op-color--grey-20;
+  border-radius: 6px;
+
+  &:focus, &:active {
+    border-color: $op-color-green--dark;
+  }
+
+  &.opm--full-width {
+    width: 100%;
+  }
+
+  &::placeholder {
+    color: $op-color--grey-50;
+  }
+
+  &::-ms-input-placeholder {
+    color: $op-color--grey-50;
+  }
+
+  &:-ms-input-placeholder {
+    color: $op-color--grey-50;
+  }
+}
+
+//noinspection SassScssResolvedByNameOnly
+@mixin input-password {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  input {
+    @include op-input-field;
+    padding-right: 41px;
+    width: 100%;
+  }
+
+  span {
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    height: 18px;
+
+    &:before {
+      @include op-font-icon(eye);
+    }
+
+    &:hover:before {
+      @include font-weight--semi-bold;
+    }
+  }
+}
+
+//noinspection SassScssResolvedByNameOnly
+@mixin op-radio-field {
+  span {
+    @include font-weight--light;
+  }
+
+  [type="radio"] {
+    display: none;
+  }
+
+  [type="radio"] + span {
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: #555;
+  }
+
+  [type="radio"] + span:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: #fff;
+  }
+
+  [type="radio"] + span:after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    box-sizing: border-box;
+    border: 4px solid $op-color-green--dark;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 100%;
+    transition: all 0.2s ease;
+
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  [type="radio"]:checked + span:after {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+//noinspection SassScssResolvedByNameOnly
+@mixin op-toggle {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 17px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .opp-toggle-round {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $op-color--grey-30;
+    transition: .4s;
+    border-radius: 13px;
+
+    &:before {
+      position: absolute;
+      content: "";
+      height: 13px;
+      width: 13px;
+      left: 2px;
+      bottom: 2px;
+      background-color: $op-color--white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+  }
+
+  input:checked + .opp-toggle-round {
+    background-color: $op-color-green--dark;
+  }
+
+  input:focus + .opp-toggle-round {
+    box-shadow: 0 0 1px $op-color-green--dark;
+  }
+
+  input:checked + .opp-toggle-round:before {
+    transform: translateX(17px);
+  }
+}

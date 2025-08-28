@@ -1,0 +1,9 @@
+{
+  "code": "CAWL",
+  "name": "CAWL",
+  "liveApiEndpoint": "https://payment.ca.cawl-solutions.fr",
+  "testApiEndpoint": "https://payment.preprod.ca.cawl-solutions.fr",
+  "liveUrl": "https://portail.prod.ca.cawl-solutions.fr",
+  "testUrl": "https://portail.preprod.ca.cawl-solutions.fr",
+  "paymentMethodName": "CAWL"
+}

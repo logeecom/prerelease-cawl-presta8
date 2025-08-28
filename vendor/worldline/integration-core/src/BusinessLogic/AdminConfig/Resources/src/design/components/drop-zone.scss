@@ -1,0 +1,33 @@
+.op-file-drop-zone {
+  border: 1px dashed $op-color--grey-30;
+  border-radius: 4px;
+  padding: 24px 36px;
+  width: fit-content;
+  color: $op-color--grey-50;
+
+  &.ops--active {
+    border-color: $op-color--green-20;
+  }
+
+  .opp-input-file-label input[type=file] {
+    display: none;
+  }
+
+  .opp-file-label {
+    display: flex;
+    column-gap: 12px;
+    cursor: pointer;
+
+    img {
+      max-width: 50px;
+      max-height: 25px;
+      object-fit: contain;
+    }
+
+    &.ops--empty {
+      &:before {
+        @include op-font-icon(drop, 24px)
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+#content.bootstrap #op-page .opp-field-title {
+    font-weight: 400;
+    text-transform: none;
+    font-size: 14px;
+    height: initial;
+    padding: 0;
+    border-bottom: none;
+    color: #000;
+    background-color: transparent;
+    margin: 0 0 10px 0;
+}
+
+#content.bootstrap #op-page .op-sliding-modal {
+    top: 155px;
+}
+
+#content.bootstrap #op-page .op-dark-mask {
+    top: 140px;
+}
+
+#op-page .op-field-wrapper .opp-field-component {
+    border-radius: 4px !important;;
+}
+
+#op-page .op-notifications-page .op-table-heading .op-search-wrapper .op-search-container .op-search-field-wrapper .op-search-input {
+    font-family: "Inter", sans-serif !important;
+    border-radius: 6px !important;
+}

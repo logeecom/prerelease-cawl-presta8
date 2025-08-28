@@ -1,0 +1,29 @@
+//noinspection SassScssResolvedByNameOnly
+@mixin op-tab {
+  display: flex;
+  margin-bottom: 1rem;
+  width: max-content;
+  gap: 20px;
+
+  .op-tab-item {
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    color: #444;
+    position: relative;
+    font-size: 18px;
+
+    &.op-active {
+      color: $op-color-green--dark;
+    }
+
+    &.op-active::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -5px;
+      height: 1px;
+      background-color: $op-color-green--dark;
+    }
+  }
+}

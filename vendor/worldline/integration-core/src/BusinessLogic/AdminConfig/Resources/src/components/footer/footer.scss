@@ -1,0 +1,30 @@
+//noinspection SassScssResolvedByNameOnly
+#op-footer .op-footer {
+  display: flex;
+  flex-direction: row;
+  height: 33px;
+  background: $op-color--gray-light;
+  align-items: center;
+  padding: 10px 20px;
+
+  .op-update {
+    display: flex;
+    flex-direction: row;
+    color: $op-color--notice;
+    font-size: $op-font-size--small;
+  }
+
+  .op-update::before {
+    padding-right: 10px;
+    content: "+";
+    @include op-font-icon(null, inherit);
+  }
+
+  .op-version {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+    color: $op-color-green--dark;
+    font-size: $op-font-size--paragraph;
+  }
+}

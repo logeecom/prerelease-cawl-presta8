@@ -1,0 +1,79 @@
+<?php
+
+namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod;
+
+use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\PaymentMethodAdditionalData;
+use OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslationCollection;
+
+/**
+ * Class PaymentMethod.
+ *
+ * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod
+ */
+class PaymentMethod
+{
+    protected PaymentProductId $productId;
+    protected TranslationCollection $name;
+    protected bool $enabled;
+    protected string $template;
+    protected ?PaymentMethodAdditionalData $additionalData;
+
+    /**
+     * @param PaymentProductId $productId
+     * @param TranslationCollection $name
+     * @param bool $enabled
+     * @param string $template
+     * @param PaymentMethodAdditionalData|null $additionalData
+     */
+    public function __construct(
+        PaymentProductId $productId,
+        TranslationCollection $name,
+        bool $enabled,
+        string $template = '',
+        ?PaymentMethodAdditionalData $additionalData = null
+    )
+    {
+        $this->productId = $productId;
+        $this->name = $name;
+        $this->enabled = $enabled;
+        $this->template = $template;
+        $this->additionalData = $additionalData;
+    }
+
+    /**
+     * @return PaymentProductId
+     */
+    public function getProductId(): PaymentProductId
+    {
+        return $this->productId;
+    }
+
+    /**
+     * @return TranslationCollection
+     */
+    public function getName(): TranslationCollection
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplate(): string
+    {
+        return $this->template;
+    }
+
+    public function getAdditionalData(): ?PaymentMethodAdditionalData
+    {
+        return $this->additionalData;
+    }
+}

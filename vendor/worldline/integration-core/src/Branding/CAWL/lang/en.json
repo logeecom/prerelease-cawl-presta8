@@ -1,0 +1,31 @@
+{
+  "CAWL": {
+    "connection": "Connect with CAWL",
+    "payments": {
+      "paymentGroups": {
+        "hosted": "CAWL hosted page"
+      }
+    },
+    "generalSettings": {
+      "accountSettings": {
+        "description": "Manage your CAWL account API preferences and configurations."
+      },
+      "payByLinkSettings": {
+        "enable": {
+          "description": "With our Pay By Link feature you can send a payment to your customers if they do not complete the payment on CAWL during checkout process or if you wish to create an order for a customer through the shop back-office and then send a payment link to the customer."
+        }
+      },
+      "disconnect": {
+        "description": "To connect a different CAWL account or disconnect from this store, click the Disconnect button below."
+      }
+    },
+    "monitoring": {
+      "logs": {
+        "description": "Here you can review all sent requests and received responses from CAWL system."
+      },
+      "webhooks": {
+        "description": "Here you can review payment webhooks received and their processing status from CAWL system."
+      }
+    }
+  }
+}

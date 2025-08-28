@@ -1,0 +1,188 @@
+//noinspection SassScssResolvedByNameOnly
+@mixin op-dropdown {
+  position: relative;
+  border-radius: 4px;
+
+  .opp-dropdown-button {
+    width: 100%;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 30px;
+    align-items: center;
+    border-radius: 4px;
+    border: 1px solid $op-color--grey-20;
+    background-color: $op-color--white;
+    height: 37px;
+
+    &:after {
+      content: '\e904';
+      font-family: op-icons;
+      font-size: 12px;
+    }
+
+    span {
+      @include font-weight--light;
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      color: $op-color--grey-50;
+
+      &.ops--selected {
+        color: $op-color--online-payments-black;
+
+        @include op-screen--narrow {
+          @include op-text-ellipsis;
+        }
+      }
+    }
+
+    input {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      border-radius: 6px 6px 0 0;
+    }
+
+    &.opt--ghost {
+      border: none;
+      background-color: transparent;
+      color: $op-color-green--dark;
+      column-gap: 10px;
+      font-size: 18px;
+      line-height: 24px;
+
+      &:after {
+        content: '\e904';
+        font-family: op-icons;
+        color: $op-color-green--dark;
+        font-size: 14px;
+      }
+
+      &:focus {
+        border: none;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .opp-dropdown-list {
+    display: none;
+    position: absolute;
+    width: 100%;
+    scrollbar-width: none;
+    max-height: 180px;
+    overflow-y: auto;
+    flex-direction: column;
+    gap: 0;
+    border-top: none;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    background-color: $op-color--white;
+    color: $op-color--online-payments-black;
+    box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.25);
+    z-index: 5;
+
+    &.ops--show {
+      display: flex;
+    }
+  }
+
+  .opp-dropdown-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .opp-dropdown-list-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: $op-font-size--main;
+    @include font-weight--light;
+    line-height: $op-font-size--main;
+    color: $op-color--online-payments-black;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $op-color--grey-10;
+    }
+
+    &.ops--selected {
+      position: relative;
+
+      &:after {
+        @include op-font-icon(checkmark, 11px);
+        position: absolute;
+        right: 16px;
+        color: $op-color--grey-60;
+        font-weight: 700;
+      }
+    }
+  }
+
+  &.ops--active {
+    .opp-dropdown-button {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border: 1px solid $op-color-green--light;
+      border-bottom: 1px solid $op-color--grey-select-bottom-border;
+      box-shadow: 0 0 0 1px $op-color-green--dark;
+      clip-path: inset(-10px -10px -1px -10px);
+
+      &.ops--search-active {
+        box-shadow: none;
+
+        & + .opp-dropdown-list {
+          box-shadow: none;
+          border: 1px solid $op-color--grey-20;
+        }
+
+        input {
+          display: block;
+        }
+
+        &.ops--no-results {
+          border-radius: 6px;
+
+          input {
+            border-radius: 6px;
+          }
+
+          & + .opp-dropdown-list {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .opp-dropdown-list {
+      border: 1px solid $op-color-green--light;
+      border-top: none;
+      box-shadow: 0 0 0 1px $op-color-green--dark;
+      clip-path: inset(0 -10px -10px -10px);
+    }
+  }
+
+  &.ops--disabled {
+    .opp-dropdown-button {
+      background-color: $op-color--grey-10;
+      color: $op-color--grey-50;
+      border: 1px solid $op-color--grey-20;
+      pointer-events: none;
+    }
+  }
+
+  &.ops--error {
+    .opp-dropdown-button {
+      border: 1px solid $op-color--red-30;
+    }
+  }
+
+  &.opm--inline .opp-dropdown-list {
+    position: relative;
+  }
+}

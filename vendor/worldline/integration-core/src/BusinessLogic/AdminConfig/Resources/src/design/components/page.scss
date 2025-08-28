@@ -1,0 +1,270 @@
+//noinspection SassScssResolvedByNameOnly
+@mixin op-page_sidebar {
+  display: flex;
+  flex-direction: column;
+  padding-top: 24px;
+
+  @include op-screen--narrow-medium {
+    z-index: 11;
+  }
+
+  span, a, h3 {
+    white-space: nowrap;
+  }
+
+  .opp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 48px;
+    padding-right: 24px;
+
+    @include op-screen--narrow-medium {
+      padding-right: 0;
+    }
+  }
+
+  .opp-mobile-menu {
+    display: none;
+
+    &:before {
+      @include op-font-icon(menu, 24px);
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    @include op-screen--narrow-medium() {
+      display: block;
+    }
+  }
+
+  .opp-mobile-underlay {
+    transform: translateX(130%);
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: $op-color--background-popup;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .op-logo {
+    display: flex;
+    gap: 12px;
+  }
+
+  .opp-version-info {
+    background: $op-color--background-version;
+    color: $op-color--green-50;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    @include font-weight--semi-bold;
+
+    &.ops--warning {
+      background: $op-color--orange-20;
+      color: $op-color--orange-60;
+
+      &:hover {
+        .opp-tooltip {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .opp-body {
+    overflow: auto;
+    flex-grow: 1;
+    max-height: 100%;
+    padding-bottom: 80px;
+
+    @include op-screen--narrow-medium() {
+      pointer-events: none;
+      transform: translateX(130%);
+      transition: all 0.3s ease;
+      position: absolute;
+      z-index: 2;
+      right: 0;
+      background: $op-color--white;
+      border-radius: 8px 0 0 0;
+      padding: 44px;
+      top: 70px;
+      bottom: 0;
+    }
+
+    .opp-menu {
+      color: $op-color--grey-60;
+      font-size: 14px;
+      line-height: 18px;
+
+      > li {
+        h3 {
+          text-transform: uppercase;
+          border-bottom: none;
+          @include font-weight--semi-bold;
+          margin-bottom: 8px;
+          background-color: transparent;
+        }
+
+        > ul {
+          margin-bottom: 24px;
+
+          .opp-menu-item.ops--disabled {
+            pointer-events: none;
+          }
+
+          a, button {
+            display: block;
+            padding: 8px 8px 8px 24px;
+            border: none;
+            background: none;
+            border-radius: 6px;
+            margin-bottom: 2px;
+            font-size: inherit;
+            color: inherit;
+            @include font-weight--regular;
+
+            &:hover {
+              background: $op-color--grey-10;
+            }
+
+            &.ops--active {
+              background: $op-color--grey-10;
+              @include font-weight--semi-bold;
+            }
+
+            &:disabled, &.ops--disabled {
+              pointer-events: none;
+              cursor: not-allowed;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .opp-quick-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 15px;
+    line-height: 21px;
+    color: $op-color--grey-70;
+
+    h3 {
+      @include font-weight--semi-bold;
+      margin: 8px 0
+    }
+
+    a {
+      align-self: flex-start;
+    }
+  }
+
+  &.ops--menu-active {
+    .opp-mobile-menu {
+      z-index: 2;
+      color: $op-color--white;
+
+      &:before {
+        @include op-font-icon--content(close);
+      }
+    }
+
+    @include op-screen--narrow-medium() {
+      .opp-mobile-underlay {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .opp-body {
+        transform: translateX(0);
+        pointer-events: auto;
+
+        > ul {
+          min-width: 330px;
+        }
+      }
+    }
+
+    @include op-screen--narrow() {
+      .opp-mobile-menu {
+        color: $op-color--black;
+      }
+
+      .opp-mobile-underlay {
+        opacity: 0;
+      }
+
+      .opp-body {
+        scale: 1;
+        opacity: 1;
+        transform: none;
+        width: 100%;
+        max-height: calc(100vh - 70px);
+      }
+    }
+  }
+
+  @include op-screen--narrow-medium {
+    padding: 12px 12px 0;
+  }
+}
+
+//noinspection SassScssResolvedByNameOnly
+#op-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  column-gap: 120px;
+
+  background-color: $op-color--white;
+  width: 100%;
+  max-height: 100%;
+
+  @include op-screen--wide {
+  }
+
+  @include op-screen--narrow {
+    padding: 12px;
+  }
+
+  > .op-sidebar {
+    @include op-page_sidebar;
+  }
+
+  > main {
+    flex-grow: 1;
+    width: 100%;
+    max-height: max-content;
+    overflow: auto;
+    padding-right: 24px;
+
+    .opp-content-holder {
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      column-gap: 24px;
+      row-gap: 24px;
+      margin: 0 auto;
+      // needed for the outlines of components to be visible properly
+      padding-left: 5px;
+      padding-right: 12px;
+
+      @include op-screen--narrow {
+        padding-right: 0;
+      }
+    }
+
+    @include op-screen--narrow-medium {
+      max-width: 100%;
+      padding-right: 5px;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+@function op-get-config-icon-fonts() {
+  @return (
+      base: (
+          font-family: 'op-icons',
+          line-height: 1,
+          font-weight: 400
+      )
+  );
+}
+
+@mixin op-config-icon-font-faces() {
+  $assets: op-get-assets-root();
+  @include op-config-icon-font-face--op-icons($assets, '/fonts/op-icons');
+}
+
+@mixin op-config-icon-font-face--op-icons($assets, $path) {
+  @if ($path == null) {
+    $path: '/fonts/op-icons';
+  }
+
+  $src: $assets+$path;
+
+  /**
+   * Font face declaration for icons
+   */
+
+  @font-face {
+    font-family: 'op-icons';
+    src: url('#{$src}/op-icons.eot');
+    src: url('#{$src}/op-icons.eot') format('embedded-opentype'),
+    url('#{$src}/op-icons.ttf') format('truetype'),
+    url('#{$src}/op-icons.woff') format('woff'),
+    url('#{$src}/op-icons.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
+@function op-get-icon-font-content-map($font: base) {
+  $map: (
+      'base': (
+          'Refresh': '\e900',
+          'NoteAdd': '\e901',
+          'ExternalSmall': '\e902',
+          'Settings': '\e903',
+          'Vector': '\e904'
+      ),
+  );
+
+  $font-map: op-get-map-value($map, $font);
+  @return $font-map;
+}
