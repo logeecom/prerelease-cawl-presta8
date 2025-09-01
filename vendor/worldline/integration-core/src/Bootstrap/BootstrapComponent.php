@@ -217,7 +217,9 @@ class BootstrapComponent extends BaseBootstrapComponent
                 ServiceRegister::getService(PaymentTransactionRepositoryInterface::class),
                 ServiceRegister::getService(StatusUpdateService::class),
                 ServiceRegister::getService(TimeProviderInterface::class),
-                ServiceRegister::getService(WaitPaymentOutcomeProcessStarterInterface::class)
+                ServiceRegister::getService(WaitPaymentOutcomeProcessStarterInterface::class),
+                ServiceRegister::getService(PaymentLinkRepositoryInterface::class),
+                ServiceRegister::getService(PaymentLinksProxyInterface::class)
             );
         }));
 

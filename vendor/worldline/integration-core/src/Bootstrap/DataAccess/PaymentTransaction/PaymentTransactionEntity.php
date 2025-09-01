@@ -127,7 +127,9 @@ class PaymentTransactionEntity extends Entity
 
     public function getTransactionId(): string
     {
-        return $this->paymentTransaction->getPaymentId()->getTransactionId();
+        return $this->paymentTransaction->getPaymentId()
+            ? $this->paymentTransaction->getPaymentId()->getTransactionId()
+            : '';
     }
 
     public function getReturnHmac(): string

@@ -21,4 +21,6 @@ interface PaymentLinksProxyInterface
         PaymentSettings $paymentSettings,
         PayByLinkSettings $payByLinkSettings
     ): PaymentLinkResponse;
+
+    public function getById(string $paymentLinkId, string $merchantReference): PaymentLinkResponse;
 }

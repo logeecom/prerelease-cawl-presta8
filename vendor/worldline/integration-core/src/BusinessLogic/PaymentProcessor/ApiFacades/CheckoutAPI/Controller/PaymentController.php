@@ -28,16 +28,23 @@ class PaymentController
         $this->paymentTransactionRepository = $paymentTransactionRepository;
     }
 
-    public function startWaitingForOutcome(PaymentId $paymentId, ?string $returnHmac = null): void
+    public function startWaitingForOutcome(?PaymentId $paymentId, ?string $returnHmac = null, ?string $merchantReference = null): void
     {
         StoreContext::getInstance()->setOrigin('landing');
+
+        if (!$paymentId && $merchantReference) {
+            $this->waitPaymentOutcomeProcess->startWaitingForPaymentLink($merchantReference);
+
+            return;
+        }
+
         $this->waitPaymentOutcomeProcess->startWaiting($paymentId, $returnHmac);
     }
 
-    public function startWaitingForOutcomeInBackground(PaymentId $paymentId, ?string $returnHmac = null): void
+    public function startWaitingForOutcomeInBackground(?PaymentId $paymentId, ?string $returnHmac = null, ?string $merchantReference = null): void
     {
         StoreContext::getInstance()->setOrigin('landing');
-        $this->waitPaymentOutcomeProcess->startInBackground($paymentId, $returnHmac);
+        $this->waitPaymentOutcomeProcess->startInBackground($paymentId, $returnHmac, $merchantReference);
     }
 
     public function getPaymentOutcome(PaymentId $paymentId, ?string $returnHmac = null): PaymentOutcomeResponse
@@ -55,9 +62,8 @@ class PaymentController
 
     public function getPaymentTransaction(string $merchantReference): PaymentTransactionResponse
     {
-        $transactions = $this->paymentTransactionRepository->getByMerchantReference($merchantReference);
-        $transaction = !empty($transactions) ? $transactions[0] : null;
-
-        return new PaymentTransactionResponse($transaction);
+        return new PaymentTransactionResponse(
+            $this->paymentTransactionRepository->getByMerchantReference($merchantReference)
+        );
     }
 }

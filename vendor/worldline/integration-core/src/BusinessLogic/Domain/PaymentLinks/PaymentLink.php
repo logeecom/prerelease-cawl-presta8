@@ -3,6 +3,7 @@
 namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks;
 
 use DateTime;
+use OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
 
 /**
  * Class PaymentLink.
@@ -13,7 +14,7 @@ class PaymentLink
 {
     private ?string $paymentLinkId;
     private ?string $merchantReference;
-    private ?string $paymentId;
+    private ?PaymentId $paymentId;
     private ?DateTime $expiresAt;
     private ?string $redirectionUrl;
     private ?string $status;
@@ -21,7 +22,7 @@ class PaymentLink
     /**
      * @param string|null $paymentLinkId
      * @param string|null $merchantReference
-     * @param string|null $paymentId
+     * @param PaymentId|null $paymentId
      * @param DateTime|null $expiresAt
      * @param string|null $redirectionUrl
      * @param string|null $status
@@ -29,7 +30,7 @@ class PaymentLink
     public function __construct(
         ?string $paymentLinkId,
         ?string $merchantReference,
-        ?string $paymentId,
+        ?PaymentId $paymentId,
         ?DateTime $expiresAt,
         ?string $redirectionUrl,
         ?string $status
@@ -47,7 +48,7 @@ class PaymentLink
         return $this->paymentLinkId;
     }
 
-    public function getPaymentId(): ?string
+    public function getPaymentId(): ?PaymentId
     {
         return $this->paymentId;
     }

@@ -11,5 +11,5 @@ use OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
  */
 interface WaitPaymentOutcomeProcessStarterInterface
 {
-    public function startInBackground(PaymentId $paymentId, ?string $returnHmac = null): void;
+    public function startInBackground(?PaymentId $paymentId, ?string $returnHmac = null, ?string $merchantReference = null): void;
 }

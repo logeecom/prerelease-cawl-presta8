@@ -145,7 +145,14 @@ class AdminWorldlineopAjaxTransactionController extends ModuleAdminController
 
         AdminAPI::get()->paymentLinks($this->context->shop->id)->create(new PaymentLinkRequest(
             new OrderProviderService($transaction['idOrder']),
-            $this->context->link->getModuleLink($this->module->name, 'redirect', ['action' => 'redirectReturnPaymentLink']),
+            $this->context->link->getModuleLink(
+                $this->module->name,
+                'redirect',
+                [
+                    'action' => 'redirectReturnPaymentLink',
+                    'merchantReference' => \Cart::getCartIdByOrderId((int)$transaction['idOrder'])
+                ]
+            ),
         ));
 
         $html = $this->module->hookAdminOrderCommon((int)$transaction['idOrder']);

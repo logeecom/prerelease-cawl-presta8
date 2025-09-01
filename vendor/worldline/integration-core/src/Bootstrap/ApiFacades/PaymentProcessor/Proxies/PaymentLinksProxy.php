@@ -44,4 +44,13 @@ class PaymentLinksProxy implements PaymentLinksProxyInterface
             )
         );
     }
+
+    public function getById(string $paymentLinkId, string $merchantReference): PaymentLinkResponse
+    {
+        ContextLogProvider::getInstance()->setCurrentOrder($merchantReference);
+
+        return CreatePaymentLinkResponseTransformer::transform(
+            $this->clientFactory->get()->paymentLinks()->getPaymentLinkById($paymentLinkId)
+        );
+    }
 }

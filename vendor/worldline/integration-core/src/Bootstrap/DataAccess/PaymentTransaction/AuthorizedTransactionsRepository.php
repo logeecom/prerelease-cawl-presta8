@@ -37,10 +37,10 @@ class AuthorizedTransactionsRepository
         $now = $this->timeProvider->getCurrentLocalTime();
         $queryFilter
             ->where('statusCode', Operators::EQUALS, StatusCode::authorized()->getCode())
+            ->where('captureAtTimestamp', Operators::NOT_EQUALS, 0)
             ->where('captureAtTimestamp', Operators::LESS_OR_EQUAL_THAN, $now->getTimestamp())
             ->orderBy('captureAtTimestamp', QueryFilter::ORDER_DESC)
             ->setLimit($limit);
-
 
         /** @var PaymentTransactionEntity[] $entities */
         $entities = $this->repository->select($queryFilter);

@@ -96,27 +96,23 @@ class PaymentTransactionRepository implements PaymentTransactionRepositoryInterf
     /**
      * @param string $reference
      *
-     * @return array
+     * @return PaymentTransaction|null
      * @throws QueryFilterInvalidParamException
      */
-    public function getByMerchantReference(string $reference): array
+    public function getByMerchantReference(string $reference): ?PaymentTransaction
     {
         $queryFilter = new QueryFilter();
 
+        // orderBy is set to DESC to fetch the last transaction from the database
         $queryFilter
             ->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())
-            ->where('merchantReference', Operators::EQUALS, $reference);
+            ->where('merchantReference', Operators::EQUALS, $reference)
+            ->orderBy('createdAtTimestamp', QueryFilter::ORDER_DESC);
 
-        /** @var PaymentTransactionEntity[] $entity */
-        $entities = $this->repository->select($queryFilter);
+        /** @var PaymentTransactionEntity| null $entity */
+        $entity = $this->repository->selectOne($queryFilter);
 
-        $result = [];
-
-        foreach ($entities as $entity) {
-            $result[] = $entity->getPaymentTransaction();
-        }
-
-        return $result;
+        return $entity ? $entity->getPaymentTransaction() : null;
     }
 
     private function getPaymentTransactionEntity(?PaymentId $paymentId, ?string $returnHmac = null, ?string $paymentLinkId = null): ?PaymentTransactionEntity

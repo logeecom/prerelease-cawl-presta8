@@ -16,7 +16,7 @@ interface PaymentTransactionRepositoryInterface
     public function updatePaymentId(PaymentTransaction $paymentTransaction, PaymentId $paymentId): void;
     public function get(PaymentId $paymentId, ?string $returnHmac = null): ?PaymentTransaction;
     public function getByPaymentLinkId(string $paymentLinkId): ?PaymentTransaction;
-    public function getByMerchantReference(string $reference): array;
+    public function getByMerchantReference(string $reference): ?PaymentTransaction;
     public function lockOrderCreation(?PaymentId $paymentId): bool;
 
     public function unlockOrderCreation(?PaymentId $paymentId): bool;

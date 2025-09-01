@@ -24,11 +24,11 @@ class WaitPaymentOutcomeProcessStarter implements WaitPaymentOutcomeProcessStart
         $this->storeContext = $storeContext;
     }
 
-    public function startInBackground(PaymentId $paymentId, ?string $returnHmac = null): void
+    public function startInBackground(?PaymentId $paymentId, ?string $returnHmac = null, ?string $merchantReference = null): void
     {
         try {
             $this->asyncProcessService->start(
-                new WaitPaymentOutcomeProcessRunner($paymentId, $returnHmac, $this->storeContext->getStoreId())
+                new WaitPaymentOutcomeProcessRunner($paymentId, $returnHmac, $merchantReference, $this->storeContext->getStoreId())
             );
         } catch (\Throwable $e) {
             Logger::logError(

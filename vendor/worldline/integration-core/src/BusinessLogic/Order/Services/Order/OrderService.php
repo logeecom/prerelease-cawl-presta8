@@ -35,15 +35,11 @@ class OrderService
 
     public function getDetails(string $merchantReference): OrderDetails
     {
-        $transactions = $this->paymentTransactionRepository->getByMerchantReference($merchantReference);
+        $transaction = $this->paymentTransactionRepository->getByMerchantReference($merchantReference);
 
-        if (empty($transactions)) {
+        if (!$transaction) {
             throw new \Exception('Cannot find Worldline transaction');
         }
-
-        // TODO: Check how to dismiss other transactions from database
-        /** @var PaymentTransaction $transaction */
-        $transaction = $transactions[count($transactions) - 1];
 
         try {
             $paymentDetails = $this->paymentsProxy->getPaymentDetails($transaction->getPaymentId());

@@ -67,7 +67,10 @@ class RedirectModuleFrontController extends \ModuleFrontController
     public function display()
     {
         $this->setTemplate('module:worldlineop/views/templates/front/redirect.tpl');
+
         $action = \Tools::getValue('action');
+        $merchantReference = \Tools::getValue('merchantReference');
+
         if (!in_array($action, self::ACTIONS)) {
             \Tools::redirect($this->context->link->getPageLink('order', null, null, ['step' => 3]));
         }
@@ -77,11 +80,12 @@ class RedirectModuleFrontController extends \ModuleFrontController
             'worldlineopRedirectController' => $this->context->link->getModuleLink(
                 $this->module->name,
                 'redirect',
-                ['action' => $action]
+                ['action' => $action, 'merchantReference' => $merchantReference]
             ),
             'returnMac' => \Tools::getValue('RETURNMAC'),
             'hostedCheckoutId' => \Tools::getValue('hostedCheckoutId'),
             'paymentId' => \Tools::getValue('paymentId'),
+            'merchantReference' => \Tools::getValue('merchantReference'),
             'worldlineopCustomerToken' => \Tools::getToken(),
         ]);
 
@@ -262,14 +266,11 @@ class RedirectModuleFrontController extends \ModuleFrontController
 
     public function displayAjaxRedirectReturnPaymentLink()
     {
-        $paymentId = \Tools::getValue('paymentId', '');
-        if (empty($paymentId)) {
-            $paymentId = \Tools::getValue('hostedCheckoutId', '');
-        }
+        $merchantReference = \Tools::getValue('merchantReference', '');
 
         CheckoutAPI::get()
             ->payment((string)$this->context->shop->id)
-            ->startWaitingForOutcomeInBackground(PaymentId::parse($paymentId));
+            ->startWaitingForOutcomeInBackground(null, null, $merchantReference);
 
         $this->displayAjaxRedirectReturnPaymentLinkInternalIframe();
     }
@@ -564,14 +565,11 @@ class RedirectModuleFrontController extends \ModuleFrontController
             $this->dieOrderStep3();
         }
 
-        $paymentId = \Tools::getValue('paymentId', '');
-        if (empty($paymentId)) {
-            $paymentId = \Tools::getValue('hostedCheckoutId', '');
-        }
+        $merchantReference = \Tools::getValue('merchantReference', '');
 
         $response = CheckoutAPI::get()
             ->payment((string)$this->context->shop->id)
-            ->getPaymentOutcome(PaymentId::parse($paymentId));
+            ->getPaymentOutcome(null, null, $merchantReference);
 
         if (!$response->isSuccessful()) {
             OnlinePaymentsPrestaShopUtility::dieJsonArray([

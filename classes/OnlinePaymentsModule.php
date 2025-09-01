@@ -425,7 +425,8 @@ class OnlinePaymentsModule extends \PaymentModule
 
             $this->context->controller->addJS(
                 [
-                    $this->getPathUri() . 'views/js/admin/worldlineop-order-tab-content.js'
+                    $this->getPathUri() . 'views/js/admin/worldlineop-order-tab-content.js',
+                    $this->getPathUri() . 'views/js/admin/worldlineop-back-office-order.js',
                 ]
             );
         }
@@ -680,9 +681,15 @@ class OnlinePaymentsModule extends \PaymentModule
         /** @var \Order $order */
         $order = $params['order'];
 
+        $cartId = \Cart::getCartIdByOrderId($order->id);
+
         $paymentLinkResponse = AdminAPI::get()->paymentLinks($this->context->shop->id)->create(new PaymentLinkRequest(
             new OrderProviderService((string)$order->id),
-            $this->context->link->getModuleLink($this->name, 'redirect', ['action' => 'redirectReturnPaymentLink']),
+            $this->context->link->getModuleLink(
+                $this->name,
+                'redirect',
+                ['action' => 'redirectReturnPaymentLink', 'merchantReference' => $cartId]
+            ),
             new DateTime($expiresAt)
         ));
 
