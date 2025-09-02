@@ -1,0 +1,127 @@
+@mixin op-header-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  padding: 0 26px;
+  background-color: $op-color--white;
+  transform: translateX(100%);
+  transition: transform 0.6s ease;
+  z-index: 5;
+
+  &.op-open {
+    transform: translateX(0);
+  }
+
+  .op-header-menu-content {
+    display: flex;
+    flex-direction: column;
+
+    .op-header-tab {
+      color: $op-color-green--dark;
+      padding: 10px;
+      font-size: $op-font-size--tab-title;
+
+      &.op-header-payment {
+        &:before {
+          content: "\e93f";
+          font-family: op-icons;
+        }
+      }
+
+      &.op-header-monitoring {
+        &:before {
+          content: "\e905";
+          font-family: op-icons;
+        }
+      }
+
+      &.op-header-settings {
+        &:before {
+          content: "\e903";
+          font-family: op-icons;
+          font-size: 24px;
+        }
+      }
+
+      &.op-header-help {
+        &:before {
+          content: "\e911";
+          font-family: op-icons;
+        }
+      }
+
+      &.op-documentation-wrapper {
+        display: flex;
+        flex-direction: column;
+
+        .op-header-documentation {
+          &:before {
+            content: "\e906";
+            font-family: op-icons;
+            padding-right: 7px;
+          }
+        }
+
+        .op-documents-list {
+          font-size: $op-font-size--header-tab;
+          color: $op-color--online-payments-black;
+          list-style: none;
+          padding: 0;
+          margin-left: 10px;
+          position: relative;
+          margin-top: 10px;
+
+          &:before {
+            position: absolute;
+            left: -5px;
+            display: block;
+            height: calc(100% - 20px);
+            width: 1.5px;
+            background: $op-color-green--dark;
+            content: '';
+          }
+
+          .op-documents-link {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            font-size: 15px;
+            font-weight: 300;
+            line-height: 15px;
+            color: $op-color--online-payments-black;
+          }
+
+          .op-documents-link-wrapper {
+            position: relative;
+            padding: 5px 10px;
+
+            &:before {
+              position: absolute;
+              top: 50%;
+              left: -5px;
+              display: block;
+              height: 1.5px;
+              width: 10px;
+              background: $op-color-green--dark;
+              content: '';
+            }
+          }
+
+          .op-documents-link:after {
+            content: "\e902";
+            font-family: op-icons;
+            font-size: 20px;
+            -webkit-appearance: none;
+            padding: 7px;
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

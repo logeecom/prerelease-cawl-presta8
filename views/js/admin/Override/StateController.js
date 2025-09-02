@@ -241,18 +241,20 @@ if (!window.OnlinePaymentsFE) {
                             return;
                         }
 
-                        const modeElem = document.getElementById('op-status');
-                        const stateElem = modeElem.querySelector('.op-mode');
+                        const modeElems = document.querySelectorAll('.op-status');
 
-                        if (stateElem) {
-                            templateService.clearComponent(stateElem);
+                        if (modeElems) {
+                            modeElems.forEach((modeElem) => {
+                                const stateElem = modeElem.querySelector('.op-mode');
+
+                                if (stateElem) {
+                                    templateService.clearComponent(stateElem);
+                                }
+                                templateService.clearComponent(modeElem);
+
+                                modeElem.insertBefore(elementGenerator.createModeElement(connection.mode), modeElem.firstChild);
+                            })
                         }
-
-                        if (modeElem) {
-                            templateService.clearComponent(modeElem);
-                        }
-
-                        modeElem.insertBefore(elementGenerator.createModeElement(connection.mode), modeElem.firstChild);
                     }
                 );
         };
@@ -271,15 +273,15 @@ if (!window.OnlinePaymentsFE) {
             let options = [
                 {
                     label: 'general.createAccount',
-                    link: ''
+                    link: OnlinePaymentsFE.brand.code + '.links.createAccount'
                 },
                 {
                     label: 'general.configurePlugin',
-                    link: ''
+                    link: OnlinePaymentsFE.brand.code + '.links.configurePlugin'
                 },
                 {
                     label: 'general.managePayment',
-                    link: ''
+                    link: OnlinePaymentsFE.brand.code + '.links.managePayment'
                 }
             ];
             const header = elementGenerator.createHeaderItem(brand, {name, options}, state);

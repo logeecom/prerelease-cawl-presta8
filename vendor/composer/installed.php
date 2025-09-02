@@ -3,7 +3,7 @@
         'name' => 'online-payments/prestashop',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '652ba01f408593ce1f5d98b73693342531344927',
+        'reference' => 'dd3428f77cf811b31d9983faeb50300de2e8caae',
         'type' => 'prestashop-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'online-payments/prestashop' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '652ba01f408593ce1f5d98b73693342531344927',
+            'reference' => 'dd3428f77cf811b31d9983faeb50300de2e8caae',
             'type' => 'prestashop-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -40,7 +40,7 @@
         'worldline/integration-core' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'e87c1add942f95b1c2e7bd21471b1ec7ca12315b',
+            'reference' => '1a0e28dcf0ca41693e17b5795ffc803d78c5588a',
             'type' => 'library',
             'install_path' => __DIR__ . '/../worldline/integration-core',
             'aliases' => array(

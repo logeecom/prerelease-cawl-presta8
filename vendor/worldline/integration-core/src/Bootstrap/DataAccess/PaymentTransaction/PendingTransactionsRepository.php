@@ -39,6 +39,7 @@ class PendingTransactionsRepository
         $queryFilter
             ->where('statusCode', Operators::IN, StatusCode::PENDING_STATUS_CODES)
             ->where('createdAtTimestamp', Operators::GREATER_OR_EQUAL_THAN, $oneDayOld->getTimestamp())
+            ->where('paymentLinkId', Operators::EQUALS, '')
             ->orderBy('updatedAtTimestamp', QueryFilter::ORDER_DESC)
             ->setLimit($limit);
 

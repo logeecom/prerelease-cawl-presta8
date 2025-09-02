@@ -75,6 +75,11 @@
       align-items: center;
       justify-content: space-between;
       column-gap: 10px;
+
+      @include op-screen--narrow {
+        flex-direction: column;
+        align-items: start;
+      }
     }
 
     .opp-field-subtitle {

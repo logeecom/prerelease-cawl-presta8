@@ -4,6 +4,10 @@
     display: flex;
     padding: 0 20px;
 
+    @include op-screen--narrow {
+      padding: 0;
+    }
+
     .op-card-title {
       flex: 1;
 
@@ -29,6 +33,10 @@
         width: 60%;
         margin-top: 0;
         margin-bottom: 20px;
+
+        @include op-screen--narrow {
+          width: 82%;
+        }
       }
 
       .op-webhooks-url-wrapper {
@@ -44,6 +52,10 @@
         width: max-content;
         border-radius: 4px;
         color: $op-color-green--dark;
+
+        @include op-screen--narrow {
+          width: 90%;
+        }
       }
 
       .op-webhooks-url-copy::after {

@@ -22,6 +22,10 @@
     display: flex;
     margin-top: 35px;
 
+    @include op-screen--narrow {
+      flex-direction: column;
+    }
+
     .op-search-wrapper {
       display: flex;
       width: 40%;
@@ -79,6 +83,11 @@
       justify-content: flex-end;
       width: 60%;
       align-items: center;
+
+      @include op-screen--narrow {
+        margin-top: 25px;
+        justify-content: flex-start;
+      }
 
       .op-number-of-items-button {
         width: 30px;

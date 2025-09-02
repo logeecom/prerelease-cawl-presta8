@@ -314,15 +314,15 @@ if (!window.OnlinePaymentsFE) {
             let options = [
                 {
                     label: 'general.createAccount',
-                    link: ''
+                    link: OnlinePaymentsFE.brand.code + '.links.createAccount'
                 },
                 {
                     label: 'general.configurePlugin',
-                    link: ''
+                    link: OnlinePaymentsFE.brand.code + '.links.configurePlugin'
                 },
                 {
                     label: 'general.managePayment',
-                    link: ''
+                    link: OnlinePaymentsFE.brand.code + '.links.managePayment'
                 }
             ];
             const header = elementGenerator.createHeaderItem(brand, { name, options }, state);

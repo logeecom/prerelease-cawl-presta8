@@ -6,6 +6,10 @@
   form {
     width: 540px;
 
+    @include op-screen--narrow {
+      width: 100%;
+    }
+
     .op-button-wrapper {
       display: flex;
       flex-direction: row;

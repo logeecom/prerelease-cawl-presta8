@@ -100,6 +100,10 @@
     @include op-translatable-label;
   }
 
+  .op-header-menu {
+    @include op-header-menu;
+  }
+
   .op-toaster {
     @include op-toaster;
   }

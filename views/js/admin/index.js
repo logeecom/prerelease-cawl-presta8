@@ -24,6 +24,7 @@ require('../../../vendor/worldline/integration-core/src/BusinessLogic/AdminConfi
 
 require('../../../vendor/worldline/integration-core/src/BusinessLogic/AdminConfig/Resources/src/components/data-table/DataTableComponent');
 require('../../../vendor/worldline/integration-core/src/BusinessLogic/AdminConfig/Resources/src/components/dropdown/DropdownComponent');
+require('../../../vendor/worldline/integration-core/src/BusinessLogic/AdminConfig/Resources/src/components/header-menu/HeaderMenu');
 require('../../../vendor/worldline/integration-core/src/BusinessLogic/AdminConfig/Resources/src/components/multiselect-dropdown/MultiselectDropdownComponent');
 require('../../../vendor/worldline/integration-core/src/BusinessLogic/AdminConfig/Resources/src/components/modal/ModalComponent');
 require('../../../vendor/worldline/integration-core/src/BusinessLogic/AdminConfig/Resources/src/components/table-filter/TableFilterComponent');

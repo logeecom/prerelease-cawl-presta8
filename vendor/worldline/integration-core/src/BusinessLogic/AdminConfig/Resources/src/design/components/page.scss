@@ -232,7 +232,7 @@
   }
 
   @include op-screen--narrow {
-    padding: 12px;
+    padding: 0;
   }
 
   > .op-sidebar {
@@ -259,6 +259,8 @@
 
       @include op-screen--narrow {
         padding-right: 0;
+        padding-left: 0;
+        margin-top: 50px;
       }
     }
 

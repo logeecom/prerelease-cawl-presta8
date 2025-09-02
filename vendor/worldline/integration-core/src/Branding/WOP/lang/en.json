@@ -1,6 +1,12 @@
 {
   "WOP": {
     "connection": "Connect with Worldline",
+    "links": {
+      "createAccount": "https://signup.direct.preprod.worldline-solutions.com/",
+      "configurePlugin": "https://docs.direct.worldline-solutions.com/en/integration/how-to-integrate/plugins/",
+      "managePayment": "",
+      "help": "https://docs.ecommerce.cawl-solutions.fr/en/about/contact/"
+    },
     "payments": {
       "paymentGroups": {
         "hosted": "Worldline hosted page"

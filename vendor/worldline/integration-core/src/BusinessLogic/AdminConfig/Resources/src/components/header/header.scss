@@ -1,5 +1,5 @@
 //noinspection SassScssResolvedByNameOnly
-.op-main-header-navigation {
+#op-page .op-main-header-navigation {
   background-color: $op-color-green--light;
   display: flex;
   width: 100%;
@@ -7,11 +7,36 @@
   align-items: center;
   padding: 20px;
 
+  .op-header-menu-item {
+    display: none;
+
+    &:before {
+      content: "\e90f";
+      font-family: op-icons;
+      color: $op-color-green--dark;
+      font-size: $op-font-size--heading;
+    }
+
+    @include op-screen--narrow {
+      display: block;
+    }
+
+    &.op-clicked:before {
+      content: "\e90a";
+    }
+  }
+
   .op-main-header-left {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 20px;
+
+    @include op-screen--narrow {
+      .op-link-dropdown {
+        display: none;
+      }
+    }
 
     .op-link-dropdown .opp-dropdown-list-item {
       padding: 6px 16px;
@@ -23,6 +48,27 @@
 
     img {
       height: 25px;
+    }
+
+    .op-big-logo {
+      display: block;
+      @include op-screen--narrow-medium {
+        display: none;
+      }
+    }
+
+    .op-small-logo {
+      display: none;
+
+      @include op-screen--narrow-medium {
+        display: block;
+        height: 40px;
+      }
+    }
+
+    @include op-screen--narrow-medium {
+      display: flex;
+      align-items: center;
     }
   }
 
@@ -46,6 +92,10 @@
       font-size: $op-font-size--header-tab;
       gap: 4px;
       align-items: center;
+
+      @include op-screen--narrow {
+        display: none;
+      }
 
       &.op-header-payment {
         &:before {
@@ -80,6 +130,10 @@
   align-items: center;
   padding: 20px;
 
+  @include op-screen--narrow {
+    justify-content: center;
+  }
+
   .op-main-title {
     color: $op-color--white;
     font-size: $op-font-size--header-title;
@@ -91,6 +145,10 @@
     flex-grow: 1;
     justify-content: flex-end;
     gap: 20px;
+
+    @include op-screen--narrow {
+      display: none;
+    }
 
     .op-mode {
       display: flex;
@@ -169,6 +227,59 @@
           font-size: $op-font-size--paragraph;
           color: $op-color--subtext;
         }
+      }
+    }
+  }
+}
+
+#op-main-header .op-main-responsive-header {
+  background-color: $op-color--white;
+  display: none;
+  width: 100%;
+  height: 65px;
+  align-items: center;
+  padding: 20px;
+
+  @include op-screen--narrow {
+    display: flex;
+  }
+
+  .op-status {
+    display: none;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: flex-start;
+    gap: 20px;
+
+    @include op-screen--narrow {
+      display: flex;
+    }
+
+    .op-mode {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;
+
+      .op-icon {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+
+      .op-sandbox {
+        border: 1px solid $op-color--sandbox;
+        background: $op-color--sandbox;
+      }
+
+      .op-live {
+        border: 1px solid $op-color--live;
+        background: $op-color--live;
+      }
+
+      .op-mode-text {
+        color: $op-color-green--dark;
+        font-size: $op-font-size--environment-mode;
       }
     }
   }

@@ -124,7 +124,7 @@ class PaymentsController extends ModuleAdminController
             $requestData['paymentProductId'],
             $names,
             $requestData['enabled'],
-            $requestData['template'],
+            $requestData['templateName'] ?? '',
             $titles,
             $logo,
             $enableGroupCards,

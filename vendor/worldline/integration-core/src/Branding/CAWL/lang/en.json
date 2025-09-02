@@ -1,6 +1,12 @@
 {
   "CAWL": {
     "connection": "Connect with CAWL",
+    "links": {
+      "createAccount": "https://signup.preprod.cawl-solutions.fr/",
+      "configurePlugin": "https://docs.ecommerce.cawl-solutions.fr/en/integration/how-to-integrate/plugins/",
+      "managePayment": "",
+      "help": "https://docs.direct.worldline-solutions.com/en/about/contact/index"
+    },
     "payments": {
       "paymentGroups": {
         "hosted": "CAWL hosted page"

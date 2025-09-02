@@ -905,8 +905,8 @@ if (!window.OnlinePaymentsFE) {
                                     value: activePayByLinkSettings.enabled,
                                     type: 'checkbox',
                                     className: '',
-                                    label: OnlinePaymentsFE.brand.code + `.generalSettings.payByLinkSettings.enable.title`,
-                                    description: `generalSettings.payByLinkSettings.enable.description`,
+                                    label: `generalSettings.payByLinkSettings.enable.title`,
+                                    description: OnlinePaymentsFE.brand.code + `.generalSettings.payByLinkSettings.enable.description`,
                                     onChange: (value) => handlePayByLinkSettingsChange('enabled', value)
                                 },
                                 {
