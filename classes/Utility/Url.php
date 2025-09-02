@@ -29,7 +29,7 @@ class Url
      */
     public static function getAdminUrl(
         string $controller,
-        string $action,
+        string $action = null,
         string $storeId = null,
         string $methodId = null,
         string $queueItemId = null,
@@ -70,6 +70,18 @@ class Url
             null,
             $shopId ?: Context::getContext()->shop->id
         );
+    }
+
+    /**
+     * Gets the URL of the admin controller without query params.
+     *
+     * @param string $controller
+     *
+     * @return string
+     */
+    public static function getAdminController(string $controller): string
+    {
+        return Context::getContext()->link->getAdminLink($controller);
     }
 
     /**

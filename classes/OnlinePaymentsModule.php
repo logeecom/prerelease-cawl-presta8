@@ -411,12 +411,7 @@ class OnlinePaymentsModule extends \PaymentModule
     {
         if (\Tools::getValue('controller') == 'AdminOrders') {
             \Media::addJsDef([
-                'onlinePaymentsAjaxTransactionUrl' => $this->context->link->getAdminLink(
-                    'AdminWorldlineopAjaxTransaction',
-                    true,
-                    [],
-                    ['ajax' => 1, 'token' => \Tools::getAdminTokenLite('AdminWorldlineopAjaxTransaction')]
-                ),
+                'onlinePaymentsAjaxTransactionUrl' => Url::getAdminUrl('OnlinePaymentsTransaction'),
                 'onlinePaymentsGenericErrorMessage' => $this->l('An error occurred while processing your request. Please try again.'),
                 'alertRefund' => $this->l('Do you confirm the refund of the funds?'),
                 'alertCapture' => $this->l('Do you confirm the capture of the transaction?'),

@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <form class="form-horizontal"
-                          action="{$link->getAdminLink('AdminWorldlineopAjaxTransaction')|escape:'htmlall':'UTF-8'}"
+                          action="{$settingsData.transactionUrl|escape:'htmlall':'UTF-8'}"
                           name="{$settingsData.moduleName}_paybylink"
                           id="{$settingsData.moduleName}-paybylink-form"
                           style="margin-top: 1.5rem"
@@ -213,7 +213,7 @@
                                     </div>
                                     {if $transactionData.actions.isAuthorized && $transactionData.captures.capturableAmount > 0}
                                         <form class="form-horizontal"
-                                              action="{$link->getAdminLink('AdminWorldlineopAjaxTransaction')|escape:'htmlall':'UTF-8'}"
+                                              action="{$settingsData.transactionUrl|escape:'htmlall':'UTF-8'}"
                                               name="{$settingsData.moduleName}_capture"
                                               id="{$settingsData.moduleName}-capture-form"
                                               style="margin-top: 1.875rem"
@@ -273,7 +273,7 @@
                                     </div>
                                     {if $transactionData.actions.isCancellable && $transactionData.cancels.cancellableAmount > 0}
                                         <form class="form-horizontal"
-                                              action="{$link->getAdminLink('AdminWorldlineopAjaxTransaction')|escape:'htmlall':'UTF-8'}"
+                                              action="{$settingsData.transactionUrl|escape:'htmlall':'UTF-8'}"
                                               name="{$settingsData.moduleName}_cancel"
                                               id="{$settingsData.moduleName}-cancel-form"
                                               style="margin-top: 1.875rem"
@@ -346,7 +346,7 @@
                                     {if $transactionData.actions.isRefundable && $transactionData.refunds.refundableAmount > 0}
                                         <hr>
                                         <form class="form-horizontal"
-                                              action="{$link->getAdminLink('AdminWorldlineopAjaxTransaction')|escape:'htmlall':'UTF-8'}"
+                                              action="{$settingsData.transactionUrl|escape:'htmlall':'UTF-8'}"
                                               name="{$settingsData.moduleName}_refund"
                                               id="{$settingsData.moduleName}-refund-form"
                                               method="post"

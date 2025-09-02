@@ -44,7 +44,8 @@ class Installer
         'OnlinePaymentsLanguage',
         'OnlinePaymentsGeneralSettings',
         'OnlinePaymentsOrderStatuses',
-        'OnlinePaymentsMonitoring'
+        'OnlinePaymentsMonitoring',
+        'OnlinePaymentsTransaction'
     ];
     private static array $orderStatuses = [
         [

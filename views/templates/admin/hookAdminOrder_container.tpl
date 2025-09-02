@@ -16,76 +16,71 @@
   {$html}
 </div>
 
-{literal}
 <script type="text/javascript">
+  (function () {
+    const onlinePaymentsAdminOrderContainer = document.querySelector(`#{$moduleName}-admin-order-container`);
 
-  {/literal}
-  const onlinePaymentsModule = "{$moduleName}";
-  {literal}
+    onlinePaymentsAdminOrderContainer.addEventListener('click', function (e) {
+      if (e.target.matches(`#{$moduleName}-btn-capture`) ||
+              e.target.matches(`#{$moduleName}-btn-refund`) ||
+              e.target.matches(`#{$moduleName}-btn-cancel`) ||
+              e.target.matches(`#{$moduleName}-btn-paybylink`)
+      ) {
+        e.preventDefault();
 
-  const onlinePaymentsAdminOrderContainer = document.querySelector(`#${onlinePaymentsModule}-admin-order-container`);
-  const refundForm = document.querySelector(`#${onlinePaymentsModule}-refund-form`);
-
-  onlinePaymentsAdminOrderContainer.addEventListener('click', function (e) {
-    if (e.target.matches(`#${onlinePaymentsModule}-btn-capture`) ||
-            e.target.matches(`#${onlinePaymentsModule}-btn-refund`) ||
-            e.target.matches(`#${onlinePaymentsModule}-btn-cancel`) ||
-            e.target.matches(`#${onlinePaymentsModule}-btn-paybylink`)
-    ) {
-      e.preventDefault();
-
-      var formToSubmit;
-      if (e.target.matches(`#${onlinePaymentsModule}-btn-capture`)) {
-        if (!window.confirm(alertCapture)) {
-          return false;
+        let formToSubmit;
+        switch (e.target.id) {
+          case `${moduleName}-btn-capture`:
+            formToSubmit = document.querySelector(`#${moduleName}-capture-form`);
+            break;
+          case `${moduleName}-btn-refund`:
+            formToSubmit = document.querySelector(`#${moduleName}-refund-form`);
+            break;
+          case `${moduleName}-btn-cancel`:
+            formToSubmit = document.querySelector(`#${moduleName}-cancel-form`);
+            break;
+          case `${moduleName}-btn-paybylink`:
+            formToSubmit = document.querySelector(`#${moduleName}-paybylink-form`);
+            break;
+          default:
+            formToSubmit = null;
         }
 
-        formToSubmit = document.querySelector(`#${onlinePaymentsModule}-capture-form`);
-      } else if (e.target.matches(`#${onlinePaymentsModule}-btn-refund`)) {
-        if (!window.confirm(alertRefund)) {
-          return false;
+        if (!formToSubmit) {
+          return;
         }
 
-        formToSubmit = document.querySelector(`#${onlinePaymentsModule}-refund-form`);
-      } else if (e.target.matches(`#${onlinePaymentsModule}-btn-cancel`)) {
-        if (!window.confirm(alertCancel)) {
-          return false;
-        }
+        const submitBtn = formToSubmit.querySelector('button');
 
-        formToSubmit = document.querySelector(`#${onlinePaymentsModule}-cancel-form`);
-      } else {
-        formToSubmit = document.querySelector(`#${onlinePaymentsModule}-paybylink-form`);
+        submitBtn.disabled = true;
+        onlinePaymentsAdminOrderContainer.style.opacity = 0.6;
+        onlinePaymentsPostTransaction(formToSubmit).then((result) => {
+          onlinePaymentsAdminOrderContainer.innerHTML = result.result_html;
+        }).catch(() => {
+        }).finally(() => {
+          onlinePaymentsAdminOrderContainer.style.opacity = 1;
+          submitBtn.disabled = false;
+        });
       }
+    }, false);
 
-      const submitBtn = formToSubmit.querySelector('button');
+    async function onlinePaymentsPostTransaction(formSent) {
+      const controller = onlinePaymentsAjaxTransactionUrl.replace(/\amp;/g, '');
 
-      submitBtn.disabled = true;
-      onlinePaymentsAdminOrderContainer.style.opacity = 0.6;
-      onlinePaymentsPostTransaction(formToSubmit).then((result) => {
-        onlinePaymentsAdminOrderContainer.innerHTML = result.result_html;
-      }).catch(() => {
-      }).finally(() => {
-        onlinePaymentsAdminOrderContainer.style.opacity = 1;
-        submitBtn.disabled = false;
+      return new Promise(function (resolve, reject) {
+        const form = new FormData(formSent);
+
+        fetch(controller, {
+          body: form,
+          method: 'post',
+        }).then((response) => {
+          resolve(response.json());
+        }).catch((err) => {
+          reject(err);
+        });
       });
     }
-  }, false);
+  })();
 
-  async function onlinePaymentsPostTransaction(formSent) {
-    const controller = onlinePaymentsAjaxTransactionUrl.replace(/\amp;/g, '');
-
-    return new Promise(function (resolve, reject) {
-      const form = new FormData(formSent);
-
-      fetch(controller, {
-        body: form,
-        method: 'post',
-      }).then((response) => {
-        resolve(response.json());
-      }).catch((err) => {
-        reject(err);
-      });
-    });
-  }
 </script>
-{/literal}
+

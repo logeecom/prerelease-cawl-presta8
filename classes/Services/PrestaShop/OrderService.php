@@ -4,6 +4,7 @@ namespace OnlinePayments\Classes\Services\PrestaShop;
 
 use Exception;
 use OnlinePayments\Classes\Services\OrderStatusMappingService;
+use OnlinePayments\Classes\Utility\Url;
 use OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\AdminAPI\AdminAPI;
 use OnlinePayments\Core\Bootstrap\ApiFacades\Order\OrderAPI\OrderAPI;
 use OnlinePayments\Core\Branding\Brand\ActiveBrandProviderInterface;
@@ -82,6 +83,7 @@ class OrderService
             'brandCode' => $provider->getActiveBrand()->getCode(),
             'brandName' => $provider->getActiveBrand()->getName(),
             'pathImg' => sprintf(__PS_BASE_URI__ . 'modules/%s/views/assets/images/', $this->module->name),
+            'transactionUrl' => Url::getAdminController('OnlinePaymentsTransaction')
         ];
     }
 
