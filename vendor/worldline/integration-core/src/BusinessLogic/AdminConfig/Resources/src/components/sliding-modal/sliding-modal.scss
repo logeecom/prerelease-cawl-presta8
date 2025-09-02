@@ -43,6 +43,9 @@
         font-weight: 600;
         font-size: $op-font-size--tab-title;
         color: $op-color--online-payments-black;
+        word-break: break-word;
+        word-wrap: break-word;
+        white-space: normal;
       }
 
       .op-integration-type {
@@ -107,6 +110,10 @@
   .op-form {
     width: 580px;
     padding: 15px;
+
+    @include op-screen--narrow {
+      width: 100%;
+    }
   }
 
   .op-button-bar {

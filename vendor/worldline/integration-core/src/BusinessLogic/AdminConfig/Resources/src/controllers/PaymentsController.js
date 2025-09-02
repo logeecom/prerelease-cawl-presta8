@@ -370,8 +370,10 @@ if (!window.OnlinePaymentsFE) {
          */
         const renderActivePaymentsForm = () => {
             const form = generator.createElement('form', 'op-payments-form');
-            const title = generator.createElement('p', 'op-payments-title', 'payments.title');
+            const title = generator.createElement('p', 'op-payments-title');
             const divider = generator.createElement('div', 'op-payments-divider');
+
+            title.innerHTML = translationService.translate('payments.title');
 
             form.appendChild(title);
             form.appendChild(divider);

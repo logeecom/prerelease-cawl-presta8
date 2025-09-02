@@ -53,7 +53,7 @@ if (!window.OnlinePaymentsFE) {
         className && child.classList.add(...className.trim().split(' '));
         if (innerHTMLKey) {
             let params = innerHTMLKey.split('|');
-            child.innerHTML = OnlinePaymentsFE.sanitize(translationService.translate(params[0], params.slice(1)));
+            child.innerText = OnlinePaymentsFE.sanitize(translationService.translate(params[0], params.slice(1)));
         }
 
         if (properties) {

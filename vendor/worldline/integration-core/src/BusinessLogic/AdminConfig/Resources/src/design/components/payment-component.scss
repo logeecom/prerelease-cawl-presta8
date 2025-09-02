@@ -24,6 +24,9 @@
         font-weight: 600;
         font-size: $op-font-size--header-tab;
         color: $op-color--online-payments-black;
+        word-break: break-word;
+        word-wrap: break-word;
+        white-space: normal;
       }
 
       .op-integration-type {

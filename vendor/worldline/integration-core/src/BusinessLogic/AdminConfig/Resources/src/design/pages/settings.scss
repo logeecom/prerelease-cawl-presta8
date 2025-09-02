@@ -5,11 +5,15 @@
     padding: 0 20px;
 
     @include op-screen--narrow {
-      padding: 0;
+      flex-direction: column;
     }
 
     .op-card-title {
       flex: 1;
+
+      @include op-screen--narrow {
+        margin-bottom: 23px;
+      }
 
       h1 {
         font-size: $op-font-size--tab-title;

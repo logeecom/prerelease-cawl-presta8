@@ -158,7 +158,8 @@
       "cards": "Cards (debit & credit)",
       "eWallet": "e-Wallet",
       "postpaid": "Postpaid",
-      "directDebit": "Direct Debit"
+      "directDebit": "Direct Debit",
+      "hosted": "Hosted Page"
     },
     "integrationType": {
       "hosted": "Hosted Page",

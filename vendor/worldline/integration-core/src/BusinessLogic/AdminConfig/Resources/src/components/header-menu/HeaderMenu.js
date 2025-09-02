@@ -75,6 +75,8 @@ if (!window.OnlinePaymentsFE.components) {
             translationService.translate('general.needHelp')
         );
         helpTab.href = translationService.translate(OnlinePaymentsFE.brand.code + '.links.help');
+        helpTab.target = '_blank';
+        helpTab.rel = 'noopener noreferrer';
         const documentation = generator.createElement(
             'div',
             'op-header-tab op-documentation-wrapper'

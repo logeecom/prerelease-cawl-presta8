@@ -5,7 +5,7 @@
       "createAccount": "https://signup.preprod.cawl-solutions.fr/",
       "configurePlugin": "https://docs.ecommerce.cawl-solutions.fr/en/integration/how-to-integrate/plugins/",
       "managePayment": "",
-      "help": "https://docs.direct.worldline-solutions.com/en/about/contact/index"
+      "help": "https://docs.ecommerce.cawl-solutions.fr/en/about/contact/"
     },
     "payments": {
       "paymentGroups": {
