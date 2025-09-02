@@ -1,14 +1,16 @@
-$(document).ready(function () {
-    let payByLinkTitle = $('input[name="worldline-pay-by-link-title"]').val();
-    $("#cart_summary_payment_module option[value='worldlineop']").text(payByLinkTitle);
+function adjustBackOfficeOrderCreation(module) {
+
+    let payByLinkTitle = $(`input[name="${module}-pay-by-link-title"]`).val();
+
+    $(`#cart_summary_payment_module option[value="${module}"]`).text(payByLinkTitle);
     let paymentSelectInput = $('#cart_summary_payment_module');
-    let expiresAt = $("#worldline-expires-at");
+    let expiresAt = $(`#${module}-expires-at`);
     let paymentSelectDiv = paymentSelectInput.parent().parent();
     let createOrderButton = $('#create-order-button');
 
     expiresAt.insertAfter(paymentSelectDiv);
 
-    if(paymentSelectInput.val() === 'worldlineop') {
+    if(paymentSelectInput.val() === module) {
         expiresAt.show();
     }
 
@@ -17,7 +19,7 @@ $(document).ready(function () {
      */
     expiresAt.on('click change' , () => {
 
-        let selectedDate = $("#worldline-expires-at-date").val();
+        let selectedDate = $(`#${module}-expires-at-date`).val();
         if(!selectedDate){
             createOrderButton.prop('disabled', true);
 
@@ -37,11 +39,11 @@ $(document).ready(function () {
     });
 
     /**
-     * Display Worldline form if selected.
+     * Display plugin form if selected.
      */
     paymentSelectInput.on('change', () => {
-        let worldlineSelected = paymentSelectInput.val() === 'worldlineop';
-        if (worldlineSelected) {
+        let pluginSelected = paymentSelectInput.val() === module;
+        if (pluginSelected) {
             expiresAt.show();
 
             return;
@@ -49,4 +51,4 @@ $(document).ready(function () {
 
         expiresAt.hide();
     });
-});
+}

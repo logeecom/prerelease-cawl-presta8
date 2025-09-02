@@ -3,7 +3,6 @@
 namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\PaymentAPI\Request;
 
 use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Request\Request;
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidActionTypeException;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidPaymentProductIdException;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidRecurrenceTypeException;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidSessionTimeoutException;
@@ -100,7 +99,6 @@ class PaymentMethodRequest extends Request
 
     /**
      * @inheritDoc
-     * @throws InvalidActionTypeException
      * @throws InvalidRecurrenceTypeException
      * @throws InvalidSignatureTypeException
      * @throws InvalidSessionTimeoutException

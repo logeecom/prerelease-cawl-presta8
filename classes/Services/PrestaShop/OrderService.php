@@ -78,7 +78,9 @@ class OrderService
         $provider = ServiceRegister::getService(ActiveBrandProviderInterface::class);
 
         return [
-            'code' => $provider->getActiveBrand()->getCode(),
+            'moduleName' => $this->module->name,
+            'brandCode' => $provider->getActiveBrand()->getCode(),
+            'brandName' => $provider->getActiveBrand()->getName(),
             'pathImg' => sprintf(__PS_BASE_URI__ . 'modules/%s/views/assets/images/', $this->module->name),
         ];
     }

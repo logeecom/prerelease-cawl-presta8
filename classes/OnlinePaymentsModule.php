@@ -411,13 +411,13 @@ class OnlinePaymentsModule extends \PaymentModule
     {
         if (\Tools::getValue('controller') == 'AdminOrders') {
             \Media::addJsDef([
-                'worldlineopAjaxTransactionUrl' => $this->context->link->getAdminLink(
+                'onlinePaymentsAjaxTransactionUrl' => $this->context->link->getAdminLink(
                     'AdminWorldlineopAjaxTransaction',
                     true,
                     [],
                     ['ajax' => 1, 'token' => \Tools::getAdminTokenLite('AdminWorldlineopAjaxTransaction')]
                 ),
-                'worldlineopGenericErrorMessage' => $this->l('An error occurred while processing your request. Please try again.'),
+                'onlinePaymentsGenericErrorMessage' => $this->l('An error occurred while processing your request. Please try again.'),
                 'alertRefund' => $this->l('Do you confirm the refund of the funds?'),
                 'alertCapture' => $this->l('Do you confirm the capture of the transaction?'),
                 'alertCancel' => $this->l('Do you confirm the cancellation of the transaction?'),
@@ -425,8 +425,8 @@ class OnlinePaymentsModule extends \PaymentModule
 
             $this->context->controller->addJS(
                 [
-                    $this->getPathUri() . 'views/js/admin/worldlineop-order-tab-content.js',
-                    $this->getPathUri() . 'views/js/admin/worldlineop-back-office-order.js',
+                    $this->getPathUri() . 'views/js/admin/onlinepayments-payment-link-copy.js',
+                    $this->getPathUri() . 'views/js/admin/onlinepayments-backoffice-order-creation.js',
                 ]
             );
         }
@@ -661,11 +661,12 @@ class OnlinePaymentsModule extends \PaymentModule
         )->format("Y-m-d");
 
         $this->context->smarty->assign([
-            'worldlinePayByLinkTitle' => $generalSettingsArray['title'],
-            'worldlineExpirationDate' => $expirationDate
+            'pluginPayByLinkTitle' => $generalSettingsArray['title'],
+            'pluginExpirationDate' => $expirationDate,
+            'moduleName' => $this->name,
         ]);
 
-        return $this->display($this->getLocalPath(), 'views/templates/hook/worldlineop-backoffice-order-creation.tpl');
+        return $this->display($this->getLocalPath(), 'views/templates/hook/onlinepayments-backoffice-order-creation.tpl');
     }
 
     public function hookActionValidateOrder(array $params): void
@@ -677,7 +678,7 @@ class OnlinePaymentsModule extends \PaymentModule
             return;
         }
 
-        $expiresAt = \Tools::getValue('worldline-expires-at-date');
+        $expiresAt = \Tools::getValue("$this->name-expires-at-date");
         /** @var \Order $order */
         $order = $params['order'];
 

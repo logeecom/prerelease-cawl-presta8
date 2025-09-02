@@ -12,74 +12,80 @@
  *
  *}
 
-<div id="worldlineop-admin-order-container">
+<div id="{$moduleName}-admin-order-container">
   {$html}
 </div>
+
 {literal}
-  <script type="text/javascript">
-    const worldlineopAdminOrderContainer = document.querySelector('#worldlineop-admin-order-container');
-    const refundForm = document.querySelector('#worldlineop-refund-form');
+<script type="text/javascript">
 
-    worldlineopAdminOrderContainer.addEventListener('click', function (e) {
-      if (e.target.matches('#worldlineop-btn-capture') ||
-              e.target.matches('#worldlineop-btn-refund') ||
-              e.target.matches('#worldlineop-btn-cancel') ||
-              e.target.matches('#worldlineop-btn-paybylink')
-      ) {
-        e.preventDefault();
+  {/literal}
+  const onlinePaymentsModule = "{$moduleName}";
+  {literal}
 
-        var formToSubmit;
-        if (e.target.matches('#worldlineop-btn-capture')) {
-          if (!window.confirm(alertCapture)) {
-            return false;
-          }
+  const onlinePaymentsAdminOrderContainer = document.querySelector(`#${onlinePaymentsModule}-admin-order-container`);
+  const refundForm = document.querySelector(`#${onlinePaymentsModule}-refund-form`);
 
-          formToSubmit = document.querySelector('#worldlineop-capture-form');
-        } else if (e.target.matches('#worldlineop-btn-refund')) {
-          if (!window.confirm(alertRefund)) {
-            return false;
-          }
+  onlinePaymentsAdminOrderContainer.addEventListener('click', function (e) {
+    if (e.target.matches(`#${onlinePaymentsModule}-btn-capture`) ||
+            e.target.matches(`#${onlinePaymentsModule}-btn-refund`) ||
+            e.target.matches(`#${onlinePaymentsModule}-btn-cancel`) ||
+            e.target.matches(`#${onlinePaymentsModule}-btn-paybylink`)
+    ) {
+      e.preventDefault();
 
-          formToSubmit = document.querySelector('#worldlineop-refund-form');
-        } else if (e.target.matches('#worldlineop-btn-cancel')) {
-          if (!window.confirm(alertCancel)) {
-            return false;
-          }
-
-          formToSubmit = document.querySelector('#worldlineop-cancel-form');
-        } else {
-          formToSubmit = document.querySelector('#worldlineop-paybylink-form');
+      var formToSubmit;
+      if (e.target.matches(`#${onlinePaymentsModule}-btn-capture`)) {
+        if (!window.confirm(alertCapture)) {
+          return false;
         }
 
-        const submitBtn = formToSubmit.querySelector('button');
+        formToSubmit = document.querySelector(`#${onlinePaymentsModule}-capture-form`);
+      } else if (e.target.matches(`#${onlinePaymentsModule}-btn-refund`)) {
+        if (!window.confirm(alertRefund)) {
+          return false;
+        }
 
-        submitBtn.disabled = true;
-        worldlineopAdminOrderContainer.style.opacity = 0.6;
-        worldlineopPostTransaction(formToSubmit).then((result) => {
-          worldlineopAdminOrderContainer.innerHTML = result.result_html;
-        }).catch(() => {
-        }).finally(() => {
-          worldlineopAdminOrderContainer.style.opacity = 1;
-          submitBtn.disabled = false;
-        });
+        formToSubmit = document.querySelector(`#${onlinePaymentsModule}-refund-form`);
+      } else if (e.target.matches(`#${onlinePaymentsModule}-btn-cancel`)) {
+        if (!window.confirm(alertCancel)) {
+          return false;
+        }
+
+        formToSubmit = document.querySelector(`#${onlinePaymentsModule}-cancel-form`);
+      } else {
+        formToSubmit = document.querySelector(`#${onlinePaymentsModule}-paybylink-form`);
       }
-    }, false);
 
-    async function worldlineopPostTransaction(formSent) {
-      const controller = worldlineopAjaxTransactionUrl.replace(/\amp;/g, '');
+      const submitBtn = formToSubmit.querySelector('button');
 
-      return new Promise(function (resolve, reject) {
-        const form = new FormData(formSent);
-
-        fetch(controller, {
-          body: form,
-          method: 'post',
-        }).then((response) => {
-          resolve(response.json());
-        }).catch((err) => {
-          reject(err);
-        });
+      submitBtn.disabled = true;
+      onlinePaymentsAdminOrderContainer.style.opacity = 0.6;
+      onlinePaymentsPostTransaction(formToSubmit).then((result) => {
+        onlinePaymentsAdminOrderContainer.innerHTML = result.result_html;
+      }).catch(() => {
+      }).finally(() => {
+        onlinePaymentsAdminOrderContainer.style.opacity = 1;
+        submitBtn.disabled = false;
       });
     }
-  </script>
+  }, false);
+
+  async function onlinePaymentsPostTransaction(formSent) {
+    const controller = onlinePaymentsAjaxTransactionUrl.replace(/\amp;/g, '');
+
+    return new Promise(function (resolve, reject) {
+      const form = new FormData(formSent);
+
+      fetch(controller, {
+        body: form,
+        method: 'post',
+      }).then((response) => {
+        resolve(response.json());
+      }).catch((err) => {
+        reject(err);
+      });
+    });
+  }
+</script>
 {/literal}

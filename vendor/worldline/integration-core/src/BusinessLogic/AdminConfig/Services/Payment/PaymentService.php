@@ -74,6 +74,11 @@ class PaymentService
      */
     public function savePaymentMethod(PaymentMethod $paymentMethod): void
     {
+        if (PaymentProductId::hostedCheckout()->equals($paymentMethod->getProductId())
+            && empty($paymentMethod->getAdditionalData()->getLogo())) {
+            $paymentMethod->getAdditionalData()->setLogo($this->logoUrlService->getHostedCheckoutLogoUrl());
+        }
+
         $this->repository->savePaymentMethod($paymentMethod);
     }
 

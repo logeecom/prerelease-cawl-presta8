@@ -39,7 +39,7 @@ class AdminWorldlineopAjaxTransactionController extends ModuleAdminController
         if (!$this->access('edit')) {
             //@formatter:off
             $this->context->smarty->assign([
-                'worldlineopAjaxTransactionError' => $this->module->l('You do not have permission to capture funds.', 'AdminWorldlineopAjaxTransactionController'),
+                'onlinePaymentsAjaxTransactionError' => $this->module->l('You do not have permission to capture funds.', 'AdminWorldlineopAjaxTransactionController'),
             ]);
             //@formatter:on
             die(json_encode([
@@ -52,7 +52,7 @@ class AdminWorldlineopAjaxTransactionController extends ModuleAdminController
         $error = $captureService->handle($transaction);
 
         if (!empty($error)) {
-            $this->context->smarty->assign('worldlineopAjaxTransactionError', $error);
+            $this->context->smarty->assign('onlinePaymentsAjaxTransactionError', $error);
         } else {
             $this->context->smarty->assign('captureConfirmation', true);
         }
@@ -71,7 +71,7 @@ class AdminWorldlineopAjaxTransactionController extends ModuleAdminController
         if (!$this->access('edit')) {
             //@formatter:off
             $this->context->smarty->assign([
-                'worldlineopAjaxTransactionError' => $this->module->l('You do not have permission to refund funds.', 'AdminWorldlineopAjaxTransactionController'),
+                'onlinePaymentsAjaxTransactionError' => $this->module->l('You do not have permission to refund funds.', 'AdminWorldlineopAjaxTransactionController'),
             ]);
             //@formatter:on
             die(json_encode([
@@ -84,7 +84,7 @@ class AdminWorldlineopAjaxTransactionController extends ModuleAdminController
         $error = $refundService->handleFromExtension($transaction);
 
         if (!empty($error)) {
-            $this->context->smarty->assign('worldlineopAjaxTransactionError', $error);
+            $this->context->smarty->assign('onlinePaymentsAjaxTransactionError', $error);
         } else {
             $this->context->smarty->assign('refundConfirmation', true);
         }
@@ -103,7 +103,7 @@ class AdminWorldlineopAjaxTransactionController extends ModuleAdminController
         if (!$this->access('edit')) {
             //@formatter:off
             $this->context->smarty->assign([
-                'worldlineopAjaxTransactionError' => $this->module->l('You do not have permission to cancel transactions.', 'AdminWorldlineopAjaxTransactionController'),
+                'onlinePaymentsAjaxTransactionError' => $this->module->l('You do not have permission to cancel transactions.', 'AdminWorldlineopAjaxTransactionController'),
             ]);
             //@formatter:on
             die(json_encode([
@@ -116,7 +116,7 @@ class AdminWorldlineopAjaxTransactionController extends ModuleAdminController
         $error = $cancelService->handleFromExtension($transaction);
 
         if (!empty($error)) {
-            $this->context->smarty->assign('worldlineopAjaxTransactionError', $error);
+            $this->context->smarty->assign('onlinePaymentsAjaxTransactionError', $error);
         } else {
             $this->context->smarty->assign('cancelConfirmation', true);
         }
@@ -135,7 +135,7 @@ class AdminWorldlineopAjaxTransactionController extends ModuleAdminController
         if (!$this->access('edit')) {
             //@formatter:off
             $this->context->smarty->assign([
-                'worldlineopAjaxTransactionError' => $this->module->l('You do not have permission to cancel transactions.', 'AdminWorldlineopAjaxTransactionController'),
+                'onlinePaymentsAjaxTransactionError' => $this->module->l('You do not have permission to cancel transactions.', 'AdminWorldlineopAjaxTransactionController'),
             ]);
             //@formatter:on
             die(json_encode([

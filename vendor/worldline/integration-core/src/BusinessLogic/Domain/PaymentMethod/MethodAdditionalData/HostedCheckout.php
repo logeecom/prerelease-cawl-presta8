@@ -27,6 +27,11 @@ class HostedCheckout implements PaymentMethodAdditionalData
         return $this->logo;
     }
 
+    public function setLogo(string $logo): void
+    {
+        $this->logo = $logo;
+    }
+
     public function isEnableGroupCards(): bool
     {
         return $this->enableGroupCards;
