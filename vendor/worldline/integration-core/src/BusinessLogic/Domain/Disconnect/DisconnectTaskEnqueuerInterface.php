@@ -10,7 +10,9 @@ namespace OnlinePayments\Core\BusinessLogic\Domain\Disconnect;
 interface DisconnectTaskEnqueuerInterface
 {
     /**
+     * @param string $mode
+     *
      * @return void
      */
-    public function enqueueDisconnectTask(): void;
+    public function enqueueDisconnectTask(string $mode): void;
 }

@@ -2,8 +2,11 @@
 
 namespace OnlinePayments\Core\Bootstrap\DataAccess\Monitoring;
 
+use DateInterval;
 use DateTime;
+use Exception;
 use OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\WebhookLog as WebhookLogEntity;
+use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\LogSettingsRepositoryInterface;
 use OnlinePayments\Core\BusinessLogic\Domain\Connection\ActiveConnectionProvider;
 use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\RepositoryWithAdvancedSearchInterface;
 use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\WebhookLogRepositoryInterface;
@@ -23,24 +26,30 @@ class WebhookLogRepository implements WebhookLogRepositoryInterface
     private RepositoryWithAdvancedSearchInterface $repository;
     private StoreContext $storeContext;
     private ActiveConnectionProvider $activeConnectionProvider;
+    private LogSettingsRepositoryInterface $logSettingsRepository;
 
     /**
      * @param RepositoryWithAdvancedSearchInterface $repository
      * @param StoreContext $storeContext
      * @param ActiveConnectionProvider $activeConnectionProvider
+     * @param LogSettingsRepositoryInterface $logSettingsRepository
      */
     public function __construct(
         RepositoryWithAdvancedSearchInterface $repository,
         StoreContext $storeContext,
-        ActiveConnectionProvider $activeConnectionProvider
+        ActiveConnectionProvider $activeConnectionProvider,
+        LogSettingsRepositoryInterface $logSettingsRepository
     ) {
         $this->repository = $repository;
         $this->storeContext = $storeContext;
         $this->activeConnectionProvider = $activeConnectionProvider;
+        $this->logSettingsRepository = $logSettingsRepository;
     }
 
     /**
      * @inheritDoc
+     *
+     * @throws Exception
      */
     public function saveWebhookLog(WebhookLog $webhookLog): void
     {
@@ -50,6 +59,14 @@ class WebhookLogRepository implements WebhookLogRepositoryInterface
             return;
         }
 
+        $logSettings = $this->logSettingsRepository->getLogSettings();
+        $expiresAt = ($webhookLog->getCreatedAt())->add(new DateInterval('P14D'));
+
+        if ($logSettings) {
+            $expiresAt = ($webhookLog->getCreatedAt())
+                ->add(new DateInterval('P' . $logSettings->getLogRecordsLifetime()->getDays() . 'D'));
+        }
+
         $webhookLog->setOrderLink($this->getOrderUrl($webhookLog));
         $entity = new WebhookLogEntity();
         $entity->setStoreId($this->storeContext->getStoreId());
@@ -57,6 +74,7 @@ class WebhookLogRepository implements WebhookLogRepositoryInterface
         $entity->setOrderId($webhookLog->getOrderId());
         $entity->setPaymentNumber($webhookLog->getPaymentNumber());
         $entity->setCreatedAt($webhookLog->getCreatedAt()->getTimestamp());
+        $entity->setExpiresAt($expiresAt->getTimestamp());
         $entity->setWebhookLog($webhookLog);
         $this->repository->save($entity);
     }
@@ -138,11 +156,41 @@ class WebhookLogRepository implements WebhookLogRepositoryInterface
      * @inheritDoc
      * @throws QueryFilterInvalidParamException
      */
-    public function deleteByMode(string $mode, int $limit): void
+    public function deleteByMode(DateTime $beforeDate, string $mode, int $limit): void
     {
         $queryFilter = new QueryFilter();
         $queryFilter->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())
             ->where('mode', Operators::EQUALS, $mode)
+            ->where('createdAt', Operators::LESS_THAN, $beforeDate->getTimestamp())
+            ->setLimit($limit);
+
+        $this->repository->deleteWhere($queryFilter);
+    }
+
+    /**
+     * @return int
+     *
+     * @throws QueryFilterInvalidParamException
+     */
+    public function countExpired(): int
+    {
+        $queryFilter = new QueryFilter();
+        $queryFilter->where('expiresAt', Operators::LESS_THAN, (new DateTime())->getTimestamp());
+
+        return $this->repository->count($queryFilter);
+    }
+
+    /**
+     * @param int $limit
+     *
+     * @return void
+     *
+     * @throws QueryFilterInvalidParamException
+     */
+    public function deleteExpired(int $limit = 5000): void
+    {
+        $queryFilter = new QueryFilter();
+        $queryFilter->where('expiresAt', Operators::LESS_THAN, (new DateTime())->getTimestamp())
             ->setLimit($limit);
 
         $this->repository->deleteWhere($queryFilter);

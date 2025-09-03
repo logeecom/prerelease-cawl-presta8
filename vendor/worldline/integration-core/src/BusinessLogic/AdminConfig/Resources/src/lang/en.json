@@ -102,7 +102,6 @@
     "invalidImageSize": "The provided file exceeds the limit of 10MB."
   },
   "connection": {
-    "title": "Configure your API keys below. If you don't have an account, you can create new one <a href=\"https://www.adyen.com/signup\" target=\"_blank\"><span>here.</span></a>",
     "mode": {
       "title": "Mode",
       "description": "Select between \"Sandbox\" or \"Live\" to link your shop to the respective environment.",

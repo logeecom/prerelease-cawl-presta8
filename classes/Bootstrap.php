@@ -35,6 +35,7 @@ use OnlinePayments\Core\Bootstrap\DataAccess\ProductTypes\ProductTypeEntity;
 use OnlinePayments\Core\Bootstrap\DataAccess\Tokens\TokenEntity;
 use OnlinePayments\Core\Bootstrap\SingleInstance;
 use OnlinePayments\Core\Branding\Brand\ActiveBrandProviderInterface;
+use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\LogSettingsRepositoryInterface;
 use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Payment\PaymentService;
 use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
 use OnlinePayments\Core\Bootstrap\DataAccess\PaymentMethod\PaymentMethodConfigEntity;
@@ -224,7 +225,8 @@ class Bootstrap extends BootstrapComponent
                 RepositoryRegistry::getRepository(MonitoringLog::class),
                 StoreContext::getInstance(),
                 ServiceRegister::getService(ActiveConnectionProvider::class),
-                ServiceRegister::getService(ActiveBrandProviderInterface::class)
+                ServiceRegister::getService(ActiveBrandProviderInterface::class),
+                ServiceRegister::getService(LogSettingsRepositoryInterface::class)
             );
         }));
 
@@ -232,7 +234,8 @@ class Bootstrap extends BootstrapComponent
             return new WebhookLogRepository(
                 RepositoryRegistry::getRepository(WebhookLog::class),
                 StoreContext::getInstance(),
-                ServiceRegister::getService(ActiveConnectionProvider::class)
+                ServiceRegister::getService(ActiveConnectionProvider::class),
+                ServiceRegister::getService(LogSettingsRepositoryInterface::class)
             );
         }));
 

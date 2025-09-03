@@ -514,7 +514,7 @@ class OnlinePaymentsModule extends \PaymentModule
             return $this->displayError(sprintf($this->l('Please change shop context to shop ID %d'), $order->id_shop));
         }
         try {
-            $orderService = new OrderService($this->name, $this->context->shop->id);
+            $orderService = new OrderService($this, $this->context->shop->id);
 
             $this->context->smarty->assign($orderService->getDetails($idOrder));
         } catch (\Exception $e) {

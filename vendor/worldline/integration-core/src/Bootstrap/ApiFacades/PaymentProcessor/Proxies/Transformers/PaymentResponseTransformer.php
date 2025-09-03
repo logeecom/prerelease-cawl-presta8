@@ -93,7 +93,7 @@ class PaymentResponseTransformer
     private static function getPaymentMethodLabel(string $productId, PaymentOutput $paymentOutput): string
     {
         if (!$productId) {
-            return 'Unknown';
+            return '';
         }
 
         return array_key_exists($productId, PaymentMethodDefaultConfigs::PAYMENT_METHOD_CONFIGS) ?

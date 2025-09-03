@@ -22,6 +22,7 @@ class MonitoringLog extends Entity
     protected string $paymentNumber;
     protected string $message;
     protected int $createdAt;
+    protected int $expiresAt;
     protected DomainMonitoringLog $monitoringLog;
 
     /**
@@ -37,6 +38,7 @@ class MonitoringLog extends Entity
         $indexMap->addStringIndex('paymentNumber');
         $indexMap->addStringIndex('message');
         $indexMap->addIntegerIndex('createdAt');
+        $indexMap->addIntegerIndex('expiresAt');
 
         return new EntityConfiguration($indexMap, 'MonitoringLog');
     }
@@ -54,6 +56,7 @@ class MonitoringLog extends Entity
         $this->paymentNumber = $data['paymentNumber'];
         $this->message = $data['message'];
         $this->createdAt = $data['createdAt'];
+        $this->expiresAt = $data['expiresAt'];
 
         $logData = $data['monitoringLog'] ?? [];
 
@@ -83,6 +86,7 @@ class MonitoringLog extends Entity
         $data['paymentNumber'] = $this->paymentNumber;
         $data['message'] = $this->message;
         $data['createdAt'] = $this->createdAt;
+        $data['expiresAt'] = $this->expiresAt;
         $data['monitoringLog'] = [
             'orderId' => $this->monitoringLog->getOrderId(),
             'paymentNumber' => $this->monitoringLog->getPaymentNumber(),
@@ -169,5 +173,15 @@ class MonitoringLog extends Entity
     public function setMonitoringLog(DomainMonitoringLog $monitoringLog): void
     {
         $this->monitoringLog = $monitoringLog;
+    }
+
+    public function getExpiresAt(): int
+    {
+        return $this->expiresAt;
+    }
+
+    public function setExpiresAt(int $expiresAt): void
+    {
+        $this->expiresAt = $expiresAt;
     }
 }

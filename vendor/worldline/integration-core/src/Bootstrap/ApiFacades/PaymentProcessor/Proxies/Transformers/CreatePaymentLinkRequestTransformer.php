@@ -92,12 +92,14 @@ class CreatePaymentLinkRequestTransformer
     private static function getExpirationDate(?DateTime $requestExpiresAt, PayByLinkExpirationTime $expirationTime): DateTime
     {
         if ($requestExpiresAt) {
-            return $requestExpiresAt;
+            $expiresAt = $requestExpiresAt;
+        } else {
+            $expiresAt = new DateTime('now', new DateTimeZone('UTC'));
+            $expiresAt->add(new DateInterval('P' . $expirationTime->getDays() . 'D'));
         }
 
-        $dt = new DateTime('now', new DateTimeZone('UTC'));
-        $dt->add(new DateInterval('P' . $expirationTime->getDays() . 'D'));
+        $expiresAt->setTime(23, 59, 59);
 
-        return $dt;
+        return $expiresAt;
     }
 }

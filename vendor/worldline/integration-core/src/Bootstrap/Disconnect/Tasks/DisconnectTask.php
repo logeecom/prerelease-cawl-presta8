@@ -5,6 +5,8 @@ namespace OnlinePayments\Core\Bootstrap\Disconnect\Tasks;
 use DateTime;
 use Exception;
 use OnlinePayments\Core\Bootstrap\DataAccess\Disconnect\DisconnectRepository;
+use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Monitoring\MonitoringLogsService;
+use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Monitoring\WebhookLogsService;
 use OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
 use OnlinePayments\Core\Infrastructure\Serializer\Serializer;
 use OnlinePayments\Core\Infrastructure\ServiceRegister;
@@ -19,15 +21,18 @@ class DisconnectTask extends Task
 {
     private string $storeId;
     private DateTime $dateTime;
+    private string $mode;
 
     /**
      * @param string $storeId
      * @param DateTime $dateTime
+     * @param string $mode
      */
-    public function __construct(string $storeId, DateTime $dateTime)
+    public function __construct(string $storeId, DateTime $dateTime, string $mode)
     {
         $this->storeId = $storeId;
         $this->dateTime = $dateTime;
+        $this->mode = $mode;
     }
 
     /**
@@ -37,7 +42,8 @@ class DisconnectTask extends Task
     {
         return new static(
             $array['storeId'],
-            (new DateTime())->setTimestamp($array['date'])
+            (new DateTime())->setTimestamp($array['date']),
+            $array['mode']
         );
     }
 
@@ -49,6 +55,7 @@ class DisconnectTask extends Task
         return [
             'storeId' => $this->storeId,
             'date' => $this->dateTime->getTimestamp(),
+            'mode' => $this->mode,
         ];
     }
 
@@ -89,7 +96,7 @@ class DisconnectTask extends Task
      */
     protected function doExecute(): void
     {
-        $this->deleteShopLogs();
+        $this->deleteMonitoringLogs();
         $this->reportProgress(45);
         $this->deleteWebhookLogs();
         $this->reportProgress(90);
@@ -97,14 +104,32 @@ class DisconnectTask extends Task
         $this->reportProgress(100);
     }
 
-    protected function deleteShopLogs(): void
+    protected function deleteMonitoringLogs(): void
     {
-        // ToDo add implementation
+        $service = $this->getMonitoringLogsService();
+
+        while ($service->count() > 0) {
+            $service->delete($this->mode);
+        }
     }
 
     protected function deleteWebhookLogs(): void
     {
-        // ToDo add implementation
+        $service = $this->getWebhookLogsService();
+
+        while ($service->count() > 0) {
+            $service->delete($this->mode);
+        }
+    }
+
+    protected function getMonitoringLogsService(): MonitoringLogsService
+    {
+        return ServiceRegister::getService(MonitoringLogsService::class);
+    }
+
+    protected function getWebhookLogsService(): WebhookLogsService
+    {
+        return ServiceRegister::getService(WebhookLogsService::class);
     }
 
     /**

@@ -41,6 +41,7 @@ use OnlinePayments\Core\Bootstrap\DataAccess\ProductTypes\ProductTypeRepository;
 use OnlinePayments\Core\Bootstrap\DataAccess\Tokens\TokenEntity;
 use OnlinePayments\Core\Bootstrap\DataAccess\Tokens\TokensRepository;
 use OnlinePayments\Core\Bootstrap\Disconnect\DisconnectTaskEnqueuer;
+use OnlinePayments\Core\Bootstrap\LogCleanup\LogCleanupTaskService;
 use OnlinePayments\Core\Bootstrap\Maintenance\TaskCleanupListener;
 use OnlinePayments\Core\Bootstrap\Sdk\MerchantClientFactory;
 use OnlinePayments\Core\Bootstrap\Sdk\WebhookTransformer;
@@ -82,6 +83,8 @@ use OnlinePayments\Core\BusinessLogic\Domain\Integration\Payment\ShopPaymentServ
 use OnlinePayments\Core\BusinessLogic\Domain\Integration\ShopOrderService;
 use OnlinePayments\Core\BusinessLogic\Domain\Integration\Stores\StoreService as IntegrationStoreService;
 use OnlinePayments\Core\BusinessLogic\Domain\Integration\Version\VersionService;
+use OnlinePayments\Core\BusinessLogic\Domain\LogCleanup\LogCleanupListener;
+use OnlinePayments\Core\BusinessLogic\Domain\LogCleanup\LogCleanupTaskServiceInterface;
 use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\MonitoringLogRepositoryInterface;
 use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\WebhookLogRepositoryInterface;
 use OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
@@ -391,6 +394,12 @@ class BootstrapComponent extends BaseBootstrapComponent
                 ServiceRegister::getService(RefundProxyInterface::class)
             );
         }));
+
+        ServiceRegister::registerService(LogCleanupTaskServiceInterface::class,
+            new SingleInstance(static function () {
+                return new LogCleanupTaskService();
+            })
+        );
     }
 
     /**
@@ -796,6 +805,15 @@ class BootstrapComponent extends BaseBootstrapComponent
             TickEvent::class,
             static function () {
                 (new TaskCleanupListener())->handle();
+            }
+        );
+
+        $eventBus->when(
+            TickEvent::class,
+            static function () {
+                (new LogCleanupListener(
+                    ServiceRegister::getService(LogCleanupTaskServiceInterface::class)
+                ))->handle();
             }
         );
     }

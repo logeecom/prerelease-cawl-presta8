@@ -24,7 +24,7 @@ if (!window.OnlinePaymentsFE.components) {
      * @returns {HTMLElement}
      */
     const renderCell = (type, cellData, header= false) => {
-        let cell = generator.createElement(type, cellData.className, cellData.label)
+        let cell = generator.createElement(type, cellData.className, cellData.label, null, null, true);
 
         if (header) {
             cell = generator.createElement(type);

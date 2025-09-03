@@ -108,4 +108,19 @@ class WebhookLogsService
 
         return $this->repository->count($disconnectTime);
     }
+
+    /**
+     * @param string $mode
+     * @param int $limit
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
+    public function delete(string $mode, int $limit = 5000): void
+    {
+        $disconnectTime = $this->disconnectRepository->getDisconnectTime();
+
+        $this->repository->deleteByMode($disconnectTime, $mode, $limit);
+    }
 }

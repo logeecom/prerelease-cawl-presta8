@@ -21,6 +21,7 @@ class WebhookLog extends Entity
     protected string $orderId;
     protected string $paymentNumber;
     protected int $createdAt;
+    protected int $expiresAt;
     protected DomainWebhookLog $webhookLog;
 
     /**
@@ -35,6 +36,7 @@ class WebhookLog extends Entity
         $indexMap->addStringIndex('orderId');
         $indexMap->addStringIndex('paymentNumber');
         $indexMap->addIntegerIndex('createdAt');
+        $indexMap->addIntegerIndex('expiresAt');
 
         return new EntityConfiguration($indexMap, 'WebhookLog');
     }
@@ -48,6 +50,7 @@ class WebhookLog extends Entity
         $this->orderId = $data['orderId'];
         $this->paymentNumber = $data['paymentNumber'];
         $this->createdAt = $data['createdAt'];
+        $this->expiresAt = $data['expiresAt'];
 
         $logData = $data['webhookLog'] ?? [];
 
@@ -74,6 +77,7 @@ class WebhookLog extends Entity
         $data['orderId'] = $this->orderId;
         $data['paymentNumber'] = $this->paymentNumber;
         $data['createdAt'] = $this->createdAt;
+        $data['expiresAt'] = $this->expiresAt;
         $data['webhookLog'] = [
             'orderId' => $this->webhookLog->getOrderId(),
             'paymentNumber' => $this->webhookLog->getPaymentNumber(),
@@ -148,5 +152,15 @@ class WebhookLog extends Entity
     public function setWebhookLog(DomainWebhookLog $webhookLog): void
     {
         $this->webhookLog = $webhookLog;
+    }
+
+    public function getExpiresAt(): int
+    {
+        return $this->expiresAt;
+    }
+
+    public function setExpiresAt(int $expiresAt): void
+    {
+        $this->expiresAt = $expiresAt;
     }
 }

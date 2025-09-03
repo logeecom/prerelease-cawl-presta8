@@ -10,6 +10,7 @@ use OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\CardsSettingsEntity
 use OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\LogSettingsEntity;
 use OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\PayByLinkSettingsEntity;
 use OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\PaymentSettingsConfigEntity;
+use OnlinePayments\Core\Bootstrap\DataAccess\PaymentLink\PaymentLinkEntity;
 use OnlinePayments\Core\Bootstrap\DataAccess\PaymentMethod\PaymentMethodConfigEntity;
 use OnlinePayments\Core\Bootstrap\DataAccess\PaymentMethod\PaymentMethodConfigRepository;
 use OnlinePayments\Core\Bootstrap\DataAccess\PaymentTransaction\PaymentTransactionEntity;
@@ -152,6 +153,7 @@ class TestBootstrapComponent extends BootstrapComponent
         RepositoryRegistry::registerRepository(QueueItem::class, MemoryQueueItemRepository::getClassName());
         RepositoryRegistry::registerRepository(PayByLinkSettingsEntity::class, MemoryRepositoryWithConditionalDelete::getClassName());
         RepositoryRegistry::registerRepository(ProductTypeEntity::class, MemoryRepositoryWithConditionalDelete::getClassName());
+        RepositoryRegistry::registerRepository(PaymentLinkEntity::class, MemoryRepositoryWithConditionalDelete::getClassName());
     }
 
     public static function reset(): void

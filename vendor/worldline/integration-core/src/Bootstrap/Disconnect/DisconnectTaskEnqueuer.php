@@ -37,13 +37,13 @@ class DisconnectTaskEnqueuer implements DisconnectTaskEnqueuerInterface
      * @throws QueueStorageUnavailableException
      * @throws Exception
      */
-    public function enqueueDisconnectTask(): void
+    public function enqueueDisconnectTask(string $mode): void
     {
         $disconnectTime = new DateTime();
         $this->disconnectRepository->setDisconnectTime($disconnectTime);
         $this->queueService->enqueue(
             'disconnect-integration',
-            new DisconnectTask(StoreContext::getInstance()->getStoreId(), $disconnectTime)
+            new DisconnectTask(StoreContext::getInstance()->getStoreId(), $disconnectTime, $mode)
         );
     }
 }

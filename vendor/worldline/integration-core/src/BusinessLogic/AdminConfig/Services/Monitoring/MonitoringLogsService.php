@@ -65,4 +65,19 @@ class MonitoringLogsService
 
         return $this->monitoringLogRepository->count($disconnectTime);
     }
+
+    /**
+     * @param string $mode
+     * @param int $limit
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
+    public function delete(string $mode, int $limit = 5000): void
+    {
+        $disconnectTime = $this->repository->getDisconnectTime();
+
+        $this->monitoringLogRepository->deleteByMode($disconnectTime, $mode, $limit);
+    }
 }

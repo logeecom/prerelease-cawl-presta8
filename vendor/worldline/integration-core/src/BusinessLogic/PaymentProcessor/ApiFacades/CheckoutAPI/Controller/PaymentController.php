@@ -47,10 +47,10 @@ class PaymentController
         $this->waitPaymentOutcomeProcess->startInBackground($paymentId, $returnHmac, $merchantReference);
     }
 
-    public function getPaymentOutcome(PaymentId $paymentId, ?string $returnHmac = null): PaymentOutcomeResponse
+    public function getPaymentOutcome(?PaymentId $paymentId, ?string $returnHmac = null, ?string $merchantReference = null): PaymentOutcomeResponse
     {
         StoreContext::getInstance()->setOrigin('landing');
-        return new PaymentOutcomeResponse($this->waitPaymentOutcomeProcess->getPaymentOutcome($paymentId, $returnHmac));
+        return new PaymentOutcomeResponse($this->waitPaymentOutcomeProcess->getPaymentOutcome($paymentId, $returnHmac, $merchantReference));
     }
 
     public function updateOrderStatus(PaymentId $paymentId, ?string $returnHmac = null): UpdateStatusResponse

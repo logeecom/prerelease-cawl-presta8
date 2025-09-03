@@ -2,9 +2,12 @@
 
 namespace OnlinePayments\Core\Bootstrap\DataAccess\Monitoring;
 
+use DateInterval;
 use DateTime;
+use Exception;
 use OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\MonitoringLog as MonitoringLogEntity;
 use OnlinePayments\Core\Branding\Brand\ActiveBrandProviderInterface;
+use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\LogSettingsRepositoryInterface;
 use OnlinePayments\Core\BusinessLogic\Domain\Connection\ActiveConnectionProvider;
 use OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionMode;
 use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\MonitoringLog;
@@ -26,29 +29,35 @@ class MonitoringLogRepository implements MonitoringLogRepositoryInterface
     private StoreContext $storeContext;
     private ActiveConnectionProvider $activeConnectionProvider;
     private ActiveBrandProviderInterface $activeBrandProvider;
+    private LogSettingsRepositoryInterface $logSettingsRepository;
 
     /**
      * @param RepositoryWithAdvancedSearchInterface $repository
      * @param StoreContext $storeContext
      * @param ActiveConnectionProvider $activeConnectionProvider
      * @param ActiveBrandProviderInterface $activeBrandProvider
+     * @param LogSettingsRepositoryInterface $logSettingsRepository
      */
     public function __construct(
         RepositoryWithAdvancedSearchInterface $repository,
         StoreContext $storeContext,
         ActiveConnectionProvider $activeConnectionProvider,
-        ActiveBrandProviderInterface $activeBrandProvider
+        ActiveBrandProviderInterface $activeBrandProvider,
+        LogSettingsRepositoryInterface $logSettingsRepository
     ) {
         $this->repository = $repository;
         $this->storeContext = $storeContext;
         $this->activeConnectionProvider = $activeConnectionProvider;
         $this->activeBrandProvider = $activeBrandProvider;
+        $this->logSettingsRepository = $logSettingsRepository;
     }
 
     /**
      * @param MonitoringLog $monitoringLog
      *
      * @return void
+     *
+     * @throws Exception
      */
     public function saveMonitoringLog(MonitoringLog $monitoringLog): void
     {
@@ -61,6 +70,14 @@ class MonitoringLogRepository implements MonitoringLogRepositoryInterface
             $mode = $activeConnection->getMode();
         }
 
+        $logSettings = $this->logSettingsRepository->getLogSettings();
+        $expiresAt = ($monitoringLog->getCreatedAt())->add(new DateInterval('P14D'));
+
+        if ($logSettings) {
+            $expiresAt = ($monitoringLog->getCreatedAt())
+                ->add(new DateInterval('P' . $logSettings->getLogRecordsLifetime()->getDays() . 'D'));
+        }
+
         $monitoringLog->setOrderLink($this->getOrderUrl($monitoringLog));
 
         $entity = new MonitoringLogEntity();
@@ -69,6 +86,7 @@ class MonitoringLogRepository implements MonitoringLogRepositoryInterface
         $entity->setOrderId($monitoringLog->getOrderId());
         $entity->setPaymentNumber($monitoringLog->getPaymentNumber());
         $entity->setCreatedAt($monitoringLog->getCreatedAt()->getTimestamp());
+        $entity->setExpiresAt($expiresAt->getTimestamp());
         $entity->setMessage($monitoringLog->getMessage());
         $entity->setMonitoringLog($monitoringLog);
         $this->repository->save($entity);
@@ -113,7 +131,7 @@ class MonitoringLogRepository implements MonitoringLogRepositoryInterface
 
         $queryFilter = new QueryFilter();
         $queryFilter->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())
-        ->where('mode', Operators::EQUALS, (string)$activeConnection->getMode());
+            ->where('mode', Operators::EQUALS, (string)$activeConnection->getMode());
 
         /** @var MonitoringLogEntity[] $entities */
         $entities = $this->repository->select($queryFilter);
@@ -145,13 +163,14 @@ class MonitoringLogRepository implements MonitoringLogRepositoryInterface
             ->where('mode', Operators::EQUALS, (string)$activeConnection->getMode());
 
         if ($disconnectTime) {
-            $queryFilter->where('createdAt', Operators::GREATER_THAN, $disconnectTime->getTimestamp());
+            $queryFilter->where('createdAt', Operators::LESS_THAN, $disconnectTime->getTimestamp());
         }
 
         return $this->repository->count($queryFilter);
     }
 
     /**
+     * @param DateTime $beforeDate
      * @param string $mode
      * @param int $limit
      *
@@ -159,11 +178,41 @@ class MonitoringLogRepository implements MonitoringLogRepositoryInterface
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function deleteByMode(string $mode, int $limit): void
+    public function deleteByMode(DateTime $beforeDate, string $mode, int $limit): void
     {
         $queryFilter = new QueryFilter();
         $queryFilter->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())
             ->where('mode', Operators::EQUALS, $mode)
+            ->where('createdAt', Operators::LESS_THAN, $beforeDate->getTimestamp())
+            ->setLimit($limit);
+
+        $this->repository->deleteWhere($queryFilter);
+    }
+
+    /**
+     * @return int
+     *
+     * @throws QueryFilterInvalidParamException
+     */
+    public function countExpired(): int
+    {
+        $queryFilter = new QueryFilter();
+        $queryFilter->where('expiresAt', Operators::LESS_THAN, (new DateTime())->getTimestamp());
+
+        return $this->repository->count($queryFilter);
+    }
+
+    /**
+     * @param int $limit
+     *
+     * @return void
+     *
+     * @throws QueryFilterInvalidParamException
+     */
+    public function deleteExpired(int $limit = 5000): void
+    {
+        $queryFilter = new QueryFilter();
+        $queryFilter->where('expiresAt', Operators::LESS_THAN, (new DateTime())->getTimestamp())
             ->setLimit($limit);
 
         $this->repository->deleteWhere($queryFilter);

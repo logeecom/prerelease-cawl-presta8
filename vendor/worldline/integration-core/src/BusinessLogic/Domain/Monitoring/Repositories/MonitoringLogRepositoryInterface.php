@@ -41,12 +41,25 @@ interface MonitoringLogRepositoryInterface
     public function count(?DateTime $disconnectTime = null): int;
 
     /**
+     * @param DateTime $beforeDate
      * @param string $mode
      * @param int $limit
      *
      * @return void
      */
-    public function deleteByMode(string $mode, int $limit): void;
+    public function deleteByMode(DateTime $beforeDate, string $mode, int $limit): void;
+
+    /**
+     * @return int
+     */
+    public function countExpired(): int;
+
+    /**
+     * @param int $limit
+     *
+     * @return void
+     */
+    public function deleteExpired(int $limit = 5000): void;
 
     /**
      * @param MonitoringLog $monitoringLog

@@ -60,34 +60,36 @@ class DisconnectService
     public function disconnect(): void
     {
         try {
-            $this->disconnectIntegration();
-            $this->deleteAllData();
+            $activeConnection = $this->connectionConfigRepository->getConnection();
+            if (null === $activeConnection) {
+                return;
+            }
+
+            $this->disconnectIntegration((string)$activeConnection->getMode());
+            $this->deleteAllData((string)$activeConnection->getMode());
         } catch (\Exception $e) {
             throw $e;
         }
     }
 
     /**
+     * @param string $mode
+     *
      * @return void
      */
-    public function disconnectIntegration(): void
+    public function disconnectIntegration(string $mode): void
     {
-        $activeConnection = $this->connectionConfigRepository->getConnection();
-        if (null === $activeConnection) {
-            return;
-        }
-
-        $this->shopPaymentService->deletePaymentMethods($activeConnection->getMode());
-        $this->cardsSettingsRepository->deleteByMode($activeConnection->getMode());
-        $this->paymentSettingsRepository->deleteByMode($activeConnection->getMode());
-        $this->logSettingsRepository->deleteByMode($activeConnection->getMode());
-        $this->paymentMethodConfigRepository->deleteByMode($activeConnection->getMode());
-        $this->payByLinkSettingsRepository->deleteByMode($activeConnection->getMode());
+        $this->shopPaymentService->deletePaymentMethods($mode);
+        $this->cardsSettingsRepository->deleteByMode($mode);
+        $this->paymentSettingsRepository->deleteByMode($mode);
+        $this->logSettingsRepository->deleteByMode($mode);
+        $this->paymentMethodConfigRepository->deleteByMode($mode);
+        $this->payByLinkSettingsRepository->deleteByMode($mode);
         $this->connectionConfigRepository->disconnect();
     }
 
-    public function deleteAllData(): void
+    public function deleteAllData(string $mode): void
     {
-        $this->disconnectTaskEnqueuer->enqueueDisconnectTask();
+        $this->disconnectTaskEnqueuer->enqueueDisconnectTask($mode);
     }
 }

@@ -46,14 +46,20 @@ if (!window.OnlinePaymentsFE) {
      * @param {string?} innerHTMLKey Inner text translation key.
      * @param {Record<string, any>?} properties An object of additional properties.
      * @param {HTMLElement[]?} children
+     * @param {boolean} allowHtml
      * @returns {HTMLElement}
      */
-    const createElement = (type, className, innerHTMLKey, properties, children) => {
+    const createElement = (type, className, innerHTMLKey, properties, children, allowHtml = false) => {
         const child = document.createElement(type);
         className && child.classList.add(...className.trim().split(' '));
         if (innerHTMLKey) {
             let params = innerHTMLKey.split('|');
-            child.innerText = OnlinePaymentsFE.sanitize(translationService.translate(params[0], params.slice(1)));
+
+            if (allowHtml) {
+                child.innerHTML = OnlinePaymentsFE.sanitize(translationService.translate(params[0], params.slice(1)));
+            } else {
+                child.innerText = OnlinePaymentsFE.sanitize(translationService.translate(params[0], params.slice(1)));
+            }
         }
 
         if (properties) {

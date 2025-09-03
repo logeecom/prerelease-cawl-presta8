@@ -93,7 +93,7 @@ class PaymentDetailsResponseTransformer
                 $mobileOutput->getPaymentProductId() : ($sepaOutput ? $sepaOutput->getPaymentProductId() : '')));
 
         if (!$id) {
-            return 'Unknown';
+            return '';
         }
 
         return array_key_exists($id, PaymentMethodDefaultConfigs::PAYMENT_METHOD_CONFIGS) ?

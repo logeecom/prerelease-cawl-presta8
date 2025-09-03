@@ -159,6 +159,7 @@ if (!window.OnlinePaymentsFE) {
                 utilities.showLoader();
                 monitoringTab.classList.remove('op-active');
                 webhooksTab.classList.add('op-active');
+                activeType = 'webhooks';
                 api.get(`${configuration.getWebhookLogsUrl}&pageNumber=${page}&pageSize=${limit}`, () => {
                     })
                     .then(renderWebhookLogsTable)
@@ -171,6 +172,7 @@ if (!window.OnlinePaymentsFE) {
                 utilities.showLoader();
                 webhooksTab.classList.remove('op-active');
                 monitoringTab.classList.add('op-active');
+                activeType = 'logs';
                 api.get(`${configuration.getMonitoringLogsUrl}&pageNumber=${page}&pageSize=${limit}`, () => {
                     })
                     .then(renderMonitoringLogsTable)
@@ -856,14 +858,17 @@ if (!window.OnlinePaymentsFE) {
 
             value10.addEventListener('click', function () {
                 limit = 10;
+                page = 1;
                 rerenderPage();
             });
             value25.addEventListener('click', function () {
                 limit = 25;
+                page = 1;
                 rerenderPage();
             });
             value50.addEventListener('click', function () {
                 limit = 50;
+                page = 1;
                 rerenderPage();
             })
             list.appendChild(value10);
