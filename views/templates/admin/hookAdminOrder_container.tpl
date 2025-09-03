@@ -30,17 +30,17 @@
 
         let formToSubmit;
         switch (e.target.id) {
-          case `${moduleName}-btn-capture`:
-            formToSubmit = document.querySelector(`#${moduleName}-capture-form`);
+          case `{$moduleName}-btn-capture`:
+            formToSubmit = document.querySelector(`#{$moduleName}-capture-form`);
             break;
-          case `${moduleName}-btn-refund`:
-            formToSubmit = document.querySelector(`#${moduleName}-refund-form`);
+          case `{$moduleName}-btn-refund`:
+            formToSubmit = document.querySelector(`#{$moduleName}-refund-form`);
             break;
-          case `${moduleName}-btn-cancel`:
-            formToSubmit = document.querySelector(`#${moduleName}-cancel-form`);
+          case `{$moduleName}-btn-cancel`:
+            formToSubmit = document.querySelector(`#{$moduleName}-cancel-form`);
             break;
-          case `${moduleName}-btn-paybylink`:
-            formToSubmit = document.querySelector(`#${moduleName}-paybylink-form`);
+          case `{$moduleName}-btn-paybylink`:
+            formToSubmit = document.querySelector(`#{$moduleName}-paybylink-form`);
             break;
           default:
             formToSubmit = null;

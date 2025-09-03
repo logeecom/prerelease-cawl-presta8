@@ -29,7 +29,7 @@ class TransactionController extends ModuleAdminController
             ]));
         }
 
-        $captureService = new CaptureService($this->module->name, $this->context->shop->id);
+        $captureService = new CaptureService($this->module, $this->context->shop->id);
 
         $error = $captureService->handle($transaction);
 
@@ -61,7 +61,7 @@ class TransactionController extends ModuleAdminController
             ]));
         }
 
-        $refundService = new RefundService($this->module->name, $this->context->shop->id);
+        $refundService = new RefundService($this->module, $this->context->shop->id);
 
         $error = $refundService->handleFromExtension($transaction);
 
@@ -93,7 +93,7 @@ class TransactionController extends ModuleAdminController
             ]));
         }
 
-        $cancelService = new CancelService($this->module->name, $this->context->shop->id);
+        $cancelService = new CancelService($this->module, $this->context->shop->id);
 
         $error = $cancelService->handleFromExtension($transaction);
 

@@ -3,13 +3,12 @@
 namespace OnlinePayments\Classes\Services\PrestaShop;
 
 use Exception;
+use OnlinePayments\Classes\OnlinePaymentsModule;
 use OnlinePayments\Classes\Services\OrderStatusMappingService;
 use OnlinePayments\Classes\Utility\Url;
 use OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\AdminAPI\AdminAPI;
 use OnlinePayments\Core\Bootstrap\ApiFacades\Order\OrderAPI\OrderAPI;
-use OnlinePayments\Core\Branding\Brand\ActiveBrandProviderInterface;
 use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
-use OnlinePayments\Core\Infrastructure\ServiceRegister;
 use WorldlineOP\PrestaShop\Utils\Tools;
 
 /**
@@ -22,15 +21,16 @@ class OrderService
     /** @var string File name for translation contextualization */
     public const FILE_NAME = 'OrderService';
 
+    /** @var OnlinePaymentsModule */
     private $module;
     private int $storeId;
 
     /**
      * OrderService constructor.
      */
-    public function __construct(string $moduleName, int $storeId)
+    public function __construct(OnlinePaymentsModule $module, int $storeId)
     {
-        $this->module = \Module::getInstanceByName($moduleName);
+        $this->module = $module;
         $this->storeId = $storeId;
     }
 
@@ -75,13 +75,10 @@ class OrderService
 
     private function getOrderSettingsData(): array
     {
-        /** @var ActiveBrandProviderInterface $provider */
-        $provider = ServiceRegister::getService(ActiveBrandProviderInterface::class);
-
         return [
             'moduleName' => $this->module->name,
-            'brandCode' => $provider->getActiveBrand()->getCode(),
-            'brandName' => $provider->getActiveBrand()->getName(),
+            'brandCode' => $this->module->getBrand()->getCode(),
+            'brandName' => $this->module->getBrand()->getName(),
             'pathImg' => sprintf(__PS_BASE_URI__ . 'modules/%s/views/assets/images/', $this->module->name),
             'transactionUrl' => Url::getAdminController('OnlinePaymentsTransaction')
         ];

@@ -3,6 +3,7 @@
 namespace OnlinePayments\Classes\Services\PrestaShop;
 
 use Exception;
+use OnlinePayments\Classes\OnlinePaymentsModule;
 use OnlinePayments\Core\Bootstrap\ApiFacades\Order\OrderAPI\OrderAPI;
 use OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\CheckoutAPI\CheckoutAPI;
 use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
@@ -22,15 +23,16 @@ class RefundService
     /** @var string File name for translation contextualization */
     public const FILE_NAME = 'RefundService';
 
+    /** @var OnlinePaymentsModule */
     private $module;
     private int $storeId;
 
     /**
      * RefundService constructor.
      */
-    public function __construct(string $moduleName, int $storeId)
+    public function __construct(OnlinePaymentsModule $module, int $storeId)
     {
-        $this->module = \Module::getInstanceByName($moduleName);
+        $this->module = $module;
         $this->storeId = $storeId;
     }
 
@@ -47,21 +49,18 @@ class RefundService
             ));
 
             if (!$refundResponse->isSuccessful()) {
-                $errorMessage = 'Refund creation failed!';
-                if ($refundResponse->toArray() && isset($refundResponse->toArray()['errorMessage'])) {
-                    $errorMessage .= ' Reason: ' . $refundResponse->toArray()['errorMessage'];
-                }
+                $errorMessage = 'Refund creation failed on ' . $this->module->getBrand()->getName() . '!';
 
                 return $this->module->l($errorMessage, self::FILE_NAME);
             }
         } catch (Exception $e) {
-            return $this->module->l($e->getMessage(), self::FILE_NAME);
+            return $this->module->l('Unexpected error occurred during refund.', self::FILE_NAME);
         }
 
         $refund = $refundResponse->toArray();
         if (!in_array($refund['statusCode'], array_merge(
             StatusCode::REFUND_STATUS_CODES, StatusCode::REFUND_REQUESTED_STATUS_CODES))) {
-            return $this->module->l("Refund of funds failed with status {$refund['status']}", self::FILE_NAME);
+            return $this->module->l("Refund of funds failed. Payment is not in Refund or Refund requested status.", self::FILE_NAME);
         }
 
         return '';
@@ -73,9 +72,6 @@ class RefundService
 
         if (!$transaction->isSuccessful()) {
             $errorMessage = 'Transaction fetching failed!';
-            if ($transaction->toArray() && isset($transaction->toArray()['errorMessage'])) {
-                $errorMessage .= ' Reason: ' . $transaction->toArray()['errorMessage'];
-            }
 
             return $this->module->l($errorMessage, self::FILE_NAME);
         }
@@ -88,15 +84,12 @@ class RefundService
             ));
 
             if (!$refundResponse->isSuccessful()) {
-                $errorMessage = 'Refund failed on Worldline!';
-                if ($refundResponse->toArray() && isset($refundResponse->toArray()['errorMessage'])) {
-                    $errorMessage .= ' Reason: ' . $refundResponse->toArray()['errorMessage'];
-                }
+                $errorMessage = 'Refund creation failed on ' . $this->module->getBrand()->getName() . '!';
 
                 return $this->module->l($errorMessage, self::FILE_NAME);
             }
         } catch (Exception $e) {
-            return $this->module->l($e->getMessage(), self::FILE_NAME);
+            return $this->module->l('Unexpected error occurred during refund', self::FILE_NAME);
         }
 
         return '';

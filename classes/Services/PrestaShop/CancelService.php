@@ -3,6 +3,7 @@
 namespace OnlinePayments\Classes\Services\PrestaShop;
 
 use Exception;
+use OnlinePayments\Classes\OnlinePaymentsModule;
 use OnlinePayments\Classes\Utility\SessionService;
 use OnlinePayments\Core\Bootstrap\ApiFacades\Order\OrderAPI\OrderAPI;
 use OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\CheckoutAPI\CheckoutAPI;
@@ -23,15 +24,16 @@ class CancelService
     /** @var string File name for translation contextualization */
     public const FILE_NAME = 'CancelService';
 
+    /** @var OnlinePaymentsModule */
     private $module;
     private int $storeId;
 
     /**
      * CancelService constructor.
      */
-    public function __construct(string $moduleName, int $storeId)
+    public function __construct(OnlinePaymentsModule $module, int $storeId)
     {
-        $this->module = \Module::getInstanceByName($moduleName);
+        $this->module = $module;
         $this->storeId = $storeId;
     }
 
@@ -41,13 +43,11 @@ class CancelService
 
         if (!$transaction->isSuccessful()) {
             $errorMessage = 'Transaction fetching failed!';
-            if ($transaction->toArray() && isset($transaction->toArray()['errorMessage'])) {
-                $errorMessage .= ' Reason: ' . $transaction->toArray()['errorMessage'];
-            }
 
             self::setErrorMessage($this->module->l($errorMessage, self::FILE_NAME));
         }
 
+        $cancelResponse = null;
         try {
             $cancelResponse = OrderAPI::get()->cancel($this->storeId)->handle(new CancelRequest(
                 $transaction->getPaymentTransaction()->getPaymentId(),
@@ -55,21 +55,18 @@ class CancelService
             ));
 
             if (!$cancelResponse->isSuccessful()) {
-                $errorMessage = 'Cancel creation failed!';
-                if ($cancelResponse->toArray() && isset($cancelResponse->toArray()['errorMessage'])) {
-                    $errorMessage .= ' Reason: ' . $cancelResponse->toArray()['errorMessage'];
-                }
+                $errorMessage = 'Cancel creation failed on ' . $this->module->getBrand()->getName() . '!';
 
                 self::setErrorMessage($this->module->l($errorMessage, self::FILE_NAME));
             }
         } catch (Exception $e) {
-            self::setErrorMessage($this->module->l($e->getMessage(), self::FILE_NAME));
+            self::setErrorMessage($this->module->l('Unexpected error occurred during refund.', self::FILE_NAME));
         }
 
-        $cancel = $cancelResponse->toArray();
+        $cancel = $cancelResponse ? $cancelResponse->toArray() : [];
         if (!in_array($cancel['statusCode'], StatusCode::CANCEL_STATUS_CODES)) {
             self::setErrorMessage(
-                $this->module->l("Cancel of funds failed with status {$cancel['status']}",
+                $this->module->l("Cancel of funds failed. Payment is not in Canceled status.",
                     self::FILE_NAME)
             );
         }
@@ -92,20 +89,17 @@ class CancelService
             ));
 
             if (!$cancelResponse->isSuccessful()) {
-                $errorMessage = 'Cancel creation failed!';
-                if ($cancelResponse->toArray() && isset($cancelResponse->toArray()['errorMessage'])) {
-                    $errorMessage .= ' Reason: ' . $cancelResponse->toArray()['errorMessage'];
-                }
+                $errorMessage = 'Cancel creation failed on ' . $this->module->getBrand()->getName() . '!';
 
                 return $this->module->l($errorMessage, self::FILE_NAME);
             }
         } catch (Exception $e) {
-            return $this->module->l($e->getMessage(), self::FILE_NAME);
+            return $this->module->l('Unexpected error occurred during refund.', self::FILE_NAME);
         }
 
         $cancel = $cancelResponse->toArray();
         if (!in_array($cancel['statusCode'], StatusCode::CANCEL_STATUS_CODES)) {
-            return $this->module->l("Cancel of funds failed with status {$cancel['status']}",self::FILE_NAME);
+            return $this->module->l("Cancel of funds failed. Payment is not in Canceled status.", self::FILE_NAME);
         }
 
         return '';

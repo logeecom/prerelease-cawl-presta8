@@ -3,7 +3,7 @@
         'name' => 'online-payments/prestashop',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '66d7131472af847afd6354605a0ceaa3622e832e',
+        'reference' => 'b7a3b66850153039235934d713c046e5f3be8823',
         'type' => 'prestashop-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'online-payments/prestashop' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '66d7131472af847afd6354605a0ceaa3622e832e',
+            'reference' => 'b7a3b66850153039235934d713c046e5f3be8823',
             'type' => 'prestashop-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

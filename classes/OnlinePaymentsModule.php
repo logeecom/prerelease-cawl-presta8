@@ -184,7 +184,7 @@ class OnlinePaymentsModule extends \PaymentModule
         );
     }
 
-    private function getBrand(): BrandConfig
+    public function getBrand(): BrandConfig
     {
         /** @var \OnlinePayments\Core\Branding\Brand\ActiveBrandProvider $provider */
         $provider = ServiceRegister::getService(
@@ -490,6 +490,7 @@ class OnlinePaymentsModule extends \PaymentModule
         }
         $this->context->smarty->assign([
             'html' => $html,
+            'moduleName' => $this->name,
         ]);
 
         return $this->display($this->getLocalPath(), 'views/templates/admin/hookAdminOrder_container.tpl');
@@ -607,7 +608,7 @@ class OnlinePaymentsModule extends \PaymentModule
             return;
         }
 
-        $shopRefundService = new RefundService($this->name, $this->context->shop->id);
+        $shopRefundService = new RefundService($this, $this->context->shop->id);
 
         $error = $shopRefundService->handleStandard((string) $params['cart']->id, $params['order']);
 
@@ -629,7 +630,7 @@ class OnlinePaymentsModule extends \PaymentModule
 
         $cartId = \Cart::getCartIdByOrderId($order->id);
 
-        $cancelService = new CancelService($this->name, $this->context->shop->id);
+        $cancelService = new CancelService($this, $this->context->shop->id);
         $cancelService->handle((string)$cartId, $order);
     }
 
