@@ -1,20 +1,20 @@
-#checkout-payment-step .worldlineop-htp.disabled iframe {
+#checkout-payment-step .online-payments-htp.disabled iframe {
     display: none
 }
 
-#checkout-payment-step .worldlineop-htp iframe {
+#checkout-payment-step .online-payments-htp iframe {
     border: none;
     width: 100%
 }
 
-#checkout-payment-step .worldlineop-htp-btn.disabled button {
+#checkout-payment-step .online-payments-htp-btn.disabled button {
     display: none
 }
 
-#checkout-payment-step .worldlineop-token-htp-btn.disabled button {
+#checkout-payment-step .online-payments-token-htp-btn.disabled button {
     display: none
 }
 
-#checkout-payment-step .payment-option img[src*="worldline"] {
+#checkout-payment-step .payment-option img[src*="payment_products"] {
     height: 20px;
 }

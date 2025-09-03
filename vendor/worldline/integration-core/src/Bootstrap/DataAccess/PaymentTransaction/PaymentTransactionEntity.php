@@ -22,7 +22,7 @@ class PaymentTransactionEntity extends Entity
 
     protected string $storeId;
     protected int $lockVersion = 0;
-    protected int $lockTimestamp = 0;
+    protected float $lockTimestamp = 0;
     protected PaymentTransaction $paymentTransaction;
 
     public function getConfig(): EntityConfiguration
@@ -34,7 +34,7 @@ class PaymentTransactionEntity extends Entity
         $indexMap->addStringIndex('merchantReference');
         $indexMap->addStringIndex('returnHmac');
         $indexMap->addIntegerIndex('lockVersion');
-        $indexMap->addIntegerIndex('lockTimestamp');
+        $indexMap->addDoubleIndex('lockTimestamp');
         $indexMap->addIntegerIndex('statusCode');
         $indexMap->addIntegerIndex('createdAtTimestamp');
         $indexMap->addIntegerIndex('captureAtTimestamp');
@@ -178,12 +178,12 @@ class PaymentTransactionEntity extends Entity
         $this->lockVersion = $lockVersion;
     }
 
-    public function getLockTimestamp(): int
+    public function getLockTimestamp(): float
     {
         return $this->lockTimestamp;
     }
 
-    public function setLockTimestamp(int $lockTimestamp): void
+    public function setLockTimestamp(float $lockTimestamp): void
     {
         $this->lockTimestamp = $lockTimestamp;
     }

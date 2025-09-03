@@ -3,7 +3,9 @@
 namespace OnlinePayments\Classes\Utility;
 
 use Context;
+use OnlinePayments\Classes\OnlinePaymentsModule;
 use OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
+use OnlinePayments\Core\Infrastructure\ServiceRegister;
 use PrestaShopException;
 
 /**
@@ -60,10 +62,13 @@ class Url
      */
     public static function getFrontUrl(string $controller, array $params = []): string
     {
+        /** @var OnlinePaymentsModule $module */
+        $module = ServiceRegister::getService(\Module::class);
+
         $shopId = StoreContext::getInstance()->getStoreId();
 
         return Context::getContext()->link->getModuleLink(
-            'worldlineop',
+            $module->name,
             $controller,
             $params,
             null,

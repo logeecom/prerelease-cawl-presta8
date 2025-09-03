@@ -108,7 +108,7 @@ class Bootstrap extends BootstrapComponent
         ServiceRegister::registerService(
             ShopLoggerAdapter::class,
             function () {
-                return new LoggerService();
+                return new LoggerService(ServiceRegister::getService(\Module::class));
             }
         );
 

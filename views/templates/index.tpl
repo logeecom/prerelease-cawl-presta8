@@ -35,7 +35,7 @@
             current: {$translations.current|json_encode}
         };
 
-        OnlinePaymentsFE.baseImgUrl = "/modules/worldlineop/views/assets/images";
+        OnlinePaymentsFE.baseImgUrl = "/modules/{$module}/views/assets/images";
 
         OnlinePaymentsFE.brand = {$brand|json_encode};
         OnlinePaymentsFE.utilities.showLoader();
@@ -53,7 +53,7 @@
                 saveMethodConfigurationUrl: '{$urls.payments.saveMethodConfigurationUrl}',
                 getMethodConfigurationUrl: '{$urls.payments.getMethodConfigurationUrl}',
                 paymentMethodLogoUrl:  window.location.protocol + '//' + window.location.host +
-                    '/modules/worldlineop/views/assets/images/payment_products/',
+                    '/modules/{$module}/views/assets/images/payment_products/',
                 getLanguagesUrl: '{$urls.payments.getLanguagesUrl}'
             },
             settings: {

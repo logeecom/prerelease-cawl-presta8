@@ -4,6 +4,7 @@ namespace OnlinePayments\Classes\Services\Checkout;
 
 use Context;
 use OnlinePayments\Classes\OnlinePaymentsModule;
+use OnlinePayments\Classes\Utility\Tools;
 use OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\CheckoutAPI\CheckoutAPI;
 use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\GeneralSettingsService;
 use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
@@ -21,7 +22,6 @@ use OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\HostedTokenizati
 use OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentMethod\PaymentMethodService;
 use OnlinePayments\Core\Infrastructure\ServiceRegister;
 use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
-use WorldlineOP\PrestaShop\Utils\Tools;
 
 /**
  * Class PaymentOptionsService.
@@ -111,7 +111,7 @@ class PaymentOptionsService
         });
 
         $amount = Amount::fromFloat($this->context->cart->getOrderTotal(),
-            Currency::fromIsoCode(Tools::getIsoCurrencyCodeById($this->context->cart->id_currency)));
+            Currency::fromIsoCode(Tools::getIsoCurrencyCodeById((int)$this->context->cart->id_currency)));
 
         $tokenSurcharge = [];
         $surcharge = false;
@@ -139,14 +139,15 @@ class PaymentOptionsService
 
         $createPaymentUrl = $this->context->link->getModuleLink($this->module->name, 'payment');
         $this->context->smarty->assign([
+            'module' => $this->module->name,
             'tokenId' => $token->getTokenId(),
             'tokenSurcharge' => $tokenSurcharge,
             'hostedTokenizationPageUrl' => $hostedTokenization->getUrl(),
             'createPaymentUrl' => $createPaymentUrl,
             'cardToken' => $token->getTokenId(),
             'totalCartCents' => $amount->getValue(),
-            'cartCurrencyCode' => Tools::getIsoCurrencyCodeById($this->context->cart->id_currency),
-            'worldlineopCustomerToken' => \Tools::getToken(),
+            'cartCurrencyCode' => Tools::getIsoCurrencyCodeById((int)$this->context->cart->id_currency),
+            'customerToken' => \Tools::getToken(),
             'surchargeEnabled' => $paymentSettings->isApplySurcharge(),
         ]);
 
@@ -155,14 +156,14 @@ class PaymentOptionsService
         $vaultTitles = $paymentMethod->getAdditionalData()->getVaultTitles();
         $vaultName = $vaultTitles->getTranslation($this->context->language->iso_code)->getMessage() ?: $vaultTitles->getDefaultTranslation()->getMessage();
         $paymentOption
-            ->setCallToActionText(sprintf($vaultName, $token->getCardNumber()))
+            ->setCallToActionText($vaultName . ' ' . $token->getCardNumber())
             ->setAdditionalInformation($this->context->smarty->fetch(
-                'module:worldlineop/views/templates/front/hostedTokenizationAdditionalInformation_1click.tpl'
+                "module:{$this->module->name}/views/templates/front/hostedTokenizationAdditionalInformation_1click.tpl"
             ))
             ->setBinary(true)
             ->setLogo(sprintf($this->module->getPathUri() . 'views/assets/images/payment_products/%s.svg',
                 (string)$token->getProductId()))
-            ->setModuleName('worldlineop-token-htp-' . $token->getTokenId());
+            ->setModuleName($this->module->name . '-token-htp-' . $token->getTokenId());
 
         return $paymentOption;
     }
@@ -213,15 +214,16 @@ class PaymentOptionsService
         $redirectUrl = $hostedTokenizationResponse->getHostedTokenization()->getUrl();
         $createPaymentUrl = $this->context->link->getModuleLink($this->module->name, 'payment');
         $this->context->smarty->assign([
+            'module' => $this->module->name,
             'displayHTP' => true,
             'hostedTokenizationPageUrl' => $redirectUrl,
             'createPaymentUrl' => $createPaymentUrl,
             'totalCartCents' => Amount::fromFloat(
                 $this->context->cart->getOrderTotal(),
-                Currency::fromIsoCode(Tools::getIsoCurrencyCodeById($this->context->cart->id_currency))
+                Currency::fromIsoCode(Tools::getIsoCurrencyCodeById((int)$this->context->cart->id_currency))
             )->getValue(),
-            'cartCurrencyCode' => Tools::getIsoCurrencyCodeById($this->context->cart->id_currency),
-            'worldlineopCustomerToken' => \Tools::getToken(),
+            'cartCurrencyCode' => Tools::getIsoCurrencyCodeById((int)$this->context->cart->id_currency),
+            'customerToken' => \Tools::getToken(),
             'surchargeEnabled' => $paymentSettings->isApplySurcharge(),
         ]);
 
@@ -235,7 +237,7 @@ class PaymentOptionsService
             ))
             ->setBinary(true)
             ->setLogo($this->module->getPathUri() . 'views/assets/images/payment_products/cb_visa_mc_amex.svg')
-            ->setModuleName('worldlineop-htp');
+            ->setModuleName($this->module->name . '-htp');
 
         return [$paymentOption];
     }

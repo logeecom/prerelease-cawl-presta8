@@ -32,6 +32,8 @@ class ShopOrderService implements ShopOrderServiceInterface
     public function createShopOrder(PaymentTransaction $paymentTransaction, PaymentDetails $paymentDetails, string $newState): void
     {
         if (null !== $this->getIdByCartId($paymentTransaction->getMerchantReference())) {
+            $this->updateStatus($paymentTransaction, $paymentDetails, $newState);
+
             return;
         }
 
@@ -40,7 +42,7 @@ class ShopOrderService implements ShopOrderServiceInterface
             return;
         }
 
-        $paymentMethodText = $this->module->l('Worldline Online Payments', 'GetPaymentPresenter');
+        $paymentMethodText = $this->module->getBrand()->getName();
         $paymentMethodText .= $paymentTransaction->getPaymentMethod() ?
             ' [' . $paymentTransaction->getPaymentMethod() . ']' : '';
 

@@ -1,5 +1,5 @@
 /*
- * 2021 Worldline Online Payments
+ * 2021 Online Payments
  *
  * NOTICE OF LICENSE
  *
@@ -7,7 +7,7 @@
  * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
  *
  * @author    PrestaShop partner
- * @copyright 2021 Worldline Online Payments
+ * @copyright 2021 Online Payments
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *
  */
@@ -15,7 +15,7 @@
 var hostedTokenizationObj;
 
 
-const htpPrototype = function (e) {
+const htpPrototype = function (e, module) {
   var invalidOptionsMap = new Map();
   const surchargeTranslation = {
     'en': 'Please note that a surcharge may be applied to the amount you have to pay depending on the payment method you will use.'
@@ -33,24 +33,80 @@ const htpPrototype = function (e) {
     return surchargeTranslation['en'];
   };
 
+  async function formatSurchargeAmounts(htp, surchargeResult) {
+    const controller = htp.urls.paymentController.replace(/\amp;/g, '');
+
+    return new Promise(function (resolve, reject) {
+      const form = new FormData();
+
+      form.append('ajax', true);
+      form.append('action', 'formatSurchargeAmounts');
+      form.append('initialAmount', htp.cartDetails.totalCents);
+      form.append('initialCurrency', htp.cartDetails.currencyCode);
+      form.append('surchargeAmount', surchargeResult.surchargeAmount.amount);
+      form.append('surchargeCurrency', surchargeResult.surchargeAmount.currency);
+      form.append('totalAmount', surchargeResult.totalAmount.amount);
+      form.append('totalCurrency', surchargeResult.totalAmount.currency);
+      form.append('token', htp.cartDetails.customerToken);
+
+      fetch(controller, {
+        body: form,
+        method: 'post',
+      }).then((response) => {
+        resolve(response.json());
+      }).catch((err) => {
+        reject(err);
+      });
+    });
+
+  }
+
+  async function createPayment(hostedTokenizationId, htp) {
+    const controller = htp.urls.paymentController.replace(/\amp;/g, '');
+
+    return new Promise(function (resolve, reject) {
+      const form = new FormData();
+
+      form.append('ajax', true);
+      form.append('action', 'createPayment');
+      form.append('hostedTokenizationId', hostedTokenizationId);
+      form.append('tokenId', htp.cartDetails.cardToken);
+      form.append('ccForm[colorDepth]', screen.colorDepth);
+      form.append('ccForm[javaEnabled]', navigator.javaEnabled());
+      form.append('ccForm[locale]', navigator.language);
+      form.append('ccForm[screenHeight]', screen.height);
+      form.append('ccForm[screenWidth]', screen.width);
+      form.append('ccForm[timezoneOffsetUtcMinutes]', new Date().getTimezoneOffset());
+      form.append('token', htp.cartDetails.customerToken);
+
+      fetch(controller, {
+        body: form,
+        method: 'post',
+      }).then((response) => {
+        resolve(response.json());
+      }).catch((err) => {
+        reject(err);
+      });
+    });
+  }
 
 //adding this code to make sure that submit button stays disabled in case when credit card information is not valid
-  function setWorldLineSubmitButton (buttonId) {
+  function setSubmitButtonStatus (buttonId) {
     document.addEventListener('DOMContentLoaded', function (){
-      const wlPayments = document.querySelectorAll('input[type="radio"][data-module-name*="worldlineop-"]');
+      const wlPayments = document.querySelectorAll(`input[type="radio"][data-module-name*="${module}-"]`);
       wlPayments.forEach(function (el) {
         el.addEventListener('change', function (event) {
           const submitBtn = document.querySelector('#'+ buttonId);
 
-          let wlPayment = getSelectedWorldLineHtpPaymentMethod();
+          let wlPayment = getSelectedHtpPaymentMethod();
           toggleSubmitButton(submitBtn, !!invalidOptionsMap.get(wlPayment.id)?.valid);
         });
       })
 
-      // enables/disables submit button for WorldLine payment methods based on their validity
+      // enables/disables submit button for payment methods based on their validity
       document.getElementById('conditions_to_approve[terms-and-conditions]')
           .addEventListener('change', function (event) {
-            let wlPayment = getSelectedWorldLineHtpPaymentMethod();
+            let wlPayment = getSelectedHtpPaymentMethod();
 
             if (wlPayment) {
               const submitBtn = document.querySelector('#'+ buttonId);
@@ -65,8 +121,8 @@ const htpPrototype = function (e) {
     });
   }
 
-  function getSelectedWorldLineHtpPaymentMethod() {
-    return document.querySelector('input[type="radio"][data-module-name*="worldlineop-"]:checked');
+  function getSelectedHtpPaymentMethod() {
+    return document.querySelector(`input[type="radio"][data-module-name*="${module}-"]:checked`);
   }
 
   function toggleSubmitButton(submitBtn, isPaymentValid) {
@@ -97,14 +153,14 @@ const htpPrototype = function (e) {
     event.preventDefault();
 
     event.target.disabled = true;
-    const errorDivElem = this.elems.iframeContainer.querySelector('.js-worldlineop-error');
-    const genericErrorDivElem = this.elems.iframeContainer.querySelector('.js-worldlineop-generic-error');
+    const errorDivElem = this.elems.iframeContainer.querySelector(`.js-${module}-error`);
+    const genericErrorDivElem = this.elems.iframeContainer.querySelector(`.js-${module}-generic-error`);
     const client = this.client;
     const self = this;
 
     this.client.submitTokenization().then(function (data) {
       if (data.success) {
-        worldlineopCreatePayment(data.hostedTokenizationId, self).then((result) => {
+        createPayment(data.hostedTokenizationId, self).then((result) => {
           if (result.success) {
             if (result.needRedirect) {
               window.top.location.href = result.redirectUrl;
@@ -132,7 +188,7 @@ const htpPrototype = function (e) {
   this.init = function () {
     this.client = new Tokenizer(
         this.urls.htp,
-        this.elems.iframeContainer.querySelector('.js-worldlineop-htp').id,
+        this.elems.iframeContainer.querySelector(`.js-${module}-htp`).id,
         {
           hideCardholderName: false,
           validationCallback: this.validationCallback,
@@ -165,7 +221,7 @@ const htpPrototype = function (e) {
       }
     }
 
-    setWorldLineSubmitButton(this.elems.payBtnId);
+    setSubmitButtonStatus(this.elems.payBtnId);
   };
 
   this.validationCallback = function (result) {
@@ -174,7 +230,7 @@ const htpPrototype = function (e) {
     result.valid && document.getElementById('conditions_to_approve[terms-and-conditions]').checked
         ? enableSubmitButton(submitBtn) : disableSubmitButton(submitBtn);
 
-    let wlPayment = getSelectedWorldLineHtpPaymentMethod();
+    let wlPayment = getSelectedHtpPaymentMethod();
 
     if (wlPayment) {
       invalidOptionsMap.set(wlPayment.id, {"valid": result.valid});
@@ -183,12 +239,12 @@ const htpPrototype = function (e) {
 
   this.surchargeCallback = function (result) {
     if (true === result.surcharge.success && 'OK' === result.surcharge.result.status) {
-      worldlineopFormatSurchargeAmounts(self.hostedTokenizationObj, result.surcharge.result).then((result) => {
+      formatSurchargeAmounts(self.hostedTokenizationObj, result.surcharge.result).then((result) => {
         if (result.success) {
-          document.querySelector('.js-wordlineop-surcharge-initial-amount').textContent = result.formattedInitialAmount;
-          document.querySelector('.js-wordlineop-surcharge-amount').textContent = result.formattedSurchargeAmount;
-          document.querySelector('.js-wordlineop-surcharge-total-amount').textContent = result.formattedTotalAmount;
-          document.querySelector('.js-worldlineop-1click-surcharge').style.display = 'block';
+          document.querySelector(`.js-${module}-surcharge-initial-amount`).textContent = result.formattedInitialAmount;
+          document.querySelector(`.js-${module}-surcharge-amount`).textContent = result.formattedSurchargeAmount;
+          document.querySelector(`.js-${module}-surcharge-total-amount`).textContent = result.formattedTotalAmount;
+          document.querySelector(`.js-${module}-1click-surcharge`).style.display = 'block';
         }
       })
     }
@@ -198,62 +254,3 @@ const htpPrototype = function (e) {
   this.init = this.init.bind(this);
   e.addEventListener('click', this.payButtonClick, false);
 };
-
-async function worldlineopFormatSurchargeAmounts(htp, surchargeResult) {
-  const controller = htp.urls.paymentController.replace(/\amp;/g, '');
-
-  return new Promise(function (resolve, reject) {
-    const form = new FormData();
-
-    form.append('ajax', true);
-    form.append('action', 'formatSurchargeAmounts');
-    form.append('initialAmount', htp.cartDetails.totalCents);
-    form.append('initialCurrency', htp.cartDetails.currencyCode);
-    form.append('surchargeAmount', surchargeResult.surchargeAmount.amount);
-    form.append('surchargeCurrency', surchargeResult.surchargeAmount.currency);
-    form.append('totalAmount', surchargeResult.totalAmount.amount);
-    form.append('totalCurrency', surchargeResult.totalAmount.currency);
-    form.append('token', htp.cartDetails.customerToken);
-
-    fetch(controller, {
-      body: form,
-      method: 'post',
-    }).then((response) => {
-      resolve(response.json());
-    }).catch((err) => {
-      reject(err);
-    });
-  });
-
-}
-
-async function worldlineopCreatePayment(hostedTokenizationId, htp) {
-  const controller = htp.urls.paymentController.replace(/\amp;/g, '');
-
-  return new Promise(function (resolve, reject) {
-    const form = new FormData();
-
-    form.append('ajax', true);
-    form.append('action', 'createPayment');
-    form.append('hostedTokenizationId', hostedTokenizationId);
-    form.append('tokenId', htp.cartDetails.cardToken);
-    form.append('worldlineopTotalCartCents', htp.cartDetails.totalCents);
-    form.append('worldlineopCartCurrencyCode', htp.cartDetails.currencyCode);
-    form.append('ccForm[colorDepth]', screen.colorDepth);
-    form.append('ccForm[javaEnabled]', navigator.javaEnabled());
-    form.append('ccForm[locale]', navigator.language);
-    form.append('ccForm[screenHeight]', screen.height);
-    form.append('ccForm[screenWidth]', screen.width);
-    form.append('ccForm[timezoneOffsetUtcMinutes]', new Date().getTimezoneOffset());
-    form.append('token', htp.cartDetails.customerToken);
-
-    fetch(controller, {
-      body: form,
-      method: 'post',
-    }).then((response) => {
-      resolve(response.json());
-    }).catch((err) => {
-      reject(err);
-    });
-  });
-}

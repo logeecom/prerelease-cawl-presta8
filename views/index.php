@@ -1,6 +1,6 @@
 <?php
 /**
- * 2021 Worldline Online Payments
+ * 2021 Online Payments
  *
  * NOTICE OF LICENSE
  *
@@ -8,7 +8,7 @@
  * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
  *
  * @author    PrestaShop partner
- * @copyright 2021 Worldline Online Payments
+ * @copyright 2021 Online Payments
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');

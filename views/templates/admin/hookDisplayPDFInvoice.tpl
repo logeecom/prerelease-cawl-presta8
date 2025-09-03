@@ -14,11 +14,11 @@
 
 <table id="payment-tab" width="40%">
   <tr>
-    <td class="payment center small grey bold" width="44%">{l s='Worldline Online Payment' mod='worldlineop'}</td>
+    <td class="payment center small grey bold" width="44%">{$title}</td>
     <td class="payment left white" width="56%">
       <table width="100%" border="0">
         <tr>
-          <td class="center small">{l s='Reference' mod='worldlineop'}<br>{$worldlineop_transaction_id|escape:'htmlall':'UTF-8'}</td>
+          <td class="center small">{l s='Reference' mod=$module}<br>{$transaction_id|escape:'htmlall':'UTF-8'}</td>
         </tr>
       </table>
     </td>

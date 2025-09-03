@@ -152,7 +152,7 @@ class PaymentTransactionRepository implements PaymentTransactionRepositoryInterf
 
         $queryFilter = new QueryFilter();
 
-        $lockTimestampCutoff = $this->getMilliseconds($this->timeProvider->getMicroTimestamp() - 30);
+        $lockTimestampCutoff = $this->timeProvider->getMicroTimestamp() - 30;
         $queryFilter
             ->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())
             ->where('transactionId', Operators::EQUALS, $paymentId->getTransactionId())
@@ -160,7 +160,7 @@ class PaymentTransactionRepository implements PaymentTransactionRepositoryInterf
             ->where('lockTimestamp', Operators::LESS_THAN, $lockTimestampCutoff);
 
         $entity->setLockVersion($entity->getLockVersion() + 1);
-        $entity->setLockTimestamp($this->getMilliseconds($this->timeProvider->getMicroTimestamp()));
+        $entity->setLockTimestamp($this->timeProvider->getMicroTimestamp());
 
         $this->repository->update($entity, $queryFilter);
 
@@ -169,7 +169,7 @@ class PaymentTransactionRepository implements PaymentTransactionRepositoryInterf
         $entityAfterLock = $this->getPaymentTransactionEntity($paymentId);
         if (
             null === $entityAfterLock ||
-            $entityAfterLock->getLockTimestamp() !== $entity->getLockTimestamp() ||
+            abs($entityAfterLock->getLockTimestamp() - $entity->getLockTimestamp()) > 0.00001 ||
             $entityAfterLock->getLockVersion() !== $entity->getLockVersion()
         ) {
             return false;
@@ -201,17 +201,12 @@ class PaymentTransactionRepository implements PaymentTransactionRepositoryInterf
         $entityAfterUnlock = $this->getPaymentTransactionEntity($paymentId);
         if (
             null === $entityAfterUnlock ||
-            $entityAfterUnlock->getLockTimestamp() !== $entity->getLockTimestamp() ||
+            abs($entityAfterUnlock->getLockTimestamp() - $entity->getLockTimestamp()) > 0.00001 ||
             $entityAfterUnlock->getLockVersion() !== $entity->getLockVersion()
         ) {
             return false;
         }
 
         return true;
-    }
-
-    private function getMilliseconds(float $microtime): int
-    {
-        return (int)($microtime * 1000);
     }
 }

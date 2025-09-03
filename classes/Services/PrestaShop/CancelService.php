@@ -72,7 +72,7 @@ class CancelService
         }
 
         self::setSuccessMessage(
-            $this->module->l('Cancellation request successfully sent to the Worldline.',
+            $this->module->l('Cancellation request successfully sent.',
                 self::FILE_NAME)
         );
     }

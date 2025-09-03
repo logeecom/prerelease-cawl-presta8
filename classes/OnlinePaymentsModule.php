@@ -15,14 +15,15 @@ use OnlinePayments\Classes\Utility\SessionService;
 use OnlinePayments\Classes\Utility\Url;
 use OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\AdminAPI\AdminAPI;
 use OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\CheckoutAPI\CheckoutAPI;
+use OnlinePayments\Core\Branding\Brand\ActiveBrandProvider;
 use OnlinePayments\Core\Branding\Brand\ActiveBrandProviderInterface;
 use OnlinePayments\Core\Branding\Brand\BrandConfig;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkRequest;
 use OnlinePayments\Core\BusinessLogic\Domain\ProductTypes\ProductType;
+use OnlinePayments\Core\Infrastructure\Logger\Logger;
 use OnlinePayments\Core\Infrastructure\ServiceRegister;
 use OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\TaskRunnerWakeup;
 use OnlinePayments\Core\Infrastructure\Utility\TimeProvider;
-use PrestaShop\ModuleLibServiceContainer\DependencyInjection\ServiceContainer;
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 
 /**
@@ -32,12 +33,6 @@ use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
  */
 class OnlinePaymentsModule extends \PaymentModule
 {
-    /** @var string */
-    public $theme;
-    /** @var \OnlinePayments\Core\Infrastructure\Logger\Logger */
-    public $logger;
-    private ?ServiceContainer $serviceContainer = null;
-
     public function install()
     {
         try {
@@ -62,38 +57,6 @@ class OnlinePaymentsModule extends \PaymentModule
     public function getInstaller(): Installer
     {
         return new Installer($this);
-    }
-
-    /**
-     * @param string $serviceName
-     *
-     * @return mixed
-     */
-    public function getService(string $serviceName)
-    {
-        if ($this->serviceContainer === null) {
-            $this->serviceContainer = new ServiceContainer(
-                $this->name . str_replace('.', '', $this->version),
-                $this->getLocalPath()
-            );
-        }
-
-        return $this->serviceContainer->getService($serviceName);
-    }
-
-    /**
-     * @return \Monolog\Logger
-     */
-    public function getLogger()
-    {
-        static $logger;
-
-        if (null === $logger) {
-            /** @var \Monolog\Logger $logger */
-            $logger = $this->getService('worldlineop.logger');
-        }
-
-        return $logger;
     }
 
     /**
@@ -148,6 +111,7 @@ class OnlinePaymentsModule extends \PaymentModule
 
         $this->context->smarty->assign(
             [
+                'module' => $this->name,
                 'urls' => $this->getUrls(),
                 'translations' => $this->getTranslations(),
                 '' => 'brand',
@@ -186,7 +150,7 @@ class OnlinePaymentsModule extends \PaymentModule
 
     public function getBrand(): BrandConfig
     {
-        /** @var \OnlinePayments\Core\Branding\Brand\ActiveBrandProvider $provider */
+        /** @var ActiveBrandProvider $provider */
         $provider = ServiceRegister::getService(
             ActiveBrandProviderInterface::class
         );
@@ -375,31 +339,34 @@ class OnlinePaymentsModule extends \PaymentModule
     public function hookActionFrontControllerSetMedia()
     {
         $controller = \Tools::getValue('controller');
+        $brand = $this->getBrand();
 
         switch ($controller) {
             case 'order':
                 $this->context->controller->registerJavascript(
-                    'worldineoc-js-sdk',
-                    'https://payment.preprod.direct.ingenico.com/hostedtokenization/js/client/tokenizer.min.js',
+                    $this->name . '-js-sdk',
+                    $brand->getLiveApiEndpoint() . '/hostedtokenization/js/client/tokenizer.min.js',
                     ['server' => 'remote', 'priority' => 1, 'position' => 'head', 'attribute' => 'defer']
                 );
                 $this->context->controller->registerStylesheet(
-                    'worldlineop-css-paymentOptions',
+                    $this->name . '-css-paymentOptions',
                     $this->getPathUri() . 'views/css/front.css?version=' . $this->version,
                     ['server' => 'remote']
                 );
                 $this->context->controller->registerJavascript(
-                    'worldlineop-js-paymentOptions',
+                    $this->name . '-js-paymentOptions',
                     $this->getPathUri() . 'views/js/paymentOptions.js?version=' . $this->version,
                     ['position' => 'head', 'priority' => 1000, 'server' => 'remote']
                 );
                 break;
             case 'redirect':
-                $this->context->controller->registerJavascript(
-                    'worldlineop-redirect-javascript',
-                    $this->getPathUri() . 'views/js/redirect.js',
-                    ['position' => 'bottom', 'priority' => 1000, 'server' => 'remote']
-                );
+                if ($this->name === \Tools::getValue('module', '')) {
+                    $this->context->controller->registerJavascript(
+                        $this->name . '-redirect-javascript',
+                        $this->getPathUri() . 'views/js/redirect.js?version=' . $this->version,
+                        ['position' => 'bottom', 'priority' => 1000, 'server' => 'remote']
+                    );
+                }
                 break;
         }
     }
@@ -438,7 +405,15 @@ class OnlinePaymentsModule extends \PaymentModule
 
             return $paymentOptionsService->getAvailable();
         } catch (\Throwable $e) {
-            $this->getLogger()->error('Error while presenting payment options', ['message' => $e->getMessage()]);
+            Logger::logError(
+                'Error while presenting payment options',
+                'PrestaShop.hookPaymentOptions',
+                [
+                    'message' => $e->getMessage(),
+                    'type' => get_class($e),
+                    'trace' => $e->getTraceAsString(),
+                ]
+            );
         }
 
         return [];
@@ -449,6 +424,10 @@ class OnlinePaymentsModule extends \PaymentModule
      */
     public function hookDisplayPaymentByBinaries()
     {
+        $this->context->smarty->assign([
+            'module' => $this->name,
+        ]);
+
         return $this->context->smarty->fetch($this->getLocalPath() . '/views/templates/front/hookDisplayPaymentByBinaries.tpl');
     }
 
@@ -459,7 +438,10 @@ class OnlinePaymentsModule extends \PaymentModule
      */
     public function hookDisplayPaymentTop($params)
     {
-        if (\Tools::getValue('worldlineopDisplayPaymentTopMessage')) {
+        if (\Tools::getValue($this->name . 'DisplayPaymentTopMessage')) {
+            $this->context->smarty->assign([
+                'module' => $this->name,
+            ]);
             return $this->context->smarty->fetch($this->getLocalPath() . '/views/templates/front/hookDisplayPaymentTop.tpl');
         }
 
@@ -473,6 +455,10 @@ class OnlinePaymentsModule extends \PaymentModule
      */
     public function hookCustomerAccount($params)
     {
+        $this->context->smarty->assign([
+            'module' => $this->name,
+        ]);
+
         return $this->display($this->getLocalPath(), 'views/templates/front/hookCustomerAccount.tpl');
     }
 
@@ -546,7 +532,9 @@ class OnlinePaymentsModule extends \PaymentModule
         }
 
         $this->context->smarty->assign([
-            'worldlineop_transaction_id' => $response->getPaymentTransaction()->getPaymentId()->getTransactionId(),
+            'module' => $this->name,
+            'title' => $this->getBrand()->getName(),
+            'transaction_id' => $response->getPaymentTransaction()->getPaymentId()->getTransactionId(),
         ]);
 
         return $this->display($this->getLocalPath(), 'views/templates/admin/hookDisplayPDFInvoice.tpl');
@@ -572,6 +560,10 @@ class OnlinePaymentsModule extends \PaymentModule
                 (string)ProductType::giftAndFlowers() => $this->l('Gift & Flowers'),
             ],
             'module' => $this->name,
+            'title' => sprintf(
+                $this->l('Please configure this section in case you accept gift cards as payment methods with %s'),
+                $this->getBrand()->getName()
+            ),
             'selectedProductType' => (string)$result->getSelectedProductType(),
         ]);
 

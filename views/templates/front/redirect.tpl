@@ -15,27 +15,27 @@
 {extends file='page.tpl'}
 
 {block name='page_content_container'}
-  <div id="js-worldlineop-loader">
-    <h1>{l s='Please wait while we are processing your payment' mod='worldlineop'}</h1>
+  <div id="js-{$module}-loader">
+    <h1>{l s='Please wait while we are processing your payment' mod=$module}</h1>
     <img src="{$img_path}icons/loader.svg" title="Loading..." alt="Loading..." />
   </div>
-  <div id="js-worldlineop-timeout-message" style="display: none;">
+  <div id="js-{$module}-timeout-message" style="display: none;">
     <div class="alert alert-warning">
-      <p>{l s='The transaction has not been confirmed yet.' mod='worldlineop'}</p>
+      <p>{l s='The transaction has not been confirmed yet.' mod=$module}</p>
       <p>
-        {l s='We suggest you contact our customer service using this link:' mod='worldlineop'}
-        <a title="{l s='Contact-us' mod='worldlineop'}" href="{$link->getPageLink('contact', true)}">
+        {l s='We suggest you contact our customer service using this link:' mod=$module}
+        <a title="{l s='Contact-us' mod=$module}" href="{$link->getPageLink('contact', true)}">
           {$link->getPageLink('contact', true)}
         </a>
       </p>
       {if $hostedCheckoutId || $paymentId}
         <p>
-          {l s='Please also provide us these transactions details:' mod='worldlineop'}<br>
+          {l s='Please also provide us these transactions details:' mod=$module}<br>
           {if $paymentId}
-            <b>{l s='Payment ID:' mod='worldlineop'}</b> {$paymentId|escape:'htmlall':'UTF-8'}
+            <b>{l s='Payment ID:' mod=$module}</b> {$paymentId|escape:'htmlall':'UTF-8'}
           {/if}
           {if $hostedCheckoutId}
-            <b>{l s='Checkout ID:' mod='worldlineop'}</b> {$hostedCheckoutId|escape:'htmlall':'UTF-8'}
+            <b>{l s='Checkout ID:' mod=$module}</b> {$hostedCheckoutId|escape:'htmlall':'UTF-8'}
           {/if}
         </p>
       {/if}
@@ -46,10 +46,13 @@
 {block name="javascript_bottom"}
   {$smarty.block.parent}
   <script>
-    const worldlineopRedirectController = "{$worldlineopRedirectController|escape:'javascript':'UTF-8'|replace:'&amp;':'&' nofilter}";
-    const returnMac = "{$returnMac}";
-    const hostedCheckoutId = "{$hostedCheckoutId}";
-    const paymentId = "{$paymentId}";
-    const worldlineopCustomerToken = "{$worldlineopCustomerToken}";
+    onlinePaymentsWaitingInit({
+      'module': "{$module|escape:'javascript':'UTF-8'}",
+      'redirectController': "{$redirectController|escape:'javascript':'UTF-8'|replace:'&amp;':'&' nofilter}",
+      'returnMac': "{$returnMac|escape:'javascript':'UTF-8'}",
+      'hostedCheckoutId': "{$hostedCheckoutId|escape:'javascript':'UTF-8'}",
+      'paymentId': "{$paymentId|escape:'javascript':'UTF-8'}",
+      'customerToken': "{$customerToken|escape:'javascript':'UTF-8'}",
+    });
   </script>
 {/block}

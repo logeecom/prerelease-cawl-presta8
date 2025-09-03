@@ -2,6 +2,7 @@
 
 namespace OnlinePayments\Classes\Services\Checkout;
 
+use OnlinePayments\Classes\Utility\Tools;
 use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
 use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Address;
 use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Cart;
@@ -16,7 +17,6 @@ use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Shipping;
 use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Country;
 use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Currency;
 use OnlinePayments\Core\BusinessLogic\Domain\Checkout\TaxableAmount;
-use WorldlineOP\PrestaShop\Utils\Tools;
 
 /**
  * Class CartProviderService.

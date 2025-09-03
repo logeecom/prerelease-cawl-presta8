@@ -14,9 +14,9 @@
 
 <!-- Single HTP -->
 {if isset($displayHTP) && $displayHTP}
-<div class="js-payment-binary js-payment-worldlineop-htp worldlineop-htp-btn">
-  <button id="js-worldlineop-btn-submit" type="submit" disabled="disabled" class="btn btn-primary center-block">
-    {l s='Place order' mod='worldlineop'}
+<div class="js-payment-binary js-payment-{$module}-htp {$module}-htp-btn online-payments-htp-btn">
+  <button id="js-{$module}-btn-submit" type="submit" disabled="disabled" class="btn btn-primary center-block">
+    {l s='Place order' mod=$module}
   </button>
 </div>
 {/if}
@@ -25,9 +25,9 @@
 {if isset($tokenHTP)}
   {foreach $tokenHTP as $htp}
     <!-- Token HTP -->
-    <div class="js-payment-binary js-payment-worldlineop-token-htp-{$htp.id} worldlineop-token-htp-btn">
-      <button id="js-worldlineop-token-btn-submit-{$htp.id}" type="submit" disabled="disabled" class="btn btn-primary center-block">
-        {l s='Place order' mod='worldlineop'}
+    <div class="js-payment-binary js-payment-{$module}-token-htp-{$htp.id} {$module}-token-htp-btn online-payments-token-htp-btn">
+      <button id="js-{$module}-token-btn-submit-{$htp.id}" type="submit" disabled="disabled" class="btn btn-primary center-block">
+        {l s='Place order' mod=$module}
       </button>
     </div>
     <!-- /Token HTP -->

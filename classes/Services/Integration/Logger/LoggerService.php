@@ -2,6 +2,7 @@
 
 namespace OnlinePayments\Classes\Services\Integration\Logger;
 
+use OnlinePayments\Classes\OnlinePaymentsModule;
 use OnlinePayments\Core\Infrastructure\Configuration\Configuration;
 use OnlinePayments\Core\Infrastructure\Logger\Interfaces\ShopLoggerAdapter;
 use OnlinePayments\Core\Infrastructure\Logger\LogData;
@@ -15,6 +16,13 @@ use OnlinePayments\Core\Infrastructure\ServiceRegister;
  */
 class LoggerService implements ShopLoggerAdapter
 {
+    private OnlinePaymentsModule $module;
+
+    public function __construct(OnlinePaymentsModule $module)
+    {
+        $this->module = $module;
+    }
+
     /**
      * PrestaShop log severity level codes.
      */
@@ -76,5 +84,33 @@ class LoggerService implements ShopLoggerAdapter
         }
 
         \PrestaShopLogger::addLog($message, self::$logMapping[$logLevel]);
+
+        $logger = new \FileLogger();
+        $logger->setFilename($this->module->getLocalPath() . '/logs/' . date('Ymd', time()) . $this->module->name . '.log');
+        $logger->log($message, self::$logMapping[$logLevel]);
+        $this->removeOldLogFiles();
+    }
+
+    private function removeOldLogFiles(): void
+    {
+        $notExpiredLogs = [
+            date('Ymd', time() - 172800) . $this->module->name . '.log',
+            date('Ymd', time() - 86400) . $this->module->name . '.log',
+            date('Ymd') . $this->module->name . '.log',
+        ];
+
+        $files = array_diff(scandir($this->module->getLocalPath() . '/logs/'), array('.', '..'));
+        if (count($files) < 4) {
+            return;
+        }
+
+        foreach ($files as $file) {
+            if (
+                is_file($this->module->getLocalPath() . '/logs/' . $file) &&
+                !in_array($file, $notExpiredLogs)
+            ) {
+                unlink($this->module->getLocalPath() . '/logs/' . $file);
+            }
+        }
     }
 }

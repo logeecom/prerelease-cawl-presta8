@@ -12,8 +12,8 @@
  *
  *}
 
-<div class="worldlineop-hook-display-payment-top">
+<div class="{$module}-hook-display-payment-top">
   <div class="alert alert-danger">
-    {l s='Payment could not be processed. Please try again or contact our Customer Service.' mod='worldlineop'}
+    {l s='Payment could not be processed. Please try again or contact our Customer Service.' mod=$module}
   </div>
 </div>

@@ -9,7 +9,8 @@ use OnlinePayments\Classes\Utility\Url;
 use OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\AdminAPI\AdminAPI;
 use OnlinePayments\Core\Bootstrap\ApiFacades\Order\OrderAPI\OrderAPI;
 use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
-use WorldlineOP\PrestaShop\Utils\Tools;
+use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Currency;
+use OnlinePayments\Core\Infrastructure\ServiceRegister;
 
 /**
  * Class OrderService
@@ -84,9 +85,9 @@ class OrderService
         ];
     }
 
-    private function getPaymentLinkData(\Order $order, array $worldlineOrderData): array
+    private function getPaymentLinkData(\Order $order, array $orderData): array
     {
-        if (isset($worldlineOrderData['payment'])) {
+        if (isset($orderData['payment'])) {
             return [
                 'display' => false
             ];
@@ -162,9 +163,8 @@ class OrderService
         $order = new \Order((int) $orderId);
         $psOrderAmountMatch = true;
         if ($order->total_paid_tax_incl) {
-            $worldlineAmount = $orderDetails->getAmount()->getValue();
-            $psAmount = (int) Tools::getRoundedAmountInCents($order->total_paid_tax_incl, $currencyIsoCode);
-            $psOrderAmountMatch = ($worldlineAmount === $psAmount);
+            $psAmount = Amount::fromFloat($order->total_paid_tax_incl, Currency::fromIsoCode($currencyIsoCode));
+            $psOrderAmountMatch = ($orderDetails->getAmount()->getValue() === $psAmount->getValue());
         }
 
         $orderHasSurcharge = false;

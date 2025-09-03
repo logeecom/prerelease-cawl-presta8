@@ -27,7 +27,7 @@ class CustomerAccountExtensionController extends ModuleFrontController
     public function initContent(): void
     {
         if ($this->redirectStoredCards) {
-            $this->redirectWithNotifications($this->context->link->getModuleLink('worldlineop', 'storedcards', []));
+            $this->redirectWithNotifications($this->context->link->getModuleLink($this->module->name, 'storedcards', []));
         }
 
         parent::initContent();
@@ -40,9 +40,9 @@ class CustomerAccountExtensionController extends ModuleFrontController
         }
 
         $this->context->smarty->assign([
+            'module' => $this->module->name,
             'stored_cards' => $storedCards,
-            'img_path' => rtrim($this->context->shop->getBaseURL(), '/') . $this->module->getPathUri() .
-                'views/img/'
+            'img_path' => rtrim($this->context->shop->getBaseURL(), '/') . $this->module->getPathUri() . 'views/img/'
         ]);
 
         $this->setTemplate('module:' . $this->module->name . '/views/templates/front/storedcards.tpl');

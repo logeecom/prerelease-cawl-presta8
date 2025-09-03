@@ -3,6 +3,7 @@
 namespace OnlinePayments\Controllers\Concrete\Front;
 
 use ModuleFrontController;
+use OnlinePayments\Classes\Utility\Tools;
 use OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\WebhookAPI\WebhookAPI;
 use OnlinePayments\Core\Bootstrap\DataAccess\PaymentTransaction\PaymentTransactionEntity;
 use OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
@@ -10,7 +11,6 @@ use OnlinePayments\Core\Infrastructure\Logger\Logger;
 use OnlinePayments\Core\Infrastructure\ORM\QueryFilter\Operators;
 use OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
 use OnlinePayments\Core\Infrastructure\ORM\RepositoryRegistry;
-use WorldlineOP\PrestaShop\Utils\Tools;
 
 /**
  * Class WebhooksController

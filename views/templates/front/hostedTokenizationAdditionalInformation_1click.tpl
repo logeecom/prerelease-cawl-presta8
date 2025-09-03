@@ -14,19 +14,19 @@
 
 {if $tokenSurcharge|escape:'htmlall':'UTF-8'}
   <div class="alert alert-info">
-    <p>{l s='Please note that a surcharge will be applied to the total amount:' mod='worldlineop'}</p>
+    <p>{l s='Please note that a surcharge will be applied to the total amount:' mod=$module}</p>
     <ul>
       <li>
-        {l s='Initial total:' mod='worldlineop'}
+        {l s='Initial total:' mod=$module}
         {$tokenSurcharge.amountWithoutSurcharge|escape:'htmlall':'UTF-8'} {$tokenSurcharge.currencyIso}
       </li>
       <li>
-        {l s='Surcharge amount:' mod='worldlineop'}
+        {l s='Surcharge amount:' mod=$module}
         {$tokenSurcharge.surchargeAmount|escape:'htmlall':'UTF-8'} {$tokenSurcharge.currencyIso}
       </li>
       <li>
         <b>
-          {l s='Total amount with surcharge:' mod='worldlineop'}
+          {l s='Total amount with surcharge:' mod=$module}
           {$tokenSurcharge.amountWithSurcharge|escape:'htmlall':'UTF-8'} {$tokenSurcharge.currencyIso}
         </b>
       </li>
@@ -34,27 +34,27 @@
   </div>
 {/if}
 
-<div class="js-worldlineop-1click-container-{$tokenId|escape:'htmlall':'UTF-8'}">
-  <div id="js-worldlineop-1click-{$tokenId|escape:'htmlall':'UTF-8'}" class="js-worldlineop-htp worldlineop-htp"></div>
+<div class="js-{$module}-1click-container-{$tokenId|escape:'htmlall':'UTF-8'}">
+  <div id="js-{$module}-1click-{$tokenId|escape:'htmlall':'UTF-8'}" class="js-{$module}-htp {$module}-htp online-payments-htp"></div>
 
-  <div class="js-worldlineop-generic-error alert alert-danger" style="display: none">
-    {l s='An error occurred while processing the payment.' mod='worldlineop'}
-    <a href="javascript:window.location.reload()">{l s='Please click here' mod='worldlineop'}</a>
-    {l s='to refresh this page or contact our Customer Service' mod='worldlineop'}
+  <div class="js-{$module}-generic-error alert alert-danger" style="display: none">
+    {l s='An error occurred while processing the payment.' mod=$module}
+    <a href="javascript:window.location.reload()">{l s='Please click here' mod=$module}</a>
+    {l s='to refresh this page or contact our Customer Service' mod=$module}
   </div>
-  <div class="js-worldlineop-error alert alert-danger" style="display: none">
+  <div class="js-{$module}-error alert alert-danger" style="display: none">
     <span></span>
-    <a href="javascript:window.location.reload()">{l s='Please click here' mod='worldlineop'}</a>
-    {l s='to refresh this page or contact our Customer Service' mod='worldlineop'}
+    <a href="javascript:window.location.reload()">{l s='Please click here' mod=$module}</a>
+    {l s='to refresh this page or contact our Customer Service' mod=$module}
   </div>
 </div>
 
 <script type="text/javascript">
-  hostedTokenizationObj = new htpPrototype(document);
+  hostedTokenizationObj = new htpPrototype(document, '{$module|escape:'javascript':'UTF-8'}');
 
   hostedTokenizationObj.elems = {
-    iframeContainer: document.querySelector('.js-worldlineop-1click-container-{$tokenId|escape:'javascript':'UTF-8'}'),
-    payBtnId: 'js-worldlineop-token-btn-submit-{$tokenId|escape:'javascript':'UTF-8'}',
+    iframeContainer: document.querySelector(".js-{$module|escape:'javascript':'UTF-8'}-1click-container-{$tokenId|escape:'javascript':'UTF-8'}"),
+    payBtnId: "js-{$module|escape:'javascript':'UTF-8'}-token-btn-submit-{$tokenId|escape:'javascript':'UTF-8'}",
   };
   hostedTokenizationObj.urls = {
     htp: "{$hostedTokenizationPageUrl|escape:'javascript':'UTF-8'|replace:'&amp;':'&'}",
@@ -64,7 +64,7 @@
   hostedTokenizationObj.cartDetails = {
     totalCents: "{$totalCartCents|intval}",
     currencyCode: "{$cartCurrencyCode|escape:'javascript':'UTF-8'}",
-    customerToken: "{$worldlineopCustomerToken|escape:'javascript':'UTF-8'}",
+    customerToken: "{$customerToken|escape:'javascript':'UTF-8'}",
     cardToken: "{$cardToken|escape:'javascript':'UTF-8'}",
   };
   hostedTokenizationObj.init();

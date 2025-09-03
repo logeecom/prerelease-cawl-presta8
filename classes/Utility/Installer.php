@@ -26,7 +26,6 @@ use PrestaShopDatabaseException;
 use PrestaShopException;
 use Tab;
 use Validate;
-use WorldlineOP\PrestaShop\Utils\Tools;
 
 /**
  * Class Installer
@@ -260,6 +259,9 @@ class Installer
         $this->dropTable(strtolower($provider->getActiveBrand()->getCode()) . '_' . QueueItemRepository::TABLE_NAME);
         $this->dropTable(strtolower($provider->getActiveBrand()->getCode()) . '_' . MonitoringLogsRepository::TABLE_NAME);
         $this->dropTable(strtolower($provider->getActiveBrand()->getCode()) . '_' . WebhookLogsRepository::TABLE_NAME);
+        $this->dropTable(strtolower($provider->getActiveBrand()->getCode()) . '_' . TokensRepository::TABLE_NAME);
+        $this->dropTable(strtolower($provider->getActiveBrand()->getCode()) . '_' . ProductTypesRepository::TABLE_NAME);
+        $this->dropTable(strtolower($provider->getActiveBrand()->getCode()) . '_' . PaymentTransactionsRepository::TABLE_NAME);
     }
 
     /**
