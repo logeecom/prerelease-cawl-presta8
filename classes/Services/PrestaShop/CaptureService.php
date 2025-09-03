@@ -59,7 +59,7 @@ class CaptureService
         if (!in_array($capture['statusCode'], array_merge(
             StatusCode::CAPTURE_STATUS_CODES, StatusCode::CAPTURE_REQUESTED_STATUS_CODES))) {
             return $this->module->l(
-                "Refund of funds failed. Payment is not in Capture or Capture requested status.",
+                "Capture of funds failed. Payment is not in Capture or Capture requested status.",
                 self::FILE_NAME
             );
         }
