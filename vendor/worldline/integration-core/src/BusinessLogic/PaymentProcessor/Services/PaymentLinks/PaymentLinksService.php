@@ -3,6 +3,7 @@
 namespace OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentLinks;
 
 use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\PayByLinkSettingsRepositoryInterface;
+use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
 use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
 use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkSettings;
 use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
@@ -13,7 +14,9 @@ use OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\PaymentTransac
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkRequest;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkResponse;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\Repositories\PaymentLinkRepositoryInterface;
+use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentLinksProxyInterface;
+use OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentMethod\PaymentMethodService;
 
 /**
  * Class PaymentLinksService.
@@ -28,6 +31,7 @@ class PaymentLinksService
     private PayByLinkSettingsRepositoryInterface $payByLinkSettingsRepository;
     private PaymentLinkRepositoryInterface $paymentLinkRepository;
     private PaymentTransactionRepositoryInterface $paymentTransactionRepository;
+    private PaymentMethodService $paymentMethodService;
 
     public function __construct(
         PaymentLinksProxyInterface $paymentLinksProxy,
@@ -35,7 +39,8 @@ class PaymentLinksService
         PaymentSettingsRepositoryInterface $paymentSettingsRepository,
         PayByLinkSettingsRepositoryInterface $payByLinkSettingsRepository,
         PaymentLinkRepositoryInterface $paymentLinkRepository,
-        PaymentTransactionRepositoryInterface $paymentTransactionRepository
+        PaymentTransactionRepositoryInterface $paymentTransactionRepository,
+        PaymentMethodService $paymentMethodService
     ) {
         $this->paymentLinksProxy = $paymentLinksProxy;
         $this->cardsSettingsRepository = $cardsSettingsRepository;
@@ -43,6 +48,7 @@ class PaymentLinksService
         $this->payByLinkSettingsRepository = $payByLinkSettingsRepository;
         $this->paymentLinkRepository = $paymentLinkRepository;
         $this->paymentTransactionRepository = $paymentTransactionRepository;
+        $this->paymentMethodService = $paymentMethodService;
     }
 
     public function create(PaymentLinkRequest $request): PaymentLinkResponse
@@ -51,7 +57,8 @@ class PaymentLinksService
             $request,
             $this->getCardsSettings(),
             $this->getPaymentSettings(),
-            $this->getPayByLinkSettings()
+            $this->getPayByLinkSettings(),
+            $this->getPaymentMethods($request->getCartProvider())
         );
 
         $this->paymentLinkRepository->save($response->getPaymentLink());
@@ -92,5 +99,10 @@ class PaymentLinksService
         $savedSettings = $this->payByLinkSettingsRepository->getPayByLinkSettings();
 
         return $savedSettings ?: new PayByLinkSettings();
+    }
+
+    private function getPaymentMethods(CartProvider $cartProvider): PaymentMethodCollection
+    {
+        return $this->paymentMethodService->getAvailablePaymentMethods($cartProvider);
     }
 }

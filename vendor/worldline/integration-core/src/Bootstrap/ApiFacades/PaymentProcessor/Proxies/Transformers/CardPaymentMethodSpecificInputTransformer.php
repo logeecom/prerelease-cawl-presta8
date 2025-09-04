@@ -7,6 +7,7 @@ use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
 use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAction;
 use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 use OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
+use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 use OnlinePayments\Sdk\Domain\CardPaymentMethodSpecificInput;
 use OnlinePayments\Sdk\Domain\PaymentProduct130SpecificInput;
@@ -26,6 +27,7 @@ class CardPaymentMethodSpecificInputTransformer
         string $getReturnUrl,
         CardsSettings $cardsSettings,
         PaymentSettings $paymentSettings,
+        ?PaymentMethodCollection $paymentMethodCollection = null,
         ?PaymentProductId $paymentProductId = null,
         ?Token $token = null
     ): CardPaymentMethodSpecificInput {
@@ -86,6 +88,10 @@ class CardPaymentMethodSpecificInputTransformer
 
         if ($paymentProductId !== null && PaymentProductId::intersolve()->equals($paymentProductId->getId())) {
             $cardPaymentMethodSpecificInput->setAuthorizationMode(PaymentAction::authorizeCapture()->getType());
+
+            if ($paymentMethodCollection && $config = $paymentMethodCollection->get(PaymentProductId::intersolve())) {
+                $cardPaymentMethodSpecificInput->setPaymentProductId($config->getAdditionalData()->getProductId()->getId());
+            }
         }
 
         if ($paymentProductId !== null && $paymentProductId->isCardType()) {

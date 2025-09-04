@@ -211,7 +211,8 @@ class BootstrapComponent extends BaseBootstrapComponent
                 ServiceRegister::getService(TokensRepositoryInterface::class),
                 ServiceRegister::getService(CardsSettingsRepositoryInterface::class),
                 ServiceRegister::getService(PaymentSettingsRepositoryInterface::class),
-                ServiceRegister::getService(ProductTypeRepositoryInterface::class)
+                ServiceRegister::getService(ProductTypeRepositoryInterface::class),
+                ServiceRegister::getService(PaymentMethodService::class)
             );
         }));
 

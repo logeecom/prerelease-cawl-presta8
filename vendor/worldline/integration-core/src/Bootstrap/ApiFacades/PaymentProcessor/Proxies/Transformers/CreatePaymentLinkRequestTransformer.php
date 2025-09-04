@@ -10,6 +10,7 @@ use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkExpiration
 use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkSettings;
 use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkRequest;
+use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 use OnlinePayments\Sdk\Domain\CreatePaymentLinkRequest;
 use OnlinePayments\Sdk\Domain\GPayThreeDSecure;
@@ -33,7 +34,8 @@ class CreatePaymentLinkRequestTransformer
         PaymentLinkRequest $input,
         CardsSettings $cardsSettings,
         PaymentSettings $paymentSettings,
-        PayByLinkSettings $payByLinkSettings
+        PayByLinkSettings $payByLinkSettings,
+        PaymentMethodCollection $paymentMethodCollection
     ): CreatePaymentLinkRequest
     {
         $cart = $input->getCartProvider()->get();
@@ -61,6 +63,7 @@ class CreatePaymentLinkRequestTransformer
             $input->getReturnUrl(),
             $cardsSettings,
             $paymentSettings,
+            $paymentMethodCollection
         );
         $request->setCardPaymentMethodSpecificInput($cardPaymentMethodSpecificInput);
 

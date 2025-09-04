@@ -7,6 +7,7 @@ use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkSettings;
 use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkRequest;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkResponse;
+use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 
 /**
  * Interface PaymentLinksProxyInterface.
@@ -19,7 +20,8 @@ interface PaymentLinksProxyInterface
         PaymentLinkRequest $request,
         CardsSettings $cardsSettings,
         PaymentSettings $paymentSettings,
-        PayByLinkSettings $payByLinkSettings
+        PayByLinkSettings $payByLinkSettings,
+        PaymentMethodCollection $paymentMethodCollection
     ): PaymentLinkResponse;
 
     public function getById(string $paymentLinkId, string $merchantReference): PaymentLinkResponse;

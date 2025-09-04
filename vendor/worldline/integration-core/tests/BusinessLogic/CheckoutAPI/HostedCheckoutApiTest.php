@@ -9,13 +9,19 @@ use OnlinePayments\Core\BusinessLogic\Domain\HostedCheckout\HostedCheckoutSessio
 use OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\PaymentResponse;
 use OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
 use OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentTransaction;
+use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethod;
+use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
+use OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translation;
+use OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslationCollection;
 use OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\HostedCheckoutProxyInterface;
+use OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentMethodProxyInterface;
 use OnlinePayments\Core\Infrastructure\ORM\RepositoryRegistry;
 use OnlinePayments\Core\Infrastructure\ServiceRegister;
 use OnlinePayments\Core\Tests\Bootstrap\BaseTestCase;
 use OnlinePayments\Core\Tests\BusinessLogic\CheckoutAPI\Mocks\MockCartProvider;
 use OnlinePayments\Core\Tests\BusinessLogic\CheckoutAPI\Mocks\MockHostedCheckoutProxy;
+use OnlinePayments\Core\Tests\BusinessLogic\CheckoutAPI\Mocks\MockPaymentMethodProxy;
 
 /**
  * Class HostedCheckoutApiTest.
@@ -34,6 +40,12 @@ class HostedCheckoutApiTest extends BaseTestCase
 
     public function testCreateHostedCheckoutSession(): void
     {
+        $this->setupAvailablePaymentMethodsInApi(
+            new PaymentMethodCollection([
+                new PaymentMethod(PaymentProductId::hostedCheckout(), new TranslationCollection(new Translation('EN', 'Hosted Checkout')), true),
+                new PaymentMethod(PaymentProductId::visa(), new TranslationCollection(new Translation('EN', 'Visa')), true),
+            ])
+        );
         $this->setupHostedCheckoutApiResponse(new PaymentResponse(
             new PaymentTransaction(
                 'TEST_MERCHANT_REFERENCE',
@@ -76,6 +88,14 @@ class HostedCheckoutApiTest extends BaseTestCase
     {
         $proxy = new MockHostedCheckoutProxy($PaymentResponse);
         ServiceRegister::registerService(HostedCheckoutProxyInterface::class, static function () use ($proxy) {
+            return $proxy;
+        });
+    }
+
+    protected function setupAvailablePaymentMethodsInApi(?PaymentMethodCollection $paymentMethodCollection = null): void
+    {
+        $proxy = new MockPaymentMethodProxy($paymentMethodCollection ?? new PaymentMethodCollection());
+        ServiceRegister::registerService(PaymentMethodProxyInterface::class, static function () use ($proxy) {
             return $proxy;
         });
     }

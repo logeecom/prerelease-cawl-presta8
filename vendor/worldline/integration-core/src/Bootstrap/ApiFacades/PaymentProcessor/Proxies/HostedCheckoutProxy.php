@@ -11,6 +11,8 @@ use OnlinePayments\Core\BusinessLogic\Domain\HostedCheckout\HostedCheckoutSessio
 use OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\PaymentResponse;
 use OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
 use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\ContextLogProvider;
+use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethod;
+use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\HostedCheckoutProxyInterface;
 
 /**
@@ -31,12 +33,13 @@ class HostedCheckoutProxy implements HostedCheckoutProxyInterface
         HostedCheckoutSessionRequest $request,
         CardsSettings $cardsSettings,
         PaymentSettings $paymentSettings,
+        PaymentMethodCollection $paymentMethodCollection,
         ?Token $token = null
     ): PaymentResponse {
         ContextLogProvider::getInstance()->setCurrentOrder($request->getCartProvider()->get()->getMerchantReference());
         return CreateHostedCheckoutResponseTransformer::transform(
             $this->clientFactory->get()->hostedCheckout()->createHostedCheckout(
-                CreateHostedCheckoutRequestTransformer::transform($request, $cardsSettings, $paymentSettings, $token)
+                CreateHostedCheckoutRequestTransformer::transform($request, $cardsSettings, $paymentSettings, $paymentMethodCollection, $token)
             )
         );
     }

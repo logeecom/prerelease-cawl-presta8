@@ -2,6 +2,7 @@
 
 namespace OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\HostedCheckout;
 
+use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
 use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
 use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 use OnlinePayments\Core\BusinessLogic\Domain\HostedCheckout\HostedCheckoutSessionRequest;
@@ -10,10 +11,12 @@ use OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Repositories\Tok
 use OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\CardsSettingsRepositoryInterface;
 use OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\PaymentSettingsRepositoryInterface;
 use OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\PaymentTransactionRepositoryInterface;
+use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodDefaultConfigs;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 use OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\HostedCheckoutProxyInterface;
 use OnlinePayments\Core\BusinessLogic\PaymentProcessor\Repositories\ProductTypeRepositoryInterface;
+use OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentMethod\PaymentMethodService;
 
 /**
  * Class HostedTokenizationService.
@@ -28,6 +31,7 @@ class HostedCheckoutService
     private PaymentSettingsRepositoryInterface $paymentSettingsRepository;
     private TokensRepositoryInterface $tokensRepository;
     private ProductTypeRepositoryInterface $productTypeRepository;
+    private PaymentMethodService $paymentMethodService;
 
     public function __construct(
         HostedCheckoutProxyInterface $hostedCheckoutProxy,
@@ -35,7 +39,8 @@ class HostedCheckoutService
         TokensRepositoryInterface $tokensRepository,
         CardsSettingsRepositoryInterface $cardsSettingsRepository,
         PaymentSettingsRepositoryInterface $paymentSettingsRepository,
-        ProductTypeRepositoryInterface $productTypeRepository
+        ProductTypeRepositoryInterface $productTypeRepository,
+        PaymentMethodService $paymentMethodService
     ) {
         $this->hostedCheckoutProxy = $hostedCheckoutProxy;
         $this->paymentTransactionRepository = $paymentTransactionRepository;
@@ -43,6 +48,7 @@ class HostedCheckoutService
         $this->cardsSettingsRepository = $cardsSettingsRepository;
         $this->paymentSettingsRepository = $paymentSettingsRepository;
         $this->productTypeRepository = $productTypeRepository;
+        $this->paymentMethodService = $paymentMethodService;
     }
 
     public function createSession(HostedCheckoutSessionRequest $request): PaymentResponse
@@ -58,7 +64,11 @@ class HostedCheckoutService
         }
 
         $paymentResponse = $this->hostedCheckoutProxy->createSession(
-            $request, $this->getCardsSettings(), $this->getPaymentSettings(), $token
+            $request,
+            $this->getCardsSettings(),
+            $this->getPaymentSettings(),
+            $this->getPaymentMethodsConfig($request->getCartProvider()),
+            $token
         );
 
         if (!$request->getCartProvider()->get()->getCustomer()->isGuest()) {
@@ -92,6 +102,11 @@ class HostedCheckoutService
         $savedSettings = $this->paymentSettingsRepository->getPaymentSettings();
 
         return $savedSettings ?: new PaymentSettings();
+    }
+
+    public function getPaymentMethodsConfig(CartProvider $cartProvider): PaymentMethodCollection
+    {
+        return $this->paymentMethodService->getAvailablePaymentMethods($cartProvider);
     }
 
     private function transformForMealvouchers(HostedCheckoutSessionRequest $request): HostedCheckoutSessionRequest

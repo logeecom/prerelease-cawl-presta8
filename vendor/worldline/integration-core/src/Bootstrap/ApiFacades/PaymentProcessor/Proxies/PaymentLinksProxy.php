@@ -11,6 +11,7 @@ use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\ContextLogProvider;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkRequest;
 use OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkResponse;
+use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentLinksProxyInterface;
 
 /**
@@ -31,7 +32,8 @@ class PaymentLinksProxy implements PaymentLinksProxyInterface
         PaymentLinkRequest $request,
         CardsSettings $cardsSettings,
         PaymentSettings $paymentSettings,
-        PayByLinkSettings $payByLinkSettings
+        PayByLinkSettings $payByLinkSettings,
+        PaymentMethodCollection $paymentMethodCollection
     ): PaymentLinkResponse
     {
         ContextLogProvider::getInstance()->setCurrentOrder(
@@ -40,7 +42,9 @@ class PaymentLinksProxy implements PaymentLinksProxyInterface
 
         return CreatePaymentLinkResponseTransformer::transform(
             $this->clientFactory->get()->paymentLinks()->createPaymentLink(
-                CreatePaymentLinkRequestTransformer::transform($request, $cardsSettings, $paymentSettings, $payByLinkSettings)
+                CreatePaymentLinkRequestTransformer::transform(
+                    $request, $cardsSettings, $paymentSettings, $payByLinkSettings, $paymentMethodCollection
+                )
             )
         );
     }
