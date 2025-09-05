@@ -97,6 +97,10 @@
         display: none;
       }
 
+      &.ops--disabled {
+        pointer-events: none;
+      }
+
       &.op-header-payment {
         &:before {
           content: "\e93f";
