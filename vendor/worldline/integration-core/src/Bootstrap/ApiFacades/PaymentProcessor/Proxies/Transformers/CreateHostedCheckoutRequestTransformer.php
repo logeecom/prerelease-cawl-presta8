@@ -105,8 +105,12 @@ class CreateHostedCheckoutRequestTransformer
         }
 
         $redirectPaymentMethodSpecificInput = new RedirectPaymentMethodSpecificInput();
-        $redirectPaymentProduct5402SpecificInput = new RedirectPaymentProduct5402SpecificInput();
-        $redirectPaymentProduct5402SpecificInput->setCompleteRemainingPaymentAmount(true);
+
+        if ($input->getPaymentProductId() !== null && $input->getPaymentProductId()->equals(PaymentProductId::mealvouchers())) {
+            $redirectPaymentProduct5402SpecificInput = new RedirectPaymentProduct5402SpecificInput();
+            $redirectPaymentProduct5402SpecificInput->setCompleteRemainingPaymentAmount(true);
+            $redirectPaymentMethodSpecificInput->setPaymentProduct5402SpecificInput($redirectPaymentProduct5402SpecificInput);
+        }
 
         if (null !== $input->getPaymentProductId() &&
             $input->getPaymentProductId()->equals(PaymentProductId::illicado()->getId())) {
@@ -122,8 +126,6 @@ class CreateHostedCheckoutRequestTransformer
         self::setSepaSpecificInput($paymentMethodCollection, $order, $request);
         self::setBankTransferSpecificInput($paymentMethodCollection, $redirectPaymentMethodSpecificInput);
         self::setOneySpecificInput($input, $paymentMethodCollection, $redirectPaymentMethodSpecificInput);
-
-        $redirectPaymentMethodSpecificInput->setPaymentProduct5402SpecificInput($redirectPaymentProduct5402SpecificInput);
 
         $request->setRedirectPaymentMethodSpecificInput($redirectPaymentMethodSpecificInput);
 
