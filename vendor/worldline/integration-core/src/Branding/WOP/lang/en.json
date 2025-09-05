@@ -11,6 +11,11 @@
     "payments": {
       "paymentGroups": {
         "hosted": "Worldline hosted page"
+      },
+      "hostedCheckout": {
+        "logo": {
+          "description": "The logo that will appear next to Worldline payment method on checkout page. Allowed image format is png, jpg and jpeg."
+        }
       }
     },
     "documentationLink": "https://docs.direct.worldline-solutions.com/en/payment-methods-and-features/payment-methods/",

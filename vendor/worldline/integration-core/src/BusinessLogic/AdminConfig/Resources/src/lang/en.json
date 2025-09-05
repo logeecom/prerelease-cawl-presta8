@@ -243,7 +243,8 @@
           "error": "Provide a file in one of the supported image types (PNG, JPG, JPEG)."
         },
         "enableGroupCards": {
-          "label": "Enable group cards"
+          "label": "Enable group cards",
+          "description": "Group all card payment methods under one single button on the checkout page."
         }
       }
     },

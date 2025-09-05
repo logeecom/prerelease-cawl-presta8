@@ -87,7 +87,9 @@ if (!window.OnlinePaymentsFE.components) {
          * @param {boolean?} additional
          */
         const handleConfigMethodChange = (prop, value, additional) => {
-            value = OnlinePaymentsFE.sanitize(value);
+            if (prop !== 'logo') {
+                value = OnlinePaymentsFE.sanitize(value);
+            }
 
             const areDifferent = (source, target) => {
                 if (Array.isArray(source) && Array.isArray(target)) {
@@ -302,6 +304,7 @@ if (!window.OnlinePaymentsFE.components) {
                         type: 'file',
                         supportedMimeTypes: ['image/jpeg', 'image/jpg', 'image/png'],
                         label: 'payments.configure.fields.logo.label',
+                        description: OnlinePaymentsFE.brand.code + '.payments.hostedCheckout.logo.description',
                         onChange: (value) => handleConfigMethodChange('logo', value, false)
                     },
                     {
@@ -310,7 +313,8 @@ if (!window.OnlinePaymentsFE.components) {
                         type: 'checkbox',
                         className: '',
                         label: `payments.configure.fields.enableGroupCards.label`,
-                        onChange: (value) => handleConfigMethodChange('enableGroupCards', value === '1', true)
+                        description: `payments.configure.fields.enableGroupCards.description`,
+                        onChange: (value) => handleConfigMethodChange('enableGroupCards', value === true, true)
                     }
                 ]
             );

@@ -11,6 +11,11 @@
     "payments": {
       "paymentGroups": {
         "hosted": "CAWL hosted page"
+      },
+      "hostedCheckout": {
+        "logo": {
+          "description": "The logo that will appear next to CAWL payment method on checkout page. Allowed image format is png, jpg and jpeg."
+        }
       }
     },
     "generalSettings": {
