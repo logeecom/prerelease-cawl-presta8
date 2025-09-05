@@ -1,6 +1,7 @@
 {
   "WOP": {
     "connection": "Connect with Worldline",
+    "connectionTitle": "Configure your API keys below. If you don't have an account, you can create new one <a href=\"https://signup.direct.preprod.worldline-solutions.com\" target=\"_blank\"><span>here.</span></a>",
     "links": {
       "createAccount": "https://signup.direct.preprod.worldline-solutions.com/",
       "configurePlugin": "https://docs.direct.worldline-solutions.com/en/integration/how-to-integrate/plugins/",

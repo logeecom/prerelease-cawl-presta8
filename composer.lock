@@ -114,12 +114,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:logeecom/worldline-direct-core.git",
-                "reference": "05dca1ae8f3d98f8ae18b17b7d3cd7106dd8f36d"
+                "reference": "8bebd5f8a0e60996ad5bb5a3742018e580de3e77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/logeecom/worldline-direct-core/zipball/05dca1ae8f3d98f8ae18b17b7d3cd7106dd8f36d",
-                "reference": "05dca1ae8f3d98f8ae18b17b7d3cd7106dd8f36d",
+                "url": "https://api.github.com/repos/logeecom/worldline-direct-core/zipball/8bebd5f8a0e60996ad5bb5a3742018e580de3e77",
+                "reference": "8bebd5f8a0e60996ad5bb5a3742018e580de3e77",
                 "shasum": ""
             },
             "require": {
@@ -151,7 +151,7 @@
                 "proprietary"
             ],
             "description": "Core Worldline integration library",
-            "time": "2025-09-05T07:04:25+00:00"
+            "time": "2025-09-05T07:55:11+00:00"
         }
     ],
     "packages-dev": [

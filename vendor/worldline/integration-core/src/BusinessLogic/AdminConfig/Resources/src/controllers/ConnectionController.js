@@ -93,7 +93,7 @@ if (!window.OnlinePaymentsFE) {
         const renderForm = (data) => {
             const content = generator.createElement('div', 'op-connection-page');
             form = generator.createElement('form');
-            const title = generator.createElement('p', 'op-connection-title', 'connection.title');
+            const title = generator.createElement('p', 'op-connection-title', OnlinePaymentsFE.brand.code + '.connectionTitle', null, null, true);
             const webhookUrlDiv = generator.createElement(
                 'div',
                 'op-webhooks-url-wrapper'
@@ -109,6 +109,7 @@ if (!window.OnlinePaymentsFE) {
             );
             webhookCopy.addEventListener('click', function () {
                 navigator.clipboard.writeText(state.formatUrl(configuration.webhooksUrl));
+                utilities.createToasterMessage('general.copied');
             });
             webhookUrlDiv.appendChild(webhooksUrl);
             webhookUrlDiv.appendChild(webhookCopy);

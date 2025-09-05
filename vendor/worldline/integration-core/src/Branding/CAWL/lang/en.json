@@ -1,6 +1,7 @@
 {
   "CAWL": {
     "connection": "Connect with CAWL",
+    "connectionTitle": "Configure your API keys below. If you don't have an account, you can create new one <a href=\"https://signup.preprod.cawl-solutions.fr\" target=\"_blank\"><span>here.</span></a>",
     "links": {
       "createAccount": "https://signup.preprod.cawl-solutions.fr/",
       "configurePlugin": "https://docs.ecommerce.cawl-solutions.fr/en/integration/how-to-integrate/plugins/",

@@ -273,6 +273,7 @@ if (!window.OnlinePaymentsFE) {
             );
             webhookCopy.addEventListener('click', function () {
                 navigator.clipboard.writeText(OnlinePaymentsFE.state.formatUrl(configuration.webhooksUrl));
+                utilities.createToasterMessage('general.copied');
             });
             webhookUrlDiv.appendChild(webhooksUrl);
             webhookUrlDiv.appendChild(webhookCopy);
@@ -1082,14 +1083,7 @@ if (!window.OnlinePaymentsFE) {
          * @param {'success' | 'error'} status
          */
         const showFlashMessage = (message, status = 'success') => {
-            const container = templateService.getMainPage()?.querySelector('.op-flash-message-wrapper');
-            if (!container) {
-                return;
-            }
-
-            templateService.clearComponent(container);
-            container.append(utilities.createFlashMessage(message, status));
-            container.scrollIntoView({behavior: 'smooth'});
+            utilities.createToasterMessage(message, status);
         };
     }
 
