@@ -272,6 +272,10 @@ if (!window.OnlinePaymentsFE) {
             let name = translationService.translate('general.documentation');
             let options = [
                 {
+                    label: 'general.readyToGoLive',
+                    link: translationService.translate(OnlinePaymentsFE.brand.code + '.links.readyToGoLive')
+                },
+                {
                     label: 'general.createAccount',
                     link: translationService.translate(OnlinePaymentsFE.brand.code + '.links.createAccount')
                 },
@@ -280,8 +284,8 @@ if (!window.OnlinePaymentsFE) {
                     link: translationService.translate(OnlinePaymentsFE.brand.code + '.links.configurePlugin')
                 },
                 {
-                    label: 'general.managePayment',
-                    link: translationService.translate(OnlinePaymentsFE.brand.code + '.links.managePayment')
+                    label: 'general.generalDocumentation',
+                    link: translationService.translate(OnlinePaymentsFE.brand.code + '.links.generalDocumentation')
                 }
             ];
             const header = elementGenerator.createHeaderItem(brand, {name, options}, state);

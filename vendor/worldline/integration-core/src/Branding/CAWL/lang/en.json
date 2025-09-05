@@ -5,7 +5,8 @@
     "links": {
       "createAccount": "https://signup.preprod.cawl-solutions.fr/",
       "configurePlugin": "https://docs.ecommerce.cawl-solutions.fr/en/integration/how-to-integrate/plugins/",
-      "managePayment": "",
+      "readyToGoLive": "https://worldline.com/en/home/solutions/online-payments/wl-online-payments.html",
+      "generalDocumentation": "https://docs.ecommerce.cawl-solutions.fr/en/",
       "help": "https://docs.ecommerce.cawl-solutions.fr/en/about/contact/"
     },
     "payments": {
