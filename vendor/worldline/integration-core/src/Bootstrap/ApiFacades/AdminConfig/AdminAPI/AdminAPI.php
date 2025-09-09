@@ -20,7 +20,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\AdminAPI\
  * Class AdminAPI. Integrations should use this class for communicating with Admin API.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\AdminAPI
- * @internal
  */
 class AdminAPI
 {

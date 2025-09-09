@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Order\Services\Capture\CaptureService
  * Class CaptureController
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\CaptureAPI\Controller
- * @internal
  */
 class CaptureController
 {

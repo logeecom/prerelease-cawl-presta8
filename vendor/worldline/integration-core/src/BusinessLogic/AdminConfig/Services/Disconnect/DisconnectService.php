@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Repositories\Pay
  * Class DisconnectService
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Disconnect
- * @internal
  */
 class DisconnectService
 {

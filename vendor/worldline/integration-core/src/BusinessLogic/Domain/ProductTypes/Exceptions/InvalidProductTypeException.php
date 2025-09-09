@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTr
  * Class InvalidProductTypeException.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\ProductTypes\Exceptions
- * @internal
  */
 class InvalidProductTypeException extends BaseTranslatableException
 {

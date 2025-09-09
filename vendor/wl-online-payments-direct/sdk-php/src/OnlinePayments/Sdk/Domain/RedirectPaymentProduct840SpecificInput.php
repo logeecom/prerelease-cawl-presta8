@@ -8,7 +8,6 @@ namespace CAWL\OnlinePayments\Sdk\Domain;
 use UnexpectedValueException;
 /**
  * @package OnlinePayments\Sdk\Domain
- * @internal
  */
 class RedirectPaymentProduct840SpecificInput extends DataObject
 {

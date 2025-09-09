@@ -16,7 +16,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Repositories\Product
  * Class PaymentMethodService.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentMethod
- * @internal
  */
 class PaymentMethodService
 {

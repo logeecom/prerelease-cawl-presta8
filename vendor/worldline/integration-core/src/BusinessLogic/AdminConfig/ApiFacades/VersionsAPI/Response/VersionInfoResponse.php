@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Version\VersionInfo;
  * Class VersionInfoResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\VersionsAPI\Response
- * @internal
  */
 class VersionInfoResponse extends Response
 {

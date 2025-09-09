@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Sdk\Domain\CreateMandateRequest;
 use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * Mandates client.
- * @internal
  */
 class MandatesClient extends ApiResource implements MandatesClientInterface
 {

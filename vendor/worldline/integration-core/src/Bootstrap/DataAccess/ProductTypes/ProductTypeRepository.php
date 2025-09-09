@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
  * Class ProductTypeRepository.
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\ProductTypes
- * @internal
  */
 class ProductTypeRepository implements ProductTypeRepositoryInterface, CheckoutAPIProductTypeRepositoryInterface
 {

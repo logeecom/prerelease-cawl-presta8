@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Sdk;
  * Class ApiResource
  *
  * @package OnlinePayments\Sdk
- * @internal
  */
 class ApiResource
 {

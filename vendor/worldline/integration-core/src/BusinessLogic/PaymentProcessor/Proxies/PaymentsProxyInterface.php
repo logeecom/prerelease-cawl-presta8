@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
  * Interface PaymentsProxyInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies
- * @internal
  */
 interface PaymentsProxyInterface
 {

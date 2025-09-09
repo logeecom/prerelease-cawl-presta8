@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTr
  * Class InvalidExemptionTypeException
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions
- * @internal
  */
 class InvalidExemptionTypeException extends BaseTranslatableException
 {

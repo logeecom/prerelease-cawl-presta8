@@ -16,7 +16,6 @@ use CAWL\OnlinePayments\Sdk\CommunicatorConfiguration;
  * Class MetricsProvidingCommunicator.
  *
  * @package OnlinePayments\Core\Bootstrap\Sdk
- * @internal
  */
 class MetricsProvidingCommunicator extends Communicator
 {

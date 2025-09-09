@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Sdk\Authentication;
  * Class Authenticator
  *
  * @package OnlinePayments\Sdk\Authentication
- * @internal
  */
 interface Authenticator
 {

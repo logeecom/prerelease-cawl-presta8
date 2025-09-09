@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring;
  * Class ContextLogProvider
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Monitoring
- * @internal
  */
 class ContextLogProvider
 {

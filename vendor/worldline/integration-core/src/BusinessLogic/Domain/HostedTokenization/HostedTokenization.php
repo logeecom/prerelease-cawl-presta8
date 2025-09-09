@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization;
  * Class HostedTokenization.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization
- * @internal
  */
 class HostedTokenization
 {

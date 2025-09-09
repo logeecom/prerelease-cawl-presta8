@@ -9,7 +9,6 @@ use RuntimeException;
  * Every class that extends this class MUST have its own protected static field $instance!
  *
  * @package OnlinePayments\Core\Infrastructure
- * @internal
  */
 abstract class Singleton
 {

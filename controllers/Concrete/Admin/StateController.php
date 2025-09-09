@@ -10,7 +10,6 @@ use Tools;
  * Class StateController
  *
  * @package OnlinePayments\Controllers\Concrete\Admin
- * @internal
  */
 class StateController extends ModuleAdminController
 {

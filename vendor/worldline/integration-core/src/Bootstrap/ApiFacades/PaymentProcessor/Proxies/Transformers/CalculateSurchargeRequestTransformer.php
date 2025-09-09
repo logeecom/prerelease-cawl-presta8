@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Sdk\Domain\CardSource;
  * Class CalculateSurchargeRequestTransformer
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
- * @internal
  */
 class CalculateSurchargeRequestTransformer
 {

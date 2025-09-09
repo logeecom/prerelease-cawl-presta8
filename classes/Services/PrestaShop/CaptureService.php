@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusCode;
  * Class CaptureService
  *
  * @package OnlinePayments\Classes\Services\PrestaShop
- * @internal
  */
 class CaptureService
 {

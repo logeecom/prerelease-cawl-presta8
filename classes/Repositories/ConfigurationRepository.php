@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Classes\Repositories;
  * Class ConfigurationRepository
  *
  * @package OnlinePayments\Classes\Repositories
- * @internal
  */
 class ConfigurationRepository
 {

@@ -28,7 +28,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentsProx
  * Class HostedTokenizationService.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\HostedTokenization
- * @internal
  */
 class HostedTokenizationService
 {

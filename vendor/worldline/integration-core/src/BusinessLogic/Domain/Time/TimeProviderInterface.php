@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Time;
  * Interface TimeProviderInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Time
- * @internal
  */
 interface TimeProviderInterface
 {

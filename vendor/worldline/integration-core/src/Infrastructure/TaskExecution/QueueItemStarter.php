@@ -15,7 +15,6 @@ use Exception;
 /**
  * Class QueueItemStarter
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
- * @internal
  */
 class QueueItemStarter implements Runnable
 {

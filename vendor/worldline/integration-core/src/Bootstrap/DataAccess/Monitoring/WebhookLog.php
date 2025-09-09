@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
  * Class WebhookLog
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\Monitoring
- * @internal
  */
 class WebhookLog extends Entity
 {

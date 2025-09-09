@@ -29,7 +29,6 @@ use CAWL\OnlinePayments\Sdk\ReferenceException;
 use CAWL\OnlinePayments\Sdk\ValidationException;
 /**
  * Payments client interface.
- * @internal
  */
 interface PaymentsClientInterface
 {

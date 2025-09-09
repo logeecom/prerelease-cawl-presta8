@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCol
  * Interface PaymentMethodProxy.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies
- * @internal
  */
 interface PaymentMethodProxyInterface
 {

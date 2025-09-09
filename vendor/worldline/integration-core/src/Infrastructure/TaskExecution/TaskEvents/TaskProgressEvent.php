@@ -8,7 +8,6 @@ use InvalidArgumentException;
  * Class TaskProgressEvent.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\TaskEvents
- * @internal
  */
 class TaskProgressEvent extends Event
 {

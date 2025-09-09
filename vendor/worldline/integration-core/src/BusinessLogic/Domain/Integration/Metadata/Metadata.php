@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Metadata;
  * Class Metadata.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Integration\Metadata
- * @internal
  */
 class Metadata
 {

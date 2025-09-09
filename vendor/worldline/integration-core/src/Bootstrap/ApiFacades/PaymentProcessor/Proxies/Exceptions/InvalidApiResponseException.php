@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTr
  * Class InvalidApiResponseException.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Exceptions
- * @internal
  */
 class InvalidApiResponseException extends BaseTranslatableException
 {

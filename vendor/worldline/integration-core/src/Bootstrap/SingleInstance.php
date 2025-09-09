@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Bootstrap;
  * Class SingleInstance
  *
  * @package OnlinePayments\Core\Bootstrap
- * @internal
  */
 class SingleInstance
 {

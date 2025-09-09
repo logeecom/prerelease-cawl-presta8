@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translatabl
  * Class PayByLinkExpirationTime
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings
- * @internal
  */
 class PayByLinkExpirationTime
 {

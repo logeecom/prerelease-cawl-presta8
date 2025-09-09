@@ -8,7 +8,6 @@ use Exception;
  * Class NativeSerializer
  *
  * @package OnlinePayments\Core\Infrastructure\Serializer\Concrete
- * @internal
  */
 class NativeSerializer extends Serializer
 {

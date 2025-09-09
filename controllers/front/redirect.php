@@ -5,10 +5,7 @@ namespace {
         exit;
     }
     use CAWL\OnlinePayments\Controllers\Concrete\Front\RedirectModuleFrontController;
-    /** @internal */
     class CawlopRedirectModuleFrontController extends RedirectModuleFrontController
     {
     }
-    /** @internal */
-    \class_alias('CAWL\\CawlopRedirectModuleFrontController', 'CawlopRedirectModuleFrontController', \false);
 }

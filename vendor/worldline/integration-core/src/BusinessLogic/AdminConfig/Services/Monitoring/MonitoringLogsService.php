@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\Monito
  * Class MonitoringLogsService
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Monitoring
- * @internal
  */
 class MonitoringLogsService
 {

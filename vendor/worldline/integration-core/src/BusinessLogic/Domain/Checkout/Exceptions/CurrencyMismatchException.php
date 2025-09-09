@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTr
  * Class CurrencyMismatchException
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\PaymentRequest\Exceptions
- * @internal
  */
 class CurrencyMismatchException extends BaseTranslatableException
 {

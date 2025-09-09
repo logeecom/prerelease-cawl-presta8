@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Language\Language;
  * Class LanguageResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\LanguageAPI\Response
- * @internal
  */
 class LanguageResponse extends Response
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
  * Class CancelRequest.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Cancel
- * @internal
  */
 class CancelRequest
 {

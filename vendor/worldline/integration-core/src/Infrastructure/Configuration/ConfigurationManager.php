@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Singleton;
  * Class ConfigurationManager.
  *
  * @package OnlinePayments\Core\Infrastructure\Configuration
- * @internal
  */
 class ConfigurationManager extends Singleton
 {

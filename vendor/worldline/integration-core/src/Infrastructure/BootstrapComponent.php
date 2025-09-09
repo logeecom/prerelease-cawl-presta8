@@ -22,7 +22,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Utility\TimeProvider;
  * Class BootstrapComponent.
  *
  * @package OnlinePayments\Core\Infrastructure
- * @internal
  */
 class BootstrapComponent
 {

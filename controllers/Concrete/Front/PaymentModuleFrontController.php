@@ -15,7 +15,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class PaymentModuleFrontController.
  *
  * @package OnlinePayments\Controllers\Concrete\Front
- * @internal
  */
 class PaymentModuleFrontController extends \ModuleFrontController
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentTransaction;
  * Interface ShopOrderService.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Integration
- * @internal
  */
 interface ShopOrderService
 {

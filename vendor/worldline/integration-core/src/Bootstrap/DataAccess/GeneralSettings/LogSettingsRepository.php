@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
  * Class LogSettingsRepository
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings
- * @internal
  */
 class LogSettingsRepository implements LogSettingsRepositoryInterface
 {

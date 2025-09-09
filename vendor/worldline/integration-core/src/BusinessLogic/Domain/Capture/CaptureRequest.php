@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
  * Class CaptureRequest.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Capture
- * @internal
  */
 class CaptureRequest
 {

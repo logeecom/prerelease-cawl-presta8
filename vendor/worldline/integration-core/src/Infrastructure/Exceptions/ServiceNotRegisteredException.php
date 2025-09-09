@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Infrastructure\Exceptions;
  * Class ServiceNotRegisteredException.
  *
  * @package OnlinePayments\Core\Infrastructure\Exceptions
- * @internal
  */
 class ServiceNotRegisteredException extends BaseException
 {

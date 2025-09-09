@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Utility\Events\Event;
  * Class BeforeQueueStatusChangeEvent.
  *
  * @package OnlinePayments\Core\Infrastructure\Scheduler
- * @internal
  */
 class BeforeQueueStatusChangeEvent extends Event
 {

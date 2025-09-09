@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Sdk\Logging\CommunicatorLogger;
 use CAWL\OnlinePayments\Sdk\Merchant\MerchantClient;
 /**
  * Payment platform client.
- * @internal
  */
 class Client extends ApiResource implements ClientInterface
 {

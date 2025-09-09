@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment;
  * Class StatusError.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Payment
- * @internal
  */
 class StatusError
 {

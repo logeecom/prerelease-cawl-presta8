@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentLink
  * Class PaymentLinksController.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\AdminAPI\Controller
- * @internal
  */
 class PaymentLinksController
 {

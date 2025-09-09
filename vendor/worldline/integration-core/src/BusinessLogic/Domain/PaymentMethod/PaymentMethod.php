@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translation
  * Class PaymentMethod.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod
- * @internal
  */
 class PaymentMethod
 {

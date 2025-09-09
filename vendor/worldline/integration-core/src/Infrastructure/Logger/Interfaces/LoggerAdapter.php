@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Logger\LogData;
  * Interface LoggerAdapter.
  *
  * @package OnlinePayments\Core\Infrastructure\Logger\Interfaces
- * @internal
  */
 interface LoggerAdapter
 {

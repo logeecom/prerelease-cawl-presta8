@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class Serializer
  *
  * @package OnlinePayments\Core\Infrastructure\Serializer
- * @internal
  */
 abstract class Serializer
 {

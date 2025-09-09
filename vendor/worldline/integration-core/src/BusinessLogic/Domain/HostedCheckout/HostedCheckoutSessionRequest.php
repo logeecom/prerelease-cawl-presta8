@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId
  * Class HostedCheckoutSessionRequest.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\HostedCheckout
- * @internal
  */
 class HostedCheckoutSessionRequest
 {

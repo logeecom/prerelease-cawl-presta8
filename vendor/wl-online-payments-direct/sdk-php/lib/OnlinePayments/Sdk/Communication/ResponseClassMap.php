@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Sdk\Communication;
  * Class ResponseClassMap
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 class ResponseClassMap
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Sdk\Domain\DataObject;
  * Class ResponseFactory
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 class ResponseFactory
 {

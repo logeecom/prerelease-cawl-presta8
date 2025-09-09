@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translatabl
  * Class TaxRate
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout
- * @internal
  */
 class TaxRate
 {

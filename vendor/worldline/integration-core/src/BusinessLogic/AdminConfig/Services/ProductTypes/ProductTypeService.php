@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ProductTypes\ProductType;
  * Class ProductTypeService.
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\ProductTypes
- * @internal
  */
 class ProductTypeService
 {

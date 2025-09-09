@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Version\VersionSer
  * Class VersionController
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\VersionsAPI\Controller
- * @internal
  */
 class VersionController
 {

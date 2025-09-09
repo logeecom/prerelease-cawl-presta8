@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
  * Class PendingTransactionsRepository.
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\PaymentTransaction
- * @internal
  */
 class PendingTransactionsRepository
 {

@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Infrastructure\Data;
  * Class Transformer.
  *
  * @package OnlinePayments\Core\Infrastructure\Data
- * @internal
  */
 class Transformer
 {

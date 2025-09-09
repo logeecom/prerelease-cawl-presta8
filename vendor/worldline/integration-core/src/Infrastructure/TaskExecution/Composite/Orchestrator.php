@@ -16,7 +16,6 @@ use InvalidArgumentException;
  * Class Orchestrator
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Composite
- * @internal
  */
 abstract class Orchestrator extends Task
 {

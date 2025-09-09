@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
  * Interface WaitPaymentOutcomeProcessStarterInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\BackgroundProcesses
- * @internal
  */
 interface WaitPaymentOutcomeProcessStarterInterface
 {

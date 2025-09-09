@@ -25,7 +25,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translation
  * Class PaymentService
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Payment
- * @internal
  */
 class PaymentService
 {

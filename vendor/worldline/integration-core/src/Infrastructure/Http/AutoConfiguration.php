@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Exceptions\BaseException;
  * Class AutoConfigurationController.
  *
  * @package OnlinePayments\Core\Infrastructure\Http\Configuration
- * @internal
  */
 class AutoConfiguration
 {

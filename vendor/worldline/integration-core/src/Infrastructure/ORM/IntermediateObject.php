@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Infrastructure\ORM;
  * Class IntermediateObject.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM
- * @internal
  */
 class IntermediateObject
 {

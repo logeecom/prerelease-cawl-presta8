@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Sdk\Domain\CreateTokenRequest;
 use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * Tokens client.
- * @internal
  */
 class TokensClient extends ApiResource implements TokensClientInterface
 {

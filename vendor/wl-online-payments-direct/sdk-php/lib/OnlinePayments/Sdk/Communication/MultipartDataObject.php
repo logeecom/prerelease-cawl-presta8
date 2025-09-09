@@ -7,7 +7,6 @@ use Exception;
  * Class MultipartDataObject
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 abstract class MultipartDataObject
 {

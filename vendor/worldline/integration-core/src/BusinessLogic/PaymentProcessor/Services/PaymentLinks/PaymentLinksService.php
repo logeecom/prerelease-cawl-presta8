@@ -21,7 +21,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentMeth
  * Class PaymentLinksService.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentMethod
- * @internal
  */
 class PaymentLinksService
 {

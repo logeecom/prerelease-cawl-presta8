@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings;
  * Class LogSettings
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings
- * @internal
  */
 class LogSettings
 {

@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\AsyncProces
  * Class AsyncProcessModuleFrontController.
  *
  * @package OnlinePayments\Controllers\Concrete\Front
- * @internal
  */
 class AsyncProcessModuleFrontController extends ModuleFrontController
 {

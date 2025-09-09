@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Task;
  * Class AutoCaptureCheckTask.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\BackgroundProcesses
- * @internal
  */
 class AutoCaptureCheckTask extends Task
 {

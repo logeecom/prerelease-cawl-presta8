@@ -26,7 +26,6 @@ use CAWL\OnlinePayments\Sdk\Domain\ShoppingCart;
  * Class OrderTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
- * @internal
  */
 class OrderTransformer
 {

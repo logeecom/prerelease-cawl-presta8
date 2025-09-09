@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces;
  * Interface TaskRunnerManager
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces
- * @internal
  */
 interface TaskRunnerManager
 {

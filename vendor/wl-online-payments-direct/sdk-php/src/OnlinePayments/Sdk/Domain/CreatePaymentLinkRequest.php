@@ -9,7 +9,6 @@ use DateTime;
 use UnexpectedValueException;
 /**
  * @package OnlinePayments\Sdk\Domain
- * @internal
  */
 class CreatePaymentLinkRequest extends DataObject
 {

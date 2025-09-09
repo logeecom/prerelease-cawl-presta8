@@ -29,7 +29,6 @@ use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
  * Class OnlinePaymentsModule
  *
  * @package OnlinePayments\Classes
- * @internal
  */
 class OnlinePaymentsModule extends \PaymentModule
 {

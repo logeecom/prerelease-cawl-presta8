@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
  * Class PaymentTransactionRepository.
  *
  * @package OnlinePayments\Classes\Services\Domain\Repositories
- * @internal
  */
 class PaymentTransactionRepository extends CorePaymentTransactionRepository
 {

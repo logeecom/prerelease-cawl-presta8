@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\TaskRunnerW
  * Class TaskRunnerManager.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
- * @internal
  */
 class TaskRunnerManager implements BaseService
 {

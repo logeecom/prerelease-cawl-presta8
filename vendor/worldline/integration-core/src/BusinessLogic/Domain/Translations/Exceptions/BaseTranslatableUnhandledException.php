@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translatabl
  * Class BaseTranslatableUnhandledException
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Translations\Model
- * @internal
  */
 class BaseTranslatableUnhandledException extends BaseTranslatableException
 {

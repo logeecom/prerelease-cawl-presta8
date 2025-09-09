@@ -7,7 +7,6 @@ use RuntimeException;
  * Class InvalidResponseException
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 class InvalidResponseException extends RuntimeException
 {

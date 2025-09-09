@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Data\DataTransferObject;
  * Class Options.
  *
  * @package OnlinePayments\Core\Infrastructure\Http\DTO
- * @internal
  */
 class Options extends DataTransferObject
 {

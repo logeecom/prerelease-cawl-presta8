@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Country;
  * Class Address.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart
- * @internal
  */
 class Address
 {

@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Classes\Utility;
  * Class SessionService
  *
  * @package OnlinePayments\Classes\Utility
- * @internal
  */
 class SessionService
 {

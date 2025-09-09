@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusCode;
  * Class StatusMappingService
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\OrderStatusMapping
- * @internal
  */
 class StatusMappingService
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Sdk\Domain\DataObject;
  * Class ErrorResponseException
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 class ErrorResponseException extends RuntimeException
 {

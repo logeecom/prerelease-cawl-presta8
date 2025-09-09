@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkSetti
  * Interface PayByLinkSettingsRepositoryInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories
- * @internal
  */
 interface PayByLinkSettingsRepositoryInterface
 {

@@ -4,7 +4,6 @@ namespace CAWL\OnlinePayments\Core\Bootstrap\Sdk;
 
 use CAWL\OnlinePayments\Sdk\Communication\DefaultConnection;
 use CAWL\OnlinePayments\Sdk\CommunicatorConfiguration;
-/** @internal */
 class DbLogConnection extends DefaultConnection
 {
     private CommunicatorLoggerHelper $communicatorLoggerHelper;

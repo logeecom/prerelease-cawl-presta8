@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Infrastructure\Utility;
  * Class Php.
  *
  * @package OnlinePayments\Core\Infrastructure\Utility
- * @internal
  */
 class Php
 {

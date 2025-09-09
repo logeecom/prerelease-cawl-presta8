@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
  * Class TaskCleanupRepository
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\Maintenance
- * @internal
  */
 class TaskCleanupRepository
 {

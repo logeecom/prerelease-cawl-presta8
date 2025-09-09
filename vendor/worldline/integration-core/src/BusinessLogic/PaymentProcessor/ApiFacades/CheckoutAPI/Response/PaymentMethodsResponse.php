@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\HostedToken
  * Class PaymentMethodsResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\CheckoutAPI\Response
- * @internal
  */
 class PaymentMethodsResponse extends Response
 {

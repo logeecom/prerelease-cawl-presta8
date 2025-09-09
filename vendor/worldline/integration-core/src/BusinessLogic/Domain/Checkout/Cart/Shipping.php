@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\TaxableAmount;
  * Class Shipping.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart
- * @internal
  */
 class Shipping
 {

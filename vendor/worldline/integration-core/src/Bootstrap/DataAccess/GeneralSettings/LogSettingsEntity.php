@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
  * Class LogSettingsEntity
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings
- * @internal
  */
 class LogSettingsEntity extends Entity
 {

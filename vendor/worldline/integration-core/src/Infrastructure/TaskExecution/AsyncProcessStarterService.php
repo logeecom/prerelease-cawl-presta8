@@ -21,7 +21,6 @@ use Exception;
  * Class AsyncProcessStarter.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
- * @internal
  */
 class AsyncProcessStarterService extends Singleton implements AsyncProcessService
 {

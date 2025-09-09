@@ -25,7 +25,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentsProx
  * Class PaymentsProxy.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies
- * @internal
  */
 class PaymentsProxy implements PaymentsProxyInterface
 {

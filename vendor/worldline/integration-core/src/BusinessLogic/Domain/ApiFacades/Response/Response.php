@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response;
  * Class Response
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response
- * @internal
  */
 abstract class Response
 {

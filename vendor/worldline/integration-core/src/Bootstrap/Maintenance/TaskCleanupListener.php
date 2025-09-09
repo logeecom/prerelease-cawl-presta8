@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueService;
  * Class TaskCleanupListener
  *
  * @package OnlinePayments\Core\Bootstrap\Maintenance
- * @internal
  */
 class TaskCleanupListener
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
  * Class ConnectionConfigResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ConnectionAPI\Response
- * @internal
  */
 class ConnectionConfigResponse extends Response
 {

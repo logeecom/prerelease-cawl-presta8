@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTr
  * Class InvalidIsoCodeException
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Language\Exception
- * @internal
  */
 class InvalidIsoCodeException extends BaseTranslatableException
 {

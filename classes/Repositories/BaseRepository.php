@@ -16,7 +16,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class BaseRepository
  *
  * @package OnlinePayments\Classes\Repositories
- * @internal
  */
 class BaseRepository implements RepositoryInterface
 {

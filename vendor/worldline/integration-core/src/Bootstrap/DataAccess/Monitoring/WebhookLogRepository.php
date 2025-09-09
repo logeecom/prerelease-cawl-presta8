@@ -19,7 +19,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
  * Class WebhookLogRepository
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\Monitoring
- * @internal
  */
 class WebhookLogRepository implements WebhookLogRepositoryInterface
 {

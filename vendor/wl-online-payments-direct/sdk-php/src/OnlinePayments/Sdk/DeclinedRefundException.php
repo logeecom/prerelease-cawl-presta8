@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Sdk\Domain\RefundResponse;
  * Class DeclinedRefundException
  *
  * @package OnlinePayments\Sdk
- * @internal
  */
 class DeclinedRefundException extends ResponseException
 {

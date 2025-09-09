@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Sdk\Domain\CompletePaymentRequest;
 use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * Complete client.
- * @internal
  */
 class CompleteClient extends ApiResource implements CompleteClientInterface
 {

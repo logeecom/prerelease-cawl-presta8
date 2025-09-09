@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class PaymentTransactionsRepository
  *
  * @package OnlinePayments\Classes\Repositories
- * @internal
  */
 class PaymentTransactionsRepository extends BaseRepositoryWithConditionalDelete
 {

@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translatabl
  * Class ConnectionService
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Connection
- * @internal
  */
 class ConnectionService
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\MonitoringLog;
  * Class MonitoringLogsResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response
- * @internal
  */
 class MonitoringLogsResponse extends Response
 {

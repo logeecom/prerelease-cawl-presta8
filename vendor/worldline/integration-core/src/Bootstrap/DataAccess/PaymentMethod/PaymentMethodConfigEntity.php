@@ -24,7 +24,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
  * Class PaymentMethodConfigEntity.
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\PaymentMethod
- * @internal
  */
 class PaymentMethodConfigEntity extends Entity
 {

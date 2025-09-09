@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translatabl
  * Class BaseTranslatableException
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Translations\Model
- * @internal
  */
 class BaseTranslatableException extends Exception
 {

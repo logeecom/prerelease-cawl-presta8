@@ -9,7 +9,6 @@ use Throwable;
  * Class ErrorResponse
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Response
- * @internal
  */
 class ErrorResponse extends Response
 {

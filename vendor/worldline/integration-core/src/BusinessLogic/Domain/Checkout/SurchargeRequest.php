@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout;
  * Class Surcharge
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout
- * @internal
  */
 class SurchargeRequest
 {

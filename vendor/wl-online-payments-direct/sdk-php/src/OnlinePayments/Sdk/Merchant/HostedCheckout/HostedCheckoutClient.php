@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Sdk\Domain\CreateHostedCheckoutRequest;
 use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * HostedCheckout client.
- * @internal
  */
 class HostedCheckoutClient extends ApiResource implements HostedCheckoutClientInterface
 {

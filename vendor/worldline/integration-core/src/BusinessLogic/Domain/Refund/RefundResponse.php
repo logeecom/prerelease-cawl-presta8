@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusCode;
  * Class RefundResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Refund
- * @internal
  */
 class RefundResponse
 {

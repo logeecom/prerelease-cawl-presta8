@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueService;
  * Class DisconnectTaskEnqueuer
  *
  * @package OnlinePayments\Core\Bootstrap\Disconnect
- * @internal
  */
 class DisconnectTaskEnqueuer implements DisconnectTaskEnqueuerInterface
 {

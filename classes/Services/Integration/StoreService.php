@@ -15,7 +15,6 @@ use Shop;
  * Class StoreService
  *
  * @package OnlinePayments\Classes\Services\Integration
- * @internal
  */
 class StoreService implements StoreServiceInterface
 {

@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Infrastructure\Http;
  * Class HttpResponse.
  *
  * @package OnlinePayments\Core\Infrastructure\Http
- * @internal
  */
 class HttpResponse
 {

@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Customer\Device;
  * Class CartProviderWithDeviceData.
  *
  * @package OnlinePayments\Classes\Services\Checkout
- * @internal
  */
 class CartProviderWithDeviceData implements CartProvider
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
  * Interface RepositoryInterface.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\Interfaces
- * @internal
  */
 interface RepositoryInterface
 {

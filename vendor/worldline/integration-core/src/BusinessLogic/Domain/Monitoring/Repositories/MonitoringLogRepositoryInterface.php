@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\MonitoringLog;
  * Interface MonitoringLogRepositoryInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories
- * @internal
  */
 interface MonitoringLogRepositoryInterface
 {

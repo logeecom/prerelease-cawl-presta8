@@ -20,7 +20,6 @@ namespace {
     require_once __DIR__ . '/bootstrap.php';
     /**
      * Class Cawlop
-     * @internal
      */
     class Cawlop extends OnlinePaymentsModule
     {
@@ -43,9 +42,4 @@ namespace {
             //@formatter:on
         }
     }
-    /**
-     * Class Cawlop
-     * @internal
-     */
-    \class_alias('CAWL\\Cawlop', 'Cawlop', \false);
 }

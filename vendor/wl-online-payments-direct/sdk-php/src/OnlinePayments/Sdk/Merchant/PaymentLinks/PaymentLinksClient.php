@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Sdk\Domain\CreatePaymentLinkRequest;
 use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * PaymentLinks client.
- * @internal
  */
 class PaymentLinksClient extends ApiResource implements PaymentLinksClientInterface
 {

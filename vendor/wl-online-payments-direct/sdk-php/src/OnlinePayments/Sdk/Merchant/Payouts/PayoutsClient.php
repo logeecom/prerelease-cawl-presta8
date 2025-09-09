@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Sdk\Domain\CreatePayoutRequest;
 use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * Payouts client.
- * @internal
  */
 class PayoutsClient extends ApiResource implements PayoutsClientInterface
 {

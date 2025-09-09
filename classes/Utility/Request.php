@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Classes\Utility;
  * Class Request
  *
  * @package OnlinePayments\Classes\Utility
- * @internal
  */
 class Request
 {

@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Infrastructure\Utility\Events;
  * Class EventBus.
  *
  * @package OnlinePayments\Core\Infrastructure\Utility\Events
- * @internal
  */
 class EventBus extends EventEmitter
 {

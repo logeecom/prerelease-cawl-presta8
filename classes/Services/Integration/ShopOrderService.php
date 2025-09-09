@@ -18,7 +18,6 @@ use PrestaShopException;
  * Class ShopOrderService.
  *
  * @package OnlinePayments\Classes\Services\Integration
- * @internal
  */
 class ShopOrderService implements ShopOrderServiceInterface
 {

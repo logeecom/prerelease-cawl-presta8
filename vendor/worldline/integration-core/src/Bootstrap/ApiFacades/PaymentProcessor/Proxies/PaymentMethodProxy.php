@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentMetho
  * Class PaymentMethodProxy.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies
- * @internal
  */
 class PaymentMethodProxy implements PaymentMethodProxyInterface
 {

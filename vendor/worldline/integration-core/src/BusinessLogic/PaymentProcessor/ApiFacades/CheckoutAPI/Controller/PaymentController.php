@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\BackgroundProcesses\
  * Class PaymentController.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\CheckoutAPI\Controller
- * @internal
  */
 class PaymentController
 {

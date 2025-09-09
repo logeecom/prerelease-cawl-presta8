@@ -15,7 +15,6 @@ use CAWL\OnlinePayments\Sdk\Domain\PaymentResponse;
  * Class PaymentResponseTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
- * @internal
  */
 class PaymentResponseTransformer
 {

@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\Runnable;
  * Class WaitPaymentOutcomeProcessRunner.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\BackgroundProcesses
- * @internal
  */
 class WaitPaymentOutcomeProcessRunner implements Runnable
 {

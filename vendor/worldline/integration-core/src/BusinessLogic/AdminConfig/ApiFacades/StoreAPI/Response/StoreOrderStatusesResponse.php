@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Stores\Models\StoreOrderStatus
  * Class StoreOrderStatusesResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\StoreAPI\Response
- * @internal
  */
 class StoreOrderStatusesResponse extends Response
 {

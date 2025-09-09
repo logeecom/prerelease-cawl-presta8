@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class ActiveBrandProvide.
  *
  * @package OnlinePayments\Core\Branding\Brand
- * @internal
  */
 class ActiveBrandProvider implements ActiveBrandProviderInterface
 {

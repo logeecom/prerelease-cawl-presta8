@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
  * Class ProductTypeEntity.
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\ProductTypes
- * @internal
  */
 class ProductTypeEntity extends Entity
 {

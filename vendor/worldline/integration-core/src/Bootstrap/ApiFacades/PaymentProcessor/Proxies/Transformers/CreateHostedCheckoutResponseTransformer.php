@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Sdk\Domain\CreateHostedCheckoutResponse;
  * Class CreateHostedCheckoutResponseTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
- * @internal
  */
 class CreateHostedCheckoutResponseTransformer
 {

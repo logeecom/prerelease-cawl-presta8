@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Repositories\Connec
  * Class ActiveConnectionProvider.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Connection
- * @internal
  */
 class ActiveConnectionProvider
 {

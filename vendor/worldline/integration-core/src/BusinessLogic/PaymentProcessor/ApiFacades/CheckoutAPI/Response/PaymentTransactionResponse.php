@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentTransaction;
  * Class PaymentTransactionResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\CheckoutAPI\Response
- * @internal
  */
 class PaymentTransactionResponse extends Response
 {

@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Order\Services\Cancel\CancelService;
  * Class CancelController
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\CancelAPI\Controller
- * @internal
  */
 class CancelController
 {

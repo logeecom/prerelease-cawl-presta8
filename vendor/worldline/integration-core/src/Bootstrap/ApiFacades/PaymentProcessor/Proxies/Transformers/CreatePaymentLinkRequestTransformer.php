@@ -26,7 +26,6 @@ use CAWL\OnlinePayments\Sdk\Domain\RedirectPaymentProduct5402SpecificInput;
  * Class CreatePaymentLinkRequestTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
- * @internal
  */
 class CreatePaymentLinkRequestTransformer
 {

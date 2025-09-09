@@ -6,7 +6,6 @@ use CAWL\OnlinePayments\Core\Bootstrap\Sdk\MerchantClientFactory;
 use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Connection\Proxies\ConnectionProxyInterface as BaseConnectionProxy;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Exceptions\InvalidConnectionDetailsException;
-/** @internal */
 class ConnectionProxy implements BaseConnectionProxy
 {
     private const CONNECTION_VALID = 'OK';

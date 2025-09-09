@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Metadata\MetadataP
  * Class MetadataProvider.
  *
  * @package OnlinePayments\Classes\Services\Integration
- * @internal
  */
 class MetadataProvider implements MetadataProviderInterface
 {

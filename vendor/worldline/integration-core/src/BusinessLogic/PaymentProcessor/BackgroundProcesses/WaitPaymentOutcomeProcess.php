@@ -15,7 +15,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\Payment\Sta
  * Class WaitPaymentOutcomeProcess.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\BackgroundProcesses
- * @internal
  */
 class WaitPaymentOutcomeProcess
 {

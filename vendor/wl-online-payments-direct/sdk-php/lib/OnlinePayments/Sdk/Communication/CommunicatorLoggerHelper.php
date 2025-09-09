@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Sdk\Logging\HeaderObfuscator;
  * Class CommunicatorLoggerHelper
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 class CommunicatorLoggerHelper
 {

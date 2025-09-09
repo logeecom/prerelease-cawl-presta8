@@ -7,7 +7,6 @@ use Db;
  * Class DatabaseHandler
  *
  * @package OnlinePayments\Classes\Utility
- * @internal
  */
 class DatabaseHandler
 {

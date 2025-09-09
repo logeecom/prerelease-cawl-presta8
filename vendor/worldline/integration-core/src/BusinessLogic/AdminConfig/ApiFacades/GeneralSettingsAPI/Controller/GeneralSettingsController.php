@@ -22,7 +22,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\Inv
  * Class GeneralSettingsController
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Controller
- * @internal
  */
 class GeneralSettingsController
 {

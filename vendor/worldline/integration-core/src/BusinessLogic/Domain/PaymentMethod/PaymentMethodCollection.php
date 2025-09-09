@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Cart;
  * Class PaymentMethodCollection.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod
- * @internal
  */
 class PaymentMethodCollection
 {

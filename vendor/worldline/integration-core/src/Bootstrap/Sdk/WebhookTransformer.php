@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Sdk\Webhooks\WebhooksHelper;
  * Class WebhookTransformer
  *
  * @package OnlinePayments\Core\Bootstrap\Sdk
- * @internal
  */
 class WebhookTransformer implements WebhookTransformerInterface
 {

@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Utility\TimeProvider;
  * Class Logger.
  *
  * @package OnlinePayments\Core\Infrastructure\Logger
- * @internal
  */
 class Logger extends Singleton
 {

@@ -3,7 +3,6 @@
 namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model;
 
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\InvalidTranslatableArrayException;
-/** @internal */
 class Translation
 {
     /**

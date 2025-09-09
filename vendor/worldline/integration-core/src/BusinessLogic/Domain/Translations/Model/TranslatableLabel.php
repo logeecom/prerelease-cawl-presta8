@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model;
  * Class TranslatableLabel
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Translations\Model
- * @internal
  */
 class TranslatableLabel
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId
  * Class PaymentService
  *
  * @package OnlinePayments\Classes\Services\Integration
- * @internal
  */
 class PaymentService extends CorePaymentService
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Exceptions\InvalidTax
  * Class TaxableAmount
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout
- * @internal
  */
 class TaxableAmount
 {

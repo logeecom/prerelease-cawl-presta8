@@ -24,7 +24,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Stores\StoreServic
  * Class GeneralSettingsService
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings
- * @internal
  */
 class GeneralSettingsService
 {

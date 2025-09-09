@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\TaskEvents\TaskProgres
  * This type of task should be used when there is a need for synchronous execution of several tasks.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
- * @internal
  */
 abstract class CompositeTask extends Task
 {

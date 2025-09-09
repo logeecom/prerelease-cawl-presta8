@@ -7,7 +7,6 @@ namespace CAWL\OnlinePayments\Sdk\Communication;
  * Generator class for v4 UUID's
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 class UuidGenerator
 {

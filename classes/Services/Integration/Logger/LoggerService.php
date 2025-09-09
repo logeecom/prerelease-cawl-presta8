@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class LoggerService
  *
  * @package OnlinePayments\Classes\Services\Integration\Logger
- * @internal
  */
 class LoggerService implements ShopLoggerAdapter
 {

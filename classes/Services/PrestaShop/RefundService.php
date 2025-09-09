@@ -16,7 +16,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Refund\RefundRequest;
  * Class RefundService
  *
  * @package OnlinePayments\Classes\Services\PrestaShop
- * @internal
  */
 class RefundService
 {

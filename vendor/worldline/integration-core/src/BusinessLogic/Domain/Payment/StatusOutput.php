@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment;
  * Class StatusOutput.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Payment
- * @internal
  */
 class StatusOutput
 {

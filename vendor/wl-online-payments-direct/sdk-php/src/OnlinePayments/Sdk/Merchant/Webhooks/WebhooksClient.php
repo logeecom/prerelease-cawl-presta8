@@ -15,7 +15,6 @@ use CAWL\OnlinePayments\Sdk\Domain\ValidateCredentialsRequest;
 use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * Webhooks client.
- * @internal
  */
 class WebhooksClient extends ApiResource implements WebhooksClientInterface
 {

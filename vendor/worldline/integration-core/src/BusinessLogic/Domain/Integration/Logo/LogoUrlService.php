@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Logo;
  * Interface LogoUrlService
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Integration\Logo
- * @internal
  */
 interface LogoUrlService
 {

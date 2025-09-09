@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Sdk\Communication\RequestObject;
  * Query parameters for Get payment product directory
  *
  * @package OnlinePayments\Sdk\Merchant\Products
- * @internal
  */
 class GetProductDirectoryParams extends RequestObject
 {

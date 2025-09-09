@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\WebhookLog;
  * Interface WebhookLogRepositoryInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories
- * @internal
  */
 interface WebhookLogRepositoryInterface
 {

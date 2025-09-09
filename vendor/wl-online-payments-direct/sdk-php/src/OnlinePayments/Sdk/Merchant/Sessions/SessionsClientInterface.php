@@ -17,7 +17,6 @@ use CAWL\OnlinePayments\Sdk\ReferenceException;
 use CAWL\OnlinePayments\Sdk\ValidationException;
 /**
  * Sessions client interface.
- * @internal
  */
 interface SessionsClientInterface
 {

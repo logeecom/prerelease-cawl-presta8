@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Singleton;
  * Class Configuration
  *
  * @package OnlinePayments\Core\Bootstrap\Configuration
- * @internal
  */
 abstract class Configuration extends InfrastructureConfiguration
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Connection\Conne
  * Class IntegrationController
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\IntegrationAPI\Controller
- * @internal
  */
 class IntegrationController
 {

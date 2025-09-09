@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
  * Class ConfigEntity.
  *
  * @package OnlinePayments\Core\Infrastructure\Configuration
- * @internal
  */
 class ConfigEntity extends Entity
 {

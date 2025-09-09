@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Sdk\Domain\ShoppingCartExtension;
  * Class CommunicatorConfiguration
  *
  * @package OnlinePayments\Sdk
- * @internal
  */
 class CommunicatorConfiguration
 {

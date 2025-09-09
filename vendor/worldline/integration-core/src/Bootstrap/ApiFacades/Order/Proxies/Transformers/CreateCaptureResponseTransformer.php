@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Sdk\Domain\CaptureResponse as SdkCaptureResponse;
  * CreateCaptureResponseTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Order\Proxies\Transformers
- * @internal
  */
 class CreateCaptureResponseTransformer
 {

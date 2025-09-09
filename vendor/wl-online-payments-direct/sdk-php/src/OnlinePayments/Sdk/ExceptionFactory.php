@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Sdk\Domain\RefundErrorResponse;
  * Class ExceptionFactory
  *
  * @package OnlinePayments\Sdk
- * @internal
  */
 class ExceptionFactory
 {

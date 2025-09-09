@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ProductTypes\ProductType;
  * Class ProductTypesController.
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ProductTypesAPI\Controller
- * @internal
  */
 class ProductTypesController
 {

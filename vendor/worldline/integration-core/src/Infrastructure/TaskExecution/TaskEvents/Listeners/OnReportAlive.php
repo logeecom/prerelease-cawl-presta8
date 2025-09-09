@@ -11,7 +11,6 @@ use RuntimeException;
  * Class OnReportAlive
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\TaskEvents\Listeners
- * @internal
  */
 class OnReportAlive
 {

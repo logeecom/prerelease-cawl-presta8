@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCol
  * Interface PaymentLinksProxyInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies
- * @internal
  */
 interface PaymentLinksProxyInterface
 {

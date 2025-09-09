@@ -5,10 +5,7 @@ namespace {
         exit;
     }
     use CAWL\OnlinePayments\Controllers\Concrete\Front\AsyncProcessModuleFrontController;
-    /** @internal */
     class CawlopAsyncProcessModuleFrontController extends AsyncProcessModuleFrontController
     {
     }
-    /** @internal */
-    \class_alias('CAWL\\CawlopAsyncProcessModuleFrontController', 'CawlopAsyncProcessModuleFrontController', \false);
 }

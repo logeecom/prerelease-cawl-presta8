@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Utility\Events\EventBus;
  * Class QueueItemStateTransitionEventBus
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Events
- * @internal
  */
 class QueueItemStateTransitionEventBus extends EventBus
 {

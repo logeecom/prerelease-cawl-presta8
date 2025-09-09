@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
  * Class AuthorizedTransactionsRepository.
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\PaymentTransaction
- * @internal
  */
 class AuthorizedTransactionsRepository
 {

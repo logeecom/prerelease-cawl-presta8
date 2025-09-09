@@ -8,7 +8,6 @@ namespace CAWL\Robtimus\Multipart;
  * @package Robtimus\Multipart
  * @author  Rob Spoor
  * @license https://www.apache.org/licenses/LICENSE-2.0.txt The Apache Software License, Version 2.0
- * @internal
  */
 final class MultipartAlternative extends Multipart
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
  * Class ValidTokensResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\HostedTokenization
- * @internal
  */
 class ValidTokensResponse
 {

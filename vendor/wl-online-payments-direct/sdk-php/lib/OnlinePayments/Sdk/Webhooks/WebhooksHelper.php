@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Sdk\Domain\WebhooksEvent;
  * Class WebhooksHelper
  *
  * @package OnlinePayments\Sdk\Webhooks
- * @internal
  */
 class WebhooksHelper
 {

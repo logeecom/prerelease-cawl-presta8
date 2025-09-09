@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Order\ApiFacades\RefundAPI\Controller
  * Class OrderAPI. Integrations should use this class for communicating with Order API.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Order\OrderAPI
- * @internal
  */
 class OrderAPI
 {

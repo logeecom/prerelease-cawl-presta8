@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Customer\Custome
  * Class Cart
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart
- * @internal
  */
 class Cart
 {

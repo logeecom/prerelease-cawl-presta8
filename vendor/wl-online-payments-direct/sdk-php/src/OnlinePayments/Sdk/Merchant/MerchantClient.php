@@ -24,7 +24,6 @@ use CAWL\OnlinePayments\Sdk\Merchant\Tokens\TokensClient;
 use CAWL\OnlinePayments\Sdk\Merchant\Webhooks\WebhooksClient;
 /**
  * Merchant client.
- * @internal
  */
 class MerchantClient extends ApiResource implements MerchantClientInterface
 {

@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Sdk\Domain\ShoppingCartExtension;
  * Class MetadataProvider
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 class MetadataProvider implements MetadataProviderInterface
 {

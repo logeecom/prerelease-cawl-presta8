@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Sdk\Logging\HeaderObfuscator;
  * Class HttpObfuscator
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 class HttpObfuscator
 {

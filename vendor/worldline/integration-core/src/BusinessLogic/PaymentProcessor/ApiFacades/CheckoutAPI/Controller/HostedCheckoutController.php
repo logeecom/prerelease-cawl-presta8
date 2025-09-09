@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\HostedCheck
  * Class HostedTokenizationController.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\CheckoutAPI\Controller
- * @internal
  */
 class HostedCheckoutController
 {

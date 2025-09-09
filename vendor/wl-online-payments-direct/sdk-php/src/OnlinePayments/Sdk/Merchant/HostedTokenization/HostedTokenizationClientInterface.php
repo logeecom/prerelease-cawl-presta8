@@ -18,7 +18,6 @@ use CAWL\OnlinePayments\Sdk\ReferenceException;
 use CAWL\OnlinePayments\Sdk\ValidationException;
 /**
  * HostedTokenization client interface.
- * @internal
  */
 interface HostedTokenizationClientInterface
 {

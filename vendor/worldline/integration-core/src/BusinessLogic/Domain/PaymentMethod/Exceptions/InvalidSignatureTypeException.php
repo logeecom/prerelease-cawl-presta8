@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTr
  * Class InvalidSignatureTypeException
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions
- * @internal
  */
 class InvalidSignatureTypeException extends BaseTranslatableException
 {

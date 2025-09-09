@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class RedirectModuleFrontController.
  *
  * @package OnlinePayments\Controllers\Concrete\Front
- * @internal
  */
 class RedirectModuleFrontController extends \ModuleFrontController
 {

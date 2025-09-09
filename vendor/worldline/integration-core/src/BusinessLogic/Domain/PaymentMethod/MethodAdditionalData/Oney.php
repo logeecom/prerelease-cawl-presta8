@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAddi
  * Class Oney
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\RedirectPaymentMethod
- * @internal
  */
 class Oney implements PaymentMethodAdditionalData
 {

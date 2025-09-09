@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\LogCleanup;
  * Class LogCleanupListener
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\LogCleanup
- * @internal
  */
 class LogCleanupListener
 {

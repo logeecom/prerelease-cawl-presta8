@@ -16,7 +16,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\HostedToken
  * Class HostedTokenizationController.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\CheckoutAPI\Controller
- * @internal
  */
 class HostedTokenizationController
 {

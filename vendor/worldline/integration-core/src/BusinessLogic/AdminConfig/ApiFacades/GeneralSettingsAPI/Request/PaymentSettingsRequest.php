@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\Inv
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAction;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAttemptsNumber;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
-/** @internal */
 class PaymentSettingsRequest extends Request
 {
     protected string $paymentAction;

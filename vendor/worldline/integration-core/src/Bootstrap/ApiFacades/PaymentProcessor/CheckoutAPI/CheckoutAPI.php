@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\CheckoutA
  * Class CheckoutAPI. Integrations should use this class for communicating with Checkout API.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\CheckoutAPI
- * @internal
  */
 class CheckoutAPI
 {

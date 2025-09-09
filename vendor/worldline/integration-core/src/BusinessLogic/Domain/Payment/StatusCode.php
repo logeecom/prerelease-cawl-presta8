@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment;
  * Class statusCode.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Payment
- * @internal
  */
 class StatusCode
 {

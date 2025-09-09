@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\GeneralSetting
  * Class GeneralSettingsResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Response
- * @internal
  */
 class GeneralSettingsResponse extends Response
 {

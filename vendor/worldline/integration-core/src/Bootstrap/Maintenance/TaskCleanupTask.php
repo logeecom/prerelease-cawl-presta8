@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Task;
  * In charge for deleting from the database tasks in specific statuses older than specific age (in seconds).
  *
  * @package OnlinePayments\Core\Bootstrap\Maintenance
- * @internal
  */
 class TaskCleanupTask extends Task
 {

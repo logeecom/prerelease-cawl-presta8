@@ -7,7 +7,6 @@ namespace CAWL\OnlinePayments\Sdk\Webhooks;
  * A store of secret keys. Implementations could store secret keys in a database, on disk, etc.
  *
  * @package OnlinePayments\Sdk\Webhooks
- * @internal
  */
 interface SecretKeyStore
 {

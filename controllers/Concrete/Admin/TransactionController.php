@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Classes\Services\PrestaShop\CaptureService;
 use CAWL\OnlinePayments\Classes\Services\PrestaShop\RefundService;
 use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\AdminAPI\AdminAPI;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkRequest;
-/** @internal */
 class TransactionController extends ModuleAdminController
 {
     /**

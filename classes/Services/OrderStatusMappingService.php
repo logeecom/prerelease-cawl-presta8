@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Classes\Services;
  * Class OrderStatusMapping
  *
  * @package OnlinePayments\Classes\Services
- * @internal
  */
 class OrderStatusMappingService
 {

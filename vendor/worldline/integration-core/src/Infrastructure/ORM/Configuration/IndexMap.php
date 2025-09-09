@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Infrastructure\ORM\Configuration;
  * Class IndexMap.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\Configuration
- * @internal
  */
 class IndexMap
 {

@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces;
  * Interface Priority
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces
- * @internal
  */
 interface Priority
 {

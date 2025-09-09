@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueService;
  * Class AutoCaptureCheckListener.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\BackgroundProcesses
- * @internal
  */
 class AutoCaptureCheckListener
 {

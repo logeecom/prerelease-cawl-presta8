@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Exceptions\ServiceNotRegisteredExcep
  * Class ServiceRegister.
  *
  * @package OnlinePayments\Core\Infrastructure
- * @internal
  */
 class ServiceRegister
 {

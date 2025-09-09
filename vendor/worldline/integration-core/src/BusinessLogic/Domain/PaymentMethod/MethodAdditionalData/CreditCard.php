@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translation
  * Class CreditCard
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData
- * @internal
  */
 class CreditCard implements PaymentMethodAdditionalData
 {

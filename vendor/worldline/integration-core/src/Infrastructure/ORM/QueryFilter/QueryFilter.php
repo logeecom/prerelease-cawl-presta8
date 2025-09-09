@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidPar
  * Class QueryFilter.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\QueryFilter
- * @internal
  */
 class QueryFilter
 {

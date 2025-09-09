@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethod;
  * Interface ShopPaymentService
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Integration\Payment
- * @internal
  */
 interface ShopPaymentService
 {

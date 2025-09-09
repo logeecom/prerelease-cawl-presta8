@@ -23,7 +23,6 @@ use CAWL\OnlinePayments\Sdk\Domain\PaymentStatusOutput;
  * Class PaymentDetailsResponseTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
- * @internal
  */
 class PaymentDetailsResponseTransformer
 {

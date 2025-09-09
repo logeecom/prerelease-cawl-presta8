@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkSetti
  * Class PayByLinkSettingsRequest
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Request
- * @internal
  */
 class PayByLinkSettingsRequest extends Request
 {

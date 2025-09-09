@@ -16,7 +16,6 @@ use CAWL\OnlinePayments\Sdk\ReferenceException;
 use CAWL\OnlinePayments\Sdk\ValidationException;
 /**
  * PrivacyPolicy client interface.
- * @internal
  */
 interface PrivacyPolicyClientInterface
 {

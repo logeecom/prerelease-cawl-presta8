@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\TaskRunnerStatus;
  * Interface RunnerStatusStorage.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces
- * @internal
  */
 interface TaskRunnerStatusStorage
 {

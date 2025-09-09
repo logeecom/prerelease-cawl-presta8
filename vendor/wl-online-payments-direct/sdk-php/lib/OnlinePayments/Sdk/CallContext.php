@@ -7,7 +7,6 @@ use DateTime;
  * Class CallContext
  *
  * @package OnlinePayments\Sdk
- * @internal
  */
 class CallContext
 {

@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
 use CAWL\OnlinePayments\Sdk\Communication\CommunicatorLoggerHelper as SdkCommunicatorLoggerHelper;
 use CAWL\OnlinePayments\Sdk\Communication\ConnectionResponseInterface;
 use CAWL\OnlinePayments\Sdk\Logging\CommunicatorLogger;
-/** @internal */
 class CommunicatorLoggerHelper extends SdkCommunicatorLoggerHelper
 {
     public function logRequest(CommunicatorLogger $communicatorLogger, $requestId, $requestMethod, $requestUri, array $requestHeaders, $requestBody = '') : void

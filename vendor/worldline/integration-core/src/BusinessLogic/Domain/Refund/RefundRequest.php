@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
  * Class RefundRequest.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Refund
- * @internal
  */
 class RefundRequest
 {

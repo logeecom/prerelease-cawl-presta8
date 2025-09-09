@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Stores\Models\StoreOrderStatus
  * Interface StoreService
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Integration\Stores
- * @internal
  */
 interface StoreService
 {

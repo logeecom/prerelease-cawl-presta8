@@ -3,7 +3,6 @@
 namespace CAWL\OnlinePayments\Sdk\Authentication;
 
 use CAWL\OnlinePayments\Sdk\CommunicatorConfiguration;
-/** @internal */
 class V1HmacAuthenticator implements Authenticator
 {
     const AUTHORIZATION_ID = 'GCS';

@@ -7,7 +7,6 @@ use DateTime;
  * Class QueryCondition.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\QueryFilter
- * @internal
  */
 class QueryCondition
 {

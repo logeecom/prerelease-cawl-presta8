@@ -15,7 +15,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\RepositoryRegistry;
  * Class WebhooksController
  *
  * @package OnlinePayments\Controllers\Concrete\Front
- * @internal
  */
 class WebhooksController extends ModuleFrontController
 {

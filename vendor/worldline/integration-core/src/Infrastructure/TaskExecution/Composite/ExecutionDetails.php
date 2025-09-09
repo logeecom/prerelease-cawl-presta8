@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Serializer\Serializer;
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Composite
  *
  * @access private
- * @internal
  */
 class ExecutionDetails implements Serializable
 {

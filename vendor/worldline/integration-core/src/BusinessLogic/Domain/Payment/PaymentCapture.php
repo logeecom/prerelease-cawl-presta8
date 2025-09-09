@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
  * Class PaymentCapture.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Payment
- * @internal
  */
 class PaymentCapture
 {

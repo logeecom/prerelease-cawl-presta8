@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Sdk\Domain\RefundResponse as SdkRefundResponse;
  * CreateRefundResponseTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Order\Proxies\Transformers
- * @internal
  */
 class CreateRefundResponseTransformer
 {

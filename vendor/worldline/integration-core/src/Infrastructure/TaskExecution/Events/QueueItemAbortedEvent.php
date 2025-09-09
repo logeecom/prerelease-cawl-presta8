@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
  * Class QueueItemAbortedEvent
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Events
- * @internal
  */
 class QueueItemAbortedEvent extends BaseQueueItemEvent
 {

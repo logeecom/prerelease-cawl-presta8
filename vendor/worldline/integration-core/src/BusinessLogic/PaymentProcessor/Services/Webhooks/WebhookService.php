@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\PaymentTr
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusCode;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Webhook\WebhookData;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\Payment\StatusUpdateService;
-/** @internal */
 class WebhookService
 {
     protected StatusUpdateService $statusUpdateService;

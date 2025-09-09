@@ -15,7 +15,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class OrderService
  *
  * @package OnlinePayments\Classes\Services\PrestaShop
- * @internal
  */
 class OrderService
 {

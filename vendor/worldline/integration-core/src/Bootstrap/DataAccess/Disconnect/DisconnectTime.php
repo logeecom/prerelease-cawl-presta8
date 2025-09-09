@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Utility\TimeProvider;
  * Class DisconnectTime
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\Disconnect
- * @internal
  */
 class DisconnectTime extends Entity
 {

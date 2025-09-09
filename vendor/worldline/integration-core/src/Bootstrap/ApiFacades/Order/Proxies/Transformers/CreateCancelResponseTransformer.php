@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Sdk\Domain\CancelPaymentResponse;
  * CreateCancelResponseTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Order\Proxies\Transformers
- * @internal
  */
 class CreateCancelResponseTransformer
 {

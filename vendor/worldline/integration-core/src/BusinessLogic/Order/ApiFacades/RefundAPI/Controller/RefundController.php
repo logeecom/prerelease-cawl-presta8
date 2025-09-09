@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Order\Services\Refund\RefundService;
  * Class RefundController
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\RefundAPI\Controller
- * @internal
  */
 class RefundController
 {

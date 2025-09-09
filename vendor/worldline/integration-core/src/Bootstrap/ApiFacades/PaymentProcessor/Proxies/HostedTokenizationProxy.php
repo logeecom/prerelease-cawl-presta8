@@ -17,7 +17,6 @@ use Throwable;
  * Class HostedTokenizationProxy.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies
- * @internal
  */
 class HostedTokenizationProxy implements HostedTokenizationProxyInterface
 {

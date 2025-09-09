@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Sdk\Domain\CreateHostedTokenizationRequest;
 use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * HostedTokenization client.
- * @internal
  */
 class HostedTokenizationClient extends ApiResource implements HostedTokenizationClientInterface
 {

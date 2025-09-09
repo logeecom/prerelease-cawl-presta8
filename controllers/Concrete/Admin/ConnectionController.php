@@ -14,7 +14,6 @@ use Tools;
  * Class ConnectionController
  *
  * @package OnlinePayments\Controllers\Concrete\Admin
- * @internal
  */
 class ConnectionController extends ModuleAdminController
 {

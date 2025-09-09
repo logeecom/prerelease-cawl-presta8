@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Exceptions\BaseException;
  * Class ProcessStorageGetException.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions
- * @internal
  */
 class ProcessStorageGetException extends BaseException
 {

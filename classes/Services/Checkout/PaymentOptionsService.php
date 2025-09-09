@@ -26,7 +26,6 @@ use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
  * Class PaymentOptionsService.
  *
  * @package OnlinePayments\Classes\Services\Checkout
- * @internal
  */
 class PaymentOptionsService
 {

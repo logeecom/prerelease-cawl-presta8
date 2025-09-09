@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\LogSettings;
  * Interface LogSettingsRepositoryInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Repositories
- * @internal
  */
 interface LogSettingsRepositoryInterface
 {

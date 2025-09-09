@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\ExemptionType;
  * Class CardsSettingsRequest
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Request
- * @internal
  */
 class CardsSettingsRequest extends Request
 {

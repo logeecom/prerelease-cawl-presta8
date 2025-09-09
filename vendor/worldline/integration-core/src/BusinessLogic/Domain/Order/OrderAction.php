@@ -3,7 +3,6 @@
 namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Order;
 
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
-/** @internal */
 class OrderAction
 {
     private bool $possible;

@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
  * Class TokenDeleteResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\CheckoutAPI\Response
- * @internal
  */
 class TokenDeleteResponse extends Response
 {

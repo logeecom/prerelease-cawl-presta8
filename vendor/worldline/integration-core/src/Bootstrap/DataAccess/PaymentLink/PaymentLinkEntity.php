@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class PaymentLinkEntity
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\PaymentLink
- * @internal
  */
 class PaymentLinkEntity extends Entity
 {

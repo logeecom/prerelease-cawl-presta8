@@ -8,7 +8,6 @@ use UnexpectedValueException;
  * Class JSONUtil
  *
  * @package OnlinePayments\Sdk
- * @internal
  */
 class JSONUtil
 {

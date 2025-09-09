@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Stores\Models;
  * Class StoreOrderStatus
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Stores\Models
- * @internal
  */
 class StoreOrderStatus
 {

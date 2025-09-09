@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Refund\RefundResponse;
  * Interface RefundProxyInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\Order\Proxies
- * @internal
  */
 interface RefundProxyInterface
 {

@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Sdk\Communication\RequestObject;
  * Query parameters for Get payment product networks
  *
  * @package OnlinePayments\Sdk\Merchant\Products
- * @internal
  */
 class GetPaymentProductNetworksParams extends RequestObject
 {

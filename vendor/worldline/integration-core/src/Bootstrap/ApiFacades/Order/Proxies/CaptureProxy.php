@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Order\Proxies\CaptureProxyInterface;
  * CaptureProxy.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Order\Proxies
- * @internal
  */
 class CaptureProxy implements CaptureProxyInterface
 {

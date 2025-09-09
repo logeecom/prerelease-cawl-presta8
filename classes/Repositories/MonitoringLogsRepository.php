@@ -15,7 +15,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class MonitoringLogsRepository
  *
  * @package OnlinePayments\Classes\Repositories
- * @internal
  */
 class MonitoringLogsRepository extends BaseRepositoryWithConditionalDelete implements RepositoryWithAdvancedSearchInterface
 {

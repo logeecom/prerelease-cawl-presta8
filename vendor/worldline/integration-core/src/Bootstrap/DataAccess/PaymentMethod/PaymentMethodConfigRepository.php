@@ -16,7 +16,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
  * Class PaymentMethodConfigRepository.
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\PaymentMethod
- * @internal
  */
 class PaymentMethodConfigRepository implements PaymentMethodConfigRepositoryInterface, PaymentConfigRepositoryInterface
 {

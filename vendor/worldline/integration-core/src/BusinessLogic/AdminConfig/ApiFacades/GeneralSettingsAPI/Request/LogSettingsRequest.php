@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\LogSettings;
  * Class LogSettingsRequest
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Request
- * @internal
  */
 class LogSettingsRequest extends Request
 {

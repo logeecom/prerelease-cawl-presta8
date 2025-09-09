@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Branding\Brand;
  * Class BrandConfig.
  *
  * @package OnlinePayments\Core\Branding\Brand
- * @internal
  */
 class BrandConfig
 {

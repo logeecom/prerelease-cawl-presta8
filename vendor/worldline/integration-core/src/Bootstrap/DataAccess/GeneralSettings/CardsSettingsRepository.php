@@ -15,7 +15,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
  * Class CardSettingsRepository
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings
- * @internal
  */
 class CardsSettingsRepository implements CardsSettingsRepositoryInterface, DomainCardsSettingsRepositoryInterface
 {

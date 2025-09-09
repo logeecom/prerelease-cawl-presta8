@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Sdk\JSON\JSONUtil;
  * Class DataObject
  *
  * @package OnlinePayments\Sdk\Domain
- * @internal
  */
 abstract class DataObject
 {

@@ -8,7 +8,6 @@ use stdClass;
  * Class JsonSerializer
  *
  * @package OnlinePayments\Core\Infrastructure\Serializer\Concrete
- * @internal
  */
 class JsonSerializer extends Serializer
 {

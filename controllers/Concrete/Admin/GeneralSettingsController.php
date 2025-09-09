@@ -20,7 +20,6 @@ use Tools;
  * Class GeneralSettingsController
  *
  * @package OnlinePayments\Controllers\Concrete\Admin
- * @internal
  */
 class GeneralSettingsController extends ModuleAdminController
 {

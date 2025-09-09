@@ -29,7 +29,6 @@ use Validate;
  * Class Installer
  *
  * @package OnlinePayments\Classes\Utility
- * @internal
  */
 class Installer
 {

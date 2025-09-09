@@ -8,7 +8,6 @@ use PhpEncryption;
  * Class Encryptor
  *
  * @package OnlinePayments\Classes\Services\Integration
- * @internal
  */
 class Encryptor implements EncryptorInterface
 {

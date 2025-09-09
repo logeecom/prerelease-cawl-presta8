@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Sdk\Merchant\Products\GetPaymentProductsParams;
  * Class GetPaymentProductsParamsTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\RequestTransformers
- * @internal
  */
 class GetPaymentProductsParamsTransformer
 {

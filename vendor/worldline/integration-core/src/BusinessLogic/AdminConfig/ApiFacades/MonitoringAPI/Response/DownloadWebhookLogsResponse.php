@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
  * Class DownloadWebhookLogsResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response
- * @internal
  */
 class DownloadWebhookLogsResponse extends Response
 {

@@ -18,7 +18,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\Inval
  * Class PaymentController
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\PaymentAPI\Controller
- * @internal
  */
 class PaymentController
 {

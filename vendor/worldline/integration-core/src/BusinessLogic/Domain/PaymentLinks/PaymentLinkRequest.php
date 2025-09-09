@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\RoundingTotalsCa
  * Class PaymentLinkRequest
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks
- * @internal
  */
 class PaymentLinkRequest
 {

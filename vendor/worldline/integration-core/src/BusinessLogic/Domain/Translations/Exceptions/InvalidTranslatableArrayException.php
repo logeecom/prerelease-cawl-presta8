@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translatabl
  * Class InvalidTranslatableArrayException.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions
- * @internal
  */
 class InvalidTranslatableArrayException extends BaseTranslatableException
 {

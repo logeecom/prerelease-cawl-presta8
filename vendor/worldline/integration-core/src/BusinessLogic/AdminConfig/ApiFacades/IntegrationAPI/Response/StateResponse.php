@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
  * Class StateResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\IntegrationAPI\Response
- * @internal
  */
 class StateResponse extends Response
 {

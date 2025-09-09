@@ -7,7 +7,6 @@ use Exception;
  * Class SecretKeyNotAvailableException
  *
  * @package OnlinePayments\Sdk\Webhooks
- * @internal
  */
 class SecretKeyNotAvailableException extends SignatureValidationException
 {

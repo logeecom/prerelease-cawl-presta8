@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Task;
  * Class QueueItemEnqueuedEvent
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Events
- * @internal
  */
 class QueueItemEnqueuedEvent extends BaseQueueItemEvent
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Sdk\Domain\CreateHostedTokenizationResponse;
  * Class CreateHostedTokenizationResponseTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
- * @internal
  */
 class CreateHostedTokenizationResponseTransformer
 {

@@ -8,7 +8,6 @@ use SplFileObject;
  * Class SplFileObjectLogger
  *
  * @package OnlinePayments\Sdk\Logging
- * @internal
  */
 class SplFileObjectLogger implements CommunicatorLogger
 {

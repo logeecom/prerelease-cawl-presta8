@@ -8,7 +8,6 @@ use DateTimeInterface;
  * Class MonitoringLog
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Monitoring
- * @internal
  */
 class MonitoringLog
 {

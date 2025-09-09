@@ -68,7 +68,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
  * Class Bootstrap
  *
  * @package OnlinePayments\Classes
- * @internal
  */
 class Bootstrap extends BootstrapComponent
 {

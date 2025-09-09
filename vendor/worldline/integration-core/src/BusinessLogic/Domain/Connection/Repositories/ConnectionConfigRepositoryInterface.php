@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
  * Interface ConnectionConfigRepositoryInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Connection\Repositories
- * @internal
  */
 interface ConnectionConfigRepositoryInterface
 {

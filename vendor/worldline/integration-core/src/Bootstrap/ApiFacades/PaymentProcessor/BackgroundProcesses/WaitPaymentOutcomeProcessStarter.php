@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\AsyncProces
  * Interface WaitPaymentOutcomeProcessStarter.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\BackgroundProcesses
- * @internal
  */
 class WaitPaymentOutcomeProcessStarter implements WaitPaymentOutcomeProcessStarterInterface
 {

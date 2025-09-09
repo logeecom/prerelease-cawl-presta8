@@ -18,7 +18,6 @@ use CAWL\OnlinePayments\Sdk\ReferenceException;
 use CAWL\OnlinePayments\Sdk\ValidationException;
 /**
  * HostedCheckout client interface.
- * @internal
  */
 interface HostedCheckoutClientInterface
 {

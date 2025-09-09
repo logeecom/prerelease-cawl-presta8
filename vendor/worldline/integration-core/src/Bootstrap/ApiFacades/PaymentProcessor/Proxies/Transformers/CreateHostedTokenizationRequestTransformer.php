@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Sdk\Domain\CreateHostedTokenizationRequest;
  * Class CreateHostedTokenizationRequestTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
- * @internal
  */
 class CreateHostedTokenizationRequestTransformer
 {

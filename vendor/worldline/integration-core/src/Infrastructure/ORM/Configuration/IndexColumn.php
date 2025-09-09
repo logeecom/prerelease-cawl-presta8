@@ -7,7 +7,6 @@ use InvalidArgumentException;
  * Class Index.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\Configuration
- * @internal
  */
 class IndexColumn
 {

@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Sdk\Communication\ResponseClassMap;
 use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * ProductGroups client.
- * @internal
  */
 class ProductGroupsClient extends ApiResource implements ProductGroupsClientInterface
 {

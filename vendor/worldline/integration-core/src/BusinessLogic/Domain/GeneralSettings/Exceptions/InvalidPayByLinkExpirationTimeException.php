@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTr
  * Class InvalidPayByLinkExpirationTimeException
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions
- * @internal
  */
 class InvalidPayByLinkExpirationTimeException extends BaseTranslatableException
 {

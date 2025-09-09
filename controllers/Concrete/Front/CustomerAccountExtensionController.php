@@ -13,7 +13,6 @@ use Tools;
  * Class CustomerAccountExtensionController
  *
  * @package OnlinePayments\Controllers\Concrete\Front
- * @internal
  */
 class CustomerAccountExtensionController extends ModuleFrontController
 {

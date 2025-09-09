@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Sdk\Domain\TokenResponse;
  * Class TokenResponseTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
- * @internal
  */
 class TokenResponseTransformer
 {

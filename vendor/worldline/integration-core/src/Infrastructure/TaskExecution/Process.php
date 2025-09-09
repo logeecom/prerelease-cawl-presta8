@@ -11,7 +11,6 @@ use InvalidArgumentException;
 /**
  * Class Process
  * @package OnlinePayments\Core\Infrastructure\ORM\Entities
- * @internal
  */
 class Process extends Entity
 {

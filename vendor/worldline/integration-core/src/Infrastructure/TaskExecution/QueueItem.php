@@ -21,7 +21,6 @@ use InvalidArgumentException;
  * Class QueueItem
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
- * @internal
  */
 class QueueItem extends Entity
 {

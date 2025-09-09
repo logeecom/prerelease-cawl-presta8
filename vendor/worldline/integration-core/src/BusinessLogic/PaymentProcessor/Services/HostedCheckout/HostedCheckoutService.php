@@ -21,7 +21,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentMeth
  * Class HostedTokenizationService.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\HostedTokenization
- * @internal
  */
 class HostedCheckoutService
 {

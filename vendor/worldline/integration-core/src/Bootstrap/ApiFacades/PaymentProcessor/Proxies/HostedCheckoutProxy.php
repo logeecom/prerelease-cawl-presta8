@@ -18,7 +18,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\HostedChecko
  * Interface HostedCheckoutProxy.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies
- * @internal
  */
 class HostedCheckoutProxy implements HostedCheckoutProxyInterface
 {

@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Order\Proxies\RefundProxyInterface;
  * RefundProxy.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Order\Proxies
- * @internal
  */
 class RefundProxy implements RefundProxyInterface
 {

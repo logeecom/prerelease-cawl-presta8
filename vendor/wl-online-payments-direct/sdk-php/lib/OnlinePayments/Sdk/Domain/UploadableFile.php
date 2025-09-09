@@ -7,7 +7,6 @@ use UnexpectedValueException;
  * Class UploadableFile
  *
  * @package OnlinePayments\Sdk\Domain
- * @internal
  */
 class UploadableFile
 {

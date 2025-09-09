@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
  * Class PaymentMethodEnableResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\PaymentAPI\Response
- * @internal
  */
 class PaymentMethodEnableResponse extends Response
 {

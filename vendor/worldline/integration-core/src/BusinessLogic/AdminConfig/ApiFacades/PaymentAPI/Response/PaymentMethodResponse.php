@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId
  * Class PaymentMethodResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\PaymentAPI\Response
- * @internal
  */
 class PaymentMethodResponse extends Response
 {

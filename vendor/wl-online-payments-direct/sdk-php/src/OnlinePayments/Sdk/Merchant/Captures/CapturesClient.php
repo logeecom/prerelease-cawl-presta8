@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Sdk\Communication\ResponseClassMap;
 use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * Captures client.
- * @internal
  */
 class CapturesClient extends ApiResource implements CapturesClientInterface
 {

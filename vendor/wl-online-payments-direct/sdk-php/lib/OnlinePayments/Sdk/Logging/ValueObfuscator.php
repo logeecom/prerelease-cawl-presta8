@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Sdk\Logging;
  * Class ValueObfuscator
  *
  * @package OnlinePayments\Sdk\Logging
- * @internal
  */
 class ValueObfuscator
 {

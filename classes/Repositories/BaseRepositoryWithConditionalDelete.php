@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class BaseRepositoryWithConditionalDelete
  *
  * @package OnlinePayments\Classes\Repositories
- * @internal
  */
 class BaseRepositoryWithConditionalDelete extends BaseRepository implements ConditionallyDeletes
 {

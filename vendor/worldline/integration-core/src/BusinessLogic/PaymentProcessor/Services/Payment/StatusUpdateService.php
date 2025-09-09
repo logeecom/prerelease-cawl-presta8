@@ -24,7 +24,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentsProx
  * Class StatusUpdateService.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\Payment
- * @internal
  */
 class StatusUpdateService
 {

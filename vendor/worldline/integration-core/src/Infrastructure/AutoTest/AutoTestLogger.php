@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Singleton;
  * Class AutoTestLogger.
  *
  * @package OnlinePayments\Core\Infrastructure\AutoConfiguration
- * @internal
  */
 class AutoTestLogger extends Singleton implements ShopLoggerAdapter
 {

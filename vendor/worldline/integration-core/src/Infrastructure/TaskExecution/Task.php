@@ -19,7 +19,6 @@ use RuntimeException;
 /**
  * Class Task
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
- * @internal
  */
 abstract class Task extends EventEmitter implements Serializable
 {

@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Task;
  * Class LogCleanupTask
  *
  * @package OnlinePayments\Core\Bootstrap\LogCleanup\Tasks
- * @internal
  */
 class LogCleanupTask extends Task
 {

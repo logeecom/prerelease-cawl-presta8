@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentTransaction;
  * Class PaymentResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization
- * @internal
  */
 class PaymentResponse
 {

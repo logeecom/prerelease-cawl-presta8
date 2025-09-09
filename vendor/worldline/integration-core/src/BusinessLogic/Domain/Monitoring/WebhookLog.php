@@ -8,7 +8,6 @@ use DateTimeInterface;
  * Class WebhookLog
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Monitoring
- * @internal
  */
 class WebhookLog
 {

@@ -7,7 +7,6 @@ use Exception;
  * Class CommunicatorLogger
  *
  * @package OnlinePayments\Sdk\Logging
- * @internal
  */
 interface CommunicatorLogger
 {

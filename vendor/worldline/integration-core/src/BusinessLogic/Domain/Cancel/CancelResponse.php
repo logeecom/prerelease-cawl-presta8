@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusCode;
  * Class CancelResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Cancel
- * @internal
  */
 class CancelResponse
 {

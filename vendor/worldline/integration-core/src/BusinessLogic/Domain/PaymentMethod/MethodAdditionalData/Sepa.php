@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditional
  * Class Sepa
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\RedirectPaymentMethod
- * @internal
  */
 class Sepa implements PaymentMethodAdditionalData
 {

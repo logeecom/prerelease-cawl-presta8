@@ -18,7 +18,6 @@ use Exception;
  * Class TaskRunnerStarter.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
- * @internal
  */
 class TaskRunnerStarter implements Runnable
 {

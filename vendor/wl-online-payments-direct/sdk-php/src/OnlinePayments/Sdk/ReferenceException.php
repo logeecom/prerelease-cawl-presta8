@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Sdk\Domain\DataObject;
  * Class ReferenceException
  *
  * @package OnlinePayments\Sdk
- * @internal
  */
 class ReferenceException extends ResponseException
 {

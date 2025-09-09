@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Sdk\Logging\CommunicatorLogger;
 use CAWL\OnlinePayments\Sdk\Merchant\MerchantClientInterface;
 /**
  * Payment platform client interface.
- * @internal
  */
 interface ClientInterface
 {

@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Exceptions\InvalidC
  * Class ConnectionController
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ConnectionAPI\Controller
- * @internal
  */
 class ConnectionController
 {

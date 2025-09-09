@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Task;
  * Class TransactionStatusCheckTask.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\BackgroundProcesses
- * @internal
  */
 class TransactionStatusCheckTask extends Task
 {

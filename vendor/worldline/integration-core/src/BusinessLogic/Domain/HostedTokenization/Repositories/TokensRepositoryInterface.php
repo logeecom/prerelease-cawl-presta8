@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
  * Interface TokensRepositoryInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories
- * @internal
  */
 interface TokensRepositoryInterface
 {

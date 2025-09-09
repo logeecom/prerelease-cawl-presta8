@@ -8,7 +8,6 @@ namespace CAWL\OnlinePayments\Sdk;
  * callback to methods that require a body handler callable.
  *
  * @package OnlinePayments\Sdk
- * @internal
  */
 class BodyHandler
 {

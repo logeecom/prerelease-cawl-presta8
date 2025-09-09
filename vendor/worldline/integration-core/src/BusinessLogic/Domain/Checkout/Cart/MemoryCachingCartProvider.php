@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart;
  * Class MemoryCachingCartProvider.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart
- * @internal
  */
 class MemoryCachingCartProvider implements CartProvider
 {

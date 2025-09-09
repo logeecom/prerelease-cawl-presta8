@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAddi
  * Class HostedCheckout
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData
- * @internal
  */
 class HostedCheckout implements PaymentMethodAdditionalData
 {

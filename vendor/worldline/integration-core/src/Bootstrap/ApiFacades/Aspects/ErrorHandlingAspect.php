@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Logger\Logger;
  * Class ErrorHandlingAspect.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Aspects
- * @internal
  */
 class ErrorHandlingAspect implements Aspect
 {

@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces;
  * Interface TaskRunnerWakeup.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces
- * @internal
  */
 interface TaskRunnerWakeup
 {

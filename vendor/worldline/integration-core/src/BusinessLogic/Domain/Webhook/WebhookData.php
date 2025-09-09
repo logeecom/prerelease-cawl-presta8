@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Webhook;
  * Class WebhookData
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Webhook
- * @internal
  */
 class WebhookData
 {

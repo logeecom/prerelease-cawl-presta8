@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueService;
  * Class LogCleanupTaskEnqueuer
  *
  * @package OnlinePayments\Core\Bootstrap\LogCleanup
- * @internal
  */
 class LogCleanupTaskService implements LogCleanupTaskServiceInterface
 {

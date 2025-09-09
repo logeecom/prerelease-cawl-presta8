@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translation
  * Class PaymentMethodResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod
- * @internal
  */
 class PaymentMethodResponse
 {

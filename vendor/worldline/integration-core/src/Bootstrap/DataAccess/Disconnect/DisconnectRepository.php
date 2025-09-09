@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
  * Class DisconnectRepository
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\Disconnect
- * @internal
  */
 class DisconnectRepository implements DisconnectRepositoryInterface
 {

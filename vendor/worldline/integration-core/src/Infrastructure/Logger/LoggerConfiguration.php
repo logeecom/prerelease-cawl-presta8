@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Singleton;
  * Class LoggerConfiguration.
  *
  * @package OnlinePayments\Core\Infrastructure\Logger
- * @internal
  */
 class LoggerConfiguration extends Singleton
 {

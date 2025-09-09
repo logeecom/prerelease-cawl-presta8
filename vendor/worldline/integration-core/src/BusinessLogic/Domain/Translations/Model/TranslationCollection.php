@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\Invali
  * Class TranslationCollection
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Translations\Model
- * @internal
  */
 class TranslationCollection
 {

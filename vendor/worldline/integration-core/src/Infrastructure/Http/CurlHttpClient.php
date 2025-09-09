@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidPar
  * Class CurlHttpClient.
  *
  * @package OnlinePayments\Core\Infrastructure\Http
- * @internal
  */
 class CurlHttpClient extends HttpClient
 {

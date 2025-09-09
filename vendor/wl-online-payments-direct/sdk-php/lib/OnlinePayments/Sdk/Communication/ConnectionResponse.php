@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Sdk\Communication;
  * Class ConnectionResponse
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 class ConnectionResponse implements ConnectionResponseInterface
 {

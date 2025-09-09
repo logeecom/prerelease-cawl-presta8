@@ -18,7 +18,6 @@ use CAWL\OnlinePayments\Sdk\ReferenceException;
 use CAWL\OnlinePayments\Sdk\ValidationException;
 /**
  * Webhooks client interface.
- * @internal
  */
 interface WebhooksClientInterface
 {

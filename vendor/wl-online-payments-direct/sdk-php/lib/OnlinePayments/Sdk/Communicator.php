@@ -24,7 +24,6 @@ use CAWL\OnlinePayments\Sdk\Logging\CommunicatorLogger;
  * Class Communicator
  *
  * @package OnlinePayments\Sdk
- * @internal
  */
 class Communicator implements CommunicatorInterface
 {

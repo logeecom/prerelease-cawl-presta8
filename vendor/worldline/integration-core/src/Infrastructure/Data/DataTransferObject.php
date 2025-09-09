@@ -7,7 +7,6 @@ use RuntimeException;
  * Class DataTransferObject.
  *
  * @package OnlinePayments\Core\Infrastructure\Data
- * @internal
  */
 abstract class DataTransferObject
 {

@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Data\DataTransferObject;
  * Class LogContextData.
  *
  * @package OnlinePayments\Core\Infrastructure\Logger
- * @internal
  */
 class LogContextData extends DataTransferObject
 {

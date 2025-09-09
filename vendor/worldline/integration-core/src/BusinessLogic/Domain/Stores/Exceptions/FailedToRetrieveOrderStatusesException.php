@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translatabl
  * Class FailedToRetrieveOrderStatusesException
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Stores\Exceptions
- * @internal
  */
 class FailedToRetrieveOrderStatusesException extends BaseTranslatableException
 {

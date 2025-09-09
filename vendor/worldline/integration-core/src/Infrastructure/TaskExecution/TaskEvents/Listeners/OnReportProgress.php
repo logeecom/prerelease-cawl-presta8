@@ -13,7 +13,6 @@ use RuntimeException;
  * Class OnReportProgress
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\TaskEvents\Listeners
- * @internal
  */
 class OnReportProgress
 {

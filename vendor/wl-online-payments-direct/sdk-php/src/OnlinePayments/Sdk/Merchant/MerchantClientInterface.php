@@ -23,7 +23,6 @@ use CAWL\OnlinePayments\Sdk\Merchant\Tokens\TokensClientInterface;
 use CAWL\OnlinePayments\Sdk\Merchant\Webhooks\WebhooksClientInterface;
 /**
  * Merchant client interface.
- * @internal
  */
 interface MerchantClientInterface
 {

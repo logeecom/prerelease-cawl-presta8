@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusCode;
  * Class WaitPaymentOutcome.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\BackgroundProcesses
- * @internal
  */
 class WaitPaymentOutcome
 {

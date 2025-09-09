@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class LogoUrlService
  *
  * @package OnlinePayments\Classes\Services\Integration
- * @internal
  */
 class LogoUrlService implements CoreLogoUrlService
 {

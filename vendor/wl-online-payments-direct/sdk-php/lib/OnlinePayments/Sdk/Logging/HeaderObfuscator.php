@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Sdk\Logging;
  * Class HeaderObfuscator
  *
  * @package OnlinePayments\Sdk\Logging
- * @internal
  */
 class HeaderObfuscator
 {

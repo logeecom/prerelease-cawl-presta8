@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Customer;
  * Class PersonalInformation.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Customer
- * @internal
  */
 class PersonalInformation
 {

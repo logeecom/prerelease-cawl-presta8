@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translatabl
  * Class Amount
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\PaymentRequest\Models\Amount
- * @internal
  */
 class Amount
 {

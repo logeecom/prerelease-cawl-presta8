@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection;
  * Class Credentials.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Connection
- * @internal
  */
 class Credentials
 {

@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
  * Interface MassInsert.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\Interfaces
- * @internal
  */
 interface MassInsert extends RepositoryInterface
 {

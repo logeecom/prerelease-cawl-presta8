@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
  * Interface ConditionallyDeletes.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\Interfaces
- * @internal
  */
 interface ConditionallyDeletes extends RepositoryInterface
 {

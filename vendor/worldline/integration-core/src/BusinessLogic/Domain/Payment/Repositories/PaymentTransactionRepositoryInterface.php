@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentTransaction;
  * Interface PaymentTransactionRepositoryInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories
- * @internal
  */
 interface PaymentTransactionRepositoryInterface
 {

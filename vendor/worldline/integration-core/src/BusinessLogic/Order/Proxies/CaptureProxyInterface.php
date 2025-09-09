@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Capture\CaptureResponse;
  * Interface CaptureProxyInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\Order\Proxies
- * @internal
  */
 interface CaptureProxyInterface
 {

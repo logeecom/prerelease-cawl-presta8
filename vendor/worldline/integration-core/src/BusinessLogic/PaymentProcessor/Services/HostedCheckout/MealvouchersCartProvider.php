@@ -15,7 +15,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Repositories\Product
  * Class MealvouchersCartProvider.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\HostedCheckout
- * @internal
  */
 class MealvouchersCartProvider implements CartProvider
 {

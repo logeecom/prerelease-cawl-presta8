@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\WebhookLog;
  * Class WebhookLogsResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response
- * @internal
  */
 class WebhookLogsResponse extends Response
 {

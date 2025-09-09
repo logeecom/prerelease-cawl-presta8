@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Utility\TimeProvider as Infrastructu
  * Interface TimeProvider.
  *
  * @package OnlinePayments\Core\Bootstrap\Time
- * @internal
  */
 class TimeProvider implements TimeProviderInterface
 {

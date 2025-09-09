@@ -8,7 +8,6 @@ use Exception;
  * Class QueueStorageUnavailableException.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions
- * @internal
  */
 class QueueStorageUnavailableException extends BaseException
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Order\Services\Order\OrderService;
  * Class OrderController
  *
  * @package OnlinePayments\Core\BusinessLogic\Order\ApiFacades\OrdersAPI\Controller
- * @internal
  */
 class OrderController
 {

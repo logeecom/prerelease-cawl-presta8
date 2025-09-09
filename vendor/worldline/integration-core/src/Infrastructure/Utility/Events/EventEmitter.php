@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Infrastructure\Utility\Events;
  * Class EventEmitter.
  *
  * @package OnlinePayments\Core\Infrastructure\Utility\Events
- * @internal
  */
 abstract class EventEmitter
 {

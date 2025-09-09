@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethod;
  * Class ShopPaymentService
  *
  * @package OnlinePayments\Classes\Services\Integration
- * @internal
  */
 class ShopPaymentService implements BaseShopPaymentService
 {

@@ -22,7 +22,6 @@ use Exception;
  * Class AutoTestService.
  *
  * @package OnlinePayments\Core\Infrastructure\AutoTest
- * @internal
  */
 class AutoTestService
 {

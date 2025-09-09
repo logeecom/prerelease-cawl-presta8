@@ -18,7 +18,6 @@ use CAWL\OnlinePayments\Sdk\Domain\ThreeDSecure;
  * Class CardPaymentMethodSpecificInputTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
- * @internal
  */
 class CardPaymentMethodSpecificInputTransformer
 {

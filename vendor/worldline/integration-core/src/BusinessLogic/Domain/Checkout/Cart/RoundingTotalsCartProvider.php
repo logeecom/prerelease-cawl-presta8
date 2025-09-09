@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\TaxableAmount;
  * Class RoundingTotalsCartProvider.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart
- * @internal
  */
 class RoundingTotalsCartProvider implements CartProvider
 {

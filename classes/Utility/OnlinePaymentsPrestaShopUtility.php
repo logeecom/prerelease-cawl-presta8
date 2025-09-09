@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
  * Class OnlinePaymentsPrestaShopUtility
  *
  * @package OnlinePayments\Classes\Utility
- * @internal
  */
 class OnlinePaymentsPrestaShopUtility
 {

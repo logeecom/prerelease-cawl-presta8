@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
  * Class StoreContextAspect.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Aspects
- * @internal
  */
 class StoreContextAspect implements Aspect
 {

@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Sdk\Communication;
  * Class HttpHeaderHelper
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 class HttpHeaderHelper
 {

@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class ConfigService
  *
  * @package OnlinePayments\Classes\Services\Integration
- * @internal
  */
 class ConfigService extends Configuration
 {

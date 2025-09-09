@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
  * Class PaymentSettingsConfigEntity
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings
- * @internal
  */
 class PaymentSettingsConfigEntity extends Entity
 {

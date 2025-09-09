@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusCode;
  * Class CaptureResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Capture
- * @internal
  */
 class CaptureResponse
 {

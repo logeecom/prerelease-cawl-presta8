@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\OrderStatusMapping\Model
  * Class OrderStatusMapping
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\OrderStatusMapping\Models
- * @internal
  */
 class OrderStatusMapping
 {

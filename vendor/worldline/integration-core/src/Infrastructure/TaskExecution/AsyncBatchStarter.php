@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\Runnable;
  * Class AsyncBatchStarter.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
- * @internal
  */
 class AsyncBatchStarter implements Runnable
 {

@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Order\Proxies\CancelProxyInterface;
  * CancelProxy.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Order\Proxies
- * @internal
  */
 class CancelProxy implements CancelProxyInterface
 {

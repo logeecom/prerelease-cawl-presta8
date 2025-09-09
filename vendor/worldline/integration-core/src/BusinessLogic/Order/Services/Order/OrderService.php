@@ -16,7 +16,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentsProx
  * Class OrderService
  *
  * @package OnlinePayments\Core\BusinessLogic\Order\Services\Order
- * @internal
  */
 class OrderService
 {

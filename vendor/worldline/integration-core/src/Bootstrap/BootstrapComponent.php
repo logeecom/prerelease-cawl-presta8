@@ -142,7 +142,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Utility\TimeProvider as Infrastructu
  * Class BootstrapComponent
  *
  * @package OnlinePayments\Core\Bootstrap
- * @internal
  */
 class BootstrapComponent extends BaseBootstrapComponent
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
  * Class OrderPayment
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Order
- * @internal
  */
 class OrderPayment
 {

@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Sdk\Domain\DataObject;
  * Class ValidationException
  *
  * @package OnlinePayments\Sdk
- * @internal
  */
 class ValidationException extends ResponseException
 {

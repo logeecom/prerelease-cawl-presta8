@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
  * @package OnlinePayments\Core\Infrastructure\ORM\Interfaces
  * @method QueueItem[] select(QueryFilter $filter = null)
  * @method QueueItem|null selectOne(QueryFilter $filter = null)
- * @internal
  */
 interface QueueItemRepository extends RepositoryInterface, ConditionallyDeletes
 {

@@ -28,7 +28,6 @@ use CAWL\OnlinePayments\Sdk\Domain\SurchargeSpecificInput;
  * Class CreateHostedCheckoutRequestTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
- * @internal
  */
 class CreateHostedCheckoutRequestTransformer
 {

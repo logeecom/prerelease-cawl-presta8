@@ -11,7 +11,6 @@ use PrestaShopException;
  * Class Url
  *
  * @package OnlinePayments\Classes\Utility
- * @internal
  */
 class Url
 {

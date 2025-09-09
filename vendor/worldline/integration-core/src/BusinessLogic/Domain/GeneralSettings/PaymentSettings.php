@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\Inv
  * Class PaymentSettings
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings
- * @internal
  */
 class PaymentSettings
 {

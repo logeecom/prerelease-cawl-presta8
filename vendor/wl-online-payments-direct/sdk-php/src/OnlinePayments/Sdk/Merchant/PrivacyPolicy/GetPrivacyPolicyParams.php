@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Sdk\Communication\RequestObject;
  * Query parameters for Get Privacy Policy
  *
  * @package OnlinePayments\Sdk\Merchant\PrivacyPolicy
- * @internal
  */
 class GetPrivacyPolicyParams extends RequestObject
 {

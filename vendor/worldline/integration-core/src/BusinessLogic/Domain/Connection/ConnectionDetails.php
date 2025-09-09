@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translatabl
  * Class ConnectionDetails.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Connection
- * @internal
  */
 class ConnectionDetails
 {

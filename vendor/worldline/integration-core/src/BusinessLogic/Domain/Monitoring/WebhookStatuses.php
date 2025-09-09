@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring;
  * Class WebhookStatuses
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Monitoring
- * @internal
  */
 class WebhookStatuses
 {

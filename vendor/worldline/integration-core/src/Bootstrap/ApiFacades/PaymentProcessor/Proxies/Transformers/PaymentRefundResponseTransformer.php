@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Sdk\Domain\RefundResponse;
  * Class PaymentRefundResponseTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
- * @internal
  */
 class PaymentRefundResponseTransformer
 {

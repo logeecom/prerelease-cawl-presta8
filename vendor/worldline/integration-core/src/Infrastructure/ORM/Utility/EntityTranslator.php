@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\IntermediateObject;
  * Class EntityTranslator.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\Utility
- * @internal
  */
 class EntityTranslator
 {

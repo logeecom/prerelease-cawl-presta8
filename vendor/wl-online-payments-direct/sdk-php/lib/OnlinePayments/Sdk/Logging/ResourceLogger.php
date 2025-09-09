@@ -8,7 +8,6 @@ use UnexpectedValueException;
  * Class ResourceLogger
  *
  * @package OnlinePayments\Sdk\Logging
- * @internal
  */
 class ResourceLogger implements CommunicatorLogger
 {

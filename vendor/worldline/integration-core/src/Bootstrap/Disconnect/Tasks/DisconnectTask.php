@@ -15,7 +15,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Task;
  * Class DisconnectTask
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Disconnect\Tasks
- * @internal
  */
 class DisconnectTask extends Task
 {

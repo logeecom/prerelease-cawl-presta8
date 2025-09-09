@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Sdk\Domain\SessionRequest;
 use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * Sessions client.
- * @internal
  */
 class SessionsClient extends ApiResource implements SessionsClientInterface
 {

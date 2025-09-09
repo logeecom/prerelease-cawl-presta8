@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Sdk\Domain\DataObject;
  * Class AuthorizationException
  *
  * @package OnlinePayments\Sdk
- * @internal
  */
 class AuthorizationException extends ResponseException
 {

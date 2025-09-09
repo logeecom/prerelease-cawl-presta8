@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
  * Class CardsSettingsEntity
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings
- * @internal
  */
 class CardsSettingsEntity extends Entity
 {

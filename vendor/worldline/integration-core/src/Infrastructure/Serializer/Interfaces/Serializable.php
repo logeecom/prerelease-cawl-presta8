@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Infrastructure\Serializer\Interfaces;
  * Interface Serializable
  *
  * @package OnlinePayments\Core\Infrastructure\Serializer\Interfaces
- * @internal
  */
 interface Serializable
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\PaymentResp
  * Class HostedCheckoutSessionResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\CheckoutAPI\Response
- * @internal
  */
 class HostedCheckoutSessionResponse extends Response
 {

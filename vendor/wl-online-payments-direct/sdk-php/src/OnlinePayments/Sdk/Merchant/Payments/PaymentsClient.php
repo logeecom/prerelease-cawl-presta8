@@ -18,7 +18,6 @@ use CAWL\OnlinePayments\Sdk\Domain\SubsequentPaymentRequest;
 use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * Payments client.
- * @internal
  */
 class PaymentsClient extends ApiResource implements PaymentsClientInterface
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Sdk\Domain\UploadableFile;
  * Class MultipartFormDataObject
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 class MultipartFormDataObject
 {

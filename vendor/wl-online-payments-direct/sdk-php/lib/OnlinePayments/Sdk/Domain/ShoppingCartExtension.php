@@ -7,7 +7,6 @@ use UnexpectedValueException;
  * Class ShoppingCartExtension
  *
  * @package OnlinePayments\Sdk\Domain
- * @internal
  */
 class ShoppingCartExtension extends DataObject
 {

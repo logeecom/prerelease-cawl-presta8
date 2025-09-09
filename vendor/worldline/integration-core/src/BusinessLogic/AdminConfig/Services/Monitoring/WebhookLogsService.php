@@ -17,7 +17,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentsProx
  * Class WebhookLogsService
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Monitoring
- * @internal
  */
 class WebhookLogsService
 {

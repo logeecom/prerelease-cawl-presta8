@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translatabl
  * Class LogRecordsLifetime
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings
- * @internal
  */
 class LogRecordsLifetime
 {

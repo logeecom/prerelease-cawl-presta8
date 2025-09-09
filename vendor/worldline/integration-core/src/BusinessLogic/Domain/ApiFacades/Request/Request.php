@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Request;
  * Class Request
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Request
- * @internal
  */
 abstract class Request
 {

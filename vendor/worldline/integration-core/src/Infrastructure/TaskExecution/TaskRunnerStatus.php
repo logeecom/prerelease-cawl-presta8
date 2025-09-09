@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Utility\TimeProvider;
 /**
  * Class TaskRunnerStatus
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
- * @internal
  */
 class TaskRunnerStatus
 {

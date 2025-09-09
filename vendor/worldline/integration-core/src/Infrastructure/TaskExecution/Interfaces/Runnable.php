@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Serializer\Interfaces\Serializable;
  * Interface Runnable.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces
- * @internal
  */
 interface Runnable extends Serializable
 {

@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
  * Class LogData.
  *
  * @package OnlinePayments\Core\Infrastructure\Logger
- * @internal
  */
 class LogData extends Entity
 {

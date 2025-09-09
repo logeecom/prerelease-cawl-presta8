@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Capture\CaptureResponse;
  * Class CreateCaptureResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\CaptureAPI\Response
- * @internal
  */
 class CreateCaptureResponse extends Response
 {

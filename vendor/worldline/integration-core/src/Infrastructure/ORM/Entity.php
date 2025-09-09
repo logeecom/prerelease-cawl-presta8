@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Configuration\EntityConfiguratio
  * Class Entity.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM
- * @internal
  */
 abstract class Entity extends DataTransferObject
 {

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translatabl
  * Class ProductType.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\ProductTypes
- * @internal
  */
 class ProductType
 {

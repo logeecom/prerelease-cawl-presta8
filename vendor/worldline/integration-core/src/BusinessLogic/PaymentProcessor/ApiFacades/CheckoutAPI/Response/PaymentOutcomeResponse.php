@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\BackgroundProcesses\
  * Class PaymentOutcomeResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\CheckoutAPI\Response
- * @internal
  */
 class PaymentOutcomeResponse extends Response
 {

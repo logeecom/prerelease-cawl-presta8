@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Sdk\Communication\RequestObject;
  * Query parameters for Get product group
  *
  * @package OnlinePayments\Sdk\Merchant\ProductGroups
- * @internal
  */
 class GetProductGroupParams extends RequestObject
 {

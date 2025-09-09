@@ -42,7 +42,6 @@ namespace {
     /**
      * Updates module from previous versions to the version 3.0.0
      * Major update that upgrades module to a core library usage
-     * @internal
      */
     function upgrade_module_3_0_0(OnlinePaymentsModule $module) : bool
     {
@@ -72,7 +71,6 @@ namespace {
         \Shop::setContext($previousShopContext);
         return \true;
     }
-    /** @internal */
     function initialize_new_plugin_3_0_0(OnlinePaymentsModule $module) : void
     {
         try {
@@ -83,14 +81,12 @@ namespace {
             Logger::logError('Failed to initialize new plugin', "[{$module->name}]_upgrade_module_3_0_0", ['message' => $e->getMessage(), 'type' => \get_class($e), 'trace' => $e->getTraceAsString()]);
         }
     }
-    /** @internal */
     function upgrade_for_shop_3_0_0(OnlinePaymentsModule $module, int $idShop) : void
     {
         \migrateAccountSettings($module, $idShop);
         \migrateAdvancedSettings($module, $idShop);
         \migratePaymentMethodsSettings($module, $idShop);
     }
-    /** @internal */
     function migrateAccountSettings(OnlinePaymentsModule $module, int $idShop) : void
     {
         $accountSettings = \json_decode(\Configuration::get(\strtoupper($module->name) . '_ACCOUNT_SETTINGS', null, null, $idShop), \true);
@@ -110,7 +106,6 @@ namespace {
         $connectionConfigRepository = ServiceRegister::getService(ConnectionConfigRepositoryInterface::class);
         $connectionConfigRepository->saveConnection(new ConnectionDetails($mode, $liveCredentials, $testCredentials));
     }
-    /** @internal */
     function migrateAdvancedSettings(OnlinePaymentsModule $module, int $idShop) : void
     {
         $advancedSettings = \json_decode(\Configuration::get(\strtoupper($module->name) . '_ADVANCED_SETTINGS', null, null, $idShop), \true);
@@ -148,7 +143,6 @@ namespace {
         AdminAPI::get()->generalSettings($idShop)->savePaymentSettings(new PaymentSettingsRequest($paymentActionType->getType(), $autocapture, $defaultPaymentSettings->getPaymentAttemptsNumber()->getPaymentAttemptsNumber(), \array_key_exists('surchargingEnabled', $paymentSettings) ? (bool) $paymentSettings['surchargingEnabled'] : $defaultPaymentSettings->isApplySurcharge(), \array_key_exists('successOrderStateId', $paymentSettings) ? (string) $paymentSettings['successOrderStateId'] : $defaultMapping->getPaymentCapturedStatus(), \array_key_exists('errorOrderStateId', $paymentSettings) ? (string) $paymentSettings['errorOrderStateId'] : $defaultMapping->getPaymentErrorStatus(), \array_key_exists('pendingOrderStateId', $paymentSettings) ? (string) $paymentSettings['pendingOrderStateId'] : $defaultMapping->getPaymentPendingStatus(), $defaultMapping->getPaymentAuthorizedStatus(), $defaultMapping->getPaymentCancelledStatus(), $defaultMapping->getPaymentRefundedStatus()));
         AdminAPI::get()->generalSettings($idShop)->saveLogSettings(new LogSettingsRequest(\array_key_exists('logsEnabled', $paymentSettings) ? (bool) $paymentSettings['logsEnabled'] : \false, 10));
     }
-    /** @internal */
     function migratePaymentMethodsSettings(OnlinePaymentsModule $module, int $idShop) : void
     {
         $paymentMethodsSettings = \json_decode(\Configuration::get(\strtoupper($module->name) . '_PAYMENT_METHODS_SETTINGS', null, null, $idShop), \true);
@@ -216,7 +210,6 @@ namespace {
             }
         }
     }
-    /** @internal */
     function migratePaymentTransactions(OnlinePaymentsModule $module) : void
     {
         $newPaymentTransactionTable = PaymentTransactionsRepository::getFullTableName();
@@ -260,7 +253,6 @@ namespace {
             $hostedCheckouts = \Db::getInstance()->executeS($dbQuery);
         }
     }
-    /** @internal */
     function migrateStoredTokens(OnlinePaymentsModule $module) : void
     {
         $newTokensTable = TokensRepository::getFullTableName();
@@ -275,7 +267,6 @@ namespace {
             $tokens = \Db::getInstance()->executeS($dbQuery);
         }
     }
-    /** @internal */
     function migrateProductTypes(OnlinePaymentsModule $module) : void
     {
         $newPaymentTypeTable = ProductTypesRepository::getFullTableName();
@@ -290,7 +281,6 @@ namespace {
             $productTypes = \Db::getInstance()->executeS($dbQuery);
         }
     }
-    /** @internal */
     function mapPaymentsToEntityRow(array $payment, int $automaticCapture) : array
     {
         $statusToStatusIdMap = ["CREATED" => '0', "CANCELLED" => '1', "REJECTED" => '2', "REJECTED_CAPTURE" => '93', "REDIRECTED" => '46', "PENDING_PAYMENT" => '51', "PENDING_COMPLETION" => '51', "PENDING_CAPTURE" => '5', "AUTHORIZATION_REQUESTED" => '51', "CAPTURE_REQUESTED" => '91', "CAPTURED" => '9', "REVERSED" => '81', "REFUND_REQUESTED" => '71', "REFUNDED" => '8'];
@@ -314,7 +304,6 @@ namespace {
         $entity->setPaymentTransaction(new PaymentTransaction((string) $payment['id_cart'], PaymentId::parse($payment['payment_id']), !empty($payment['returnmac']) ? $payment['returnmac'] : null, $statusCode, !empty($payment['id_customer']) ? $payment['id_customer'] : null, $dateAdd ?? null, $dateAdd ?? null, null, null, $captureTime));
         return \prepareDataForInsertOrUpdate($entity);
     }
-    /** @internal */
     function mapHostedCheckoutToEntityRow(array $hostedCheckout, int $automaticCapture) : array
     {
         $txnDateAdd = \DateTime::createFromFormat('Y-m-d H:i:s', (string) $hostedCheckout['tnx_date_add']);
@@ -338,7 +327,6 @@ namespace {
         $entity->setPaymentTransaction(new PaymentTransaction((string) $hostedCheckout['id_cart'], PaymentId::parse($hostedCheckout['session_id']), !empty($hostedCheckout['returnmac']) ? $hostedCheckout['returnmac'] : null, $statusCode, !empty($hostedCheckout['id_customer']) ? $hostedCheckout['id_customer'] : null, $dateAdd ?? null, $dateAdd ?? null, null, null, $captureTime));
         return \prepareDataForInsertOrUpdate($entity);
     }
-    /** @internal */
     function mapTokensToEntityRow(array $token) : array
     {
         $entity = new TokenEntity();
@@ -346,7 +334,6 @@ namespace {
         $entity->setToken(new Token((string) $token['id_customer'], (string) $token['value'], (string) $token['product_id'], (string) $token['card_number'], (string) $token['expiry_date']));
         return \prepareDataForInsertOrUpdate($entity);
     }
-    /** @internal */
     function mapProductTypesToEntityRow(array $productType) : array
     {
         try {
@@ -359,7 +346,6 @@ namespace {
         $entity->setProductType($type);
         return \prepareDataForInsertOrUpdate($entity);
     }
-    /** @internal */
     function prepareDataForInsertOrUpdate(Entity $entity) : array
     {
         $indexes = IndexHelper::transformFieldsToIndexes($entity);

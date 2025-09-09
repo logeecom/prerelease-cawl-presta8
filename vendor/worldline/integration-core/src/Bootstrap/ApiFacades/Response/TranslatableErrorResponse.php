@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTr
  * Class TranslatableErrorResponse
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Response
- * @internal
  */
 class TranslatableErrorResponse extends ErrorResponse
 {

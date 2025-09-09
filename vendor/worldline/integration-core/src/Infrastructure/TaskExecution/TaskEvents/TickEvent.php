@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Utility\Events\Event;
  * Class TickEvent.
  *
  * @package OnlinePayments\Core\Infrastructure\Scheduler
- * @internal
  */
 class TickEvent extends Event
 {

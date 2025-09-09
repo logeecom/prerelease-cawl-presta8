@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusError;
  * Class OrderDetails
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Order
- * @internal
  */
 class OrderDetails
 {

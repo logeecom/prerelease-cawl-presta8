@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Sdk\Domain\OperationPaymentReferences;
  * CreateCaptureRequestTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Order\Proxies\Transformers
- * @internal
  */
 class CreateCaptureRequestTransformer
 {

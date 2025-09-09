@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\WebhookLog;
  * Interface RepositoryWithAdvancedSearchInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories
- * @internal
  */
 interface RepositoryWithAdvancedSearchInterface
 {

@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Stores\StoreService;
  * Class StoreController
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\StoreAPI\Controller
- * @internal
  */
 class StoreController
 {

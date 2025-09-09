@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\SurchargeResponse;
  * Interface SurchargeProxyInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies
- * @internal
  */
 interface SurchargeProxyInterface
 {

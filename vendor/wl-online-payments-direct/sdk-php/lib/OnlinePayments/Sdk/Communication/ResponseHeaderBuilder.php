@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Sdk\Communication;
  * Class ResponseHeaderBuilder
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 class ResponseHeaderBuilder
 {

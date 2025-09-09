@@ -8,7 +8,6 @@ use RuntimeException;
  * Class SignatureValidationException
  *
  * @package OnlinePayments\Sdk\Webhooks
- * @internal
  */
 class SignatureValidationException extends RuntimeException
 {

@@ -33,7 +33,6 @@ use RuntimeException;
  * Class Queue.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
- * @internal
  */
 class QueueService
 {

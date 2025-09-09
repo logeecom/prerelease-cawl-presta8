@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Task;
  * Class AutoTestTask.
  *
  * @package OnlinePayments\Core\Infrastructure\AutoTest
- * @internal
  */
 class AutoTestTask extends Task
 {

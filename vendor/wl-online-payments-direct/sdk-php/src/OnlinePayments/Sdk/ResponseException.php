@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Sdk\Domain\DataObject;
  * Class ResponseException
  *
  * @package OnlinePayments\Sdk
- * @internal
  */
 class ResponseException extends RuntimeException
 {

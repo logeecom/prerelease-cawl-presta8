@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
  * Class TokensRepository.
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\Tokens
- * @internal
  */
 class TokensRepository implements TokensRepositoryInterface
 {

@@ -18,7 +18,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
  * Class QueueItemRepository
  *
  * @package OnlinePayments\Classes\Repositories
- * @internal
  */
 class QueueItemRepository extends BaseRepository implements CoreQueueItemRepository
 {

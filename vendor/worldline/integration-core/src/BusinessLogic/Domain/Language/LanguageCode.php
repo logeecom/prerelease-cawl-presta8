@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translatabl
  * Class LanguageCode
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Language
- * @internal
  */
 class LanguageCode
 {

@@ -18,7 +18,6 @@ use Exception;
  * Class TaskRunnerWakeupService.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
- * @internal
  */
 class TaskRunnerWakeupService implements TaskRunnerWakeup
 {

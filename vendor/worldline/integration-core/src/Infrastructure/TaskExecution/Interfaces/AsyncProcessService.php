@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\ProcessStar
  * Interface AsyncProcessStarter.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces
- * @internal
  */
 interface AsyncProcessService
 {

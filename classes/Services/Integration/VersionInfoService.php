@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class VersionInfoService
  *
  * @package OnlinePayments\Classes\Services\Integration
- * @internal
  */
 class VersionInfoService implements VersionService
 {

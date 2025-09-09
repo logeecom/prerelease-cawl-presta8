@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
  * Class TokenEntity.
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\Tokens
- * @internal
  */
 class TokenEntity extends Entity
 {

@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Sdk\Domain\RefundRequest as SdkRefundRequest;
  * CreateRefundRequestTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Order\Proxies\Transformers
- * @internal
  */
 class CreateRefundRequestTransformer
 {

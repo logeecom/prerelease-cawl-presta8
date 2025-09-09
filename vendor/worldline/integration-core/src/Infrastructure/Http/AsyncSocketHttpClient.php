@@ -22,7 +22,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidPar
  * request would imply supporting complete HTTP specification.
  *
  * @package OnlinePayments\Core\Infrastructure\Http
- * @internal
  */
 class AsyncSocketHttpClient extends CurlHttpClient
 {

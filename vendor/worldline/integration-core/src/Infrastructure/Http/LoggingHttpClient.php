@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Logger\Logger;
  * Class LoggingHttpClient.
  *
  * @package OnlinePayments\Core\Infrastructure\Http
- * @internal
  */
 class LoggingHttpClient extends HttpClient
 {

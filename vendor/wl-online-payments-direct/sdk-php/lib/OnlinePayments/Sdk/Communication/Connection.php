@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Sdk\Logging\CommunicatorLogger;
  * Interface Connection
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 interface Connection
 {

@@ -15,7 +15,6 @@ use CAWL\OnlinePayments\Sdk\ProxyConfiguration;
  * Class ApiException
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 class DefaultConnection implements Connection
 {

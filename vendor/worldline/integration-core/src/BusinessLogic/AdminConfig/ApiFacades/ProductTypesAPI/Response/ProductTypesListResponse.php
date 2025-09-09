@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ProductTypes\ProductType;
  * Class ProductTypesListResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ProductTypesAPI\Response
- * @internal
  */
 class ProductTypesListResponse extends Response
 {

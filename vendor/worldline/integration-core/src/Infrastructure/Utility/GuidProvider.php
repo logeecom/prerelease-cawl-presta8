@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Infrastructure\Utility;
  * Class GuidProvider.
  *
  * @package OnlinePayments\Core\Infrastructure\Utility
- * @internal
  */
 class GuidProvider
 {

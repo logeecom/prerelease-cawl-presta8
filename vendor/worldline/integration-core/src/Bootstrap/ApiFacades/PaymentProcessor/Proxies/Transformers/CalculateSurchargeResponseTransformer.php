@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Sdk\Domain\CalculateSurchargeResponse;
  * Class CalculateSurchargeResponseTransformer
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
- * @internal
  */
 class CalculateSurchargeResponseTransformer
 {

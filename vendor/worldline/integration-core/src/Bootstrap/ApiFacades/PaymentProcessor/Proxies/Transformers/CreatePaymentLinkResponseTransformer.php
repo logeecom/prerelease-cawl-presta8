@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Sdk\Domain\PaymentLinkResponse as SdkPaymentLinkResponse
  * Class CreatePaymentLinkResponseTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
- * @internal
  */
 class CreatePaymentLinkResponseTransformer
 {

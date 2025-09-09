@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
  * Class GeneralSettingsResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings
- * @internal
  */
 class GeneralSettingsResponse
 {

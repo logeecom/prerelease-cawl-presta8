@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
  * Class PaymentLink.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks
- * @internal
  */
 class PaymentLink
 {

@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Language;
  * Class Language
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Language
- * @internal
  */
 class Language
 {

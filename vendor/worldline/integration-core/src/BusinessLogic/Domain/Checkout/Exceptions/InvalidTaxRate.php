@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTr
  * Class InvalidTaxRate
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\Exceptions
- * @internal
  */
 class InvalidTaxRate extends BaseTranslatableException
 {

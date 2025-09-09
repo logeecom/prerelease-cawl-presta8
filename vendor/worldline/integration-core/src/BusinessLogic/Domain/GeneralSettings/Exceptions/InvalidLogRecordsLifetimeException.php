@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTr
  * Class InvalidLogRecordsLifetimeException
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions
- * @internal
  */
 class InvalidLogRecordsLifetimeException extends BaseTranslatableException
 {

@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Disconnect;
  * Interface DisconnectTaskEnqueuerInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Disconnect
- * @internal
  */
 interface DisconnectTaskEnqueuerInterface
 {

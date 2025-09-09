@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Sdk\Communication\ResponseClassMap;
 use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * PrivacyPolicy client.
- * @internal
  */
 class PrivacyPolicyClient extends ApiResource implements PrivacyPolicyClientInterface
 {

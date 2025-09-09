@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ProductTypes\ProductType;
  * Interface ProductTypeRepositoryInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\ProductTypes\Repositories
- * @internal
  */
 interface ProductTypeRepositoryInterface
 {

@@ -7,7 +7,6 @@ use RuntimeException;
  * Class ApiVersionMismatchException
  *
  * @package OnlinePayments\Sdk\Webhooks
- * @internal
  */
 class ApiVersionMismatchException extends RuntimeException
 {

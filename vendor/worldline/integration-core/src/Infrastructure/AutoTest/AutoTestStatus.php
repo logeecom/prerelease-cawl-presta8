@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\Logger\LogData;
  * Class AutoTestStatus.
  *
  * @package OnlinePayments\Core\Infrastructure\AutoTest
- * @internal
  */
 class AutoTestStatus extends DataTransferObject
 {

@@ -18,7 +18,6 @@ use CAWL\OnlinePayments\Sdk\Merchant\MerchantClientInterface;
  * Class MerchantClientFactory.
  *
  * @package OnlinePayments\Core\Bootstrap\Sdk
- * @internal
  */
 class MerchantClientFactory
 {

@@ -14,7 +14,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class PaymentTransactionEntity.
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\PaymentTransaction
- * @internal
  */
 class PaymentTransactionEntity extends Entity
 {

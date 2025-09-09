@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Stores\StoreService as BaseSto
  * Class StoreService
  *
  * @package OnlinePayments\Classes\Services\Domain
- * @internal
  */
 class StoreService extends BaseStoreService
 {

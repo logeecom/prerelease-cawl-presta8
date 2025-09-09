@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Monitoring\Webho
  * Class LogsController
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Controller
- * @internal
  */
 class LogsController
 {

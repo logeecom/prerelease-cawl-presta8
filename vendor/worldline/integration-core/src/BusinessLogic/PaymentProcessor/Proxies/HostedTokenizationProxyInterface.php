@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
  * Interface HostedTokenizationProxyInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies
- * @internal
  */
 interface HostedTokenizationProxyInterface
 {

@@ -5,7 +5,6 @@ namespace CAWL\OnlinePayments\Core\Bootstrap\Sdk;
 use Exception;
 use CAWL\OnlinePayments\Core\Infrastructure\Logger\Logger;
 use CAWL\OnlinePayments\Sdk\Logging\CommunicatorLogger;
-/** @internal */
 class ApiLogger implements CommunicatorLogger
 {
     public function log($message) : void

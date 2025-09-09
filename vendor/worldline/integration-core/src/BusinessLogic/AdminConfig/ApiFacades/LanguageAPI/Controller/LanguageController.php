@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Language\LanguageS
  * Class LanguageController
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\LanguageAPI\Controller
- * @internal
  */
 class LanguageController
 {

@@ -16,7 +16,6 @@ use CAWL\OnlinePayments\Sdk\Domain\GetIINDetailsRequest;
 use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * Services client.
- * @internal
  */
 class ServicesClient extends ApiResource implements ServicesClientInterface
 {

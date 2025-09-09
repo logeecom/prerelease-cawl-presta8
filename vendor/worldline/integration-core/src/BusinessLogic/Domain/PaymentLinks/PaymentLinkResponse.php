@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks;
  * Class PaymentLinkResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks
- * @internal
  */
 class PaymentLinkResponse
 {

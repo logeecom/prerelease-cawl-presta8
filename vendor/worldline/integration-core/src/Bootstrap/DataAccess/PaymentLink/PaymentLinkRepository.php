@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
  * Class PaymentLinkRepository
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\PaymentLink
- * @internal
  */
 class PaymentLinkRepository implements PaymentLinkRepositoryInterface
 {

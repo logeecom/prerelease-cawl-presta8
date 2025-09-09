@@ -8,7 +8,6 @@ use Exception;
  * Interface DisconnectRepositoryInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Disconnect\Repositories
- * @internal
  */
 interface DisconnectRepositoryInterface
 {

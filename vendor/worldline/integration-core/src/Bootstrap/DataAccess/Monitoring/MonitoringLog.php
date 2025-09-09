@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
  * Class MonitoringLog
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\Monitoring
- * @internal
  */
 class MonitoringLog extends Entity
 {

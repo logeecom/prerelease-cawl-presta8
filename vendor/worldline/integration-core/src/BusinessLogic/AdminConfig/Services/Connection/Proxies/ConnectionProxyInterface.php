@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
  * Interface ConnectionProxy
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Connection\Proxies
- * @internal
  */
 interface ConnectionProxyInterface
 {

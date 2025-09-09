@@ -11,7 +11,6 @@ use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
  * Class WebhookLogRepository
  *
  * @package OnlinePayments\Classes\Services\Domain\Repositories
- * @internal
  */
 class WebhookLogRepository extends CoreWebhookLogRepository
 {

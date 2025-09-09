@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLink;
  * Interface PaymentLinkRepositoryInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\Repositories
- * @internal
  */
 interface PaymentLinkRepositoryInterface
 {

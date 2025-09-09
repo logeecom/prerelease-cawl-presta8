@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Version;
  * Class VersionInfo
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Version
- * @internal
  */
 class VersionInfo
 {

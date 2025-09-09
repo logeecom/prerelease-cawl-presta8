@@ -7,7 +7,6 @@ use Exception;
  * Class StoreContext
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Multistore
- * @internal
  */
 class StoreContext
 {

@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\TaskRunnerS
  * Class RunnerStatusStorage.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
- * @internal
  */
 class RunnerStatusStorage implements TaskRunnerStatusStorage
 {

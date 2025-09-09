@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTr
  * Class InvalidConnectionModeException.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Connection\Exceptions
- * @internal
  */
 class InvalidConnectionDetailsException extends BaseTranslatableException
 {

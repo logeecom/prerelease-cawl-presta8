@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class HttpClient.
  *
  * @package OnlinePayments\Core\Infrastructure\Http
- * @internal
  */
 abstract class HttpClient
 {

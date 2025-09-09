@@ -15,7 +15,6 @@ use Tools;
  * Class MonitoringController
  *
  * @package OnlinePayments\Controllers\Concrete\Admin
- * @internal
  */
 class MonitoringController extends ModuleAdminController
 {

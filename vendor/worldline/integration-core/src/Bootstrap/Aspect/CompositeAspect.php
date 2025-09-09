@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\Bootstrap\Aspect;
  * Class CompositeAspect
  *
  * @package OnlinePayments\Core\Bootstrap\Aspect
- * @internal
  */
 class CompositeAspect implements Aspect
 {

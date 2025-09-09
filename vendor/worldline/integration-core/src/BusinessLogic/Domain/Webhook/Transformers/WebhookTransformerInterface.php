@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Webhook\WebhookData;
  * Interface WebhookTransformerInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Webhook\Transformers
- * @internal
  */
 interface WebhookTransformerInterface
 {

@@ -20,7 +20,6 @@ use Exception;
  * Class TaskRunner.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
- * @internal
  */
 class TaskRunner
 {

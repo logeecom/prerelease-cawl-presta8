@@ -17,7 +17,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusCode;
  * Class CancelService
  *
  * @package OnlinePayments\Classes\Services\PrestaShop
- * @internal
  */
 class CancelService
 {

@@ -5,7 +5,6 @@ namespace CAWL\OnlinePayments\Sdk\Domain;
 use UnexpectedValueException;
 /**
  * @package OnlinePayments\Sdk\Webhooks
- * @internal
  */
 class WebhooksEvent extends DataObject
 {

@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\TaskRunnerS
  * Class Configuration.
  *
  * @package OnlinePayments\Core\Infrastructure\Configuration
- * @internal
  */
 abstract class Configuration extends Singleton
 {

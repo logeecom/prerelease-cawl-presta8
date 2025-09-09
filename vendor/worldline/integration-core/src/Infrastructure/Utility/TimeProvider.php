@@ -7,7 +7,6 @@ use DateTime;
  * Class TimeProvider.
  *
  * @package OnlinePayments\Core\Infrastructure\Utility
- * @internal
  */
 class TimeProvider
 {

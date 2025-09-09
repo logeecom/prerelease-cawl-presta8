@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Encryption;
  * Interface Encryptor
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Integration\Encryption
- * @internal
  */
 interface Encryptor
 {

@@ -21,7 +21,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\TaxableAmount;
  * Class CartProviderService.
  *
  * @package OnlinePayments\Classes\Services\Checkout
- * @internal
  */
 class CartProviderService implements CartProvider
 {

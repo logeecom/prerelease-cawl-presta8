@@ -21,7 +21,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translation
  * Class PaymentMethodRequest
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\PaymentAPI\Request
- * @internal
  */
 class PaymentMethodRequest extends Request
 {

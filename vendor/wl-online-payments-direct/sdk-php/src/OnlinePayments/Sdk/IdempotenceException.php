@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Sdk\Domain\DataObject;
  * Class IdempotenceException
  *
  * @package OnlinePayments\Sdk
- * @internal
  */
 class IdempotenceException extends ResponseException
 {

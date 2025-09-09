@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Refund\RefundResponse;
  * Class CreateRefundResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\RefundAPI\Response
- * @internal
  */
 class CreateRefundResponse extends Response
 {

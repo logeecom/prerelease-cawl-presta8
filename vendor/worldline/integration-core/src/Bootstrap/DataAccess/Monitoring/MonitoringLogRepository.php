@@ -21,7 +21,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
  * Class MonitoringLogRepository
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\Monitoring
- * @internal
  */
 class MonitoringLogRepository implements MonitoringLogRepositoryInterface
 {

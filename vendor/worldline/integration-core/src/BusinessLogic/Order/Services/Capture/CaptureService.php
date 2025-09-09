@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Order\Proxies\CaptureProxyInterface;
  * Class CaptureService
  *
  * @package OnlinePayments\Core\BusinessLogic\Order\Services\Capture
- * @internal
  */
 class CaptureService
 {

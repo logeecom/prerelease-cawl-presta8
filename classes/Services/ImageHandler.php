@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class ImageHandler
  *
  * @package OnlinePayments\Classes\Services
- * @internal
  */
 class ImageHandler
 {

@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\AdminAPI\AdminAPI;
  * Class StoresController.
  *
  * @package OnlinePayments\Controllers\Concrete\Admin
- * @internal
  */
 class StoresController extends ModuleAdminController
 {

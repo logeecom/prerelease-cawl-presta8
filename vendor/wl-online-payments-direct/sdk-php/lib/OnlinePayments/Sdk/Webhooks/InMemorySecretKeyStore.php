@@ -7,7 +7,6 @@ use UnexpectedValueException;
  * Class InMemorySecretKeyStore
  *
  * @package OnlinePayments\Sdk\Webhooks
- * @internal
  */
 class InMemorySecretKeyStore implements SecretKeyStore
 {

@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Sdk\Webhooks;
  * Class SignatureValidator
  *
  * @package OnlinePayments\Sdk\Webhooks
- * @internal
  */
 class SignatureValidator
 {

@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Order\Proxies\RefundProxyInterface;
  * Class RefundService
  *
  * @package OnlinePayments\Core\BusinessLogic\Order\Services\Refund
- * @internal
  */
 class RefundService
 {

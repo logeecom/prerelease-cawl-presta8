@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueService;
  * Class TransactionStatusCheckListener.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\BackgroundProcesses
- * @internal
  */
 class TransactionStatusCheckListener
 {

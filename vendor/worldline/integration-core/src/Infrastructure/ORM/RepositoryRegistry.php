@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
  * Class RepositoryRegistry.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM
- * @internal
  */
 class RepositoryRegistry
 {

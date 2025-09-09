@@ -11,7 +11,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
  * Class PayByLinkSettingsEntity
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings
- * @internal
  */
 class PayByLinkSettingsEntity extends Entity
 {

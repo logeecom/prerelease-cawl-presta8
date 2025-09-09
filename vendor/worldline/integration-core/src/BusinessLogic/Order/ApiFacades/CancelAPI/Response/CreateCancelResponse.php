@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Cancel\CancelResponse;
  * Class CreateCancelResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\CancelAPI\Controller
- * @internal
  */
 class CreateCancelResponse extends Response
 {

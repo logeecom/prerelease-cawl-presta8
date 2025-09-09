@@ -15,7 +15,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class WebhookLogsRepository
  *
  * @package OnlinePayments\Classes\Repositories
- * @internal
  */
 class WebhookLogsRepository extends BaseRepositoryWithConditionalDelete implements RepositoryWithAdvancedSearchInterface
 {

@@ -11,7 +11,6 @@ use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
  * Class MonitoringLogRepository
  *
  * @package OnlinePayments\Classes\Services\Domain\Repositories
- * @internal
  */
 class MonitoringLogRepository extends CoreMonitoringLogRepository
 {

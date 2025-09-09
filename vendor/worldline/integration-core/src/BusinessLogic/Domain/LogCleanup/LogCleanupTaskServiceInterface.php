@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\LogCleanup;
  * Interface LogCleanupTaskServiceInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\LogCleanup
- * @internal
  */
 interface LogCleanupTaskServiceInterface
 {

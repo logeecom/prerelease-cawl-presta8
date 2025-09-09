@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Stores\Models\StoreOrderStatus
  * Class StoreService
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Stores
- * @internal
  */
 class StoreService
 {

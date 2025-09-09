@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Sdk\Communication\ResponseClassMap;
 use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * Refunds client.
- * @internal
  */
 class RefundsClient extends ApiResource implements RefundsClientInterface
 {

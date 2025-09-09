@@ -13,7 +13,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Validate;
 /**
  * Class Tools
- * @internal
  */
 class Tools
 {

@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Order\Proxies\CancelProxyInterface;
  * Class CancelService
  *
  * @package OnlinePayments\Core\BusinessLogic\Order\Services\Cancel
- * @internal
  */
 class CancelService
 {

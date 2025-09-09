@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentMeth
  * Class PaymentMethodsController.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\CheckoutAPI\Controller
- * @internal
  */
 class PaymentMethodsController
 {

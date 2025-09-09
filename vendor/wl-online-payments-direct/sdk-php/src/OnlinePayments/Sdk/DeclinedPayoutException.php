@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Sdk\Domain\PayoutResult;
  * Class DeclinedPayoutException
  *
  * @package OnlinePayments\Sdk
- * @internal
  */
 class DeclinedPayoutException extends ResponseException
 {

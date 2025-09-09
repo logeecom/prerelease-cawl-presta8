@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTr
  * Class InvalidCurrencyCode
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\PaymentRequest\Exceptions
- * @internal
  */
 class InvalidCurrencyCode extends BaseTranslatableException
 {

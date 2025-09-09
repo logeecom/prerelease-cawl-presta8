@@ -7,7 +7,6 @@ use UnexpectedValueException;
  * Class BodyObfuscator
  *
  * @package OnlinePayments\Sdk\Logging
- * @internal
  */
 class BodyObfuscator
 {

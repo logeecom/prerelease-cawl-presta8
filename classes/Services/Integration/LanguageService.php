@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * Class LanguageService
  *
  * @package OnlinePayments\Classes\Services\Integration
- * @internal
  */
 class LanguageService implements CoreLanguageService
 {

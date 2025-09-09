@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  * @template T
  *
  * @package OnlinePayments\Core\Bootstrap\Aspect
- * @internal
  */
 class Aspects
 {

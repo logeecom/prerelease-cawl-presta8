@@ -12,7 +12,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\Webhooks\We
  * Class WebhooksController
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\WebhooksAPI\Controller
- * @internal
  */
 class WebhooksController
 {

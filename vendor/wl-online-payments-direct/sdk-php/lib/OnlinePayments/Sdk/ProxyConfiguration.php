@@ -6,7 +6,6 @@ namespace CAWL\OnlinePayments\Sdk;
  * Class ProxyConfiguration
  *
  * @package OnlinePayments\Sdk
- * @internal
  */
 class ProxyConfiguration
 {

@@ -7,7 +7,6 @@ use Exception;
  * Class RequestObject
  *
  * @package OnlinePayments\Sdk\Communication
- * @internal
  */
 abstract class RequestObject
 {

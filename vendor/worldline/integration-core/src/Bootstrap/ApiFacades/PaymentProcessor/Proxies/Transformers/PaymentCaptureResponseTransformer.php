@@ -13,7 +13,6 @@ use CAWL\OnlinePayments\Sdk\Domain\Capture;
  * Class PaymentCaptureResponseTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
- * @internal
  */
 class PaymentCaptureResponseTransformer
 {

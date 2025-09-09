@@ -7,7 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTr
  * Class TokenDeletionFailureException
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Exceptions
- * @internal
  */
 class TokenDeletionFailureException extends BaseTranslatableException
 {

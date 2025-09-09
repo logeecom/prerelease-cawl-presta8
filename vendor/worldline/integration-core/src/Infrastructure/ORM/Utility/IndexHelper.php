@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
  * Class IndexHelper.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\Utility
- * @internal
  */
 class IndexHelper
 {
