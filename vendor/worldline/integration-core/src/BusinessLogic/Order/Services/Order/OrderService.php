@@ -9,8 +9,8 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Order\OrderDetails;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Order\OrderPayment;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Payment;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentTransaction;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\PaymentTransactionRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusCode;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentsProxyInterface;
 /**
  * Class OrderService
@@ -31,7 +31,7 @@ class OrderService
     public function getDetails(string $merchantReference) : OrderDetails
     {
         $transaction = $this->paymentTransactionRepository->getByMerchantReference($merchantReference);
-        if (!$transaction) {
+        if (!$transaction || $transaction->getStatusCode()->equals(StatusCode::incomplete()) || !$transaction->getPaymentId()) {
             throw new \Exception('Cannot find Worldline transaction');
         }
         try {

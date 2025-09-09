@@ -10,7 +10,6 @@ use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\AdminAPI\AdminAPI;
 use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\Order\OrderAPI\OrderAPI;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Currency;
-use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
 /**
  * Class OrderService
  *
@@ -53,7 +52,7 @@ class OrderService
         try {
             $paymentLinkData = $this->getPaymentLinkData($order, $orderData);
         } catch (Exception $exception) {
-            $paymentLinkData = ['display' => \false];
+            $paymentLinkData = ['displayButton' => \false];
             $errorMessages[] = $exception->getMessage();
         }
         $settingsData = $this->getOrderSettingsData();
@@ -66,27 +65,21 @@ class OrderService
     private function getPaymentLinkData(\Order $order, array $orderData) : array
     {
         if (isset($orderData['payment'])) {
-            return ['display' => \false];
+            return ['displayButton' => \false];
         }
         $generalSettingsResponse = AdminAPI::get()->generalSettings($this->storeId)->getGeneralSettings();
         if (!$generalSettingsResponse->isSuccessful()) {
-            $errorMessage = "Module: {$this->module->name}: General settings fetch failed!";
-            if ($generalSettingsResponse->toArray() && isset($generalSettingsResponse->toArray()['errorMessage'])) {
-                $errorMessage .= ' Reason: ' . $generalSettingsResponse->toArray()['errorMessage'];
-            }
+            $errorMessage = "General settings fetch failed!";
             throw new \Exception($this->module->l($errorMessage, self::FILE_NAME));
         }
         $generalSettings = $generalSettingsResponse->toArray();
         $payByLinkEnabled = \array_key_exists('payByLinkSettings', $generalSettings) && $generalSettings['payByLinkSettings']['enabled'];
-        $shouldDisplayPayByLink = $payByLinkEnabled && ($order->current_state == OrderStatusMappingService::PRESTA_CANCELED_ID || $order->current_state == OrderStatusMappingService::PRESTA_PAYMENT_ERROR_ID || $order->current_state == OrderStatusMappingService::PRESTA_ON_BACKORDER_ID);
-        $paymentLinkData = ['display' => $shouldDisplayPayByLink];
-        if ($shouldDisplayPayByLink) {
+        $shouldDisplayPayByLinkButton = $payByLinkEnabled && ($order->current_state == OrderStatusMappingService::PRESTA_CANCELED_ID || $order->current_state == OrderStatusMappingService::PRESTA_PAYMENT_ERROR_ID || $order->current_state == OrderStatusMappingService::PRESTA_ON_BACKORDER_ID);
+        $paymentLinkData = ['displayButton' => $shouldDisplayPayByLinkButton];
+        if ($payByLinkEnabled) {
             $paymentLinkResponse = AdminAPI::get()->paymentLinks($this->storeId)->get(\Cart::getCartIdByOrderId($order->id));
             if (!$paymentLinkResponse->isSuccessful()) {
-                $errorMessage = "Module: {$this->module->name}: Payment link fetching failed!";
-                if ($paymentLinkResponse->toArray() && isset($paymentLinkResponse->toArray()['errorMessage'])) {
-                    $errorMessage .= ' Reason: ' . $paymentLinkResponse->toArray()['errorMessage'];
-                }
+                $errorMessage = "Payment link fetching failed!";
                 throw new \Exception($this->module->l($errorMessage, self::FILE_NAME));
             }
             if ($paymentLinkResponse->getRedirectUrl()) {
@@ -104,10 +97,7 @@ class OrderService
         $cartId = \Cart::getCartIdByOrderId($orderId);
         $orderDetailsResponse = OrderAPI::get()->orders($this->storeId)->getDetails($cartId);
         if (!$orderDetailsResponse->isSuccessful()) {
-            $errorMessage = "Module: {$this->module->name}: Order details fetch failed!";
-            if ($orderDetailsResponse->toArray() && isset($orderDetailsResponse->toArray()['errorMessage'])) {
-                $errorMessage .= ' Reason: ' . $orderDetailsResponse->toArray()['errorMessage'];
-            }
+            $errorMessage = "Order details fetch failed!";
             throw new \Exception($this->module->l($errorMessage, self::FILE_NAME));
         }
         $orderDetails = $orderDetailsResponse->getOrderDetails();

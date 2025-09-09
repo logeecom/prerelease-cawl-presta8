@@ -59,4 +59,10 @@ interface WebhookLogRepositoryInterface
      * @return string
      */
     public function getOrderUrl(WebhookLog $webhookLog) : string;
+    /**
+     * @param string $merchantReference
+     *
+     * @return string
+     */
+    public function getOrderIdByMerchantReference(string $merchantReference) : string;
 }

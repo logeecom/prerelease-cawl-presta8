@@ -56,7 +56,7 @@
                 </div>
             </div>
         {/if}
-        {if isset($paymentLinkData.display) && $paymentLinkData.display && !isset($paymentLinkData.redirectUrl)}
+        {if $paymentLinkData.displayButton && !isset($paymentLinkData.redirectUrl)}
             <div class="row">
                 <div class="col-md-12">
                     <form class="form-horizontal"
@@ -382,7 +382,11 @@
                 </div>
             </div>
         {/if}
-        {if !isset($transactionData.payment) && isset($paymentLinkData.display) && !$paymentLinkData.display && !empty($errorMessages)}
+        {if !isset($transactionData.payment) &&
+        !isset($paymentLinkData.redirectUrl) &&
+        !$paymentLinkData.displayButton
+        && !empty($errorMessages)
+        }
             <div class="alert alert-danger">
                 <p>{l s='Transaction data does not exist and payment link is not available. More details:' mod="{$settingsData.moduleName}"}</p>
                 <ul>

@@ -47,7 +47,7 @@ class MonitoringLog extends Entity
         parent::inflate($data);
         $this->storeId = $data['storeId'];
         $this->mode = $data['mode'];
-        $this->requestId = $data['requestId'];
+        $this->requestId = $data['requestId'] ?? '';
         $this->orderId = $data['orderId'];
         $this->paymentNumber = $data['paymentNumber'];
         $this->message = $data['message'];

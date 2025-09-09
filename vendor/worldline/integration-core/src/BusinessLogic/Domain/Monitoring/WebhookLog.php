@@ -54,6 +54,10 @@ class WebhookLog
     {
         return $this->orderId;
     }
+    public function setOrderId(string $orderId) : void
+    {
+        $this->orderId = $orderId;
+    }
     public function getPaymentNumber() : string
     {
         return $this->paymentNumber;

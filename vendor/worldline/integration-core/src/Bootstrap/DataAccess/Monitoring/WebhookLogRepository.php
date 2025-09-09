@@ -58,6 +58,7 @@ class WebhookLogRepository implements WebhookLogRepositoryInterface
             $expiresAt = $createdAtDate->add(new DateInterval('P' . $logSettings->getLogRecordsLifetime()->getDays() . 'D'))->getTimestamp();
         }
         $webhookLog->setOrderLink($this->getOrderUrl($webhookLog));
+        $webhookLog->setOrderId($this->getOrderIdByMerchantReference($webhookLog->getOrderId()));
         $entity = new WebhookLogEntity();
         $entity->setStoreId($this->storeContext->getStoreId());
         $entity->setMode((string) $activeConnection->getMode());
@@ -168,5 +169,14 @@ class WebhookLogRepository implements WebhookLogRepositoryInterface
     public function getOrderUrl(WebhookLog $webhookLog) : string
     {
         return '';
+    }
+    /**
+     * @param string $merchantReference
+     *
+     * @return string
+     */
+    public function getOrderIdByMerchantReference(string $merchantReference) : string
+    {
+        return $merchantReference;
     }
 }
