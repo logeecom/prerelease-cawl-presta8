@@ -59,21 +59,36 @@ class MonitoringLogRepository implements MonitoringLogRepositoryInterface
         if ($activeConnection !== null) {
             $mode = $activeConnection->getMode();
         }
+        $existingLog = $this->getLogByRequestId($monitoringLog->getRequestId());
+        if ($existingLog) {
+            $monitoringLog->setRequestBody($existingLog->getMonitoringLog()->getRequestBody());
+            $monitoringLog->setMessage($existingLog->getMonitoringLog()->getMessage());
+            $monitoringLog->setCreatedAt($existingLog->getMonitoringLog()->getCreatedAt());
+        }
         $logSettings = $this->logSettingsRepository->getLogSettings();
-        $expiresAt = $monitoringLog->getCreatedAt()->add(new DateInterval('P14D'));
+        $createdAtDate = clone $monitoringLog->getCreatedAt();
+        $createdAt = $monitoringLog->getCreatedAt()->getTimestamp();
+        $expiresAt = $monitoringLog->getCreatedAt()->add(new DateInterval('P14D'))->getTimestamp();
         if ($logSettings) {
-            $expiresAt = $monitoringLog->getCreatedAt()->add(new DateInterval('P' . $logSettings->getLogRecordsLifetime()->getDays() . 'D'));
+            $expiresAt = $createdAtDate->add(new DateInterval('P' . $logSettings->getLogRecordsLifetime()->getDays() . 'D'))->getTimestamp();
         }
         $monitoringLog->setOrderLink($this->getOrderUrl($monitoringLog));
+        $monitoringLog->setOrderId($this->getOrderIdByMerchantReference($monitoringLog->getOrderId()));
         $entity = new MonitoringLogEntity();
         $entity->setStoreId($this->storeContext->getStoreId());
         $entity->setMode((string) $mode);
         $entity->setOrderId($monitoringLog->getOrderId());
+        $entity->setRequestId($monitoringLog->getRequestId());
         $entity->setPaymentNumber($monitoringLog->getPaymentNumber());
-        $entity->setCreatedAt($monitoringLog->getCreatedAt()->getTimestamp());
-        $entity->setExpiresAt($expiresAt->getTimestamp());
+        $entity->setCreatedAt($createdAt);
+        $entity->setExpiresAt($expiresAt);
         $entity->setMessage($monitoringLog->getMessage());
         $entity->setMonitoringLog($monitoringLog);
+        if ($existingLog) {
+            $entity->setId($existingLog->getId());
+            $this->repository->update($entity);
+            return;
+        }
         $this->repository->save($entity);
     }
     /**
@@ -185,5 +200,20 @@ class MonitoringLogRepository implements MonitoringLogRepositoryInterface
     public function getOrderUrl(MonitoringLog $monitoringLog) : string
     {
         return '';
+    }
+    /**
+     * @param string $merchantReference
+     *
+     * @return string
+     */
+    public function getOrderIdByMerchantReference(string $merchantReference) : string
+    {
+        return $merchantReference;
+    }
+    protected function getLogByRequestId(string $requestId) : ?MonitoringLogEntity
+    {
+        $queryFilter = new QueryFilter();
+        $queryFilter->where('requestId', Operators::EQUALS, $requestId);
+        return $this->repository->selectOne($queryFilter);
     }
 }

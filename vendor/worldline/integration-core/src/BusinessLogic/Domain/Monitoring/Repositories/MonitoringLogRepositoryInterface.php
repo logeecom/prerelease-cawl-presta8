@@ -59,4 +59,10 @@ interface MonitoringLogRepositoryInterface
      * @return string
      */
     public function getOrderUrl(MonitoringLog $monitoringLog) : string;
+    /**
+     * @param string $merchantReference
+     *
+     * @return string
+     */
+    public function getOrderIdByMerchantReference(string $merchantReference) : string;
 }

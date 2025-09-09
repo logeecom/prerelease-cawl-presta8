@@ -51,9 +51,11 @@ class WebhookLogRepository implements WebhookLogRepositoryInterface
             return;
         }
         $logSettings = $this->logSettingsRepository->getLogSettings();
-        $expiresAt = $webhookLog->getCreatedAt()->add(new DateInterval('P14D'));
+        $createdAtDate = clone $webhookLog->getCreatedAt();
+        $createdAt = $webhookLog->getCreatedAt()->getTimestamp();
+        $expiresAt = $webhookLog->getCreatedAt()->add(new DateInterval('P14D'))->getTimestamp();
         if ($logSettings) {
-            $expiresAt = $webhookLog->getCreatedAt()->add(new DateInterval('P' . $logSettings->getLogRecordsLifetime()->getDays() . 'D'));
+            $expiresAt = $createdAtDate->add(new DateInterval('P' . $logSettings->getLogRecordsLifetime()->getDays() . 'D'))->getTimestamp();
         }
         $webhookLog->setOrderLink($this->getOrderUrl($webhookLog));
         $entity = new WebhookLogEntity();
@@ -61,8 +63,8 @@ class WebhookLogRepository implements WebhookLogRepositoryInterface
         $entity->setMode((string) $activeConnection->getMode());
         $entity->setOrderId($webhookLog->getOrderId());
         $entity->setPaymentNumber($webhookLog->getPaymentNumber());
-        $entity->setCreatedAt($webhookLog->getCreatedAt()->getTimestamp());
-        $entity->setExpiresAt($expiresAt->getTimestamp());
+        $entity->setCreatedAt($createdAt);
+        $entity->setExpiresAt($expiresAt);
         $entity->setWebhookLog($webhookLog);
         $this->repository->save($entity);
     }

@@ -11,10 +11,8 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId
 use CAWL\OnlinePayments\Sdk\Domain\CardPaymentMethodSpecificInputForHostedCheckout;
 use CAWL\OnlinePayments\Sdk\Domain\CreateHostedCheckoutRequest;
 use CAWL\OnlinePayments\Sdk\Domain\CreateMandateRequest;
-use CAWL\OnlinePayments\Sdk\Domain\GPayThreeDSecure;
 use CAWL\OnlinePayments\Sdk\Domain\HostedCheckoutSpecificInput;
 use CAWL\OnlinePayments\Sdk\Domain\MobilePaymentMethodSpecificInput;
-use CAWL\OnlinePayments\Sdk\Domain\MobilePaymentProduct320SpecificInput;
 use CAWL\OnlinePayments\Sdk\Domain\Order;
 use CAWL\OnlinePayments\Sdk\Domain\PaymentProductFilter;
 use CAWL\OnlinePayments\Sdk\Domain\PaymentProductFiltersHostedCheckout;
@@ -70,6 +68,8 @@ class CreateHostedCheckoutRequestTransformer
             $redirectPaymentProduct5402SpecificInput = new RedirectPaymentProduct5402SpecificInput();
             $redirectPaymentProduct5402SpecificInput->setCompleteRemainingPaymentAmount(\true);
             $redirectPaymentMethodSpecificInput->setPaymentProduct5402SpecificInput($redirectPaymentProduct5402SpecificInput);
+            // Reset mobile specific input because it breaks mealvouchers
+            $request->setMobilePaymentMethodSpecificInput(null);
         }
         if (null !== $input->getPaymentProductId() && $input->getPaymentProductId()->equals(PaymentProductId::illicado()->getId())) {
             $redirectPaymentMethodSpecificInput->setRequiresApproval(\false);

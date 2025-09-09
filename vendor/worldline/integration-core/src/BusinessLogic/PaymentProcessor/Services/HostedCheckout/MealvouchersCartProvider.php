@@ -45,14 +45,17 @@ class MealvouchersCartProvider implements CartProvider
     }
     private function getMergedProductName(LineItemCollection $lineItems, ProductType $mergedProductType) : string
     {
-        if ($lineItems->getCount() === 1) {
-            return $lineItems->toArray()[0]->getProduct()->getName();
-        }
-        $mergedName = '';
+        $productNames = [];
+        $totalQuantity = 0;
         foreach ($lineItems->toArray() as $lineItem) {
-            $mergedName .= $lineItem->getProduct()->getName() . ' + ';
+            $totalQuantity += $lineItem->getQuantity();
+            if ($lineItem->getProduct()->getId() === 'rounding') {
+                continue;
+            }
+            $productNames[] = $lineItem->getProduct()->getName();
         }
-        return \strlen($mergedName) <= 50 ? $mergedName : "{$lineItems->getCount()} {$mergedProductType} Items";
+        $mergedName = \join(' + ', $productNames);
+        return \strlen($mergedName) <= 50 ? $mergedName : \substr("{$totalQuantity} {$mergedProductType} Items", 0, 50);
     }
     private function getMergedProductCode(LineItemCollection $lineItems) : string
     {

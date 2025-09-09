@@ -46,7 +46,8 @@ class WebhookLogsService
      */
     public function logWebhook(WebhookData $webhookData) : void
     {
-        $webhookLog = new WebhookLog($webhookData->getMerchantReference(), $webhookData->getId(), PaymentMethodDefaultConfigs::getName($webhookData->getId(), $this->activeBrandProvider->getActiveBrand()->getPaymentMethodName())['translation'] ?? '', WebhookStatuses::statusMap[$webhookData->getStatusCategory()], $webhookData->getType(), new DateTime($webhookData->getCreated()), $webhookData->getStatusCode(), $webhookData->getWebhookBody(), $this->activeBrandProvider->getTransactionUrl() . PaymentId::parse((string) $webhookData->getId())->getTransactionId());
+        $payment = $this->paymentsProxy->getPayment(PaymentId::parse($webhookData->getId()));
+        $webhookLog = new WebhookLog($webhookData->getMerchantReference(), $webhookData->getId(), PaymentMethodDefaultConfigs::getName($payment->getProductId(), $this->activeBrandProvider->getActiveBrand()->getPaymentMethodName())['translation'] ?? '', WebhookStatuses::statusMap[$webhookData->getStatusCategory()], $webhookData->getType(), new DateTime($webhookData->getCreated()), $webhookData->getStatusCode(), $webhookData->getWebhookBody(), $this->activeBrandProvider->getTransactionUrl() . PaymentId::parse((string) $webhookData->getId())->getTransactionId());
         $this->repository->saveWebhookLog($webhookLog);
     }
     /**

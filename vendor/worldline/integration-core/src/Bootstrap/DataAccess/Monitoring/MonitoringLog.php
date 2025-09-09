@@ -16,6 +16,7 @@ class MonitoringLog extends Entity
     public const CLASS_NAME = __CLASS__;
     protected string $storeId;
     protected string $mode;
+    protected string $requestId;
     protected string $orderId;
     protected string $paymentNumber;
     protected string $message;
@@ -30,6 +31,7 @@ class MonitoringLog extends Entity
         $indexMap = new IndexMap();
         $indexMap->addStringIndex('storeId');
         $indexMap->addStringIndex('mode');
+        $indexMap->addStringIndex('requestId');
         $indexMap->addStringIndex('orderId');
         $indexMap->addStringIndex('paymentNumber');
         $indexMap->addStringIndex('message');
@@ -45,25 +47,27 @@ class MonitoringLog extends Entity
         parent::inflate($data);
         $this->storeId = $data['storeId'];
         $this->mode = $data['mode'];
+        $this->requestId = $data['requestId'];
         $this->orderId = $data['orderId'];
         $this->paymentNumber = $data['paymentNumber'];
         $this->message = $data['message'];
         $this->createdAt = $data['createdAt'];
         $this->expiresAt = $data['expiresAt'];
         $logData = $data['monitoringLog'] ?? [];
-        $this->monitoringLog = new DomainMonitoringLog($logData['orderId'] ?? '', $logData['paymentNumber'] ?? '', $logData['logLevel'] ?? '', $logData['message'] ?? '', $logData['createdAt'] ? \DateTime::createFromFormat('U', $logData['createdAt']) : null, $logData['requestMethod'] ?? '', $logData['requestEndpoint'] ?? '', $logData['requestBody'] ?? '', $logData['statusCode'] ?? '', $logData['responseBody'] ?? '', $logData['transactionLink'] ?? '', $logData['orderLink'] ?? '');
+        $this->monitoringLog = new DomainMonitoringLog($logData['requestId'] ?? '', $logData['orderId'] ?? '', $logData['paymentNumber'] ?? '', $logData['logLevel'] ?? '', $logData['message'] ?? '', $logData['createdAt'] ? \DateTime::createFromFormat('U', $logData['createdAt']) : null, $logData['requestMethod'] ?? '', $logData['requestEndpoint'] ?? '', $logData['requestBody'] ?? '', $logData['statusCode'] ?? '', $logData['responseBody'] ?? '', $logData['transactionLink'] ?? '', $logData['orderLink'] ?? '');
     }
     public function toArray() : array
     {
         $data = parent::toArray();
         $data['storeId'] = $this->storeId;
         $data['mode'] = $this->mode;
+        $data['requestId'] = $this->requestId;
         $data['orderId'] = $this->orderId;
         $data['paymentNumber'] = $this->paymentNumber;
         $data['message'] = $this->message;
         $data['createdAt'] = $this->createdAt;
         $data['expiresAt'] = $this->expiresAt;
-        $data['monitoringLog'] = ['orderId' => $this->monitoringLog->getOrderId(), 'paymentNumber' => $this->monitoringLog->getPaymentNumber(), 'logLevel' => $this->monitoringLog->getLogLevel(), 'message' => $this->monitoringLog->getMessage(), 'createdAt' => $this->monitoringLog->getCreatedAt() ? $this->monitoringLog->getCreatedAt()->getTimestamp() : '', 'requestMethod' => $this->monitoringLog->getRequestMethod(), 'requestEndpoint' => $this->monitoringLog->getRequestEndpoint(), 'requestBody' => $this->monitoringLog->getRequestBody(), 'statusCode' => $this->monitoringLog->getStatusCode(), 'responseBody' => $this->monitoringLog->getResponseBody(), 'transactionLink' => $this->monitoringLog->getTransactionLink(), 'orderLink' => $this->monitoringLog->getOrderLink()];
+        $data['monitoringLog'] = ['requestId' => $this->requestId, 'orderId' => $this->monitoringLog->getOrderId(), 'paymentNumber' => $this->monitoringLog->getPaymentNumber(), 'logLevel' => $this->monitoringLog->getLogLevel(), 'message' => $this->monitoringLog->getMessage(), 'createdAt' => $this->monitoringLog->getCreatedAt() ? $this->monitoringLog->getCreatedAt()->getTimestamp() : '', 'requestMethod' => $this->monitoringLog->getRequestMethod(), 'requestEndpoint' => $this->monitoringLog->getRequestEndpoint(), 'requestBody' => $this->monitoringLog->getRequestBody(), 'statusCode' => $this->monitoringLog->getStatusCode(), 'responseBody' => $this->monitoringLog->getResponseBody(), 'transactionLink' => $this->monitoringLog->getTransactionLink(), 'orderLink' => $this->monitoringLog->getOrderLink()];
         return $data;
     }
     public function getStoreId() : string
@@ -81,6 +85,14 @@ class MonitoringLog extends Entity
     public function setMode(string $mode) : void
     {
         $this->mode = $mode;
+    }
+    public function getRequestId() : string
+    {
+        return $this->requestId;
+    }
+    public function setRequestId(string $requestId) : void
+    {
+        $this->requestId = $requestId;
     }
     public function getOrderId() : string
     {

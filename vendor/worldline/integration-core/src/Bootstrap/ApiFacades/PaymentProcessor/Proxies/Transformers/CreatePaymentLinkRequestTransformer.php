@@ -13,10 +13,8 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkReques
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 use CAWL\OnlinePayments\Sdk\Domain\CreatePaymentLinkRequest;
-use CAWL\OnlinePayments\Sdk\Domain\GPayThreeDSecure;
 use CAWL\OnlinePayments\Sdk\Domain\HostedCheckoutSpecificInput;
 use CAWL\OnlinePayments\Sdk\Domain\MobilePaymentMethodSpecificInput;
-use CAWL\OnlinePayments\Sdk\Domain\MobilePaymentProduct320SpecificInput;
 use CAWL\OnlinePayments\Sdk\Domain\PaymentLinkSpecificInput;
 use CAWL\OnlinePayments\Sdk\Domain\PaymentProductFilter;
 use CAWL\OnlinePayments\Sdk\Domain\PaymentProductFiltersHostedCheckout;
