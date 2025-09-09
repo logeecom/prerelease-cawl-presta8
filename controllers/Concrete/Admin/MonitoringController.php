@@ -32,6 +32,7 @@ class MonitoringController extends ModuleAdminController
         /** @var MonitoringLogRepository $repository */
         $repository = ServiceRegister::getService(MonitoringLogRepositoryInterface::class);
         foreach ($arrayResult['monitoringLogs'] as $key => $monitoringLog) {
+            $arrayResult['monitoringLogs'][$key]['orderId'] = $repository->getOrderIdByCartId($monitoringLog['orderId']);
             $arrayResult['monitoringLogs'][$key]['orderLink'] = $repository->getOrderUrlByCartId($monitoringLog['orderId']);
         }
         OnlinePaymentsPrestaShopUtility::dieJsonArray($arrayResult);
@@ -60,6 +61,7 @@ class MonitoringController extends ModuleAdminController
         /** @var WebhookLogRepository $repository */
         $repository = ServiceRegister::getService(WebhookLogRepositoryInterface::class);
         foreach ($arrayResult['webhookLogs'] as $key => $webhookLog) {
+            $arrayResult['webhookLogs'][$key]['orderId'] = $repository->getOrderIdByCartId($webhookLog['orderId']);
             $arrayResult['webhookLogs'][$key]['orderLink'] = $repository->getOrderUrlByCartId($webhookLog['orderId']);
         }
         OnlinePaymentsPrestaShopUtility::dieJsonArray($arrayResult);

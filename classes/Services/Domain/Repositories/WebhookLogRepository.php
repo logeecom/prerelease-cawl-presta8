@@ -31,4 +31,13 @@ class WebhookLogRepository extends CoreWebhookLogRepository
         }
         return \rtrim(Context::getContext()->link->getBaseLink(), '/') . SymfonyContainer::getInstance()->get('router')->generate('admin_orders_view', ['orderId' => $id]);
     }
+    /**
+     * @param string $cartId
+     *
+     * @return string
+     */
+    public function getOrderIdByCartId(string $cartId) : string
+    {
+        return Order::getIdByCartId((int) $cartId);
+    }
 }
