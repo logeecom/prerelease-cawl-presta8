@@ -35,8 +35,8 @@ class CardPaymentMethodSpecificInputTransformer
         if (null !== $paymentProductId && PaymentProductId::maestro()->equals($paymentProductId)) {
             $threeDSecure->setSkipAuthentication(\false);
         }
-        if ($cardsSettings->isEnable3ds() && $cardsSettings->isEnable3dsExemption() && null !== $cart->getTotalInEUR() && $cardsSettings->getExemptionLimit()->getValue() >= $cart->getTotalInEUR()->getValue()) {
-            $threeDSecure->setExemptionRequest($cardsSettings->getExemptionType());
+        if ($cardsSettings->isEnable3ds() && $cardsSettings->isEnable3dsExemption() && null !== $cart->getTotalInEUR() && $cardsSettings->getExemptionLimit()->getValue() >= $cart->getTotalInEUR()->getValue() && null !== $cardsSettings->getExemptionType()) {
+            $threeDSecure->setExemptionRequest($cardsSettings->getExemptionType()->getType());
             $threeDSecure->setSkipAuthentication(\true);
             $threeDSecure->setSkipSoftDecline(\false);
         }
