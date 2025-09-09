@@ -60,6 +60,9 @@ class CardPaymentMethodSpecificInputTransformer
         if ($paymentProductId !== null && $paymentProductId->equals(PaymentProductId::mealvouchers()->getId())) {
             $cardPaymentMethodSpecificInput->setAuthorizationMode(PaymentAction::authorizeCapture()->getType());
         }
+        if ($paymentProductId !== null && $paymentProductId->equals(PaymentProductId::chequeVacancesConnect()->getId())) {
+            $cardPaymentMethodSpecificInput->setAuthorizationMode(PaymentAction::authorizeCapture()->getType());
+        }
         if ($paymentProductId !== null && PaymentProductId::intersolve()->equals($paymentProductId->getId())) {
             $cardPaymentMethodSpecificInput->setAuthorizationMode(PaymentAction::authorizeCapture()->getType());
             if ($paymentMethodCollection && ($config = $paymentMethodCollection->get(PaymentProductId::intersolve()))) {

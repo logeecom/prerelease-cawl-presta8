@@ -18,6 +18,7 @@ use CAWL\OnlinePayments\Sdk\Domain\PaymentProductFilter;
 use CAWL\OnlinePayments\Sdk\Domain\PaymentProductFiltersHostedCheckout;
 use CAWL\OnlinePayments\Sdk\Domain\RedirectPaymentMethodSpecificInput;
 use CAWL\OnlinePayments\Sdk\Domain\RedirectPaymentProduct5402SpecificInput;
+use CAWL\OnlinePayments\Sdk\Domain\RedirectPaymentProduct5403SpecificInput;
 use CAWL\OnlinePayments\Sdk\Domain\RedirectPaymentProduct5408SpecificInput;
 use CAWL\OnlinePayments\Sdk\Domain\SepaDirectDebitPaymentMethodSpecificInputBase;
 use CAWL\OnlinePayments\Sdk\Domain\SepaDirectDebitPaymentProduct771SpecificInputBase;
@@ -69,6 +70,12 @@ class CreateHostedCheckoutRequestTransformer
             $redirectPaymentProduct5402SpecificInput->setCompleteRemainingPaymentAmount(\true);
             $redirectPaymentMethodSpecificInput->setPaymentProduct5402SpecificInput($redirectPaymentProduct5402SpecificInput);
             // Reset mobile specific input because it breaks mealvouchers
+            $request->setMobilePaymentMethodSpecificInput(null);
+        }
+        if ($input->getPaymentProductId() !== null && $input->getPaymentProductId()->equals(PaymentProductId::chequeVacancesConnect())) {
+            $redirectPaymentProduct5403SpecificInput = new RedirectPaymentProduct5403SpecificInput();
+            $redirectPaymentProduct5403SpecificInput->setCompleteRemainingPaymentAmount(\true);
+            $redirectPaymentMethodSpecificInput->setPaymentProduct5403SpecificInput($redirectPaymentProduct5403SpecificInput);
             $request->setMobilePaymentMethodSpecificInput(null);
         }
         if (null !== $input->getPaymentProductId() && $input->getPaymentProductId()->equals(PaymentProductId::illicado()->getId())) {
