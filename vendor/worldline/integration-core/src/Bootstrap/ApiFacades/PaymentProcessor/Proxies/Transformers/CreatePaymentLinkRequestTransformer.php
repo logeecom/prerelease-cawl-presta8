@@ -48,15 +48,7 @@ class CreatePaymentLinkRequestTransformer
         $cardPaymentMethodSpecificInput = CardPaymentMethodSpecificInputTransformer::transform($cart, $input->getReturnUrl(), $cardsSettings, $paymentSettings, $paymentMethodCollection);
         $request->setCardPaymentMethodSpecificInput($cardPaymentMethodSpecificInput);
         $mobilePaymentMethodSpecificInput = new MobilePaymentMethodSpecificInput();
-        $mobilePaymentProduct320SpecificInput = new MobilePaymentProduct320SpecificInput();
-        $gPayThreeDSecure = new GPayThreeDSecure();
-        $threeDSecure = $cardPaymentMethodSpecificInput->getThreeDSecure();
-        $gPayThreeDSecure->setSkipAuthentication($threeDSecure->getSkipAuthentication());
-        $gPayThreeDSecure->setChallengeIndicator($threeDSecure->getchallengeIndicator());
-        $gPayThreeDSecure->setRedirectionData($threeDSecure->getRedirectionData());
-        $gPayThreeDSecure->setExemptionRequest($threeDSecure->getexemptionRequest());
-        $mobilePaymentProduct320SpecificInput->setThreeDSecure($gPayThreeDSecure);
-        $mobilePaymentMethodSpecificInput->setPaymentProduct320SpecificInput($mobilePaymentProduct320SpecificInput);
+        $mobilePaymentMethodSpecificInput->setPaymentProduct320SpecificInput(GooglePaySpecificRequestTransformer::transform($cardPaymentMethodSpecificInput));
         $request->setMobilePaymentMethodSpecificInput($mobilePaymentMethodSpecificInput);
         $redirectPaymentMethodSpecificInput = new RedirectPaymentMethodSpecificInput();
         $redirectPaymentProduct5402SpecificInput = new RedirectPaymentProduct5402SpecificInput();

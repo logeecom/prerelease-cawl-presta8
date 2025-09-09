@@ -59,22 +59,12 @@ class CreateHostedCheckoutRequestTransformer
         $request->setHostedCheckoutSpecificInput($hostedCheckoutSpecificInput);
         $cardPaymentMethodSpecificInput = CardPaymentMethodSpecificInputTransformer::transform($cart, $input->getReturnUrl(), $cardsSettings, $paymentSettings, $paymentMethodCollection, $input->getPaymentProductId(), $token);
         $request->setCardPaymentMethodSpecificInput($cardPaymentMethodSpecificInput);
+        $mobilePaymentMethodSpecificInput = new MobilePaymentMethodSpecificInput();
         if (null !== $input->getPaymentProductId() && $input->getPaymentProductId()->isMobileType()) {
-            $mobilePaymentMethodSpecificInput = new MobilePaymentMethodSpecificInput();
             $mobilePaymentMethodSpecificInput->setPaymentProductId($input->getPaymentProductId()->getId());
-            if (PaymentProductId::googlePay()->equals($input->getPaymentProductId())) {
-                $mobilePaymentProduct320SpecificInput = new MobilePaymentProduct320SpecificInput();
-                $gPayThreeDSecure = new GPayThreeDSecure();
-                $threeDSecure = $cardPaymentMethodSpecificInput->getThreeDSecure();
-                $gPayThreeDSecure->setSkipAuthentication($threeDSecure->getSkipAuthentication());
-                $gPayThreeDSecure->setChallengeIndicator($threeDSecure->getchallengeIndicator());
-                $gPayThreeDSecure->setRedirectionData($threeDSecure->getRedirectionData());
-                $gPayThreeDSecure->setExemptionRequest($threeDSecure->getexemptionRequest());
-                $mobilePaymentProduct320SpecificInput->setThreeDSecure($gPayThreeDSecure);
-                $mobilePaymentMethodSpecificInput->setPaymentProduct320SpecificInput($mobilePaymentProduct320SpecificInput);
-            }
-            $request->setMobilePaymentMethodSpecificInput($mobilePaymentMethodSpecificInput);
         }
+        $mobilePaymentMethodSpecificInput->setPaymentProduct320SpecificInput(GooglePaySpecificRequestTransformer::transform($cardPaymentMethodSpecificInput));
+        $request->setMobilePaymentMethodSpecificInput($mobilePaymentMethodSpecificInput);
         $redirectPaymentMethodSpecificInput = new RedirectPaymentMethodSpecificInput();
         if ($input->getPaymentProductId() !== null && $input->getPaymentProductId()->equals(PaymentProductId::mealvouchers())) {
             $redirectPaymentProduct5402SpecificInput = new RedirectPaymentProduct5402SpecificInput();
