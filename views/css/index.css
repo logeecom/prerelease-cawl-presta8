@@ -731,6 +731,11 @@ ul.op-bullet-list li {
 #op-page .op-modal.op-webhook-notifications-modal .opp-modal-content {
   max-width: 515px;
 }
+@media (max-width: 767.98px) {
+  #op-page .op-modal.op-webhook-notifications-modal .opp-modal-content {
+    max-width: 100%;
+  }
+}
 
 .opp-system-info-settings .opp-setting-field button, .opp-system-info-settings .opp-setting-field a {
   width: fit-content;
@@ -1976,6 +1981,7 @@ ul.op-bullet-list li {
 @media (max-width: 767.98px) {
   #op-page .op-settings-page .op-card .op-card-content .op-webhooks-url {
     width: 90%;
+    line-break: anywhere;
   }
 }
 #op-page .op-settings-page .op-card .op-card-content .op-webhooks-url-copy::after {
@@ -5071,6 +5077,11 @@ ul.op-bullet-list li {
 }
 #op-page .op-modal.op-webhook-notifications-modal .opp-modal-content {
   max-width: 515px;
+}
+@media (max-width: 767.98px) {
+  #op-page .op-modal.op-webhook-notifications-modal .opp-modal-content {
+    max-width: 100%;
+  }
 }
 
 .opp-system-info-settings .opp-setting-field button, .opp-system-info-settings .opp-setting-field a {

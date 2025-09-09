@@ -277,7 +277,7 @@ class PaymentProductId
     }
     public function isMobileType() : bool
     {
-        return \in_array($this->id, [self::APPLE_PAY, self::GOOGLE_PAY, self::WECHAT_PAY], \true);
+        return \in_array($this->id, [self::APPLE_PAY, self::GOOGLE_PAY], \true);
     }
     public function isRedirectType() : bool
     {
