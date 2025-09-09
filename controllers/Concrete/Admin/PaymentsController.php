@@ -92,6 +92,6 @@ class PaymentsController extends ModuleAdminController
         if (!$logo && isset($additionalData['logo'])) {
             $logo = $additionalData['logo'];
         }
-        return new PaymentMethodRequest($requestData['paymentProductId'], $names, $requestData['enabled'], $requestData['templateName'] ?? '', $titles, $logo, $enableGroupCards, null, $sessionTimeout, $paymentProductId, $recurrenceType, $signatureType, $instantPayment);
+        return new PaymentMethodRequest($requestData['paymentProductId'], $names, \filter_var($requestData['enabled'], \FILTER_VALIDATE_BOOLEAN), $requestData['templateName'] ?? '', $titles, $logo, $enableGroupCards, null, $sessionTimeout, $paymentProductId, $recurrenceType, $signatureType, $instantPayment);
     }
 }
