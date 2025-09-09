@@ -4241,7 +4241,7 @@ ul.op-bullet-list li {
 }
 #op-page .op-need-help {
   position: fixed;
-  top: 94vh;
+  top: 92vh;
   background: #007B7C;
   border-radius: 10px;
   padding: 10px 18px;
@@ -4250,9 +4250,15 @@ ul.op-bullet-list li {
   font-family: "Inter";
   font-size: 14px;
 }
+@media (max-width: 767.98px) {
+  #op-page .op-need-help {
+    display: none;
+  }
+}
 #op-page .op-need-help:before {
   content: "\e911";
   font-family: op-icons;
+  padding-right: 10px;
 }
 #op-page .op-dark-mask {
   width: 100%;

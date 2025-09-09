@@ -26,7 +26,7 @@ namespace {
     {
         public function __construct()
         {
-            $config = \json_decode(\file_get_contents(__DIR__ . '/config.json'), \true);
+            $config = $this->getConfig();
             $this->name = $config['MODULE_NAME'];
             $this->author = $config['AUTHOR'];
             $this->version = $config['VERSION'];

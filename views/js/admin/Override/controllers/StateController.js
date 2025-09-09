@@ -299,7 +299,16 @@ if (!window.OnlinePaymentsFE) {
         this.initializeFooter = () => {
             api.get(configuration.versionUrl, null, true)
                 .then((version) => {
+                    let existingNeedHelp = document.querySelector('.op-need-help');
+
+                    if (existingNeedHelp) {
+                        existingNeedHelp.remove();
+                    }
+
                     let needHelp = elementGenerator.createElement('span', 'op-need-help', 'general.needHelp');
+                    needHelp.addEventListener('click', () => {
+                        window.open(translationService.translate('general.helpLink'), '_blank');
+                    });
                     templateService.getMainPage().appendChild(needHelp);
 
                     const footer = OnlinePaymentsFE.components.Footer.create({

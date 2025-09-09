@@ -5,5 +5,6 @@
   "VERSION": "3.0.0",
   "MODULE_KEY": "",
   "DISPLAY_NAME": "Cawl Online Payments",
-  "DESCRIPTION": "This module offers a 1-click integration to start accepting payments and grow your revenues by offering your customers with global and regional payment methods to sell across Europe."
+  "DESCRIPTION": "This module offers a 1-click integration to start accepting payments and grow your revenues by offering your customers with global and regional payment methods to sell across Europe.",
+  "HELP_LINK": "https://addons.prestashop.com/en/contact-us?id_product=86428"
 }

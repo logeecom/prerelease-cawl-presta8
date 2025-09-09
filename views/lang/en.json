@@ -147,7 +147,10 @@
       "title": "Webhooks URL",
       "description": "To avoid copy/paste issues, use the \"copy\" icon to copy the URL."
     },
-    "connect": "Connect"
+    "connect": "Connect",
+    "messages": {
+      "connectionUpdated": "Successfully connected."
+    }
   },
   "payments": {
     "pageTitle": "My payment methods",

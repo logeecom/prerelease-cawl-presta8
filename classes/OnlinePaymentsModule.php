@@ -104,6 +104,10 @@ class OnlinePaymentsModule extends \PaymentModule
         $provider = ServiceRegister::getService(ActiveBrandProviderInterface::class);
         return $provider->getActiveBrand();
     }
+    public function getConfig()
+    {
+        return \json_decode(\file_get_contents(__DIR__ . '/../config.json'), \true);
+    }
     private function getUrls() : array
     {
         return ['connection' => ['getSettingsUrl' => Url::getAdminUrl('Connection', 'getConnectionSettings', '{storeId}'), 'submitUrl' => Url::getAdminUrl('Connection', 'connect', '{storeId}'), 'webhooksUrl' => Url::getFrontUrl('webhook') . '?storeId={storeId}'], 'stores' => ['storesUrl' => Url::getAdminUrl('Stores', 'getStores', '{storeId}'), 'currentStoreUrl' => Url::getAdminUrl('Stores', 'getCurrentStore')], 'integration' => ['stateUrl' => Url::getAdminUrl('State', 'index', '{storeId}')], 'version' => ['versionUrl' => Url::getAdminUrl('Version', 'getVersion')], 'payments' => ['getAvailablePaymentsUrl' => Url::getAdminUrl('Payments', 'list', '{storeId}'), 'enableMethodUrl' => Url::getAdminUrl('Payments', 'enable', '{storeId}'), 'saveMethodConfigurationUrl' => Url::getAdminUrl('Payments', 'save', '{storeId}', '{methodId}'), 'getMethodConfigurationUrl' => Url::getAdminUrl('Payments', 'getPaymentMethod', '{storeId}', '{methodId}'), 'getLanguagesUrl' => Url::getAdminUrl('Language', 'getLanguages', '{storeId}')], 'settings' => ['getGeneralSettingsUrl' => Url::getAdminUrl('GeneralSettings', 'getGeneralSettings', '{storeId}'), 'getPaymentStatusesUrl' => Url::getAdminUrl('OrderStatuses', 'getOrderStatuses', '{storeId}'), 'saveConnectionUrl' => Url::getAdminUrl('Connection', 'connect', '{storeId}'), 'saveCardsSettingsUrl' => Url::getAdminUrl('GeneralSettings', 'saveCardsSettings', '{storeId}'), 'savePaymentSettingsUrl' => Url::getAdminUrl('GeneralSettings', 'savePaymentSettings', '{storeId}'), 'saveLogSettingsUrl' => Url::getAdminUrl('GeneralSettings', 'saveLogSettings', '{storeId}'), 'savePayByLinkSettingsUrl' => Url::getAdminUrl('GeneralSettings', 'savePayByLinkSettings', '{storeId}'), 'webhooksUrl' => Url::getFrontUrl('webhook') . '?storeId={storeId}', 'disconnectUrl' => Url::getAdminUrl('GeneralSettings', 'disconnect', '{storeId}')], 'monitoring' => ['getMonitoringLogsUrl' => Url::getAdminUrl('Monitoring', 'getMonitoringLogs', '{storeId}'), 'getWebhookLogsUrl' => Url::getAdminUrl('Monitoring', 'getWebhookLogs', '{storeId}'), 'downloadMonitoringLogsUrl' => Url::getAdminUrl('Monitoring', 'downloadMonitoringLogs', '{storeId}'), 'downloadWebhookLogsUrl' => Url::getAdminUrl('Monitoring', 'downloadWebhookLogs', '{storeId}')]];
@@ -117,10 +121,10 @@ class OnlinePaymentsModule extends \PaymentModule
         $baseDir = __DIR__ . '/../views/lang/';
         $translations = \json_decode(\file_get_contents($baseDir . 'en.json'), \true);
         if ($translations) {
-            /** @var ActiveBrandProviderInterface $brandProvider */
-            $brandProvider = ServiceRegister::getService(ActiveBrandProviderInterface::class);
-            $brand = $brandProvider->getActiveBrand();
-            $translations[$brand->getCode()]['links']['configurePlugin'] = $translations[$brand->getCode()]['links']['configurePlugin'] . 'prestashop';
+            $brand = $this->getBrand()->getCode();
+            $config = $this->getConfig();
+            $translations[$brand]['links']['configurePlugin'] = $translations[$brand]['links']['configurePlugin'] . 'prestashop';
+            $translations['general']['helpLink'] = $config['HELP_LINK'];
         }
         return $translations;
     }
@@ -131,10 +135,10 @@ class OnlinePaymentsModule extends \PaymentModule
         $file = \file_exists($baseDir . $locale . '.json') ? $baseDir . $locale . '.json' : $baseDir . 'en.json';
         $translations = \json_decode(\file_get_contents($file), \true);
         if ($translations) {
-            /** @var ActiveBrandProviderInterface $brandProvider */
-            $brandProvider = ServiceRegister::getService(ActiveBrandProviderInterface::class);
-            $brand = $brandProvider->getActiveBrand();
-            $translations[$brand->getCode()]['links']['configurePlugin'] = $translations[$brand->getCode()]['links']['configurePlugin'] . 'prestashop';
+            $brand = $this->getBrand()->getCode();
+            $config = $this->getConfig();
+            $translations[$brand]['links']['configurePlugin'] = $translations[$brand]['links']['configurePlugin'] . 'prestashop';
+            $translations['general']['helpLink'] = $config['HELP_LINK'];
         }
         return $translations;
     }
