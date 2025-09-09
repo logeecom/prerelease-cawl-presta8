@@ -1,21 +1,20 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings;
 
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidActionTypeException;
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidActionTypeException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
 /**
  * Class PaymentAction
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod
+ * @internal
  */
 class PaymentAction
 {
     public const AUTHORIZE = 'FINAL_AUTHORIZATION';
     public const AUTHORIZE_CAPTURE = 'SALE';
     private string $type;
-
     /**
      * @param string $type
      */
@@ -23,17 +22,14 @@ class PaymentAction
     {
         $this->type = $type;
     }
-
-    public static function authorize(): PaymentAction
+    public static function authorize() : PaymentAction
     {
         return new self(self::AUTHORIZE);
     }
-
-    public static function authorizeCapture(): PaymentAction
+    public static function authorizeCapture() : PaymentAction
     {
         return new self(self::AUTHORIZE_CAPTURE);
     }
-
     /**
      * @param string $state
      *
@@ -41,30 +37,21 @@ class PaymentAction
      *
      * @throws InvalidActionTypeException
      */
-    public static function fromState(string $state): PaymentAction
+    public static function fromState(string $state) : PaymentAction
     {
         if ($state === self::AUTHORIZE_CAPTURE) {
             return new self(self::AUTHORIZE_CAPTURE);
         }
-
         if ($state === self::AUTHORIZE) {
             return new self(self::AUTHORIZE);
         }
-
-        throw new InvalidActionTypeException(
-            new TranslatableLabel(
-                'Invalid action type. Action type must be "authorize" or "authorize-capture"',
-                'payment.invalidActionType'
-            )
-        );
+        throw new InvalidActionTypeException(new TranslatableLabel('Invalid action type. Action type must be "authorize" or "authorize-capture"', 'payment.invalidActionType'));
     }
-
-    public function getType(): string
+    public function getType() : string
     {
         return $this->type;
     }
-
-    public function equals(PaymentAction $action): bool
+    public function equals(PaymentAction $action) : bool
     {
         return $this->type === $action->getType();
     }

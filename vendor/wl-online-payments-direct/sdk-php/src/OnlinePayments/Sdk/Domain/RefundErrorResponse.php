@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class RefundErrorResponse extends DataObject
 {
@@ -15,17 +16,14 @@ class RefundErrorResponse extends DataObject
      * @var string
      */
     public $errorId = null;
-
     /**
      * @var APIError[]
      */
     public $errors = null;
-
     /**
      * @var RefundResponse
      */
     public $refundResult = null;
-
     /**
      * @return string
      */
@@ -33,7 +31,6 @@ class RefundErrorResponse extends DataObject
     {
         return $this->errorId;
     }
-
     /**
      * @param string
      */
@@ -41,7 +38,6 @@ class RefundErrorResponse extends DataObject
     {
         $this->errorId = $value;
     }
-
     /**
      * @return APIError[]
      */
@@ -49,7 +45,6 @@ class RefundErrorResponse extends DataObject
     {
         return $this->errors;
     }
-
     /**
      * @param APIError[]
      */
@@ -57,7 +52,6 @@ class RefundErrorResponse extends DataObject
     {
         $this->errors = $value;
     }
-
     /**
      * @return RefundResponse
      */
@@ -65,7 +59,6 @@ class RefundErrorResponse extends DataObject
     {
         return $this->refundResult;
     }
-
     /**
      * @param RefundResponse
      */
@@ -73,30 +66,28 @@ class RefundErrorResponse extends DataObject
     {
         $this->refundResult = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->errorId)) {
+        if (!\is_null($this->errorId)) {
             $object->errorId = $this->errorId;
         }
-        if (!is_null($this->errors)) {
+        if (!\is_null($this->errors)) {
             $object->errors = [];
             foreach ($this->errors as $element) {
-                if (!is_null($element)) {
+                if (!\is_null($element)) {
                     $object->errors[] = $element->toObject();
                 }
             }
         }
-        if (!is_null($this->refundResult)) {
+        if (!\is_null($this->refundResult)) {
             $object->refundResult = $this->refundResult->toObject();
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -105,12 +96,12 @@ class RefundErrorResponse extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'errorId')) {
+        if (\property_exists($object, 'errorId')) {
             $this->errorId = $object->errorId;
         }
-        if (property_exists($object, 'errors')) {
-            if (!is_array($object->errors) && !is_object($object->errors)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->errors, true) . '\' is not an array or object');
+        if (\property_exists($object, 'errors')) {
+            if (!\is_array($object->errors) && !\is_object($object->errors)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->errors, \true) . '\' is not an array or object');
             }
             $this->errors = [];
             foreach ($object->errors as $element) {
@@ -118,9 +109,9 @@ class RefundErrorResponse extends DataObject
                 $this->errors[] = $value->fromObject($element);
             }
         }
-        if (property_exists($object, 'refundResult')) {
-            if (!is_object($object->refundResult)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->refundResult, true) . '\' is not an object');
+        if (\property_exists($object, 'refundResult')) {
+            if (!\is_object($object->refundResult)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->refundResult, \true) . '\' is not an object');
             }
             $value = new RefundResponse();
             $this->refundResult = $value->fromObject($object->refundResult);

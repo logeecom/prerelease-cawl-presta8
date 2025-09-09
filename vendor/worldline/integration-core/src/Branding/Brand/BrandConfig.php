@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\Branding\Brand;
+namespace CAWL\OnlinePayments\Core\Branding\Brand;
 
 /**
  * Class BrandConfig.
  *
  * @package OnlinePayments\Core\Branding\Brand
+ * @internal
  */
 class BrandConfig
 {
@@ -16,7 +17,6 @@ class BrandConfig
     private string $liveUrl;
     private string $testUrl;
     private string $paymentMethodName;
-
     /**
      * @param string $code
      * @param string $name
@@ -26,15 +26,8 @@ class BrandConfig
      * @param string $testUrl
      * @param string $paymentMethodName
      */
-    public function __construct(
-        string $code,
-        string $name,
-        string $liveApiEndpoint,
-        string $testApiEndpoint,
-        string $liveUrl,
-        string $testUrl,
-        string $paymentMethodName
-    ) {
+    public function __construct(string $code, string $name, string $liveApiEndpoint, string $testApiEndpoint, string $liveUrl, string $testUrl, string $paymentMethodName)
+    {
         $this->code = $code;
         $this->name = $name;
         $this->liveApiEndpoint = $liveApiEndpoint;
@@ -43,38 +36,31 @@ class BrandConfig
         $this->testUrl = $testUrl;
         $this->paymentMethodName = $paymentMethodName;
     }
-
-    public function getCode(): string
+    public function getCode() : string
     {
         return $this->code;
     }
-
-    public function getName(): string
+    public function getName() : string
     {
         return $this->name;
     }
-
-    public function getLiveApiEndpoint(): string
+    public function getLiveApiEndpoint() : string
     {
         return $this->liveApiEndpoint;
     }
-
-    public function getTestApiEndpoint(): string
+    public function getTestApiEndpoint() : string
     {
         return $this->testApiEndpoint;
     }
-
-    public function getLiveUrl(): string
+    public function getLiveUrl() : string
     {
         return $this->liveUrl;
     }
-
-    public function getTestUrl(): string
+    public function getTestUrl() : string
     {
         return $this->testUrl;
     }
-
-    public function getPaymentMethodName(): string
+    public function getPaymentMethodName() : string
     {
         return $this->paymentMethodName;
     }

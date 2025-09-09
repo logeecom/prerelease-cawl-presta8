@@ -1,33 +1,30 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories;
 
-
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkSettings;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkSettings;
 /**
  * Interface PayByLinkSettingsRepositoryInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories
+ * @internal
  */
 interface PayByLinkSettingsRepositoryInterface
 {
     /**
      * @return PayByLinkSettings|null
      */
-    public function getPayByLinkSettings(): ?PayByLinkSettings;
-
+    public function getPayByLinkSettings() : ?PayByLinkSettings;
     /**
      * @param PayByLinkSettings $payByLinkSettings
      *
      * @return void
      */
-    public function savePayByLinkSettings(PayByLinkSettings $payByLinkSettings): void;
-
+    public function savePayByLinkSettings(PayByLinkSettings $payByLinkSettings) : void;
     /**
      * @param string $mode
      *
      * @return void
      */
-    public function deleteByMode(string $mode): void;
+    public function deleteByMode(string $mode) : void;
 }

@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Logger\Interfaces;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Logger\Interfaces;
 
 /**
  * Interface DefaultLoggerAdapter.
  *
  * @package OnlinePayments\Core\Infrastructure\Logger\Interfaces
+ * @internal
  */
 interface DefaultLoggerAdapter
 {

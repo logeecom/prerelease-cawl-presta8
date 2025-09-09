@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Http\Exceptions;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Http\Exceptions;
 
 /**
  * Class HttpAuthenticationException.
  *
  * @package OnlinePayments\Core\Infrastructure\Utility\Exceptions
+ * @internal
  */
 class HttpAuthenticationException extends HttpBaseException
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Intersolve;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Intersolve;
 
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidSessionTimeoutException;
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidSessionTimeoutException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
 /**
  * Class SessionTimeout
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\RedirectPaymentMethod\Intersolve
+ * @internal
  */
 class SessionTimeout
 {
@@ -22,7 +22,6 @@ class SessionTimeout
      * @var int
      */
     protected int $duration;
-
     /**
      * @param int $duration
      *
@@ -31,29 +30,19 @@ class SessionTimeout
     public function __construct(int $duration)
     {
         $this->validate($duration);
-
         $this->duration = $duration;
     }
-
-    public function getDuration(): int
+    public function getDuration() : int
     {
         return $this->duration;
     }
-
     /**
      * @throws InvalidSessionTimeoutException
      */
-    public function validate(int $duration): void
+    public function validate(int $duration) : void
     {
         if ($duration < self::MIN_VALUE || $duration > self::MAX_VALUE) {
-            throw new InvalidSessionTimeoutException(
-                new TranslatableLabel(
-                    'Invalid session timeout duration. Session timeout must be between '
-                    . self::MIN_VALUE . ' and ' . self::MAX_VALUE,
-                    'payments.sessionTimeoutDuration',
-                    [(string)self::MIN_VALUE, (string)self::MAX_VALUE]
-                )
-            );
+            throw new InvalidSessionTimeoutException(new TranslatableLabel('Invalid session timeout duration. Session timeout must be between ' . self::MIN_VALUE . ' and ' . self::MAX_VALUE, 'payments.sessionTimeoutDuration', [(string) self::MIN_VALUE, (string) self::MAX_VALUE]));
         }
     }
 }

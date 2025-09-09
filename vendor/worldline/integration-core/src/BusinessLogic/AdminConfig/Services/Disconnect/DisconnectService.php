@@ -1,20 +1,20 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Disconnect;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Disconnect;
 
-use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\CardsSettingsRepositoryInterface;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\LogSettingsRepositoryInterface;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\PayByLinkSettingsRepositoryInterface;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\PaymentSettingsRepositoryInterface;
-use OnlinePayments\Core\BusinessLogic\Domain\Connection\Repositories\ConnectionConfigRepositoryInterface;
-use OnlinePayments\Core\BusinessLogic\Domain\Disconnect\DisconnectTaskEnqueuerInterface;
-use OnlinePayments\Core\BusinessLogic\Domain\Integration\Payment\ShopPaymentService;
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Repositories\PaymentConfigRepositoryInterface;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\CardsSettingsRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\LogSettingsRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\PayByLinkSettingsRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\PaymentSettingsRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Repositories\ConnectionConfigRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Disconnect\DisconnectTaskEnqueuerInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Payment\ShopPaymentService;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Repositories\PaymentConfigRepositoryInterface;
 /**
  * Class DisconnectService
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Disconnect
+ * @internal
  */
 class DisconnectService
 {
@@ -26,7 +26,6 @@ class DisconnectService
     protected PaymentConfigRepositoryInterface $paymentMethodConfigRepository;
     protected PayByLinkSettingsRepositoryInterface $payByLinkSettingsRepository;
     protected DisconnectTaskEnqueuerInterface $disconnectTaskEnqueuer;
-
     /**
      * @param ShopPaymentService $shopPaymentService
      * @param ConnectionConfigRepositoryInterface $connectionConfigRepository
@@ -37,16 +36,8 @@ class DisconnectService
      * @param PayByLinkSettingsRepositoryInterface $payByLinkSettingsRepository
      * @param DisconnectTaskEnqueuerInterface $disconnectTaskEnqueuer
      */
-    public function __construct(
-        ShopPaymentService $shopPaymentService,
-        ConnectionConfigRepositoryInterface $connectionConfigRepository,
-        CardsSettingsRepositoryInterface $cardsSettingsRepository,
-        PaymentSettingsRepositoryInterface $paymentSettingsRepository,
-        LogSettingsRepositoryInterface $logSettingsRepository,
-        PaymentConfigRepositoryInterface $paymentMethodConfigRepository,
-        PayByLinkSettingsRepositoryInterface $payByLinkSettingsRepository,
-        DisconnectTaskEnqueuerInterface $disconnectTaskEnqueuer
-    ) {
+    public function __construct(ShopPaymentService $shopPaymentService, ConnectionConfigRepositoryInterface $connectionConfigRepository, CardsSettingsRepositoryInterface $cardsSettingsRepository, PaymentSettingsRepositoryInterface $paymentSettingsRepository, LogSettingsRepositoryInterface $logSettingsRepository, PaymentConfigRepositoryInterface $paymentMethodConfigRepository, PayByLinkSettingsRepositoryInterface $payByLinkSettingsRepository, DisconnectTaskEnqueuerInterface $disconnectTaskEnqueuer)
+    {
         $this->shopPaymentService = $shopPaymentService;
         $this->connectionConfigRepository = $connectionConfigRepository;
         $this->cardsSettingsRepository = $cardsSettingsRepository;
@@ -56,28 +47,25 @@ class DisconnectService
         $this->payByLinkSettingsRepository = $payByLinkSettingsRepository;
         $this->disconnectTaskEnqueuer = $disconnectTaskEnqueuer;
     }
-
-    public function disconnect(): void
+    public function disconnect() : void
     {
         try {
             $activeConnection = $this->connectionConfigRepository->getConnection();
             if (null === $activeConnection) {
                 return;
             }
-
-            $this->disconnectIntegration((string)$activeConnection->getMode());
-            $this->deleteAllData((string)$activeConnection->getMode());
+            $this->disconnectIntegration((string) $activeConnection->getMode());
+            $this->deleteAllData((string) $activeConnection->getMode());
         } catch (\Exception $e) {
             throw $e;
         }
     }
-
     /**
      * @param string $mode
      *
      * @return void
      */
-    public function disconnectIntegration(string $mode): void
+    public function disconnectIntegration(string $mode) : void
     {
         $this->shopPaymentService->deletePaymentMethods($mode);
         $this->cardsSettingsRepository->deleteByMode($mode);
@@ -87,8 +75,7 @@ class DisconnectService
         $this->payByLinkSettingsRepository->deleteByMode($mode);
         $this->connectionConfigRepository->disconnect();
     }
-
-    public function deleteAllData(string $mode): void
+    public function deleteAllData(string $mode) : void
     {
         $this->disconnectTaskEnqueuer->enqueueDisconnectTask($mode);
     }

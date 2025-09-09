@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class EmptyValidator extends DataObject
 {
@@ -19,7 +20,6 @@ class EmptyValidator extends DataObject
         $object = parent::toObject();
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this

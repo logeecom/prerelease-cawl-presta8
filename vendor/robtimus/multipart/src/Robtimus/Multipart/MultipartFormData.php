@@ -1,5 +1,6 @@
 <?php
-namespace Robtimus\Multipart;
+
+namespace CAWL\Robtimus\Multipart;
 
 /**
  * A multipart/form-data object.
@@ -7,6 +8,7 @@ namespace Robtimus\Multipart;
  * @package Robtimus\Multipart
  * @author  Rob Spoor
  * @license https://www.apache.org/licenses/LICENSE-2.0.txt The Apache Software License, Version 2.0
+ * @internal
  */
 final class MultipartFormData extends Multipart
 {
@@ -19,7 +21,6 @@ final class MultipartFormData extends Multipart
     {
         parent::__construct($boundary, 'multipart/form-data');
     }
-
     /**
      * Adds a string parameter.
      *
@@ -32,16 +33,13 @@ final class MultipartFormData extends Multipart
     {
         Util::validateNonEmptyString($name, '$name');
         Util::validateString($value, '$value');
-
         $this->startPart();
         $this->addContentDisposition('form-data', $name);
         $this->endHeaders();
         $this->addContent($value);
         $this->endPart();
-
         return $this;
     }
-
     /**
      * Adds a file parameter.
      *
@@ -63,14 +61,12 @@ final class MultipartFormData extends Multipart
         Util::validateStreamable($content, '$content');
         Util::validateNonEmptyString($contentType, '$contentType');
         Util::validateInt($contentLength, '$contentLength');
-
         $this->startPart();
         $this->addContentDisposition('form-data', $name, $filename);
         $this->addContentType($contentType);
         $this->endHeaders();
         $this->addContent($content, $contentLength);
         $this->endPart();
-
         return $this;
     }
 }

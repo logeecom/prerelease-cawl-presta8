@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\AutoTest;
+namespace CAWL\OnlinePayments\Core\Infrastructure\AutoTest;
 
-use OnlinePayments\Core\Infrastructure\Data\DataTransferObject;
-use OnlinePayments\Core\Infrastructure\Logger\LogData;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Data\DataTransferObject;
+use CAWL\OnlinePayments\Core\Infrastructure\Logger\LogData;
 /**
  * Class AutoTestStatus.
  *
  * @package OnlinePayments\Core\Infrastructure\AutoTest
+ * @internal
  */
 class AutoTestStatus extends DataTransferObject
 {
@@ -36,7 +36,6 @@ class AutoTestStatus extends DataTransferObject
      * @var LogData[]
      */
     public array $logs;
-
     /**
      * AutoTestStatus constructor.
      *
@@ -52,26 +51,19 @@ class AutoTestStatus extends DataTransferObject
         $this->error = $error;
         $this->logs = $logs;
     }
-
     /**
      * Returns an array representation of the object.
      *
      * @return array This object as an array.
      */
-    public function toArray(): array
+    public function toArray() : array
     {
-        return array(
-            'taskStatus' => $this->taskStatus,
-            'finished' => $this->finished,
-            'error' => $this->error,
-            'logs' => $this->logs,
-        );
+        return array('taskStatus' => $this->taskStatus, 'finished' => $this->finished, 'error' => $this->error, 'logs' => $this->logs);
     }
-
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): DataTransferObject
+    public static function fromArray(array $data) : DataTransferObject
     {
         return new self($data['taskStatus'], $data['finished'], $data['error'], $data['logs']);
     }

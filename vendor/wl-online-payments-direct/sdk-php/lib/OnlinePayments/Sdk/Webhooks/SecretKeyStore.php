@@ -1,11 +1,13 @@
 <?php
-namespace OnlinePayments\Sdk\Webhooks;
+
+namespace CAWL\OnlinePayments\Sdk\Webhooks;
 
 /**
  * Class SecretKeyStore
  * A store of secret keys. Implementations could store secret keys in a database, on disk, etc.
  *
  * @package OnlinePayments\Sdk\Webhooks
+ * @internal
  */
 interface SecretKeyStore
 {

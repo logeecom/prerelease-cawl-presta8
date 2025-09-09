@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution\Events;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Events;
 
-use OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
-use OnlinePayments\Core\Infrastructure\Utility\Events\Event;
-
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
+use CAWL\OnlinePayments\Core\Infrastructure\Utility\Events\Event;
 /**
  * Class QueueStatusChangedEvent.
  *
  * @package OnlinePayments\Core\Infrastructure\Scheduler
+ * @internal
  */
 class QueueStatusChangedEvent extends Event
 {
@@ -16,21 +16,18 @@ class QueueStatusChangedEvent extends Event
      * Fully qualified name of this class.
      */
     const CLASS_NAME = __CLASS__;
-
     /**
      * Queue item.
      *
      * @var QueueItem
      */
     private QueueItem $queueItem;
-
     /**
      * Previous state of queue item.
      *
      * @var string
      */
     private string $previousState;
-
     /**
      * TaskProgressEvent constructor.
      *
@@ -42,23 +39,21 @@ class QueueStatusChangedEvent extends Event
         $this->queueItem = $queueItem;
         $this->previousState = $previousState;
     }
-
     /**
      * Gets Queue item.
      *
      * @return QueueItem Queue item.
      */
-    public function getQueueItem(): QueueItem
+    public function getQueueItem() : QueueItem
     {
         return $this->queueItem;
     }
-
     /**
      * Gets previous state.
      *
      * @return string Previous state.
      */
-    public function getPreviousState(): string
+    public function getPreviousState() : string
     {
         return $this->previousState;
     }

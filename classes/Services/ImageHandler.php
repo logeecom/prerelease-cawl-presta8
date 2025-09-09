@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Classes\Services;
+namespace CAWL\OnlinePayments\Classes\Services;
 
 use Module;
-use OnlinePayments\Core\Infrastructure\ServiceRegister;
-
+use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
 /**
  * Class ImageHandler
  *
  * @package OnlinePayments\Classes\Services
+ * @internal
  */
 class ImageHandler
 {
@@ -20,25 +20,21 @@ class ImageHandler
      *
      * @return bool
      */
-    public static function saveImage(string $file, string $fileName, string $storeId, string $mode): bool
+    public static function saveImage(string $file, string $fileName, string $storeId, string $mode) : bool
     {
         /** @var Module $module */
         $module = ServiceRegister::getService(Module::class);
-        if (!file_exists(_PS_IMG_DIR_ . $module->name)) {
-            mkdir(_PS_IMG_DIR_ . $module->name);
+        if (!\file_exists(\_PS_IMG_DIR_ . $module->name)) {
+            \mkdir(\_PS_IMG_DIR_ . $module->name);
         }
-
-        if (!file_exists(_PS_IMG_DIR_ . $module->name . '/' . $storeId)) {
-            mkdir(_PS_IMG_DIR_ . $module->name . '/' . $storeId);
+        if (!\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId)) {
+            \mkdir(\_PS_IMG_DIR_ . $module->name . '/' . $storeId);
         }
-
-        if (!file_exists(_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode)) {
-            mkdir(_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode);
+        if (!\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode)) {
+            \mkdir(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode);
         }
-
-        return move_uploaded_file($file, _PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/'. $fileName . '.png');
+        return \move_uploaded_file($file, \_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png');
     }
-
     /**
      * @param string $fileName
      * @param string $storeId
@@ -46,19 +42,16 @@ class ImageHandler
      *
      * @return string
      */
-    public static function getImageUrl(string $fileName, string $storeId, string $mode): string
+    public static function getImageUrl(string $fileName, string $storeId, string $mode) : string
     {
         /** @var Module $module */
         $module = ServiceRegister::getService(Module::class);
         $shop = new \Shop($storeId);
-
-        if (!file_exists(_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png')) {
+        if (!\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png')) {
             return '';
         }
-
         return $shop->getBaseURL() . 'img/' . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png';
     }
-
     /**
      * @param string $fileName
      * @param string $storeId
@@ -66,45 +59,38 @@ class ImageHandler
      *
      * @return void
      */
-    public static function removeImage(string $fileName, string $storeId, string $mode): void
+    public static function removeImage(string $fileName, string $storeId, string $mode) : void
     {
         $module = ServiceRegister::getService(Module::class);
-
-        if (file_exists(_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png')) {
-            unlink(_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png');
+        if (\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png')) {
+            \unlink(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png');
         }
     }
-
     /**
      * @param string $storeId
      * @param string $mode
      *
      * @return void
      */
-    public static function removeDirectoryForStore(string $storeId, string $mode): void
+    public static function removeDirectoryForStore(string $storeId, string $mode) : void
     {
         $module = ServiceRegister::getService(Module::class);
-
-        if (file_exists(_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode)) {
-            $items = array_diff(scandir(_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode), ['.', '..']);
-
+        if (\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode)) {
+            $items = \array_diff(\scandir(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode), ['.', '..']);
             foreach ($items as $item) {
-                unlink(_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $item);
+                \unlink(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $item);
             }
-
-            rmdir(_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode);
+            \rmdir(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode);
         }
     }
-
     /**
      * @return void
      */
-    public static function removeOnlinePaymentsDirectory(): void
+    public static function removeOnlinePaymentsDirectory() : void
     {
         $module = ServiceRegister::getService(Module::class);
-
-        if (file_exists(_PS_IMG_DIR_ . $module->name)) {
-            rmdir(_PS_IMG_DIR_ . $module->name);
+        if (\file_exists(\_PS_IMG_DIR_ . $module->name)) {
+            \rmdir(\_PS_IMG_DIR_ . $module->name);
         }
     }
 }

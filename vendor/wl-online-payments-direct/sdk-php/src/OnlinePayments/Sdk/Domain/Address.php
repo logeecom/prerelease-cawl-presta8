@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class Address extends DataObject
 {
@@ -15,37 +16,30 @@ class Address extends DataObject
      * @var string
      */
     public $additionalInfo = null;
-
     /**
      * @var string
      */
     public $city = null;
-
     /**
      * @var string
      */
     public $countryCode = null;
-
     /**
      * @var string
      */
     public $houseNumber = null;
-
     /**
      * @var string
      */
     public $state = null;
-
     /**
      * @var string
      */
     public $street = null;
-
     /**
      * @var string
      */
     public $zip = null;
-
     /**
      * @return string
      */
@@ -53,7 +47,6 @@ class Address extends DataObject
     {
         return $this->additionalInfo;
     }
-
     /**
      * @param string
      */
@@ -61,7 +54,6 @@ class Address extends DataObject
     {
         $this->additionalInfo = $value;
     }
-
     /**
      * @return string
      */
@@ -69,7 +61,6 @@ class Address extends DataObject
     {
         return $this->city;
     }
-
     /**
      * @param string
      */
@@ -77,7 +68,6 @@ class Address extends DataObject
     {
         $this->city = $value;
     }
-
     /**
      * @return string
      */
@@ -85,7 +75,6 @@ class Address extends DataObject
     {
         return $this->countryCode;
     }
-
     /**
      * @param string
      */
@@ -93,7 +82,6 @@ class Address extends DataObject
     {
         $this->countryCode = $value;
     }
-
     /**
      * @return string
      */
@@ -101,7 +89,6 @@ class Address extends DataObject
     {
         return $this->houseNumber;
     }
-
     /**
      * @param string
      */
@@ -109,7 +96,6 @@ class Address extends DataObject
     {
         $this->houseNumber = $value;
     }
-
     /**
      * @return string
      */
@@ -117,7 +103,6 @@ class Address extends DataObject
     {
         return $this->state;
     }
-
     /**
      * @param string
      */
@@ -125,7 +110,6 @@ class Address extends DataObject
     {
         $this->state = $value;
     }
-
     /**
      * @return string
      */
@@ -133,7 +117,6 @@ class Address extends DataObject
     {
         return $this->street;
     }
-
     /**
      * @param string
      */
@@ -141,7 +124,6 @@ class Address extends DataObject
     {
         $this->street = $value;
     }
-
     /**
      * @return string
      */
@@ -149,7 +131,6 @@ class Address extends DataObject
     {
         return $this->zip;
     }
-
     /**
      * @param string
      */
@@ -157,37 +138,35 @@ class Address extends DataObject
     {
         $this->zip = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->additionalInfo)) {
+        if (!\is_null($this->additionalInfo)) {
             $object->additionalInfo = $this->additionalInfo;
         }
-        if (!is_null($this->city)) {
+        if (!\is_null($this->city)) {
             $object->city = $this->city;
         }
-        if (!is_null($this->countryCode)) {
+        if (!\is_null($this->countryCode)) {
             $object->countryCode = $this->countryCode;
         }
-        if (!is_null($this->houseNumber)) {
+        if (!\is_null($this->houseNumber)) {
             $object->houseNumber = $this->houseNumber;
         }
-        if (!is_null($this->state)) {
+        if (!\is_null($this->state)) {
             $object->state = $this->state;
         }
-        if (!is_null($this->street)) {
+        if (!\is_null($this->street)) {
             $object->street = $this->street;
         }
-        if (!is_null($this->zip)) {
+        if (!\is_null($this->zip)) {
             $object->zip = $this->zip;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -196,25 +175,25 @@ class Address extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'additionalInfo')) {
+        if (\property_exists($object, 'additionalInfo')) {
             $this->additionalInfo = $object->additionalInfo;
         }
-        if (property_exists($object, 'city')) {
+        if (\property_exists($object, 'city')) {
             $this->city = $object->city;
         }
-        if (property_exists($object, 'countryCode')) {
+        if (\property_exists($object, 'countryCode')) {
             $this->countryCode = $object->countryCode;
         }
-        if (property_exists($object, 'houseNumber')) {
+        if (\property_exists($object, 'houseNumber')) {
             $this->houseNumber = $object->houseNumber;
         }
-        if (property_exists($object, 'state')) {
+        if (\property_exists($object, 'state')) {
             $this->state = $object->state;
         }
-        if (property_exists($object, 'street')) {
+        if (\property_exists($object, 'street')) {
             $this->street = $object->street;
         }
-        if (property_exists($object, 'zip')) {
+        if (\property_exists($object, 'zip')) {
             $this->zip = $object->zip;
         }
         return $this;

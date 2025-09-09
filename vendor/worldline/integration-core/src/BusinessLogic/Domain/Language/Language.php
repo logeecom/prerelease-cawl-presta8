@@ -1,17 +1,17 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Language;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Language;
 
 /**
  * Class Language
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Language
+ * @internal
  */
 class Language
 {
     protected string $code;
     protected string $logo;
-
     /**
      * @param string $code
      * @param string $logo
@@ -21,13 +21,11 @@ class Language
         $this->code = $code;
         $this->logo = $logo;
     }
-
-    public function getCode(): string
+    public function getCode() : string
     {
         return $this->code;
     }
-
-    public function getLogo(): string
+    public function getLogo() : string
     {
         return $this->logo;
     }

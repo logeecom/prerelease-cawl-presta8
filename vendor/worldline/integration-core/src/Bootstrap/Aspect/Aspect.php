@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\Aspect;
+namespace CAWL\OnlinePayments\Core\Bootstrap\Aspect;
 
 /**
  * Interface Aspect
  *
  * @package OnlinePayments\Core\Bootstrap\Aspect
+ * @internal
  */
 interface Aspect
 {

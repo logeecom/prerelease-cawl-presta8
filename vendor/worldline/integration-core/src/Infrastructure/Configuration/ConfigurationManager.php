@@ -1,17 +1,17 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Configuration;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Configuration;
 
-use OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
-use OnlinePayments\Core\Infrastructure\ORM\Interfaces\RepositoryInterface;
-use OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
-use OnlinePayments\Core\Infrastructure\ORM\RepositoryRegistry;
-use OnlinePayments\Core\Infrastructure\Singleton;
-
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Interfaces\RepositoryInterface;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\RepositoryRegistry;
+use CAWL\OnlinePayments\Core\Infrastructure\Singleton;
 /**
  * Class ConfigurationManager.
  *
  * @package OnlinePayments\Core\Infrastructure\Configuration
+ * @internal
  */
 class ConfigurationManager extends Singleton
 {
@@ -31,7 +31,6 @@ class ConfigurationManager extends Singleton
      * @var string
      */
     protected string $context = '';
-
     /**
      * When integration supports multiple accounts (middleware integration) proper context must be set based on
      * middleware account that is using core library functionality. This context should then be used by business
@@ -44,17 +43,15 @@ class ConfigurationManager extends Singleton
     {
         $this->context = $context;
     }
-
     /**
      * Gets task execution context.
      *
      * @return string
      */
-    public function getContext(): string
+    public function getContext() : string
     {
         return $this->context;
     }
-
     /**
      * Gets configuration value for given name.
      *
@@ -66,13 +63,11 @@ class ConfigurationManager extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function getConfigValue(string $name, $default = null, bool $isContextSpecific = true)
+    public function getConfigValue(string $name, $default = null, bool $isContextSpecific = \true)
     {
         $entity = $this->getConfigEntity($name, $isContextSpecific);
-
         return $entity ? $entity->getValue() : $default;
     }
-
     /**
      * Saves configuration value or updates it if it already exists.
      *
@@ -84,13 +79,12 @@ class ConfigurationManager extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function saveConfigValue(string $name, $value, bool $isContextSpecific = true): ConfigEntity
+    public function saveConfigValue(string $name, $value, bool $isContextSpecific = \true) : ConfigEntity
     {
         $config = $this->getConfigEntity($name, $isContextSpecific) ?: new ConfigEntity();
         if ($isContextSpecific) {
             $config->setContext($this->getContext());
         }
-
         $config->setValue($value);
         if ($config->getId() === null) {
             $config->setName($name);
@@ -98,10 +92,8 @@ class ConfigurationManager extends Singleton
         } else {
             $this->getRepository()->update($config);
         }
-
         return $config;
     }
-
     /**
      * Returns configuration entity with provided name.
      *
@@ -112,7 +104,7 @@ class ConfigurationManager extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    protected function getConfigEntity(string $name, bool $isContextSpecific = true): ?ConfigEntity
+    protected function getConfigEntity(string $name, bool $isContextSpecific = \true) : ?ConfigEntity
     {
         $filter = new QueryFilter();
         /** @noinspection PhpUnhandledExceptionInspection */
@@ -121,13 +113,10 @@ class ConfigurationManager extends Singleton
             /** @noinspection PhpUnhandledExceptionInspection */
             $filter->where('context', '=', $this->getContext());
         }
-
         /** @var ConfigEntity $config */
         $config = $this->getRepository()->selectOne($filter);
-
         return $config;
     }
-
     /**
      * Removes configuration if it exists.
      *
@@ -138,23 +127,20 @@ class ConfigurationManager extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function deleteConfigEntity(string $name, bool $isContextSpecific = true): void
+    public function deleteConfigEntity(string $name, bool $isContextSpecific = \true) : void
     {
         $entity = $this->getConfigEntity($name, $isContextSpecific);
-
         if ($entity) {
             $this->getRepository()->delete($entity);
         }
     }
-
-
     /** @noinspection PhpDocMissingThrowsInspection */
     /**
      * Returns repository instance.
      *
      * @return RepositoryInterface Configuration repository.
      */
-    protected function getRepository(): RepositoryInterface
+    protected function getRepository() : RepositoryInterface
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         return RepositoryRegistry::getRepository(ConfigEntity::getClassName());

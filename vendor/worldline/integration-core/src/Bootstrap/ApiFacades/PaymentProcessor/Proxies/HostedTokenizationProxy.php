@@ -1,45 +1,37 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies;
+namespace CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies;
 
-use OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers\CreateHostedTokenizationRequestTransformer;
-use OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers\CreateHostedTokenizationResponseTransformer;
-use OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers\TokenResponseTransformer;
-use OnlinePayments\Core\Bootstrap\Sdk\MerchantClientFactory;
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Cart;
-use OnlinePayments\Core\BusinessLogic\Domain\Connection\Exceptions\InvalidConnectionDetailsException;
-use OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\HostedTokenization;
-use OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
-use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\ContextLogProvider;
-use OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\HostedTokenizationProxyInterface;
+use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers\CreateHostedTokenizationRequestTransformer;
+use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers\CreateHostedTokenizationResponseTransformer;
+use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers\TokenResponseTransformer;
+use CAWL\OnlinePayments\Core\Bootstrap\Sdk\MerchantClientFactory;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Cart;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Exceptions\InvalidConnectionDetailsException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\HostedTokenization;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\ContextLogProvider;
+use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\HostedTokenizationProxyInterface;
 use Throwable;
-
 /**
  * Class HostedTokenizationProxy.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies
+ * @internal
  */
 class HostedTokenizationProxy implements HostedTokenizationProxyInterface
 {
     private MerchantClientFactory $clientFactory;
-
     public function __construct(MerchantClientFactory $clientFactory)
     {
         $this->clientFactory = $clientFactory;
     }
-
-    public function create(Cart $cart, array $savedTokens = []): HostedTokenization
+    public function create(Cart $cart, array $savedTokens = []) : HostedTokenization
     {
         ContextLogProvider::getInstance()->setCurrentOrder($cart->getMerchantReference());
-
-        return CreateHostedTokenizationResponseTransformer::transform(
-            $this->clientFactory->get()->hostedTokenization()->createHostedTokenization(
-                CreateHostedTokenizationRequestTransformer::transform($cart, $savedTokens)
-            )
-        );
+        return CreateHostedTokenizationResponseTransformer::transform($this->clientFactory->get()->hostedTokenization()->createHostedTokenization(CreateHostedTokenizationRequestTransformer::transform($cart, $savedTokens)));
     }
-
-    public function getToken(string $customerId, string $tokenId): ?Token
+    public function getToken(string $customerId, string $tokenId) : ?Token
     {
         try {
             return TokenResponseTransformer::transform($customerId, $this->clientFactory->get()->tokens()->getToken($tokenId));
@@ -47,7 +39,6 @@ class HostedTokenizationProxy implements HostedTokenizationProxyInterface
             return null;
         }
     }
-
     /**
      * @param string $tokenId
      *
@@ -55,7 +46,7 @@ class HostedTokenizationProxy implements HostedTokenizationProxyInterface
      *
      * @throws InvalidConnectionDetailsException
      */
-    public function deleteToken(string $tokenId): void
+    public function deleteToken(string $tokenId) : void
     {
         $this->clientFactory->get()->tokens()->deleteToken($tokenId);
     }

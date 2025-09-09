@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
 /**
  * Class DownloadMonitoringLogsResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response
+ * @internal
  */
 class DownloadMonitoringLogsResponse extends Response
 {
@@ -15,7 +15,6 @@ class DownloadMonitoringLogsResponse extends Response
      * @var mixed[]
      */
     protected array $logs;
-
     /**
      * @param array $logs
      */
@@ -23,11 +22,10 @@ class DownloadMonitoringLogsResponse extends Response
     {
         $this->logs = $logs;
     }
-
     /**
      * @inheritDoc
      */
-    public function toArray(): array
+    public function toArray() : array
     {
         return $this->logs;
     }

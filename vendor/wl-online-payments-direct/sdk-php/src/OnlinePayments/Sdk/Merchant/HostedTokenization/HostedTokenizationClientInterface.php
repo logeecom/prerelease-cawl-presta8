@@ -1,23 +1,24 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Merchant\HostedTokenization;
+namespace CAWL\OnlinePayments\Sdk\Merchant\HostedTokenization;
 
-use OnlinePayments\Sdk\ApiException;
-use OnlinePayments\Sdk\AuthorizationException;
-use OnlinePayments\Sdk\CallContext;
-use OnlinePayments\Sdk\Communication\InvalidResponseException;
-use OnlinePayments\Sdk\Domain\CreateHostedTokenizationRequest;
-use OnlinePayments\Sdk\Domain\CreateHostedTokenizationResponse;
-use OnlinePayments\Sdk\Domain\GetHostedTokenizationResponse;
-use OnlinePayments\Sdk\IdempotenceException;
-use OnlinePayments\Sdk\PlatformException;
-use OnlinePayments\Sdk\ReferenceException;
-use OnlinePayments\Sdk\ValidationException;
-
+use CAWL\OnlinePayments\Sdk\ApiException;
+use CAWL\OnlinePayments\Sdk\AuthorizationException;
+use CAWL\OnlinePayments\Sdk\CallContext;
+use CAWL\OnlinePayments\Sdk\Communication\InvalidResponseException;
+use CAWL\OnlinePayments\Sdk\Domain\CreateHostedTokenizationRequest;
+use CAWL\OnlinePayments\Sdk\Domain\CreateHostedTokenizationResponse;
+use CAWL\OnlinePayments\Sdk\Domain\GetHostedTokenizationResponse;
+use CAWL\OnlinePayments\Sdk\IdempotenceException;
+use CAWL\OnlinePayments\Sdk\PlatformException;
+use CAWL\OnlinePayments\Sdk\ReferenceException;
+use CAWL\OnlinePayments\Sdk\ValidationException;
 /**
  * HostedTokenization client interface.
+ * @internal
  */
 interface HostedTokenizationClientInterface
 {
@@ -37,7 +38,6 @@ interface HostedTokenizationClientInterface
      * @throws InvalidResponseException
      */
     function createHostedTokenization(CreateHostedTokenizationRequest $body, ?CallContext $callContext = null);
-
     /**
      * Resource /v2/{merchantId}/hostedtokenizations/{hostedTokenizationId} - Get hosted tokenization session
      *

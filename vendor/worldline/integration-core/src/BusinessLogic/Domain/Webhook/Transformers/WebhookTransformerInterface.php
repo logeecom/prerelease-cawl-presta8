@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Webhook\Transformers;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Webhook\Transformers;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Webhook\WebhookData;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Webhook\WebhookData;
 /**
  * Interface WebhookTransformerInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Webhook\Transformers
+ * @internal
  */
 interface WebhookTransformerInterface
 {
@@ -17,5 +17,5 @@ interface WebhookTransformerInterface
      *
      * @return WebhookData
      */
-    public function transform(string $webhookBody, array $requestHeaders): WebhookData;
+    public function transform(string $webhookBody, array $requestHeaders) : WebhookData;
 }

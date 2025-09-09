@@ -1,48 +1,37 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Merchant\ProductGroups;
+namespace CAWL\OnlinePayments\Sdk\Merchant\ProductGroups;
 
-use OnlinePayments\Sdk\ApiResource;
-use OnlinePayments\Sdk\CallContext;
-use OnlinePayments\Sdk\Communication\ErrorResponseException;
-use OnlinePayments\Sdk\Communication\ResponseClassMap;
-use OnlinePayments\Sdk\ExceptionFactory;
-
+use CAWL\OnlinePayments\Sdk\ApiResource;
+use CAWL\OnlinePayments\Sdk\CallContext;
+use CAWL\OnlinePayments\Sdk\Communication\ErrorResponseException;
+use CAWL\OnlinePayments\Sdk\Communication\ResponseClassMap;
+use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * ProductGroups client.
+ * @internal
  */
 class ProductGroupsClient extends ApiResource implements ProductGroupsClientInterface
 {
     /** @var ExceptionFactory|null */
     private $responseExceptionFactory = null;
-
     /**
      * @inheritdoc
      */
     public function getProductGroups(GetProductGroupsParams $query, ?CallContext $callContext = null)
     {
         $responseClassMap = new ResponseClassMap();
-        $responseClassMap->defaultSuccessResponseClassName = '\OnlinePayments\Sdk\Domain\GetPaymentProductGroupsResponse';
-        $responseClassMap->defaultErrorResponseClassName = '\OnlinePayments\Sdk\Domain\ErrorResponse';
+        $responseClassMap->defaultSuccessResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\GetPaymentProductGroupsResponse';
+        $responseClassMap->defaultErrorResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\ErrorResponse';
         try {
-            return $this->getCommunicator()->get(
-                $responseClassMap,
-                $this->instantiateUri('/v2/{merchantId}/productgroups'),
-                $this->getClientMetaInfo(),
-                $query,
-                $callContext
-            );
+            return $this->getCommunicator()->get($responseClassMap, $this->instantiateUri('/v2/{merchantId}/productgroups'), $this->getClientMetaInfo(), $query, $callContext);
         } catch (ErrorResponseException $e) {
-            throw $this->getResponseExceptionFactory()->createException(
-                $e->getHttpStatusCode(),
-                $e->getErrorResponse(),
-                $callContext
-            );
+            throw $this->getResponseExceptionFactory()->createException($e->getHttpStatusCode(), $e->getErrorResponse(), $callContext);
         }
     }
-
     /**
      * @inheritdoc
      */
@@ -50,29 +39,18 @@ class ProductGroupsClient extends ApiResource implements ProductGroupsClientInte
     {
         $this->context['paymentProductGroupId'] = $paymentProductGroupId;
         $responseClassMap = new ResponseClassMap();
-        $responseClassMap->defaultSuccessResponseClassName = '\OnlinePayments\Sdk\Domain\PaymentProductGroup';
-        $responseClassMap->defaultErrorResponseClassName = '\OnlinePayments\Sdk\Domain\ErrorResponse';
+        $responseClassMap->defaultSuccessResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\PaymentProductGroup';
+        $responseClassMap->defaultErrorResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\ErrorResponse';
         try {
-            return $this->getCommunicator()->get(
-                $responseClassMap,
-                $this->instantiateUri('/v2/{merchantId}/productgroups/{paymentProductGroupId}'),
-                $this->getClientMetaInfo(),
-                $query,
-                $callContext
-            );
+            return $this->getCommunicator()->get($responseClassMap, $this->instantiateUri('/v2/{merchantId}/productgroups/{paymentProductGroupId}'), $this->getClientMetaInfo(), $query, $callContext);
         } catch (ErrorResponseException $e) {
-            throw $this->getResponseExceptionFactory()->createException(
-                $e->getHttpStatusCode(),
-                $e->getErrorResponse(),
-                $callContext
-            );
+            throw $this->getResponseExceptionFactory()->createException($e->getHttpStatusCode(), $e->getErrorResponse(), $callContext);
         }
     }
-
     /** @return ExceptionFactory */
     private function getResponseExceptionFactory()
     {
-        if (is_null($this->responseExceptionFactory)) {
+        if (\is_null($this->responseExceptionFactory)) {
             $this->responseExceptionFactory = new ExceptionFactory();
         }
         return $this->responseExceptionFactory;

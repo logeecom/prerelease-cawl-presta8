@@ -1,16 +1,15 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Order;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Order;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
+/** @internal */
 class OrderAction
 {
     private bool $possible;
     private Amount $done;
     private Amount $pending;
     private Amount $available;
-
     /**
      * @param bool $possible
      * @param Amount $done
@@ -24,24 +23,19 @@ class OrderAction
         $this->pending = $pending;
         $this->available = $available;
     }
-
-    public function isPossible(): bool
+    public function isPossible() : bool
     {
         return $this->possible;
     }
-
-
-    public function getDone(): Amount
+    public function getDone() : Amount
     {
         return $this->done;
     }
-
-    public function getPending(): Amount
+    public function getPending() : Amount
     {
         return $this->pending;
     }
-
-    public function getAvailable(): Amount
+    public function getAvailable() : Amount
     {
         return $this->available;
     }

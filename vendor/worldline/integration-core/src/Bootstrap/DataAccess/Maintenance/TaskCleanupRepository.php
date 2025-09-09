@@ -1,17 +1,17 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\DataAccess\Maintenance;
+namespace CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Maintenance;
 
 use DateTime;
-use OnlinePayments\Core\Infrastructure\ORM\Interfaces\QueueItemRepository;
-use OnlinePayments\Core\Infrastructure\ORM\QueryFilter\Operators;
-use OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
-use OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
-
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Interfaces\QueueItemRepository;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\Operators;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
 /**
  * Class TaskCleanupRepository
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\Maintenance
+ * @internal
  */
 class TaskCleanupRepository
 {
@@ -19,7 +19,6 @@ class TaskCleanupRepository
      * @var QueueItemRepository
      */
     protected $repository;
-
     /**
      * @param QueueItemRepository $repository
      */
@@ -27,43 +26,30 @@ class TaskCleanupRepository
     {
         $this->repository = $repository;
     }
-
-    public function getCompletedCount(): int
+    public function getCompletedCount() : int
     {
         $filter = new QueryFilter();
         $filter->where('status', Operators::EQUALS, QueueItem::COMPLETED);
-
         return $this->repository->count($filter);
     }
-
-    public function getFailedCount(): int
+    public function getFailedCount() : int
     {
         $filter = new QueryFilter();
         $filter->where('status', Operators::IN, [QueueItem::FAILED, QueueItem::ABORTED]);
-
         return $this->repository->count($filter);
     }
-
-    public function deleteCompletedTasks(int $limit = 5000): void
+    public function deleteCompletedTasks(int $limit = 5000) : void
     {
         $filter = new QueryFilter();
         $filter->where('status', Operators::EQUALS, QueueItem::COMPLETED);
         $filter->setLimit($limit);
-
         $this->repository->deleteWhere($filter);
     }
-
-    public function deleteFailedTasks(DateTime $beforeDate, int $limit = 5000): void
+    public function deleteFailedTasks(DateTime $beforeDate, int $limit = 5000) : void
     {
         $filter = new QueryFilter();
-        $filter->where('status', Operators::IN, [QueueItem::FAILED, QueueItem::ABORTED])
-            ->where(
-                'queueTime',
-                Operators::LESS_THAN,
-                $beforeDate
-            );
+        $filter->where('status', Operators::IN, [QueueItem::FAILED, QueueItem::ABORTED])->where('queueTime', Operators::LESS_THAN, $beforeDate);
         $filter->setLimit($limit);
-
         $this->repository->deleteWhere($filter);
     }
 }

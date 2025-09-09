@@ -1,17 +1,17 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution;
 
-use OnlinePayments\Core\Infrastructure\Configuration\Configuration;
-use OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
-use OnlinePayments\Core\Infrastructure\ServiceRegister;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\TaskRunnerManager as BaseService;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\TaskRunnerWakeup;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Configuration\Configuration;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
+use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\TaskRunnerManager as BaseService;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\TaskRunnerWakeup;
 /**
  * Class TaskRunnerManager.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
+ * @internal
  */
 class TaskRunnerManager implements BaseService
 {
@@ -23,7 +23,6 @@ class TaskRunnerManager implements BaseService
      * @var ?TaskRunnerWakeup
      */
     protected ?TaskRunnerWakeup $taskRunnerWakeupService = null;
-
     /**
      * Halts task runner.
      *
@@ -31,9 +30,8 @@ class TaskRunnerManager implements BaseService
      */
     public function halt()
     {
-        $this->getConfiguration()->setTaskRunnerHalted(true);
+        $this->getConfiguration()->setTaskRunnerHalted(\true);
     }
-
     /**
      * Resumes task execution.
      *
@@ -41,35 +39,31 @@ class TaskRunnerManager implements BaseService
      */
     public function resume()
     {
-        $this->getConfiguration()->setTaskRunnerHalted(false);
+        $this->getConfiguration()->setTaskRunnerHalted(\false);
         $this->getTaskRunnerWakeupService()->wakeup();
     }
-
     /**
      * Retrieves configuration.
      *
      * @return Configuration Configuration instance.
      */
-    protected function getConfiguration(): Configuration
+    protected function getConfiguration() : Configuration
     {
         if ($this->configuration === null) {
             $this->configuration = ServiceRegister::getService(Configuration::CLASS_NAME);
         }
-
         return $this->configuration;
     }
-
     /**
      * Retrieves task runner wakeup service.
      *
      * @return TaskRunnerWakeup Task runner wakeup instance.
      */
-    protected function getTaskRunnerWakeupService(): TaskRunnerWakeup
+    protected function getTaskRunnerWakeupService() : TaskRunnerWakeup
     {
         if ($this->taskRunnerWakeupService === null) {
             $this->taskRunnerWakeupService = ServiceRegister::getService(TaskRunnerWakeup::CLASS_NAME);
         }
-
         return $this->taskRunnerWakeupService;
     }
 }

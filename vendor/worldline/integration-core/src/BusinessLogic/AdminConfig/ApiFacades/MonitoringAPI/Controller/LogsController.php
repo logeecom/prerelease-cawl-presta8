@@ -1,25 +1,24 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Controller;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Controller;
 
 use Exception;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response\DownloadMonitoringLogsResponse;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response\DownloadWebhookLogsResponse;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response\MonitoringLogsResponse;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response\WebhookLogsResponse;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Monitoring\MonitoringLogsService;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Monitoring\WebhookLogsService;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response\DownloadMonitoringLogsResponse;
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response\DownloadWebhookLogsResponse;
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response\MonitoringLogsResponse;
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response\WebhookLogsResponse;
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Monitoring\MonitoringLogsService;
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Monitoring\WebhookLogsService;
 /**
  * Class LogsController
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Controller
+ * @internal
  */
 class LogsController
 {
     protected MonitoringLogsService $monitoringLogsService;
     protected WebhookLogsService $webhookLogsService;
-
     /**
      * @param MonitoringLogsService $monitoringLogsService
      * @param WebhookLogsService $webhookLogsService
@@ -29,7 +28,6 @@ class LogsController
         $this->monitoringLogsService = $monitoringLogsService;
         $this->webhookLogsService = $webhookLogsService;
     }
-
     /**
      * @param int $pageNumber
      * @param int $pageSize
@@ -39,27 +37,18 @@ class LogsController
      *
      * @throws Exception
      */
-    public function getMonitoringLogs(int $pageNumber = 1, int $pageSize = 10, string $searchTerm = ''): MonitoringLogsResponse
+    public function getMonitoringLogs(int $pageNumber = 1, int $pageSize = 10, string $searchTerm = '') : MonitoringLogsResponse
     {
         $numberOfItems = $this->monitoringLogsService->count();
-
-        return new MonitoringLogsResponse(
-            $this->monitoringLogsService->getLogs($pageNumber, $pageSize, $searchTerm),
-            $this->hasNextPage($pageNumber, $pageSize, $numberOfItems),
-            ($pageNumber - 1) * $pageSize + 1,
-            ($pageNumber * $pageSize > $numberOfItems) ? $numberOfItems : $pageNumber * $pageSize,
-            $numberOfItems
-        );
+        return new MonitoringLogsResponse($this->monitoringLogsService->getLogs($pageNumber, $pageSize, $searchTerm), $this->hasNextPage($pageNumber, $pageSize, $numberOfItems), ($pageNumber - 1) * $pageSize + 1, $pageNumber * $pageSize > $numberOfItems ? $numberOfItems : $pageNumber * $pageSize, $numberOfItems);
     }
-
     /**
      * @return DownloadMonitoringLogsResponse
      */
-    public function downloadMonitoringLogs(): DownloadMonitoringLogsResponse
+    public function downloadMonitoringLogs() : DownloadMonitoringLogsResponse
     {
         return new DownloadMonitoringLogsResponse($this->monitoringLogsService->getAllLogs());
     }
-
     /**
      * @param int $pageNumber
      * @param int $pageSize
@@ -69,39 +58,29 @@ class LogsController
      *
      * @throws Exception
      */
-    public function getWebhookLogs(int $pageNumber = 1, int $pageSize = 10, string $searchTerm = ''): WebhookLogsResponse
+    public function getWebhookLogs(int $pageNumber = 1, int $pageSize = 10, string $searchTerm = '') : WebhookLogsResponse
     {
         $numberOfItems = $this->webhookLogsService->count();
-
-        return new WebhookLogsResponse(
-            $this->webhookLogsService->getLogs($pageNumber, $pageSize, $searchTerm),
-            $this->hasNextPage($pageNumber, $pageSize, $numberOfItems),
-            ($pageNumber - 1) * $pageSize + 1,
-            ($pageNumber * $pageSize > $numberOfItems) ? $numberOfItems : $pageNumber * $pageSize,
-            $numberOfItems
-        );
+        return new WebhookLogsResponse($this->webhookLogsService->getLogs($pageNumber, $pageSize, $searchTerm), $this->hasNextPage($pageNumber, $pageSize, $numberOfItems), ($pageNumber - 1) * $pageSize + 1, $pageNumber * $pageSize > $numberOfItems ? $numberOfItems : $pageNumber * $pageSize, $numberOfItems);
     }
-
     /**
      * @return DownloadWebhookLogsResponse
      */
-    public function downloadWebhookLogs(): DownloadWebhookLogsResponse
+    public function downloadWebhookLogs() : DownloadWebhookLogsResponse
     {
         return new DownloadWebhookLogsResponse($this->webhookLogsService->getAllLogs());
     }
-
     /**
      * @param int $pageNumber
      * @param int $pageSize
      * @param int $numberOfItems
      * @return bool
      */
-    protected function hasNextPage(int $pageNumber, int $pageSize, int $numberOfItems): bool
+    protected function hasNextPage(int $pageNumber, int $pageSize, int $numberOfItems) : bool
     {
         if ($pageNumber <= 1) {
             return $pageSize < $numberOfItems;
         }
-
         return $pageNumber * $pageSize < $numberOfItems;
     }
 }

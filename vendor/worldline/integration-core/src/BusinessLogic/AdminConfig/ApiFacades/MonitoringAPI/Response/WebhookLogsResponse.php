@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\WebhookLog;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\WebhookLog;
 /**
  * Class WebhookLogsResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response
+ * @internal
  */
 class WebhookLogsResponse extends Response
 {
@@ -20,7 +20,6 @@ class WebhookLogsResponse extends Response
     protected int $beginning;
     protected int $end;
     protected int $numberOfItems;
-
     /**
      * @param WebhookLog[] $webhookLogs
      */
@@ -32,35 +31,15 @@ class WebhookLogsResponse extends Response
         $this->end = $end;
         $this->numberOfItems = $numberOfItems;
     }
-
     /**
      * @inheritDoc
      */
-    public function toArray(): array
+    public function toArray() : array
     {
         $result = [];
-
         foreach ($this->webhookLogs as $webhookLog) {
-            $result[] = [
-                'orderId' => $webhookLog->getOrderId(),
-                'paymentNumber' => $webhookLog->getPaymentNumber(),
-                'paymentMethod' => $webhookLog->getPaymentMethod(),
-                'status' => $webhookLog->getStatus(),
-                'type' => $webhookLog->getType(),
-                'createdAt' => $webhookLog->getCreatedAt() ? $webhookLog->getCreatedAt()->format('m-d-Y H:i:s') : '',
-                'statusCode' => (string)$webhookLog->getStatusCode(),
-                'webhookBody' => $webhookLog->getWebhookBody(),
-                'transactionLink' => $webhookLog->getTransactionLink(),
-                'orderLink' => $webhookLog->getOrderLink(),
-            ];
+            $result[] = ['orderId' => $webhookLog->getOrderId(), 'paymentNumber' => $webhookLog->getPaymentNumber(), 'paymentMethod' => $webhookLog->getPaymentMethod(), 'status' => $webhookLog->getStatus(), 'type' => $webhookLog->getType(), 'createdAt' => $webhookLog->getCreatedAt() ? $webhookLog->getCreatedAt()->format('m-d-Y H:i:s') : '', 'statusCode' => (string) $webhookLog->getStatusCode(), 'webhookBody' => $webhookLog->getWebhookBody(), 'transactionLink' => $webhookLog->getTransactionLink(), 'orderLink' => $webhookLog->getOrderLink()];
         }
-
-        return [
-            'webhookLogs' => $result,
-            'nextPageAvailable' => $this->nextPageAvailable,
-            'beginning' => $this->beginning,
-            'end' => $this->end,
-            'numberOfItems' => $this->numberOfItems,
-        ];
+        return ['webhookLogs' => $result, 'nextPageAvailable' => $this->nextPageAvailable, 'beginning' => $this->beginning, 'end' => $this->end, 'numberOfItems' => $this->numberOfItems];
     }
 }

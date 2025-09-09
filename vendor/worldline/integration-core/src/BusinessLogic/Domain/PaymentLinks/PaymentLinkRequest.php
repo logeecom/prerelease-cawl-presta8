@@ -1,22 +1,21 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\MemoryCachingCartProvider;
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\RoundingTotalsCartProvider;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\MemoryCachingCartProvider;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\RoundingTotalsCartProvider;
 /**
  * Class PaymentLinkRequest
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks
+ * @internal
  */
 class PaymentLinkRequest
 {
     private CartProvider $cartProvider;
     private string $returnUrl;
     private ?\DateTime $expiresAt;
-
     /**
      * @param CartProvider $cartProvider
      * @param string $returnUrl
@@ -27,19 +26,15 @@ class PaymentLinkRequest
         $this->returnUrl = $returnUrl;
         $this->expiresAt = $expiresAt;
     }
-
-    public function getCartProvider(): CartProvider
+    public function getCartProvider() : CartProvider
     {
         return $this->cartProvider;
     }
-
-
-    public function getReturnUrl(): string
+    public function getReturnUrl() : string
     {
         return $this->returnUrl;
     }
-
-    public function getExpiresAt(): ?\DateTime
+    public function getExpiresAt() : ?\DateTime
     {
         return $this->expiresAt;
     }

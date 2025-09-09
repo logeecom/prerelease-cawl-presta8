@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap;
+namespace CAWL\OnlinePayments\Core\Bootstrap;
 
 /**
  * Class SingleInstance
  *
  * @package OnlinePayments\Core\Bootstrap
+ * @internal
  */
 class SingleInstance
 {
@@ -17,7 +18,6 @@ class SingleInstance
      * @var callable
      */
     private $delegate;
-
     /**
      * @param callable $delegate
      */
@@ -25,16 +25,14 @@ class SingleInstance
     {
         $this->delegate = $delegate;
     }
-
     /**
      * @return mixed
      */
     public function __invoke()
     {
         if (!$this->instance) {
-            $this->instance = call_user_func($this->delegate);
+            $this->instance = \call_user_func($this->delegate);
         }
-
         return $this->instance;
     }
 }

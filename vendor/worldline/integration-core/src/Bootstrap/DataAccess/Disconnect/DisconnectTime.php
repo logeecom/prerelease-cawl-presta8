@@ -1,18 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\DataAccess\Disconnect;
+namespace CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Disconnect;
 
 use DateTime;
-use OnlinePayments\Core\Infrastructure\ORM\Configuration\EntityConfiguration;
-use OnlinePayments\Core\Infrastructure\ORM\Configuration\IndexMap;
-use OnlinePayments\Core\Infrastructure\ORM\Entity;
-use OnlinePayments\Core\Infrastructure\ServiceRegister;
-use OnlinePayments\Core\Infrastructure\Utility\TimeProvider;
-
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Configuration\EntityConfiguration;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Configuration\IndexMap;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
+use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
+use CAWL\OnlinePayments\Core\Infrastructure\Utility\TimeProvider;
 /**
  * Class DisconnectTime
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\Disconnect
+ * @internal
  */
 class DisconnectTime extends Entity
 {
@@ -26,58 +26,50 @@ class DisconnectTime extends Entity
      * @var string[]
      */
     protected array $fields = ['id', 'storeId', 'date'];
-
     /**
      * @inheritDoc
      */
-    public function getConfig(): EntityConfiguration
+    public function getConfig() : EntityConfiguration
     {
         $indexMap = new IndexMap();
         $indexMap->addStringIndex('storeId');
-
         return new EntityConfiguration($indexMap, 'DisconnectTime');
     }
     /**
      * @return string
      */
-    public function getStoreId(): string
+    public function getStoreId() : string
     {
         return $this->storeId;
     }
-
     /**
      * @param string $storeId
      */
-    public function setStoreId(string $storeId): void
+    public function setStoreId(string $storeId) : void
     {
         $this->storeId = $storeId;
     }
-
     /**
      * @return DateTime
      */
-    public function getDate(): DateTime
+    public function getDate() : DateTime
     {
         return $this->date;
     }
-
     /**
      * @param DateTime $date
      */
-    public function setDate(DateTime $date): void
+    public function setDate(DateTime $date) : void
     {
         $this->date = $date;
     }
-
-    public function toArray(): array
+    public function toArray() : array
     {
         $data = parent::toArray();
         $data['date'] = $this->getDate()->getTimestamp();
-
         return $data;
     }
-
-    public function inflate(array $data): void
+    public function inflate(array $data) : void
     {
         /** @var TimeProvider $timeProvider */
         $timeProvider = ServiceRegister::getService(TimeProvider::CLASS_NAME);

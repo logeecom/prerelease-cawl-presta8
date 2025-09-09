@@ -1,23 +1,24 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Merchant\HostedCheckout;
+namespace CAWL\OnlinePayments\Sdk\Merchant\HostedCheckout;
 
-use OnlinePayments\Sdk\ApiException;
-use OnlinePayments\Sdk\AuthorizationException;
-use OnlinePayments\Sdk\CallContext;
-use OnlinePayments\Sdk\Communication\InvalidResponseException;
-use OnlinePayments\Sdk\Domain\CreateHostedCheckoutRequest;
-use OnlinePayments\Sdk\Domain\CreateHostedCheckoutResponse;
-use OnlinePayments\Sdk\Domain\GetHostedCheckoutResponse;
-use OnlinePayments\Sdk\IdempotenceException;
-use OnlinePayments\Sdk\PlatformException;
-use OnlinePayments\Sdk\ReferenceException;
-use OnlinePayments\Sdk\ValidationException;
-
+use CAWL\OnlinePayments\Sdk\ApiException;
+use CAWL\OnlinePayments\Sdk\AuthorizationException;
+use CAWL\OnlinePayments\Sdk\CallContext;
+use CAWL\OnlinePayments\Sdk\Communication\InvalidResponseException;
+use CAWL\OnlinePayments\Sdk\Domain\CreateHostedCheckoutRequest;
+use CAWL\OnlinePayments\Sdk\Domain\CreateHostedCheckoutResponse;
+use CAWL\OnlinePayments\Sdk\Domain\GetHostedCheckoutResponse;
+use CAWL\OnlinePayments\Sdk\IdempotenceException;
+use CAWL\OnlinePayments\Sdk\PlatformException;
+use CAWL\OnlinePayments\Sdk\ReferenceException;
+use CAWL\OnlinePayments\Sdk\ValidationException;
 /**
  * HostedCheckout client interface.
+ * @internal
  */
 interface HostedCheckoutClientInterface
 {
@@ -37,7 +38,6 @@ interface HostedCheckoutClientInterface
      * @throws InvalidResponseException
      */
     function createHostedCheckout(CreateHostedCheckoutRequest $body, ?CallContext $callContext = null);
-
     /**
      * Resource /v2/{merchantId}/hostedcheckouts/{hostedCheckoutId} - Get hosted checkout status
      *

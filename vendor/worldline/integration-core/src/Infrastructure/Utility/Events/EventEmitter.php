@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Utility\Events;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Utility\Events;
 
 /**
  * Class EventEmitter.
  *
  * @package OnlinePayments\Core\Infrastructure\Utility\Events
+ * @internal
  */
 abstract class EventEmitter
 {
@@ -16,7 +17,6 @@ abstract class EventEmitter
      * @var array
      */
     protected array $handlers = [];
-
     /**
      * Registers event handler for a given event.
      *
@@ -24,11 +24,10 @@ abstract class EventEmitter
      * @param callable $handler Callback to invoke when event occurs.
      *      Observable will pass observed event instance as a handler parameter.
      */
-    public function when(string $eventClass, callable $handler): void
+    public function when(string $eventClass, callable $handler) : void
     {
         $this->handlers[$eventClass][] = $handler;
     }
-
     /**
      * Fires requested event by calling all its registered handlers.
      *
@@ -36,10 +35,10 @@ abstract class EventEmitter
      */
     protected function fire(Event $event)
     {
-        $eventClass = get_class($event);
+        $eventClass = \get_class($event);
         if (!empty($this->handlers[$eventClass])) {
             foreach ($this->handlers[$eventClass] as $handler) {
-                call_user_func($handler, $event);
+                \call_user_func($handler, $event);
             }
         }
     }

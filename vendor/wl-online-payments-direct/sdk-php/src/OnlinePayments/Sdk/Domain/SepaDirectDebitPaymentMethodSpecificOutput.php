@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class SepaDirectDebitPaymentMethodSpecificOutput extends DataObject
 {
@@ -15,17 +16,14 @@ class SepaDirectDebitPaymentMethodSpecificOutput extends DataObject
      * @var FraudResults
      */
     public $fraudResults = null;
-
     /**
      * @var PaymentProduct771SpecificOutput
      */
     public $paymentProduct771SpecificOutput = null;
-
     /**
      * @var int
      */
     public $paymentProductId = null;
-
     /**
      * @return FraudResults
      */
@@ -33,7 +31,6 @@ class SepaDirectDebitPaymentMethodSpecificOutput extends DataObject
     {
         return $this->fraudResults;
     }
-
     /**
      * @param FraudResults
      */
@@ -41,7 +38,6 @@ class SepaDirectDebitPaymentMethodSpecificOutput extends DataObject
     {
         $this->fraudResults = $value;
     }
-
     /**
      * @return PaymentProduct771SpecificOutput
      */
@@ -49,7 +45,6 @@ class SepaDirectDebitPaymentMethodSpecificOutput extends DataObject
     {
         return $this->paymentProduct771SpecificOutput;
     }
-
     /**
      * @param PaymentProduct771SpecificOutput
      */
@@ -57,7 +52,6 @@ class SepaDirectDebitPaymentMethodSpecificOutput extends DataObject
     {
         $this->paymentProduct771SpecificOutput = $value;
     }
-
     /**
      * @return int
      */
@@ -65,7 +59,6 @@ class SepaDirectDebitPaymentMethodSpecificOutput extends DataObject
     {
         return $this->paymentProductId;
     }
-
     /**
      * @param int
      */
@@ -73,25 +66,23 @@ class SepaDirectDebitPaymentMethodSpecificOutput extends DataObject
     {
         $this->paymentProductId = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->fraudResults)) {
+        if (!\is_null($this->fraudResults)) {
             $object->fraudResults = $this->fraudResults->toObject();
         }
-        if (!is_null($this->paymentProduct771SpecificOutput)) {
+        if (!\is_null($this->paymentProduct771SpecificOutput)) {
             $object->paymentProduct771SpecificOutput = $this->paymentProduct771SpecificOutput->toObject();
         }
-        if (!is_null($this->paymentProductId)) {
+        if (!\is_null($this->paymentProductId)) {
             $object->paymentProductId = $this->paymentProductId;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -100,21 +91,21 @@ class SepaDirectDebitPaymentMethodSpecificOutput extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'fraudResults')) {
-            if (!is_object($object->fraudResults)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->fraudResults, true) . '\' is not an object');
+        if (\property_exists($object, 'fraudResults')) {
+            if (!\is_object($object->fraudResults)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->fraudResults, \true) . '\' is not an object');
             }
             $value = new FraudResults();
             $this->fraudResults = $value->fromObject($object->fraudResults);
         }
-        if (property_exists($object, 'paymentProduct771SpecificOutput')) {
-            if (!is_object($object->paymentProduct771SpecificOutput)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->paymentProduct771SpecificOutput, true) . '\' is not an object');
+        if (\property_exists($object, 'paymentProduct771SpecificOutput')) {
+            if (!\is_object($object->paymentProduct771SpecificOutput)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->paymentProduct771SpecificOutput, \true) . '\' is not an object');
             }
             $value = new PaymentProduct771SpecificOutput();
             $this->paymentProduct771SpecificOutput = $value->fromObject($object->paymentProduct771SpecificOutput);
         }
-        if (property_exists($object, 'paymentProductId')) {
+        if (\property_exists($object, 'paymentProductId')) {
             $this->paymentProductId = $object->paymentProductId;
         }
         return $this;

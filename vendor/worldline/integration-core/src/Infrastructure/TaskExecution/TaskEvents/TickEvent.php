@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution\TaskEvents;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\TaskEvents;
 
-use OnlinePayments\Core\Infrastructure\Utility\Events\Event;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Utility\Events\Event;
 /**
  * Class TickEvent.
  *
  * @package OnlinePayments\Core\Infrastructure\Scheduler
+ * @internal
  */
 class TickEvent extends Event
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings;
 
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidPaymentAttemptsNumberException;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidPaymentAttemptsNumberException;
 /**
  * Class PaymentSettings
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings
+ * @internal
  */
 class PaymentSettings
 {
@@ -51,7 +51,6 @@ class PaymentSettings
      * @var string
      */
     protected string $paymentRefundedStatus;
-
     /**
      * @param ?PaymentAction $paymentAction
      * @param ?AutomaticCapture $automaticCapture
@@ -66,18 +65,8 @@ class PaymentSettings
      *
      * @throws InvalidPaymentAttemptsNumberException
      */
-    public function __construct(
-        ?PaymentAction $paymentAction = null,
-        ?AutomaticCapture $automaticCapture = null,
-        ?PaymentAttemptsNumber $paymentAttemptsNumber = null,
-        bool $applySurcharge = false,
-        string $paymentCapturedStatus = '',
-        string $paymentErrorStatus = '',
-        string $paymentPendingStatus = '',
-        string $paymentAuthorizedStatus = '',
-        string $paymentCancelledStatus = '',
-        string $paymentRefundedStatus = ''
-    ) {
+    public function __construct(?PaymentAction $paymentAction = null, ?AutomaticCapture $automaticCapture = null, ?PaymentAttemptsNumber $paymentAttemptsNumber = null, bool $applySurcharge = \false, string $paymentCapturedStatus = '', string $paymentErrorStatus = '', string $paymentPendingStatus = '', string $paymentAuthorizedStatus = '', string $paymentCancelledStatus = '', string $paymentRefundedStatus = '')
+    {
         $this->paymentAction = $paymentAction ?? PaymentAction::authorizeCapture();
         $this->automaticCapture = $automaticCapture ?? AutomaticCapture::never();
         $this->paymentAttemptsNumber = $paymentAttemptsNumber ?? PaymentAttemptsNumber::create(10);
@@ -89,83 +78,73 @@ class PaymentSettings
         $this->paymentCancelledStatus = $paymentCancelledStatus;
         $this->paymentRefundedStatus = $paymentRefundedStatus;
     }
-
     /**
      * @return PaymentAction
      */
-    public function getPaymentAction(): PaymentAction
+    public function getPaymentAction() : PaymentAction
     {
         return $this->paymentAction;
     }
-
     /**
      * @return AutomaticCapture
      */
-    public function getAutomaticCapture(): AutomaticCapture
+    public function getAutomaticCapture() : AutomaticCapture
     {
         return $this->automaticCapture;
     }
-
     /**
      * @return PaymentAttemptsNumber
      */
-    public function getPaymentAttemptsNumber(): PaymentAttemptsNumber
+    public function getPaymentAttemptsNumber() : PaymentAttemptsNumber
     {
         return $this->paymentAttemptsNumber;
     }
-
     /**
      * @return bool
      */
-    public function isApplySurcharge(): bool
+    public function isApplySurcharge() : bool
     {
         return $this->applySurcharge;
     }
-
     /**
      * @return string
      */
-    public function getPaymentCapturedStatus(): string
+    public function getPaymentCapturedStatus() : string
     {
         return $this->paymentCapturedStatus;
     }
-
     /**
      * @return string
      */
-    public function getPaymentErrorStatus(): string
+    public function getPaymentErrorStatus() : string
     {
         return $this->paymentErrorStatus;
     }
-
     /**
      * @return string
      */
-    public function getPaymentPendingStatus(): string
+    public function getPaymentPendingStatus() : string
     {
         return $this->paymentPendingStatus;
     }
-
     /**
      * @return string
      */
-    public function getPaymentAuthorizedStatus(): string
+    public function getPaymentAuthorizedStatus() : string
     {
         return $this->paymentAuthorizedStatus;
     }
-
     /**
      * @return string
      */
-    public function getPaymentCancelledStatus(): string
+    public function getPaymentCancelledStatus() : string
     {
         return $this->paymentCancelledStatus;
     }
-
     /**
      * @return string
      */
-    public function getPaymentRefundedStatus(): string
+    public function getPaymentRefundedStatus() : string
     {
         return $this->paymentRefundedStatus;
     }

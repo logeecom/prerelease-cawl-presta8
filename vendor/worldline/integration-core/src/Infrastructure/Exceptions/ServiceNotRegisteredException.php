@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Exceptions;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Exceptions;
 
 /**
  * Class ServiceNotRegisteredException.
  *
  * @package OnlinePayments\Core\Infrastructure\Exceptions
+ * @internal
  */
 class ServiceNotRegisteredException extends BaseException
 {
@@ -16,6 +17,6 @@ class ServiceNotRegisteredException extends BaseException
      */
     public function __construct(string $type)
     {
-        parent::__construct("Service of type \"$type\" is not registered.");
+        parent::__construct("Service of type \"{$type}\" is not registered.");
     }
 }

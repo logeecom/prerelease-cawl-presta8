@@ -1,15 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Language\Exception;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Language\Exception;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTranslatableException;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTranslatableException;
 /**
  * Class InvalidIsoCodeException
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Language\Exception
+ * @internal
  */
 class InvalidIsoCodeException extends BaseTranslatableException
 {
-
 }

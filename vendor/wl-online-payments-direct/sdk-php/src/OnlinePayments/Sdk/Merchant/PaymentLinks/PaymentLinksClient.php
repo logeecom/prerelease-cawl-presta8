@@ -1,25 +1,25 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Merchant\PaymentLinks;
+namespace CAWL\OnlinePayments\Sdk\Merchant\PaymentLinks;
 
 use Exception;
-use OnlinePayments\Sdk\ApiResource;
-use OnlinePayments\Sdk\CallContext;
-use OnlinePayments\Sdk\Communication\ErrorResponseException;
-use OnlinePayments\Sdk\Communication\ResponseClassMap;
-use OnlinePayments\Sdk\Domain\CreatePaymentLinkRequest;
-use OnlinePayments\Sdk\ExceptionFactory;
-
+use CAWL\OnlinePayments\Sdk\ApiResource;
+use CAWL\OnlinePayments\Sdk\CallContext;
+use CAWL\OnlinePayments\Sdk\Communication\ErrorResponseException;
+use CAWL\OnlinePayments\Sdk\Communication\ResponseClassMap;
+use CAWL\OnlinePayments\Sdk\Domain\CreatePaymentLinkRequest;
+use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * PaymentLinks client.
+ * @internal
  */
 class PaymentLinksClient extends ApiResource implements PaymentLinksClientInterface
 {
     /** @var ExceptionFactory|null */
     private $responseExceptionFactory = null;
-
     /**
      * @inheritdoc
      * @throws Exception
@@ -27,26 +27,14 @@ class PaymentLinksClient extends ApiResource implements PaymentLinksClientInterf
     public function createPaymentLink(CreatePaymentLinkRequest $body, ?CallContext $callContext = null)
     {
         $responseClassMap = new ResponseClassMap();
-        $responseClassMap->defaultSuccessResponseClassName = '\OnlinePayments\Sdk\Domain\PaymentLinkResponse';
-        $responseClassMap->defaultErrorResponseClassName = '\OnlinePayments\Sdk\Domain\ErrorResponse';
+        $responseClassMap->defaultSuccessResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\PaymentLinkResponse';
+        $responseClassMap->defaultErrorResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\ErrorResponse';
         try {
-            return $this->getCommunicator()->post(
-                $responseClassMap,
-                $this->instantiateUri('/v2/{merchantId}/paymentlinks'),
-                $this->getClientMetaInfo(),
-                $body,
-                null,
-                $callContext
-            );
+            return $this->getCommunicator()->post($responseClassMap, $this->instantiateUri('/v2/{merchantId}/paymentlinks'), $this->getClientMetaInfo(), $body, null, $callContext);
         } catch (ErrorResponseException $e) {
-            throw $this->getResponseExceptionFactory()->createException(
-                $e->getHttpStatusCode(),
-                $e->getErrorResponse(),
-                $callContext
-            );
+            throw $this->getResponseExceptionFactory()->createException($e->getHttpStatusCode(), $e->getErrorResponse(), $callContext);
         }
     }
-
     /**
      * @inheritdoc
      */
@@ -54,25 +42,14 @@ class PaymentLinksClient extends ApiResource implements PaymentLinksClientInterf
     {
         $this->context['paymentLinkId'] = $paymentLinkId;
         $responseClassMap = new ResponseClassMap();
-        $responseClassMap->defaultSuccessResponseClassName = '\OnlinePayments\Sdk\Domain\PaymentLinkResponse';
-        $responseClassMap->defaultErrorResponseClassName = '\OnlinePayments\Sdk\Domain\ErrorResponse';
+        $responseClassMap->defaultSuccessResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\PaymentLinkResponse';
+        $responseClassMap->defaultErrorResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\ErrorResponse';
         try {
-            return $this->getCommunicator()->get(
-                $responseClassMap,
-                $this->instantiateUri('/v2/{merchantId}/paymentlinks/{paymentLinkId}'),
-                $this->getClientMetaInfo(),
-                null,
-                $callContext
-            );
+            return $this->getCommunicator()->get($responseClassMap, $this->instantiateUri('/v2/{merchantId}/paymentlinks/{paymentLinkId}'), $this->getClientMetaInfo(), null, $callContext);
         } catch (ErrorResponseException $e) {
-            throw $this->getResponseExceptionFactory()->createException(
-                $e->getHttpStatusCode(),
-                $e->getErrorResponse(),
-                $callContext
-            );
+            throw $this->getResponseExceptionFactory()->createException($e->getHttpStatusCode(), $e->getErrorResponse(), $callContext);
         }
     }
-
     /**
      * @inheritdoc
      * @throws Exception
@@ -81,29 +58,17 @@ class PaymentLinksClient extends ApiResource implements PaymentLinksClientInterf
     {
         $this->context['paymentLinkId'] = $paymentLinkId;
         $responseClassMap = new ResponseClassMap();
-        $responseClassMap->defaultErrorResponseClassName = '\OnlinePayments\Sdk\Domain\ErrorResponse';
+        $responseClassMap->defaultErrorResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\ErrorResponse';
         try {
-            return $this->getCommunicator()->post(
-                $responseClassMap,
-                $this->instantiateUri('/v2/{merchantId}/paymentlinks/{paymentLinkId}/cancel'),
-                $this->getClientMetaInfo(),
-                null,
-                null,
-                $callContext
-            );
+            return $this->getCommunicator()->post($responseClassMap, $this->instantiateUri('/v2/{merchantId}/paymentlinks/{paymentLinkId}/cancel'), $this->getClientMetaInfo(), null, null, $callContext);
         } catch (ErrorResponseException $e) {
-            throw $this->getResponseExceptionFactory()->createException(
-                $e->getHttpStatusCode(),
-                $e->getErrorResponse(),
-                $callContext
-            );
+            throw $this->getResponseExceptionFactory()->createException($e->getHttpStatusCode(), $e->getErrorResponse(), $callContext);
         }
     }
-
     /** @return ExceptionFactory */
     private function getResponseExceptionFactory()
     {
-        if (is_null($this->responseExceptionFactory)) {
+        if (\is_null($this->responseExceptionFactory)) {
             $this->responseExceptionFactory = new ExceptionFactory();
         }
         return $this->responseExceptionFactory;

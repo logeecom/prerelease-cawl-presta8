@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\StoreAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\StoreAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-use OnlinePayments\Core\BusinessLogic\Domain\Stores\Models\StoreOrderStatus;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Stores\Models\StoreOrderStatus;
 /**
  * Class StoreOrderStatusesResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\StoreAPI\Response
+ * @internal
  */
 class StoreOrderStatusesResponse extends Response
 {
@@ -16,7 +16,6 @@ class StoreOrderStatusesResponse extends Response
      * @var StoreOrderStatus[]
      */
     private array $storeOrderStatuses;
-
     /**
      * @param StoreOrderStatus[] $storeOrderStatuses
      */
@@ -24,21 +23,15 @@ class StoreOrderStatusesResponse extends Response
     {
         $this->storeOrderStatuses = $storeOrderStatuses;
     }
-
     /**
      * @inheritDoc
      */
-    public function toArray(): array
+    public function toArray() : array
     {
         $result = [];
-
         foreach ($this->storeOrderStatuses as $storeOrderStatus) {
-            $result[] = [
-                'value' => $storeOrderStatus->getStatusId(),
-                'label' => $storeOrderStatus->getStatusName(),
-            ];
+            $result[] = ['value' => $storeOrderStatus->getStatusId(), 'label' => $storeOrderStatus->getStatusName()];
         }
-
         return $result;
     }
 }

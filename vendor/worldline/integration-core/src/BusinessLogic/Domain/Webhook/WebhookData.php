@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Webhook;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Webhook;
 
 /**
  * Class WebhookData
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Webhook
+ * @internal
  */
 class WebhookData
 {
@@ -16,7 +17,6 @@ class WebhookData
     private string $statusCategory;
     private int $statusCode;
     private string $webhookBody;
-
     /**
      * @param string $id
      * @param string $merchantReference
@@ -26,15 +26,8 @@ class WebhookData
      * @param int $statusCode
      * @param string $webhookBody
      */
-    public function __construct(
-        string $id,
-        string $merchantReference,
-        string $type,
-        string $created,
-        string $statusCategory,
-        int $statusCode,
-        string $webhookBody
-    ) {
+    public function __construct(string $id, string $merchantReference, string $type, string $created, string $statusCategory, int $statusCode, string $webhookBody)
+    {
         $this->id = $id;
         $this->merchantReference = $merchantReference;
         $this->type = $type;
@@ -43,38 +36,31 @@ class WebhookData
         $this->statusCode = $statusCode;
         $this->webhookBody = $webhookBody;
     }
-
-    public function getId(): string
+    public function getId() : string
     {
         return $this->id;
     }
-
-    public function getMerchantReference(): string
+    public function getMerchantReference() : string
     {
         return $this->merchantReference;
     }
-
-    public function getType(): string
+    public function getType() : string
     {
         return $this->type;
     }
-
-    public function getCreated(): string
+    public function getCreated() : string
     {
         return $this->created;
     }
-
-    public function getStatusCategory(): string
+    public function getStatusCategory() : string
     {
         return $this->statusCategory;
     }
-
-    public function getStatusCode(): int
+    public function getStatusCode() : int
     {
         return $this->statusCode;
     }
-
-    public function getWebhookBody(): string
+    public function getWebhookBody() : string
     {
         return $this->webhookBody;
     }

@@ -1,20 +1,19 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\AdminAPI\Controller;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\AdminAPI\Controller;
 
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkRequest;
-use OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\AdminAPI\Response\PaymentLinkResponse;
-use OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentLinks\PaymentLinksService;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkRequest;
+use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\AdminAPI\Response\PaymentLinkResponse;
+use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentLinks\PaymentLinksService;
 /**
  * Class PaymentLinksController.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\AdminAPI\Controller
+ * @internal
  */
 class PaymentLinksController
 {
     private PaymentLinksService $paymentLinksService;
-
     /**
      * @param PaymentLinksService $paymentLinksService
      */
@@ -22,13 +21,11 @@ class PaymentLinksController
     {
         $this->paymentLinksService = $paymentLinksService;
     }
-
-    public function create(PaymentLinkRequest $request): PaymentLinkResponse
+    public function create(PaymentLinkRequest $request) : PaymentLinkResponse
     {
         return new PaymentLinkResponse($this->paymentLinksService->create($request));
     }
-
-    public function get(string $merchantReference): PaymentLinkResponse
+    public function get(string $merchantReference) : PaymentLinkResponse
     {
         return new PaymentLinkResponse($this->paymentLinksService->get($merchantReference));
     }

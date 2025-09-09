@@ -1,17 +1,17 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\ORM;
+namespace CAWL\OnlinePayments\Core\Infrastructure\ORM;
 
-use OnlinePayments\Core\Infrastructure\ORM\Exceptions\RepositoryClassException;
-use OnlinePayments\Core\Infrastructure\ORM\Exceptions\RepositoryNotRegisteredException;
-use OnlinePayments\Core\Infrastructure\ORM\Interfaces\QueueItemRepository;
-use OnlinePayments\Core\Infrastructure\ORM\Interfaces\RepositoryInterface;
-use OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
-
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\RepositoryClassException;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\RepositoryNotRegisteredException;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Interfaces\QueueItemRepository;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Interfaces\RepositoryInterface;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
 /**
  * Class RepositoryRegistry.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM
+ * @internal
  */
 class RepositoryRegistry
 {
@@ -19,12 +19,10 @@ class RepositoryRegistry
      * @var RepositoryInterface[]
      */
     protected static array $instantiated = [];
-
     /**
      * @var array
      */
     protected static array $repositories = [];
-
     /**
      * Returns an instance of repository that is responsible for handling the entity
      *
@@ -34,23 +32,20 @@ class RepositoryRegistry
      *
      * @throws RepositoryNotRegisteredException
      */
-    public static function getRepository(string $entityClass): RepositoryInterface
+    public static function getRepository(string $entityClass) : RepositoryInterface
     {
         if (!static::isRegistered($entityClass)) {
-            throw new RepositoryNotRegisteredException("Repository for entity $entityClass not found or registered.");
+            throw new RepositoryNotRegisteredException("Repository for entity {$entityClass} not found or registered.");
         }
-
-        if (!array_key_exists($entityClass, static::$instantiated)) {
+        if (!\array_key_exists($entityClass, static::$instantiated)) {
             $repositoryClass = static::$repositories[$entityClass];
             /** @var RepositoryInterface $repository */
             $repository = new $repositoryClass();
             $repository->setEntityClass($entityClass);
             static::$instantiated[$entityClass] = $repository;
         }
-
         return static::$instantiated[$entityClass];
     }
-
     /**
      * Registers repository for provided entity class
      *
@@ -61,16 +56,14 @@ class RepositoryRegistry
      *
      * @return void
      */
-    public static function registerRepository(string $entityClass, string $repositoryClass): void
+    public static function registerRepository(string $entityClass, string $repositoryClass) : void
     {
-        if (!is_subclass_of($repositoryClass, RepositoryInterface::CLASS_NAME)) {
-            throw new RepositoryClassException("Class $repositoryClass is not implementation of RepositoryInterface.");
+        if (!\is_subclass_of($repositoryClass, RepositoryInterface::CLASS_NAME)) {
+            throw new RepositoryClassException("Class {$repositoryClass} is not implementation of RepositoryInterface.");
         }
-
         unset(static::$instantiated[$entityClass]);
         static::$repositories[$entityClass] = $repositoryClass;
     }
-
     /**
      * Checks whether repository has been registered for a particular entity.
      *
@@ -78,11 +71,10 @@ class RepositoryRegistry
      *
      * @return boolean Returns TRUE if repository has been registered; FALSE otherwise.
      */
-    public static function isRegistered(string $entityClass): bool
+    public static function isRegistered(string $entityClass) : bool
     {
         return isset(static::$repositories[$entityClass]);
     }
-
     /**
      * Returns queue item repository.
      *
@@ -91,14 +83,13 @@ class RepositoryRegistry
      * @throws RepositoryClassException
      * @throws RepositoryNotRegisteredException
      */
-    public static function getQueueItemRepository(): QueueItemRepository
+    public static function getQueueItemRepository() : QueueItemRepository
     {
         /** @var QueueItemRepository $repository */
         $repository = static::getRepository(QueueItem::getClassName());
-        if (!($repository instanceof QueueItemRepository)) {
+        if (!$repository instanceof QueueItemRepository) {
             throw new RepositoryClassException('Instance class is not implementation of QueueItemRepository');
         }
-
         return $repository;
     }
 }

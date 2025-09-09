@@ -1,19 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\VersionsAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\VersionsAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-use OnlinePayments\Core\BusinessLogic\Domain\Version\VersionInfo;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Version\VersionInfo;
 /**
  * Class VersionInfoResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\VersionsAPI\Response
+ * @internal
  */
 class VersionInfoResponse extends Response
 {
     private VersionInfo $versionInfo;
-
     /**
      * @param VersionInfo $versionInfo
      */
@@ -21,12 +20,8 @@ class VersionInfoResponse extends Response
     {
         $this->versionInfo = $versionInfo;
     }
-
-    public function toArray(): array
+    public function toArray() : array
     {
-        return [
-            'installed' => $this->versionInfo->getInstalled(),
-            'latest' => $this->versionInfo->getLatest()
-        ];
+        return ['installed' => $this->versionInfo->getInstalled(), 'latest' => $this->versionInfo->getLatest()];
     }
 }

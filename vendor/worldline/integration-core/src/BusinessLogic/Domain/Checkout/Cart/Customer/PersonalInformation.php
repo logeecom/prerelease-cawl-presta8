@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Customer;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Customer;
 
 /**
  * Class PersonalInformation.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Customer
+ * @internal
  */
 class PersonalInformation
 {
@@ -13,7 +14,6 @@ class PersonalInformation
     private string $lastName;
     private string $gender;
     private string $title;
-
     public function __construct(string $firstName, string $lastName, string $gender = '', string $title = '')
     {
         $this->firstName = $firstName;
@@ -21,23 +21,19 @@ class PersonalInformation
         $this->gender = $gender;
         $this->title = $title;
     }
-
-    public function getFirstName(): string
+    public function getFirstName() : string
     {
         return $this->firstName;
     }
-
-    public function getLastName(): string
+    public function getLastName() : string
     {
         return $this->lastName;
     }
-
-    public function getGender(): string
+    public function getGender() : string
     {
         return $this->gender;
     }
-
-    public function getTitle(): string
+    public function getTitle() : string
     {
         return $this->title;
     }

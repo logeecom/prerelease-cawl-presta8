@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization;
 
 /**
  * Class TokenResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization
+ * @internal
  */
 class TokenResponse
 {
@@ -14,7 +15,6 @@ class TokenResponse
     private string $cardNumber;
     private string $expirationDate;
     private string $logoUrl;
-
     /**
      * @param string $tokenId
      * @param string $cardBrand
@@ -22,41 +22,31 @@ class TokenResponse
      * @param string $expirationDate
      * @param string $logoUrl
      */
-    public function __construct(
-        string $tokenId,
-        string $cardBrand,
-        string $cardNumber,
-        string $expirationDate,
-        string $logoUrl = ''
-    ) {
+    public function __construct(string $tokenId, string $cardBrand, string $cardNumber, string $expirationDate, string $logoUrl = '')
+    {
         $this->tokenId = $tokenId;
         $this->cardBrand = $cardBrand;
         $this->cardNumber = $cardNumber;
         $this->expirationDate = $expirationDate;
         $this->logoUrl = $logoUrl;
     }
-
-    public function getTokenId(): string
+    public function getTokenId() : string
     {
         return $this->tokenId;
     }
-
-    public function getCardBrand(): string
+    public function getCardBrand() : string
     {
         return $this->cardBrand;
     }
-
-    public function getCardNumber(): string
+    public function getCardNumber() : string
     {
         return $this->cardNumber;
     }
-
-    public function getExpirationDate(): string
+    public function getExpirationDate() : string
     {
         return $this->expirationDate;
     }
-
-    public function getLogoUrl(): string
+    public function getLogoUrl() : string
     {
         return $this->logoUrl;
     }

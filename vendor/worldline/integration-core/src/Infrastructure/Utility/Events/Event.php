@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Utility\Events;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Utility\Events;
 
 /**
  * Class Event.
  *
  * @package OnlinePayments\Core\Infrastructure\Utility\Events
+ * @internal
  */
 abstract class Event
 {

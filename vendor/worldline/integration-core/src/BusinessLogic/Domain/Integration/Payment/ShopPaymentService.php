@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Integration\Payment;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Payment;
 
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethod;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethod;
 /**
  * Interface ShopPaymentService
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Integration\Payment
+ * @internal
  */
 interface ShopPaymentService
 {
@@ -16,20 +16,18 @@ interface ShopPaymentService
      *
      * @return void
      */
-    public function savePaymentMethod(PaymentMethod $paymentMethod): void;
-
+    public function savePaymentMethod(PaymentMethod $paymentMethod) : void;
     /**
      * @param string $paymentProductId
      * @param bool $enabled
      *
      * @return void
      */
-    public function enable(string $paymentProductId, bool $enabled): void;
-
+    public function enable(string $paymentProductId, bool $enabled) : void;
     /**
      * @param string $mode
      *
      * @return void
      */
-    public function deletePaymentMethods(string $mode): void;
+    public function deletePaymentMethods(string $mode) : void;
 }

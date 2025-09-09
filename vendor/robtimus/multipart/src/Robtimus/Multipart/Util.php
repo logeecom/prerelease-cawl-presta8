@@ -1,5 +1,6 @@
 <?php
-namespace Robtimus\Multipart;
+
+namespace CAWL\Robtimus\Multipart;
 
 /**
  * Utility functions.
@@ -17,7 +18,6 @@ final class Util
     private function __construct()
     {
     }
-
     /**
      * Validates that an input value is an int.
      *
@@ -31,11 +31,10 @@ final class Util
      */
     public static function validateInt(&$input, $name, $message = '')
     {
-        if (!is_int($input)) {
+        if (!\is_int($input)) {
             self::throwIncorrectlyTypedException($name, $message);
         }
     }
-
     /**
      * Validates that an input value is a positive int.
      *
@@ -54,7 +53,6 @@ final class Util
             throw new \InvalidArgumentException($message === '' ? $name . ' <= 0' : $message);
         }
     }
-
     /**
      * Validates that an input value is a string.
      *
@@ -68,11 +66,10 @@ final class Util
      */
     public static function validateString(&$input, $name, $message = '')
     {
-        if (!is_string($input)) {
+        if (!\is_string($input)) {
             self::throwIncorrectlyTypedException($name, $message);
         }
     }
-
     /**
      * Validates that an input value is a non-empty string.
      *
@@ -87,11 +84,10 @@ final class Util
     public static function validateNonEmptyString(&$input, $name, $message = '')
     {
         self::validateString($input, $name, $message);
-        if (trim($input) === '') {
+        if (\trim($input) === '') {
             throw new \InvalidArgumentException($message === '' ? $name . ' must be non-empty' : $message);
         }
     }
-
     /**
      * Validates that an input value can be used for streaming.
      *
@@ -105,11 +101,10 @@ final class Util
      */
     public static function validateStreamable(&$input, $name, $message = '')
     {
-        if (!is_string($input) && !is_resource($input) && !is_callable($input)) {
+        if (!\is_string($input) && !\is_resource($input) && !\is_callable($input)) {
             self::throwIncorrectlyTypedException($name, $message);
         }
     }
-
     /**
      * Throws an exception that indicates an input value is incorrectly typed.
      *

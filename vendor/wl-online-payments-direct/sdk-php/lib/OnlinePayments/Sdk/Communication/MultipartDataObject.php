@@ -1,25 +1,25 @@
 <?php
-namespace OnlinePayments\Sdk\Communication;
+
+namespace CAWL\OnlinePayments\Sdk\Communication;
 
 use Exception;
-
 /**
  * Class MultipartDataObject
  *
  * @package OnlinePayments\Sdk\Communication
+ * @internal
  */
 abstract class MultipartDataObject
 {
     /**
      * @return MultipartFormDataObject
      */
-    abstract public function toMultipartFormDataObject();
-
+    public abstract function toMultipartFormDataObject();
     /**
      * @throws Exception
      */
     public function __set($name, $value)
     {
-        throw new Exception('Cannot add new property ' . $name . ' to instances of class ' . get_class($this));
+        throw new Exception('Cannot add new property ' . $name . ' to instances of class ' . \get_class($this));
     }
 }

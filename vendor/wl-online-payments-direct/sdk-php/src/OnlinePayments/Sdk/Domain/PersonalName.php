@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class PersonalName extends DataObject
 {
@@ -15,17 +16,14 @@ class PersonalName extends DataObject
      * @var string
      */
     public $firstName = null;
-
     /**
      * @var string
      */
     public $surname = null;
-
     /**
      * @var string
      */
     public $title = null;
-
     /**
      * @return string
      */
@@ -33,7 +31,6 @@ class PersonalName extends DataObject
     {
         return $this->firstName;
     }
-
     /**
      * @param string
      */
@@ -41,7 +38,6 @@ class PersonalName extends DataObject
     {
         $this->firstName = $value;
     }
-
     /**
      * @return string
      */
@@ -49,7 +45,6 @@ class PersonalName extends DataObject
     {
         return $this->surname;
     }
-
     /**
      * @param string
      */
@@ -57,7 +52,6 @@ class PersonalName extends DataObject
     {
         $this->surname = $value;
     }
-
     /**
      * @return string
      */
@@ -65,7 +59,6 @@ class PersonalName extends DataObject
     {
         return $this->title;
     }
-
     /**
      * @param string
      */
@@ -73,25 +66,23 @@ class PersonalName extends DataObject
     {
         $this->title = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->firstName)) {
+        if (!\is_null($this->firstName)) {
             $object->firstName = $this->firstName;
         }
-        if (!is_null($this->surname)) {
+        if (!\is_null($this->surname)) {
             $object->surname = $this->surname;
         }
-        if (!is_null($this->title)) {
+        if (!\is_null($this->title)) {
             $object->title = $this->title;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -100,13 +91,13 @@ class PersonalName extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'firstName')) {
+        if (\property_exists($object, 'firstName')) {
             $this->firstName = $object->firstName;
         }
-        if (property_exists($object, 'surname')) {
+        if (\property_exists($object, 'surname')) {
             $this->surname = $object->surname;
         }
-        if (property_exists($object, 'title')) {
+        if (\property_exists($object, 'title')) {
             $this->title = $object->title;
         }
         return $this;

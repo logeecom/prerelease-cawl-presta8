@@ -1,17 +1,17 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings;
 
 /**
  * Class LogSettings
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings
+ * @internal
  */
 class LogSettings
 {
     protected bool $debugMode;
     protected LogRecordsLifetime $logRecordsLifetime;
-
     /**
      * @param bool $debugMode
      * @param LogRecordsLifetime $logRecordsLifetime
@@ -21,13 +21,11 @@ class LogSettings
         $this->debugMode = $debugMode;
         $this->logRecordsLifetime = $logRecordsLifetime;
     }
-
-    public function isDebugMode(): bool
+    public function isDebugMode() : bool
     {
         return $this->debugMode;
     }
-
-    public function getLogRecordsLifetime(): LogRecordsLifetime
+    public function getLogRecordsLifetime() : LogRecordsLifetime
     {
         return $this->logRecordsLifetime;
     }

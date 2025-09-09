@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Order;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Order;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
-use OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusError;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusError;
 /**
  * Class OrderDetails
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Order
+ * @internal
  */
 class OrderDetails
 {
@@ -20,7 +20,6 @@ class OrderDetails
     private OrderAction $cancel;
     /** @var StatusError[] */
     private array $errors;
-
     /**
      * @param Amount $amount
      * @param OrderPayment[] $payments
@@ -29,13 +28,7 @@ class OrderDetails
      * @param OrderAction $cancel
      * @param StatusError[] $errors
      */
-    public function __construct(
-        Amount $amount,
-        array $payments,
-        OrderAction $capture,
-        OrderAction $refund,
-        OrderAction $cancel,
-        array $errors)
+    public function __construct(Amount $amount, array $payments, OrderAction $capture, OrderAction $refund, OrderAction $cancel, array $errors)
     {
         $this->amount = $amount;
         $this->payments = $payments;
@@ -44,33 +37,27 @@ class OrderDetails
         $this->cancel = $cancel;
         $this->errors = $errors;
     }
-
-    public function getAmount(): Amount
+    public function getAmount() : Amount
     {
         return $this->amount;
     }
-
-    public function getPayments(): array
+    public function getPayments() : array
     {
         return $this->payments;
     }
-
-    public function getCapture(): OrderAction
+    public function getCapture() : OrderAction
     {
         return $this->capture;
     }
-
-    public function getRefund(): OrderAction
+    public function getRefund() : OrderAction
     {
         return $this->refund;
     }
-
-    public function getCancel(): OrderAction
+    public function getCancel() : OrderAction
     {
         return $this->cancel;
     }
-
-    public function getErrors(): array
+    public function getErrors() : array
     {
         return $this->errors;
     }

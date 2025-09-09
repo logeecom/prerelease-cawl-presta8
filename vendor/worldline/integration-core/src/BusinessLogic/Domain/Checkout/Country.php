@@ -1,12 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Checkout;
-
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout;
 
 /**
  * Class Country
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout
+ * @internal
  */
 class Country
 {
@@ -14,7 +14,6 @@ class Country
      * @var string
      */
     private string $country;
-
     /**
      * @param string $country
      */
@@ -22,7 +21,6 @@ class Country
     {
         $this->country = $country;
     }
-
     /**
      * Country iso code should be in two letters format
      *
@@ -30,23 +28,21 @@ class Country
      *
      * @return Country
      */
-    public static function fromIsoCode(string $isoCode): Country
+    public static function fromIsoCode(string $isoCode) : Country
     {
-        return new self(strtoupper($isoCode));
+        return new self(\strtoupper($isoCode));
     }
-
     /**
      * @return string
      */
-    public function getIsoCode(): string
+    public function getIsoCode() : string
     {
         return $this->country;
     }
-
     /**
      * @return string
      */
-    public function __toString(): string
+    public function __toString() : string
     {
         return $this->country;
     }

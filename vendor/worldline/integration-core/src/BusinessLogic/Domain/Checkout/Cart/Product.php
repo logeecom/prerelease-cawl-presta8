@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart;
 
 /**
  * Class Product.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart
+ * @internal
  */
 class Product
 {
@@ -14,7 +15,6 @@ class Product
     private string $upcCode;
     private string $type;
     private string $unit;
-
     public function __construct(string $id, string $name, string $upcCode = '', string $type = '', string $unit = 'piece')
     {
         $this->id = $id;
@@ -23,28 +23,23 @@ class Product
         $this->type = $type;
         $this->unit = $unit;
     }
-
-    public function getId(): string
+    public function getId() : string
     {
         return $this->id;
     }
-
-    public function getName(): string
+    public function getName() : string
     {
         return $this->name;
     }
-
-    public function getUpcCode(): string
+    public function getUpcCode() : string
     {
         return $this->upcCode;
     }
-
-    public function getType(): string
+    public function getType() : string
     {
         return $this->type;
     }
-
-    public function getUnit(): string
+    public function getUnit() : string
     {
         return $this->unit;
     }

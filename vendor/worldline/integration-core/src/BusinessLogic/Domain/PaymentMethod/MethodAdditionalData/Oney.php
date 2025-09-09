@@ -1,16 +1,16 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData;
 
 /**
  * Class Oney
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\RedirectPaymentMethod
+ * @internal
  */
 class Oney implements PaymentMethodAdditionalData
 {
     protected string $paymentOption = '';
-
     /**
      * @param string $paymentOption
      */
@@ -18,8 +18,7 @@ class Oney implements PaymentMethodAdditionalData
     {
         $this->paymentOption = $paymentOption;
     }
-
-    public function getPaymentOption(): string
+    public function getPaymentOption() : string
     {
         return $this->paymentOption;
     }

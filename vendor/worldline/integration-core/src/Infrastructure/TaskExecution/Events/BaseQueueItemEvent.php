@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution\Events;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Events;
 
-use OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
-use OnlinePayments\Core\Infrastructure\Utility\Events\Event;
-
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
+use CAWL\OnlinePayments\Core\Infrastructure\Utility\Events\Event;
 /**
  * Class BaseQueueItemEvent
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Events
+ * @internal
  */
 abstract class BaseQueueItemEvent extends Event
 {
@@ -16,7 +16,6 @@ abstract class BaseQueueItemEvent extends Event
      * @var QueueItem
      */
     protected QueueItem $queueItem;
-
     /**
      * BaseQueueItemEvent constructor.
      *
@@ -26,11 +25,10 @@ abstract class BaseQueueItemEvent extends Event
     {
         $this->queueItem = $queueItem;
     }
-
     /**
      * @return QueueItem
      */
-    public function getQueueItem(): QueueItem
+    public function getQueueItem() : QueueItem
     {
         return $this->queueItem;
     }

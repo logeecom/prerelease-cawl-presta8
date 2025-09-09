@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\ORM\Utility;
+namespace CAWL\OnlinePayments\Core\Infrastructure\ORM\Utility;
 
 use DateTime;
-use OnlinePayments\Core\Infrastructure\ORM\Entity;
-
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
 /**
  * Class IndexHelper.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\Utility
+ * @internal
  */
 class IndexHelper
 {
@@ -19,7 +19,7 @@ class IndexHelper
      *
      * @return array Map of property indexes
      */
-    public static function mapFieldsToIndexes(Entity $entity): array
+    public static function mapFieldsToIndexes(Entity $entity) : array
     {
         $result = [];
         $config = $entity->getConfig();
@@ -27,10 +27,8 @@ class IndexHelper
         foreach ($config->getIndexMap()->getIndexes() as $item) {
             $result[$item->getProperty()] = $index++;
         }
-
         return $result;
     }
-
     /**
      * Transforms entity fields from int, double, date, bool to their string representation for indexes
      *
@@ -38,7 +36,7 @@ class IndexHelper
      *
      * @return string[]
      */
-    public static function transformFieldsToIndexes(Entity $entity): array
+    public static function transformFieldsToIndexes(Entity $entity) : array
     {
         $result = [];
         $config = $entity->getConfig();
@@ -47,10 +45,8 @@ class IndexHelper
             $field = $item->getProperty();
             $result[$index++] = static::castFieldValue($entity->getIndexValue($field), $item->getType());
         }
-
         return $result;
     }
-
     /**
      * Casts value to index required string format
      *
@@ -61,31 +57,25 @@ class IndexHelper
      */
     public static function castFieldValue($value, string $type)
     {
-        if ($value === null || is_string($value)) {
+        if ($value === null || \is_string($value)) {
             return $value;
         }
-
         if ($type === 'dateTime' && $value instanceof DateTime) {
-            return (string)$value->getTimestamp();
+            return (string) $value->getTimestamp();
         }
-
-        if ($type === 'integer' && is_int($value)) {
-            return sprintf('%011d', $value);
+        if ($type === 'integer' && \is_int($value)) {
+            return \sprintf('%011d', $value);
         }
-
-        if ($type === 'double' && is_float($value)) {
+        if ($type === 'double' && \is_float($value)) {
             // 123.15 => 00000000123.15000, padding to 11 numbers before and padding to 5 behind decimal point
-            return sprintf('%017.5f', $value);
+            return \sprintf('%017.5f', $value);
         }
-
-        if ($type === 'boolean' && is_bool($value)) {
+        if ($type === 'boolean' && \is_bool($value)) {
             return $value ? '1' : '0';
         }
-
-        if ($type === 'array' && is_array($value)) {
-            return array_values($value);
+        if ($type === 'array' && \is_array($value)) {
+            return \array_values($value);
         }
-
         return null;
     }
 }

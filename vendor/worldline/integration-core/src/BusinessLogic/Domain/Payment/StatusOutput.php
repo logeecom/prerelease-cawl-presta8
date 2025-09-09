@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Payment;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment;
 
 /**
  * Class StatusOutput.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Payment
+ * @internal
  */
 class StatusOutput
 {
@@ -13,22 +14,18 @@ class StatusOutput
      * @var StatusError[]
      */
     private array $errors;
-
     /**
      * @var bool
      */
     private ?bool $authorized;
-
     /**
      * @var bool
      */
     private ?bool $cancellable;
-
     /**
      * @var bool
      */
     private ?bool $refundable;
-
     /**
      * @param bool|null $isAuthorized
      * @param bool|null $isCancellable
@@ -42,23 +39,19 @@ class StatusOutput
         $this->cancellable = $isCancellable;
         $this->refundable = $isRefundable;
     }
-
-    public function getErrors(): array
+    public function getErrors() : array
     {
         return $this->errors;
     }
-
-    public function isAuthorized(): ?bool
+    public function isAuthorized() : ?bool
     {
         return $this->authorized;
     }
-
-    public function isCancellable(): ?bool
+    public function isCancellable() : ?bool
     {
         return $this->cancellable;
     }
-
-    public function isRefundable(): ?bool
+    public function isRefundable() : ?bool
     {
         return $this->refundable;
     }

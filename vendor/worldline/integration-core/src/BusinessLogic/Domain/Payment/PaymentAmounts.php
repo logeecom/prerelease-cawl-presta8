@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Payment;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
 /**
  * Class PaymentAmounts.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Payment
+ * @internal
  */
 class PaymentAmounts
 {
@@ -16,7 +16,6 @@ class PaymentAmounts
     private ?Amount $capturedAmount;
     private ?Amount $captureRequestedAmount;
     private ?Amount $cancelledAmount;
-
     /**
      * @param Amount|null $refundedAmount
      * @param Amount|null $refundRequestedAmount
@@ -24,13 +23,7 @@ class PaymentAmounts
      * @param Amount|null $captureRequestedAmount
      * @param Amount|null $cancelledAmount
      */
-    public function __construct(
-        ?Amount $refundedAmount,
-        ?Amount $refundRequestedAmount,
-        ?Amount $capturedAmount,
-        ?Amount $captureRequestedAmount,
-        ?Amount $cancelledAmount
-    )
+    public function __construct(?Amount $refundedAmount, ?Amount $refundRequestedAmount, ?Amount $capturedAmount, ?Amount $captureRequestedAmount, ?Amount $cancelledAmount)
     {
         $this->refundedAmount = $refundedAmount;
         $this->refundRequestedAmount = $refundRequestedAmount;
@@ -38,28 +31,23 @@ class PaymentAmounts
         $this->captureRequestedAmount = $captureRequestedAmount;
         $this->cancelledAmount = $cancelledAmount;
     }
-
-    public function getRefundedAmount(): ?Amount
+    public function getRefundedAmount() : ?Amount
     {
         return $this->refundedAmount;
     }
-
-    public function getRefundRequestedAmount(): ?Amount
+    public function getRefundRequestedAmount() : ?Amount
     {
         return $this->refundRequestedAmount;
     }
-
-    public function getCapturedAmount(): ?Amount
+    public function getCapturedAmount() : ?Amount
     {
         return $this->capturedAmount;
     }
-
-    public function getCaptureRequestedAmount(): ?Amount
+    public function getCaptureRequestedAmount() : ?Amount
     {
         return $this->captureRequestedAmount;
     }
-
-    public function getCancelledAmount(): ?Amount
+    public function getCancelledAmount() : ?Amount
     {
         return $this->cancelledAmount;
     }

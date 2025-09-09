@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslationCollection;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslationCollection;
 /**
  * Class PaymentMethodResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod
+ * @internal
  */
 class PaymentMethodResponse
 {
@@ -19,7 +19,6 @@ class PaymentMethodResponse
      */
     protected array $integrationTypes;
     protected bool $enabled;
-
     /**
      * @param string $paymentProductId
      * @param TranslationCollection $name
@@ -27,41 +26,31 @@ class PaymentMethodResponse
      * @param string[] $integrationTypes
      * @param bool $enabled
      */
-    public function __construct(
-        string $paymentProductId,
-        TranslationCollection $name,
-        string $paymentGroup,
-        array $integrationTypes,
-        bool $enabled
-    ) {
+    public function __construct(string $paymentProductId, TranslationCollection $name, string $paymentGroup, array $integrationTypes, bool $enabled)
+    {
         $this->paymentProductId = $paymentProductId;
         $this->name = $name;
         $this->paymentGroup = $paymentGroup;
         $this->integrationTypes = $integrationTypes;
         $this->enabled = $enabled;
     }
-
-    public function getPaymentProductId(): string
+    public function getPaymentProductId() : string
     {
         return $this->paymentProductId;
     }
-
-    public function getName(): TranslationCollection
+    public function getName() : TranslationCollection
     {
         return $this->name;
     }
-
-    public function getPaymentGroup(): string
+    public function getPaymentGroup() : string
     {
         return $this->paymentGroup;
     }
-
-    public function getIntegrationTypes(): array
+    public function getIntegrationTypes() : array
     {
         return $this->integrationTypes;
     }
-
-    public function isEnabled(): bool
+    public function isEnabled() : bool
     {
         return $this->enabled;
     }

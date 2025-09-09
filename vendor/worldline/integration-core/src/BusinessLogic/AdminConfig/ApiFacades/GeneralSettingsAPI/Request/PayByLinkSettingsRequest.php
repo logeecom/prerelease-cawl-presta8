@@ -1,23 +1,22 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Request;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Request;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Request\Request;
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidPayByLinkExpirationTimeException;
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkExpirationTime;
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkSettings;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Request\Request;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidPayByLinkExpirationTimeException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkExpirationTime;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkSettings;
 /**
  * Class PayByLinkSettingsRequest
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Request
+ * @internal
  */
 class PayByLinkSettingsRequest extends Request
 {
     protected bool $enabled;
     protected string $title;
     protected int $expirationTime;
-
     /**
      * @param bool $enabled
      * @param string $title
@@ -29,18 +28,13 @@ class PayByLinkSettingsRequest extends Request
         $this->title = $title;
         $this->expirationTime = $expirationTime;
     }
-
     /**
      * @inheritDoc
      *
      * @throws InvalidPayByLinkExpirationTimeException
      */
-    public function transformToDomainModel(): object
+    public function transformToDomainModel() : object
     {
-        return new PayByLinkSettings(
-            $this->enabled,
-            $this->title,
-            PayByLinkExpirationTime::create($this->expirationTime)
-        );
+        return new PayByLinkSettings($this->enabled, $this->title, PayByLinkExpirationTime::create($this->expirationTime));
     }
 }

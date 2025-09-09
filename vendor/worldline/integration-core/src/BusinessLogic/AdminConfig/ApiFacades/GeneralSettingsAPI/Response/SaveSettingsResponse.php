@@ -1,20 +1,20 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
 /**
  * Class SaveSettingsResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Response
+ * @internal
  */
 class SaveSettingsResponse extends Response
 {
     /**
      * @inheritDoc
      */
-    public function toArray(): array
+    public function toArray() : array
     {
         return [];
     }

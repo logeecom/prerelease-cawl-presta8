@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Utility\Events;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Utility\Events;
 
 /**
  * Class EventBus.
  *
  * @package OnlinePayments\Core\Infrastructure\Utility\Events
+ * @internal
  */
 class EventBus extends EventEmitter
 {
@@ -19,36 +20,31 @@ class EventBus extends EventEmitter
      * @var ?EventBus
      */
     protected static $instance;
-
     /**
      * EventBus constructor.
      */
     protected function __construct()
     {
     }
-
     /**
      * Returns singleton instance of EventBus.
      *
      * @return EventBus Instance of EventBus class.
      */
-    public static function getInstance(): EventBus
+    public static function getInstance() : EventBus
     {
         if (static::$instance === null) {
             static::$instance = new static();
         }
-
         return static::$instance;
     }
-
     /**
      * Resets singleton instance. Required for proper tests.
      */
-    public static function resetInstance(): void
+    public static function resetInstance() : void
     {
         static::$instance = null;
     }
-
     /**
      * Fires requested event by calling all its registered handlers.
      *

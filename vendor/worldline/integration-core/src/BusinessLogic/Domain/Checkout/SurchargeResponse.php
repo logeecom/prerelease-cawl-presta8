@@ -1,18 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Checkout;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout;
 
 /**
  * Class SurchargeResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout
+ * @internal
  */
 class SurchargeResponse
 {
     private Amount $netAmount;
     private Amount $surchargeAmount;
     private Amount $totalAmount;
-
     /**
      * @param Amount $netAmount
      * @param Amount $surchargeAmount
@@ -24,18 +24,15 @@ class SurchargeResponse
         $this->surchargeAmount = $surchargeAmount;
         $this->totalAmount = $totalAmount;
     }
-
-    public function getNetAmount(): Amount
+    public function getNetAmount() : Amount
     {
         return $this->netAmount;
     }
-
-    public function getSurchargeAmount(): Amount
+    public function getSurchargeAmount() : Amount
     {
         return $this->surchargeAmount;
     }
-
-    public function getTotalAmount(): Amount
+    public function getTotalAmount() : Amount
     {
         return $this->totalAmount;
     }

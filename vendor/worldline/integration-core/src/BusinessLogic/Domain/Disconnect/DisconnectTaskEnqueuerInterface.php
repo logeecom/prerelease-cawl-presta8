@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Disconnect;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Disconnect;
 
 /**
  * Interface DisconnectTaskEnqueuerInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Disconnect
+ * @internal
  */
 interface DisconnectTaskEnqueuerInterface
 {
@@ -14,5 +15,5 @@ interface DisconnectTaskEnqueuerInterface
      *
      * @return void
      */
-    public function enqueueDisconnectTask(string $mode): void;
+    public function enqueueDisconnectTask(string $mode) : void;
 }

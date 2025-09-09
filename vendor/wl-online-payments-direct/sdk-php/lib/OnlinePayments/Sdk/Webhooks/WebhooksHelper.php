@@ -1,24 +1,23 @@
 <?php
-namespace OnlinePayments\Sdk\Webhooks;
 
-use OnlinePayments\Sdk\Communication\ConnectionResponse;
-use OnlinePayments\Sdk\Communication\ResponseClassMap;
-use OnlinePayments\Sdk\Communication\ResponseFactory;
-use OnlinePayments\Sdk\Domain\WebhooksEvent;
+namespace CAWL\OnlinePayments\Sdk\Webhooks;
 
+use CAWL\OnlinePayments\Sdk\Communication\ConnectionResponse;
+use CAWL\OnlinePayments\Sdk\Communication\ResponseClassMap;
+use CAWL\OnlinePayments\Sdk\Communication\ResponseFactory;
+use CAWL\OnlinePayments\Sdk\Domain\WebhooksEvent;
 /**
  * Class WebhooksHelper
  *
  * @package OnlinePayments\Sdk\Webhooks
+ * @internal
  */
 class WebhooksHelper
 {
     /** @var SignatureValidator */
     private $signatureValidator;
-
     /** @var ResponseFactory|null */
     private $responseFactory = null;
-
     /**
      * @param SecretKeyStore $secretKeyStore
      */
@@ -26,16 +25,14 @@ class WebhooksHelper
     {
         $this->signatureValidator = new SignatureValidator($secretKeyStore);
     }
-
     /** @return ResponseFactory */
     protected function getResponseFactory()
     {
-        if (is_null($this->responseFactory)) {
+        if (\is_null($this->responseFactory)) {
             $this->responseFactory = new ResponseFactory();
         }
         return $this->responseFactory;
     }
-
     /**
      * Unmarshals the given input stream that contains the body,
      * while also validating its contents using the given request headers.
@@ -48,16 +45,13 @@ class WebhooksHelper
     public function unmarshal($body, $requestHeaders)
     {
         $this->signatureValidator->validate($body, $requestHeaders);
-
         $response = new ConnectionResponse(200, array('Content-Type' => 'application/json'), $body);
         $responseClassMap = new ResponseClassMap();
         $responseClassMap->addResponseClassName(200, WebhooksEvent::class);
-
         $event = $this->getResponseFactory()->createResponse($response, $responseClassMap);
         $this->validateApiVersion($event);
         return $event;
     }
-
     private function validateApiVersion($event)
     {
         if ('v1' !== $event->apiVersion) {

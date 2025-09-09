@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class AccountOnFileAttribute extends DataObject
 {
@@ -15,23 +16,19 @@ class AccountOnFileAttribute extends DataObject
      * @var string
      */
     public $key = null;
-
     /**
      * @var string
      * @deprecated Deprecated
      */
     public $mustWriteReason = null;
-
     /**
      * @var string
      */
     public $status = null;
-
     /**
      * @var string
      */
     public $value = null;
-
     /**
      * @return string
      */
@@ -39,7 +36,6 @@ class AccountOnFileAttribute extends DataObject
     {
         return $this->key;
     }
-
     /**
      * @param string
      */
@@ -47,7 +43,6 @@ class AccountOnFileAttribute extends DataObject
     {
         $this->key = $value;
     }
-
     /**
      * @return string
      * @deprecated Deprecated
@@ -56,7 +51,6 @@ class AccountOnFileAttribute extends DataObject
     {
         return $this->mustWriteReason;
     }
-
     /**
      * @param string
      * @deprecated Deprecated
@@ -65,7 +59,6 @@ class AccountOnFileAttribute extends DataObject
     {
         $this->mustWriteReason = $value;
     }
-
     /**
      * @return string
      */
@@ -73,7 +66,6 @@ class AccountOnFileAttribute extends DataObject
     {
         return $this->status;
     }
-
     /**
      * @param string
      */
@@ -81,7 +73,6 @@ class AccountOnFileAttribute extends DataObject
     {
         $this->status = $value;
     }
-
     /**
      * @return string
      */
@@ -89,7 +80,6 @@ class AccountOnFileAttribute extends DataObject
     {
         return $this->value;
     }
-
     /**
      * @param string
      */
@@ -97,28 +87,26 @@ class AccountOnFileAttribute extends DataObject
     {
         $this->value = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->key)) {
+        if (!\is_null($this->key)) {
             $object->key = $this->key;
         }
-        if (!is_null($this->mustWriteReason)) {
+        if (!\is_null($this->mustWriteReason)) {
             $object->mustWriteReason = $this->mustWriteReason;
         }
-        if (!is_null($this->status)) {
+        if (!\is_null($this->status)) {
             $object->status = $this->status;
         }
-        if (!is_null($this->value)) {
+        if (!\is_null($this->value)) {
             $object->value = $this->value;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -127,16 +115,16 @@ class AccountOnFileAttribute extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'key')) {
+        if (\property_exists($object, 'key')) {
             $this->key = $object->key;
         }
-        if (property_exists($object, 'mustWriteReason')) {
+        if (\property_exists($object, 'mustWriteReason')) {
             $this->mustWriteReason = $object->mustWriteReason;
         }
-        if (property_exists($object, 'status')) {
+        if (\property_exists($object, 'status')) {
             $this->status = $object->status;
         }
-        if (property_exists($object, 'value')) {
+        if (\property_exists($object, 'value')) {
             $this->value = $object->value;
         }
         return $this;

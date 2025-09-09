@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Payment;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
 /**
  * Class Payment.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Payment
+ * @internal
  */
 class Payment
 {
@@ -17,15 +17,7 @@ class Payment
     private ?string $status;
     private ?string $productId;
     private ?string $paymentMethodName;
-
-    public function __construct(
-        StatusCode $statusCode,
-        Amount $amount,
-        ?string $tokenId,
-        ?string $status = null,
-        ?string $productId = null,
-        ?string $paymentMethodName = null
-    )
+    public function __construct(StatusCode $statusCode, Amount $amount, ?string $tokenId, ?string $status = null, ?string $productId = null, ?string $paymentMethodName = null)
     {
         $this->statusCode = $statusCode;
         $this->amount = $amount;
@@ -34,34 +26,27 @@ class Payment
         $this->productId = $productId;
         $this->paymentMethodName = $paymentMethodName;
     }
-
-    public function getStatusCode(): StatusCode
+    public function getStatusCode() : StatusCode
     {
         return $this->statusCode;
     }
-
-    public function getAmount(): Amount
+    public function getAmount() : Amount
     {
         return $this->amount;
     }
-
-    public function getTokenId(): ?string
+    public function getTokenId() : ?string
     {
         return $this->tokenId;
     }
-
-
-    public function getStatus(): ?string
+    public function getStatus() : ?string
     {
         return $this->status;
     }
-
-    public function getProductId(): ?string
+    public function getProductId() : ?string
     {
         return $this->productId;
     }
-
-    public function getPaymentMethodName(): ?string
+    public function getPaymentMethodName() : ?string
     {
         return $this->paymentMethodName;
     }

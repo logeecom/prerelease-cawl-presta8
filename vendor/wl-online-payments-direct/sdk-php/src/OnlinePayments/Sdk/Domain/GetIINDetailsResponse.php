@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class GetIINDetailsResponse extends DataObject
 {
@@ -15,27 +16,22 @@ class GetIINDetailsResponse extends DataObject
      * @var string
      */
     public $cardType = null;
-
     /**
      * @var IINDetail[]
      */
     public $coBrands = null;
-
     /**
      * @var string
      */
     public $countryCode = null;
-
     /**
      * @var bool
      */
     public $isAllowedInContext = null;
-
     /**
      * @var int
      */
     public $paymentProductId = null;
-
     /**
      * @return string
      */
@@ -43,7 +39,6 @@ class GetIINDetailsResponse extends DataObject
     {
         return $this->cardType;
     }
-
     /**
      * @param string
      */
@@ -51,7 +46,6 @@ class GetIINDetailsResponse extends DataObject
     {
         $this->cardType = $value;
     }
-
     /**
      * @return IINDetail[]
      */
@@ -59,7 +53,6 @@ class GetIINDetailsResponse extends DataObject
     {
         return $this->coBrands;
     }
-
     /**
      * @param IINDetail[]
      */
@@ -67,7 +60,6 @@ class GetIINDetailsResponse extends DataObject
     {
         $this->coBrands = $value;
     }
-
     /**
      * @return string
      */
@@ -75,7 +67,6 @@ class GetIINDetailsResponse extends DataObject
     {
         return $this->countryCode;
     }
-
     /**
      * @param string
      */
@@ -83,7 +74,6 @@ class GetIINDetailsResponse extends DataObject
     {
         $this->countryCode = $value;
     }
-
     /**
      * @return bool
      */
@@ -91,7 +81,6 @@ class GetIINDetailsResponse extends DataObject
     {
         return $this->isAllowedInContext;
     }
-
     /**
      * @param bool
      */
@@ -99,7 +88,6 @@ class GetIINDetailsResponse extends DataObject
     {
         $this->isAllowedInContext = $value;
     }
-
     /**
      * @return int
      */
@@ -107,7 +95,6 @@ class GetIINDetailsResponse extends DataObject
     {
         return $this->paymentProductId;
     }
-
     /**
      * @param int
      */
@@ -115,36 +102,34 @@ class GetIINDetailsResponse extends DataObject
     {
         $this->paymentProductId = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->cardType)) {
+        if (!\is_null($this->cardType)) {
             $object->cardType = $this->cardType;
         }
-        if (!is_null($this->coBrands)) {
+        if (!\is_null($this->coBrands)) {
             $object->coBrands = [];
             foreach ($this->coBrands as $element) {
-                if (!is_null($element)) {
+                if (!\is_null($element)) {
                     $object->coBrands[] = $element->toObject();
                 }
             }
         }
-        if (!is_null($this->countryCode)) {
+        if (!\is_null($this->countryCode)) {
             $object->countryCode = $this->countryCode;
         }
-        if (!is_null($this->isAllowedInContext)) {
+        if (!\is_null($this->isAllowedInContext)) {
             $object->isAllowedInContext = $this->isAllowedInContext;
         }
-        if (!is_null($this->paymentProductId)) {
+        if (!\is_null($this->paymentProductId)) {
             $object->paymentProductId = $this->paymentProductId;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -153,12 +138,12 @@ class GetIINDetailsResponse extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'cardType')) {
+        if (\property_exists($object, 'cardType')) {
             $this->cardType = $object->cardType;
         }
-        if (property_exists($object, 'coBrands')) {
-            if (!is_array($object->coBrands) && !is_object($object->coBrands)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->coBrands, true) . '\' is not an array or object');
+        if (\property_exists($object, 'coBrands')) {
+            if (!\is_array($object->coBrands) && !\is_object($object->coBrands)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->coBrands, \true) . '\' is not an array or object');
             }
             $this->coBrands = [];
             foreach ($object->coBrands as $element) {
@@ -166,13 +151,13 @@ class GetIINDetailsResponse extends DataObject
                 $this->coBrands[] = $value->fromObject($element);
             }
         }
-        if (property_exists($object, 'countryCode')) {
+        if (\property_exists($object, 'countryCode')) {
             $this->countryCode = $object->countryCode;
         }
-        if (property_exists($object, 'isAllowedInContext')) {
+        if (\property_exists($object, 'isAllowedInContext')) {
             $this->isAllowedInContext = $object->isAllowedInContext;
         }
-        if (property_exists($object, 'paymentProductId')) {
+        if (\property_exists($object, 'paymentProductId')) {
             $this->paymentProductId = $object->paymentProductId;
         }
         return $this;

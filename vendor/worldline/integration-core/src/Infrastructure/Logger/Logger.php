@@ -1,17 +1,17 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Logger;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Logger;
 
-use OnlinePayments\Core\Infrastructure\Logger\Interfaces\DefaultLoggerAdapter;
-use OnlinePayments\Core\Infrastructure\Logger\Interfaces\ShopLoggerAdapter;
-use OnlinePayments\Core\Infrastructure\ServiceRegister;
-use OnlinePayments\Core\Infrastructure\Singleton;
-use OnlinePayments\Core\Infrastructure\Utility\TimeProvider;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Logger\Interfaces\DefaultLoggerAdapter;
+use CAWL\OnlinePayments\Core\Infrastructure\Logger\Interfaces\ShopLoggerAdapter;
+use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
+use CAWL\OnlinePayments\Core\Infrastructure\Singleton;
+use CAWL\OnlinePayments\Core\Infrastructure\Utility\TimeProvider;
 /**
  * Class Logger.
  *
  * @package OnlinePayments\Core\Infrastructure\Logger
+ * @internal
  */
 class Logger extends Singleton
 {
@@ -31,39 +31,33 @@ class Logger extends Singleton
      * Debug type of log.
      */
     const DEBUG = 3;
-
     /**
      * Singleton instance of this class.
      *
      * @var ?Singleton
      */
     protected static ?Singleton $instance = null;
-
     /**
      * Shop logger.
      *
      * @var ShopLoggerAdapter
      */
     private $shopLogger;
-
     /**
      * Time provider.
      *
      * @var TimeProvider
      */
     private $timeProvider;
-
     /**
      * Logger constructor. Hidden.
      */
     protected function __construct()
     {
         parent::__construct();
-
         $this->shopLogger = ServiceRegister::getService(ShopLoggerAdapter::CLASS_NAME);
         $this->timeProvider = ServiceRegister::getService(TimeProvider::CLASS_NAME);
     }
-
     /**
      * Logs error message.
      *
@@ -77,7 +71,6 @@ class Logger extends Singleton
     {
         self::getInstance()->logMessage(self::ERROR, $message, $component, $context);
     }
-
     /**
      * Logs warning message.
      *
@@ -87,11 +80,10 @@ class Logger extends Singleton
      *
      * @return void
      */
-    public static function logWarning(string $message, string $component = 'Core', array $context = []): void
+    public static function logWarning(string $message, string $component = 'Core', array $context = []) : void
     {
         self::getInstance()->logMessage(self::WARNING, $message, $component, $context);
     }
-
     /**
      * Logs info message.
      *
@@ -101,11 +93,10 @@ class Logger extends Singleton
      *
      * @return void
      */
-    public static function logInfo(string $message, string $component = 'Core', array $context = []): void
+    public static function logInfo(string $message, string $component = 'Core', array $context = []) : void
     {
         self::getInstance()->logMessage(self::INFO, $message, $component, $context);
     }
-
     /**
      * Logs debug message.
      *
@@ -117,7 +108,6 @@ class Logger extends Singleton
     {
         self::getInstance()->logMessage(self::DEBUG, $message, $component, $context);
     }
-
     /**
      * Logs message.
      *
@@ -128,24 +118,15 @@ class Logger extends Singleton
      *
      * @return void
      */
-    protected function logMessage(int $level, string $message, string $component, array $context = []): void
+    protected function logMessage(int $level, string $message, string $component, array $context = []) : void
     {
         $config = LoggerConfiguration::getInstance();
-        $logData = new LogData(
-            $config->getIntegrationName(),
-            $level,
-            $this->timeProvider->getMillisecondsTimestamp(),
-            $component,
-            $message,
-            $context
-        );
-
+        $logData = new LogData($config->getIntegrationName(), $level, $this->timeProvider->getMillisecondsTimestamp(), $component, $message, $context);
         // If default logger is turned on and message level is lower or equal than set in configuration
         if ($config->isDefaultLoggerEnabled() && $level <= $config->getMinLogLevel()) {
             $defaultLogger = ServiceRegister::getService(DefaultLoggerAdapter::CLASS_NAME);
             $defaultLogger->logMessage($logData);
         }
-
         $this->shopLogger->logMessage($logData);
     }
 }

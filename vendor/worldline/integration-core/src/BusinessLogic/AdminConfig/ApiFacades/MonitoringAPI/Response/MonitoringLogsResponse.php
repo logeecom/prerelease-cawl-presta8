@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\MonitoringLog;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\MonitoringLog;
 /**
  * Class MonitoringLogsResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\MonitoringAPI\Response
+ * @internal
  */
 class MonitoringLogsResponse extends Response
 {
@@ -20,7 +20,6 @@ class MonitoringLogsResponse extends Response
     protected int $beginning;
     protected int $end;
     protected int $numberOfItems;
-
     /**
      * @param array $monitoringLogs
      * @param bool $nextPageAvailable
@@ -36,37 +35,15 @@ class MonitoringLogsResponse extends Response
         $this->end = $end;
         $this->numberOfItems = $numberOfItems;
     }
-
     /**
      * @inheritDoc
      */
-    public function toArray(): array
+    public function toArray() : array
     {
         $result = [];
-
         foreach ($this->monitoringLogs as $monitoringLog) {
-            $result[] = [
-                'orderId' => $monitoringLog->getOrderId(),
-                'paymentNumber' => $monitoringLog->getPaymentNumber(),
-                'logLevel' => $monitoringLog->getLogLevel(),
-                'message' => $monitoringLog->getMessage(),
-                'createdAt' => $monitoringLog->getCreatedAt() ? $monitoringLog->getCreatedAt()->format('m-d-Y H:i:s') : '',
-                'requestMethod' => $monitoringLog->getRequestMethod(),
-                'requestEndpoint' => $monitoringLog->getRequestEndpoint(),
-                'requestBody' => $monitoringLog->getRequestBody(),
-                'statusCode' => (string)$monitoringLog->getStatusCode(),
-                'responseBody' => $monitoringLog->getResponseBody(),
-                'transactionLink' => $monitoringLog->getTransactionLink(),
-                'orderLink' => $monitoringLog->getOrderLink(),
-            ];
+            $result[] = ['orderId' => $monitoringLog->getOrderId(), 'paymentNumber' => $monitoringLog->getPaymentNumber(), 'logLevel' => $monitoringLog->getLogLevel(), 'message' => $monitoringLog->getMessage(), 'createdAt' => $monitoringLog->getCreatedAt() ? $monitoringLog->getCreatedAt()->format('m-d-Y H:i:s') : '', 'requestMethod' => $monitoringLog->getRequestMethod(), 'requestEndpoint' => $monitoringLog->getRequestEndpoint(), 'requestBody' => $monitoringLog->getRequestBody(), 'statusCode' => (string) $monitoringLog->getStatusCode(), 'responseBody' => $monitoringLog->getResponseBody(), 'transactionLink' => $monitoringLog->getTransactionLink(), 'orderLink' => $monitoringLog->getOrderLink()];
         }
-
-        return [
-            'monitoringLogs' => $result,
-            'nextPageAvailable' => $this->nextPageAvailable,
-            'beginning' => $this->beginning,
-            'end' => $this->end,
-            'numberOfItems' => $this->numberOfItems,
-        ];
+        return ['monitoringLogs' => $result, 'nextPageAvailable' => $this->nextPageAvailable, 'beginning' => $this->beginning, 'end' => $this->end, 'numberOfItems' => $this->numberOfItems];
     }
 }

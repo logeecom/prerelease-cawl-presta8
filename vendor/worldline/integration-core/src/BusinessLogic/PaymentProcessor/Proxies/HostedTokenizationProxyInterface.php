@@ -1,16 +1,16 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies;
 
 use Exception;
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Cart;
-use OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\HostedTokenization;
-use OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Cart;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\HostedTokenization;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
 /**
  * Interface HostedTokenizationProxyInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies
+ * @internal
  */
 interface HostedTokenizationProxyInterface
 {
@@ -20,16 +20,14 @@ interface HostedTokenizationProxyInterface
      *
      * @return HostedTokenization
      */
-    public function create(Cart $cart, array $savedTokens = []): HostedTokenization;
-
+    public function create(Cart $cart, array $savedTokens = []) : HostedTokenization;
     /**
      * @param string $customerId
      * @param string $tokenId
      *
      * @return Token|null
      */
-    public function getToken(string $customerId, string $tokenId): ?Token;
-
+    public function getToken(string $customerId, string $tokenId) : ?Token;
     /**
      * @param string $tokenId
      *
@@ -37,5 +35,5 @@ interface HostedTokenizationProxyInterface
      *
      * @throws Exception
      */
-    public function deleteToken(string $tokenId): void;
+    public function deleteToken(string $tokenId) : void;
 }

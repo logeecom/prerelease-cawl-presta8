@@ -1,5 +1,6 @@
 <?php
-namespace Robtimus\Multipart;
+
+namespace CAWL\Robtimus\Multipart;
 
 /**
  * A multipart/related object.
@@ -7,6 +8,7 @@ namespace Robtimus\Multipart;
  * @package Robtimus\Multipart
  * @author  Rob Spoor
  * @license https://www.apache.org/licenses/LICENSE-2.0.txt The Apache Software License, Version 2.0
+ * @internal
  */
 final class MultipartRelated extends Multipart
 {
@@ -19,7 +21,6 @@ final class MultipartRelated extends Multipart
     {
         parent::__construct($boundary, 'multipart/related');
     }
-
     /**
      * Adds a part.
      *
@@ -39,7 +40,6 @@ final class MultipartRelated extends Multipart
         Util::validateNonEmptyString($contentType, '$contentType');
         Util::validateInt($contentLength, '$contentLength');
         Util::validateString($contentTransferEncoding, '$contentTransferEncoding');
-
         $this->startPart();
         $this->addContentType($contentType);
         if ($contentTransferEncoding !== '') {
@@ -48,10 +48,8 @@ final class MultipartRelated extends Multipart
         $this->endHeaders();
         $this->addContent($content, $contentLength);
         $this->endPart();
-
         return $this;
     }
-
     /**
      * Adds an inline file.
      *
@@ -75,7 +73,6 @@ final class MultipartRelated extends Multipart
         Util::validateNonEmptyString($contentType, '$contentType');
         Util::validateInt($contentLength, '$contentLength');
         Util::validateString($contentTransferEncoding, '$contentTransferEncoding');
-
         $this->startPart();
         $this->addContentType($contentType);
         $this->addContentID($contentID);
@@ -86,7 +83,6 @@ final class MultipartRelated extends Multipart
         $this->endHeaders();
         $this->addContent($content, $contentLength);
         $this->endPart();
-
         return $this;
     }
 }

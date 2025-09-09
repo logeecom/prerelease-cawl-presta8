@@ -1,17 +1,17 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Stores\Models;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Stores\Models;
 
 /**
  * Class StoreOrderStatus
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Stores\Models
+ * @internal
  */
 class StoreOrderStatus
 {
     private string $statusId;
     private string $statusName;
-
     /**
      * @param string $statusId
      * @param string $statusName
@@ -21,19 +21,17 @@ class StoreOrderStatus
         $this->statusId = $statusId;
         $this->statusName = $statusName;
     }
-
     /**
      * @return string
      */
-    public function getStatusId(): string
+    public function getStatusId() : string
     {
         return $this->statusId;
     }
-
     /**
      * @return string
      */
-    public function getStatusName(): string
+    public function getStatusName() : string
     {
         return $this->statusName;
     }

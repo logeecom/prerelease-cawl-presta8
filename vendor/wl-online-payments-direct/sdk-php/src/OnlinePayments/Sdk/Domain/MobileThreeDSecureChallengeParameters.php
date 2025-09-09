@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class MobileThreeDSecureChallengeParameters extends DataObject
 {
@@ -15,22 +16,18 @@ class MobileThreeDSecureChallengeParameters extends DataObject
      * @var string
      */
     public $acsReferenceNumber = null;
-
     /**
      * @var string
      */
     public $acsSignedContent = null;
-
     /**
      * @var string
      */
     public $acsTransactionId = null;
-
     /**
      * @var string
      */
     public $threeDServerTransactionId = null;
-
     /**
      * @return string
      */
@@ -38,7 +35,6 @@ class MobileThreeDSecureChallengeParameters extends DataObject
     {
         return $this->acsReferenceNumber;
     }
-
     /**
      * @param string
      */
@@ -46,7 +42,6 @@ class MobileThreeDSecureChallengeParameters extends DataObject
     {
         $this->acsReferenceNumber = $value;
     }
-
     /**
      * @return string
      */
@@ -54,7 +49,6 @@ class MobileThreeDSecureChallengeParameters extends DataObject
     {
         return $this->acsSignedContent;
     }
-
     /**
      * @param string
      */
@@ -62,7 +56,6 @@ class MobileThreeDSecureChallengeParameters extends DataObject
     {
         $this->acsSignedContent = $value;
     }
-
     /**
      * @return string
      */
@@ -70,7 +63,6 @@ class MobileThreeDSecureChallengeParameters extends DataObject
     {
         return $this->acsTransactionId;
     }
-
     /**
      * @param string
      */
@@ -78,7 +70,6 @@ class MobileThreeDSecureChallengeParameters extends DataObject
     {
         $this->acsTransactionId = $value;
     }
-
     /**
      * @return string
      */
@@ -86,7 +77,6 @@ class MobileThreeDSecureChallengeParameters extends DataObject
     {
         return $this->threeDServerTransactionId;
     }
-
     /**
      * @param string
      */
@@ -94,28 +84,26 @@ class MobileThreeDSecureChallengeParameters extends DataObject
     {
         $this->threeDServerTransactionId = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->acsReferenceNumber)) {
+        if (!\is_null($this->acsReferenceNumber)) {
             $object->acsReferenceNumber = $this->acsReferenceNumber;
         }
-        if (!is_null($this->acsSignedContent)) {
+        if (!\is_null($this->acsSignedContent)) {
             $object->acsSignedContent = $this->acsSignedContent;
         }
-        if (!is_null($this->acsTransactionId)) {
+        if (!\is_null($this->acsTransactionId)) {
             $object->acsTransactionId = $this->acsTransactionId;
         }
-        if (!is_null($this->threeDServerTransactionId)) {
+        if (!\is_null($this->threeDServerTransactionId)) {
             $object->threeDServerTransactionId = $this->threeDServerTransactionId;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -124,16 +112,16 @@ class MobileThreeDSecureChallengeParameters extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'acsReferenceNumber')) {
+        if (\property_exists($object, 'acsReferenceNumber')) {
             $this->acsReferenceNumber = $object->acsReferenceNumber;
         }
-        if (property_exists($object, 'acsSignedContent')) {
+        if (\property_exists($object, 'acsSignedContent')) {
             $this->acsSignedContent = $object->acsSignedContent;
         }
-        if (property_exists($object, 'acsTransactionId')) {
+        if (\property_exists($object, 'acsTransactionId')) {
             $this->acsTransactionId = $object->acsTransactionId;
         }
-        if (property_exists($object, 'threeDServerTransactionId')) {
+        if (\property_exists($object, 'threeDServerTransactionId')) {
             $this->threeDServerTransactionId = $object->threeDServerTransactionId;
         }
         return $this;

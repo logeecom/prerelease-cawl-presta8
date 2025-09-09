@@ -1,16 +1,16 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution\Composite;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Composite;
 
-use OnlinePayments\Core\Infrastructure\Serializer\Interfaces\Serializable;
-use OnlinePayments\Core\Infrastructure\Serializer\Serializer;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Serializer\Interfaces\Serializable;
+use CAWL\OnlinePayments\Core\Infrastructure\Serializer\Serializer;
 /**
  * Class ExecutionDetails
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Composite
  *
  * @access private
+ * @internal
  */
 class ExecutionDetails implements Serializable
 {
@@ -20,21 +20,18 @@ class ExecutionDetails implements Serializable
      * @var int
      */
     private int $executionId;
-
     /**
      * Positive (grater than zero) integer. Higher number implies higher impact of subtask's progress on total progress.
      *
      * @var int
      */
     private int $weight;
-
     /**
      * Task progress.
      *
      * @var float
      */
     private float $progress;
-
     /**
      * ExecutionDetails constructor.
      *
@@ -47,31 +44,27 @@ class ExecutionDetails implements Serializable
         $this->weight = $weight;
         $this->progress = 0.0;
     }
-
     /**
      * @return ?int
      */
-    public function getExecutionId(): ?int
+    public function getExecutionId() : ?int
     {
         return $this->executionId;
     }
-
     /**
      * @return int
      */
-    public function getWeight(): int
+    public function getWeight() : int
     {
         return $this->weight;
     }
-
     /**
      * @return float
      */
-    public function getProgress(): float
+    public function getProgress() : float
     {
         return $this->progress;
     }
-
     /**
      * @param float $progress
      */
@@ -79,15 +72,13 @@ class ExecutionDetails implements Serializable
     {
         $this->progress = $progress;
     }
-
     /**
      * @inheritDoc
      */
-    public function serialize(): string
+    public function serialize() : string
     {
         return Serializer::serialize([$this->executionId, $this->weight, $this->progress]);
     }
-
     /**
      * @inheritDoc
      */
@@ -95,27 +86,20 @@ class ExecutionDetails implements Serializable
     {
         list($this->executionId, $this->weight, $this->progress) = Serializer::unserialize($data);
     }
-
     /**
      * @inheritDoc
      */
-    public function toArray(): array
+    public function toArray() : array
     {
-        return [
-            'progress' => $this->getProgress(),
-            'executionId' => $this->getExecutionId(),
-            'weight' => $this->getWeight(),
-        ];
+        return ['progress' => $this->getProgress(), 'executionId' => $this->getExecutionId(), 'weight' => $this->getWeight()];
     }
-
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $array): Serializable
+    public static function fromArray(array $array) : Serializable
     {
         $entity = new static($array['executionId'], $array['weight']);
         $entity->setProgress($array['progress']);
-
         return $entity;
     }
 }

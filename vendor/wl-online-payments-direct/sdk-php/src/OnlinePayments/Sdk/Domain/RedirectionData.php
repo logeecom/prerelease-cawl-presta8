@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class RedirectionData extends DataObject
 {
@@ -15,7 +16,6 @@ class RedirectionData extends DataObject
      * @var string
      */
     public $returnUrl = null;
-
     /**
      * @return string
      */
@@ -23,7 +23,6 @@ class RedirectionData extends DataObject
     {
         return $this->returnUrl;
     }
-
     /**
      * @param string
      */
@@ -31,19 +30,17 @@ class RedirectionData extends DataObject
     {
         $this->returnUrl = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->returnUrl)) {
+        if (!\is_null($this->returnUrl)) {
             $object->returnUrl = $this->returnUrl;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -52,7 +49,7 @@ class RedirectionData extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'returnUrl')) {
+        if (\property_exists($object, 'returnUrl')) {
             $this->returnUrl = $object->returnUrl;
         }
         return $this;

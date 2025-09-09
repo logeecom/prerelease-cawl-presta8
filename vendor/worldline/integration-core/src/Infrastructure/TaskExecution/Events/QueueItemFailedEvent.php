@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution\Events;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Events;
 
-use OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
-
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
 /**
  * Class QueueItemFailedEvent
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Events
+ * @internal
  */
 class QueueItemFailedEvent extends BaseQueueItemEvent
 {
@@ -15,7 +15,6 @@ class QueueItemFailedEvent extends BaseQueueItemEvent
      * @var string
      */
     protected string $failureDescription;
-
     /**
      * QueueItemFailedEvent constructor.
      *
@@ -27,11 +26,10 @@ class QueueItemFailedEvent extends BaseQueueItemEvent
         parent::__construct($queueItem);
         $this->failureDescription = $failureDescription;
     }
-
     /**
      * @return string
      */
-    public function getFailureDescription(): string
+    public function getFailureDescription() : string
     {
         return $this->failureDescription;
     }

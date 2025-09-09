@@ -1,22 +1,23 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Merchant\ProductGroups;
+namespace CAWL\OnlinePayments\Sdk\Merchant\ProductGroups;
 
-use OnlinePayments\Sdk\ApiException;
-use OnlinePayments\Sdk\AuthorizationException;
-use OnlinePayments\Sdk\CallContext;
-use OnlinePayments\Sdk\Communication\InvalidResponseException;
-use OnlinePayments\Sdk\Domain\GetPaymentProductGroupsResponse;
-use OnlinePayments\Sdk\Domain\PaymentProductGroup;
-use OnlinePayments\Sdk\IdempotenceException;
-use OnlinePayments\Sdk\PlatformException;
-use OnlinePayments\Sdk\ReferenceException;
-use OnlinePayments\Sdk\ValidationException;
-
+use CAWL\OnlinePayments\Sdk\ApiException;
+use CAWL\OnlinePayments\Sdk\AuthorizationException;
+use CAWL\OnlinePayments\Sdk\CallContext;
+use CAWL\OnlinePayments\Sdk\Communication\InvalidResponseException;
+use CAWL\OnlinePayments\Sdk\Domain\GetPaymentProductGroupsResponse;
+use CAWL\OnlinePayments\Sdk\Domain\PaymentProductGroup;
+use CAWL\OnlinePayments\Sdk\IdempotenceException;
+use CAWL\OnlinePayments\Sdk\PlatformException;
+use CAWL\OnlinePayments\Sdk\ReferenceException;
+use CAWL\OnlinePayments\Sdk\ValidationException;
 /**
  * ProductGroups client interface.
+ * @internal
  */
 interface ProductGroupsClientInterface
 {
@@ -36,7 +37,6 @@ interface ProductGroupsClientInterface
      * @throws InvalidResponseException
      */
     function getProductGroups(GetProductGroupsParams $query, ?CallContext $callContext = null);
-
     /**
      * Resource /v2/{merchantId}/productgroups/{paymentProductGroupId} - Get product group
      *

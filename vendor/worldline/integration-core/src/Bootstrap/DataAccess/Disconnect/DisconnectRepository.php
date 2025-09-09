@@ -1,25 +1,24 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\DataAccess\Disconnect;
+namespace CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Disconnect;
 
 use DateTime;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Disconnect\Repositories\DisconnectRepositoryInterface;
-use OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
-use OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
-use OnlinePayments\Core\Infrastructure\ORM\Interfaces\RepositoryInterface;
-use OnlinePayments\Core\Infrastructure\ORM\QueryFilter\Operators;
-use OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Disconnect\Repositories\DisconnectRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Interfaces\RepositoryInterface;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\Operators;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
 /**
  * Class DisconnectRepository
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\Disconnect
+ * @internal
  */
 class DisconnectRepository implements DisconnectRepositoryInterface
 {
     protected StoreContext $storeContext;
     protected RepositoryInterface $repository;
-
     /**
      * @param StoreContext $storeContext
      * @param RepositoryInterface $repository
@@ -29,62 +28,51 @@ class DisconnectRepository implements DisconnectRepositoryInterface
         $this->storeContext = $storeContext;
         $this->repository = $repository;
     }
-
     /**
      * @inheritDoc
      */
-    public function getDisconnectTime(): ?DateTime
+    public function getDisconnectTime() : ?DateTime
     {
         $entity = $this->getDisconnectTimeEntity();
-
         return $entity ? $entity->getDate() : null;
     }
-
     /**
      * @inheritDoc
      */
-    public function setDisconnectTime(DateTime $disconnectTime): void
+    public function setDisconnectTime(DateTime $disconnectTime) : void
     {
         $existingDisconnectTime = $this->getDisconnectTimeEntity();
-
         if ($existingDisconnectTime) {
             $existingDisconnectTime->setDate($disconnectTime);
             $existingDisconnectTime->setStoreId($this->storeContext->getStoreId());
             $this->repository->update($existingDisconnectTime);
-
             return;
         }
-
         $entity = new DisconnectTime();
         $entity->setStoreId($this->storeContext->getStoreId());
         $entity->setDate($disconnectTime);
         $this->repository->save($entity);
     }
-
     /**
      * @inheritDoc
      */
-    public function deleteDisconnectTime(): void
+    public function deleteDisconnectTime() : void
     {
         $disconnectTime = $this->getDisconnectTimeEntity();
-
         if (!$disconnectTime) {
             return;
         }
-
         $this->repository->delete($disconnectTime);
     }
-
     /**
      * @return DisconnectTime|null
      *
      * @throws QueryFilterInvalidParamException
      */
-    protected function getDisconnectTimeEntity(): ?DisconnectTime
+    protected function getDisconnectTimeEntity() : ?DisconnectTime
     {
         $queryFilter = new QueryFilter();
         $queryFilter->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId());
-
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->repository->selectOne($queryFilter);
     }

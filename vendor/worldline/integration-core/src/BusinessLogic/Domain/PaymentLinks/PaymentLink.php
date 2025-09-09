@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks;
 
 use DateTime;
-use OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
 /**
  * Class PaymentLink.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks
+ * @internal
  */
 class PaymentLink
 {
@@ -18,7 +18,6 @@ class PaymentLink
     private ?DateTime $expiresAt;
     private ?string $redirectionUrl;
     private ?string $status;
-
     /**
      * @param string|null $paymentLinkId
      * @param string|null $merchantReference
@@ -27,14 +26,8 @@ class PaymentLink
      * @param string|null $redirectionUrl
      * @param string|null $status
      */
-    public function __construct(
-        ?string $paymentLinkId,
-        ?string $merchantReference,
-        ?PaymentId $paymentId,
-        ?DateTime $expiresAt,
-        ?string $redirectionUrl,
-        ?string $status
-    ) {
+    public function __construct(?string $paymentLinkId, ?string $merchantReference, ?PaymentId $paymentId, ?DateTime $expiresAt, ?string $redirectionUrl, ?string $status)
+    {
         $this->paymentLinkId = $paymentLinkId;
         $this->merchantReference = $merchantReference;
         $this->paymentId = $paymentId;
@@ -42,33 +35,27 @@ class PaymentLink
         $this->redirectionUrl = $redirectionUrl;
         $this->status = $status;
     }
-
-    public function getPaymentLinkId(): ?string
+    public function getPaymentLinkId() : ?string
     {
         return $this->paymentLinkId;
     }
-
-    public function getPaymentId(): ?PaymentId
+    public function getPaymentId() : ?PaymentId
     {
         return $this->paymentId;
     }
-
-    public function getExpiresAt(): ?DateTime
+    public function getExpiresAt() : ?DateTime
     {
         return $this->expiresAt;
     }
-
-    public function getRedirectionUrl(): ?string
+    public function getRedirectionUrl() : ?string
     {
         return $this->redirectionUrl;
     }
-
-    public function getStatus(): ?string
+    public function getStatus() : ?string
     {
         return $this->status;
     }
-
-    public function getMerchantReference(): ?string
+    public function getMerchantReference() : ?string
     {
         return $this->merchantReference;
     }

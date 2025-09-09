@@ -1,17 +1,17 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution;
 
-use OnlinePayments\Core\Infrastructure\ORM\Configuration\EntityConfiguration;
-use OnlinePayments\Core\Infrastructure\ORM\Configuration\IndexMap;
-use OnlinePayments\Core\Infrastructure\ORM\Entity;
-use OnlinePayments\Core\Infrastructure\Serializer\Serializer;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\Runnable;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Configuration\EntityConfiguration;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Configuration\IndexMap;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
+use CAWL\OnlinePayments\Core\Infrastructure\Serializer\Serializer;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\Runnable;
 use InvalidArgumentException;
-
 /**
  * Class Process
  * @package OnlinePayments\Core\Infrastructure\ORM\Entities
+ * @internal
  */
 class Process extends Entity
 {
@@ -19,21 +19,18 @@ class Process extends Entity
      * Fully qualified name of this class.
      */
     const CLASS_NAME = __CLASS__;
-
     /**
      * Unique identifier.
      *
      * @var string
      */
     protected string $guid;
-
     /**
      * Runnable instance.
      *
      * @var Runnable
      */
     protected Runnable $runner;
-
     /**
      * Sets raw array data to this entity instance properties.
      *
@@ -46,49 +43,42 @@ class Process extends Entity
         if (!isset($data['guid'], $data['runner'])) {
             throw new InvalidArgumentException('Data array needs to have "guid" and "runner" keys.');
         }
-
         parent::inflate($data);
         $this->setGuid($data['guid']);
         $this->setRunner(Serializer::unserialize($data['runner']));
     }
-
     /**
      * Transforms entity to its array format representation.
      *
      * @return array Entity in array format.
      */
-    public function toArray(): array
+    public function toArray() : array
     {
         $data = parent::toArray();
         $data['guid'] = $this->getGuid();
         $data['runner'] = Serializer::serialize($this->getRunner());
-
         return $data;
     }
-
     /**
      * Returns entity configuration object
      *
      * @return EntityConfiguration
      */
-    public function getConfig(): EntityConfiguration
+    public function getConfig() : EntityConfiguration
     {
         $indexMap = new IndexMap();
         $indexMap->addStringIndex('guid');
-
         return new EntityConfiguration($indexMap, 'Process');
     }
-
     /**
      * Gets Guid.
      *
      * @return string Guid.
      */
-    public function getGuid(): string
+    public function getGuid() : string
     {
         return $this->guid;
     }
-
     /**
      * Sets Guid.
      *
@@ -98,17 +88,15 @@ class Process extends Entity
     {
         $this->guid = $guid;
     }
-
     /**
      * Gets Runner.
      *
      * @return Runnable Runner.
      */
-    public function getRunner(): Runnable
+    public function getRunner() : Runnable
     {
         return $this->runner;
     }
-
     /**
      * Sets Runner.
      *

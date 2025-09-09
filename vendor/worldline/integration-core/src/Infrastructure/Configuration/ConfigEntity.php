@@ -1,15 +1,15 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Configuration;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Configuration;
 
-use OnlinePayments\Core\Infrastructure\ORM\Configuration\EntityConfiguration;
-use OnlinePayments\Core\Infrastructure\ORM\Configuration\IndexMap;
-use OnlinePayments\Core\Infrastructure\ORM\Entity;
-
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Configuration\EntityConfiguration;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Configuration\IndexMap;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
 /**
  * Class ConfigEntity.
  *
  * @package OnlinePayments\Core\Infrastructure\Configuration
+ * @internal
  */
 class ConfigEntity extends Entity
 {
@@ -17,59 +17,50 @@ class ConfigEntity extends Entity
      * Fully qualified name of this class.
      */
     const CLASS_NAME = __CLASS__;
-
     /**
      * Configuration property name.
      *
      * @var ?string
      */
     protected ?string $name = null;
-
     /**
      * Configuration property value.
      *
      * @var mixed
      */
     protected $value;
-
     /**
      * Configuration context identifier.
      *
      * @var ?string
      */
     protected ?string $context = null;
-
     /**
      * Array of field names.
      *
      * @var array
      */
     protected array $fields = ['id', 'name', 'value', 'context'];
-
     /**
      * Returns entity configuration object.
      *
      * @return EntityConfiguration Configuration object.
      */
-    public function getConfig(): EntityConfiguration
+    public function getConfig() : EntityConfiguration
     {
         $map = new IndexMap();
-        $map->addStringIndex('name')
-            ->addStringIndex('context');
-
+        $map->addStringIndex('name')->addStringIndex('context');
         return new EntityConfiguration($map, 'Configuration');
     }
-
     /**
      * Gets configuration property name.
      *
      * @return string Configuration property name.
      */
-    public function getName(): string
+    public function getName() : string
     {
         return $this->name;
     }
-
     /**
      * Sets configuration property name.
      *
@@ -79,7 +70,6 @@ class ConfigEntity extends Entity
     {
         $this->name = $name;
     }
-
     /**
      * Gets Configuration property value.
      *
@@ -89,17 +79,15 @@ class ConfigEntity extends Entity
     {
         return $this->value;
     }
-
     /**
      * Sets Configuration property value.
      *
      * @param mixed $value Configuration property value.
      */
-    public function setValue($value): void
+    public function setValue($value) : void
     {
         $this->value = $value;
     }
-
     /**
      * Sets context on config entity.
      *
@@ -109,13 +97,12 @@ class ConfigEntity extends Entity
     {
         $this->context = $context;
     }
-
     /**
      * Retrieves config value context.
      *
      * @return ?string Context value.
      */
-    public function getContext(): ?string
+    public function getContext() : ?string
     {
         return $this->context;
     }

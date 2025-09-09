@@ -1,19 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\AdminAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\AdminAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkResponse as DomainPaymentLinkResponse;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkResponse as DomainPaymentLinkResponse;
 /**
  * Class PaymentLinkResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\AdminAPI\Response
+ * @internal
  */
 class PaymentLinkResponse extends Response
 {
     private DomainPaymentLinkResponse $paymentLinkResponse;
-
     /**
      * @param DomainPaymentLinkResponse $paymentLinkResponse
      */
@@ -21,27 +20,16 @@ class PaymentLinkResponse extends Response
     {
         $this->paymentLinkResponse = $paymentLinkResponse;
     }
-
-    public function toArray(): array
+    public function toArray() : array
     {
         $paymentLink = $this->paymentLinkResponse->getPaymentLink();
-
         if (!$paymentLink) {
             return [];
         }
-
-        return [
-            'paymentLinkId' => $paymentLink->getPaymentLinkId(),
-            'paymentId' => $paymentLink->getPaymentId(),
-            'redirectionUrl' => $paymentLink->getRedirectionUrl(),
-            'expirationDate' => $paymentLink->getExpiresAt()->format('P'),
-        ];
+        return ['paymentLinkId' => $paymentLink->getPaymentLinkId(), 'paymentId' => $paymentLink->getPaymentId(), 'redirectionUrl' => $paymentLink->getRedirectionUrl(), 'expirationDate' => $paymentLink->getExpiresAt()->format('P')];
     }
-
-    public function getRedirectUrl(): ?string
+    public function getRedirectUrl() : ?string
     {
-        return $this->paymentLinkResponse->getPaymentLink()
-            ? $this->paymentLinkResponse->getPaymentLink()->getRedirectionUrl()
-            : null;
+        return $this->paymentLinkResponse->getPaymentLink() ? $this->paymentLinkResponse->getPaymentLink()->getRedirectionUrl() : null;
     }
 }

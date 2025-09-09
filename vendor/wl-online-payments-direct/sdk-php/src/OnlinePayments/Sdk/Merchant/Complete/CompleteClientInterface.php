@@ -1,23 +1,24 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Merchant\Complete;
+namespace CAWL\OnlinePayments\Sdk\Merchant\Complete;
 
-use OnlinePayments\Sdk\ApiException;
-use OnlinePayments\Sdk\AuthorizationException;
-use OnlinePayments\Sdk\CallContext;
-use OnlinePayments\Sdk\Communication\InvalidResponseException;
-use OnlinePayments\Sdk\DeclinedPaymentException;
-use OnlinePayments\Sdk\Domain\CompletePaymentRequest;
-use OnlinePayments\Sdk\Domain\CompletePaymentResponse;
-use OnlinePayments\Sdk\IdempotenceException;
-use OnlinePayments\Sdk\PlatformException;
-use OnlinePayments\Sdk\ReferenceException;
-use OnlinePayments\Sdk\ValidationException;
-
+use CAWL\OnlinePayments\Sdk\ApiException;
+use CAWL\OnlinePayments\Sdk\AuthorizationException;
+use CAWL\OnlinePayments\Sdk\CallContext;
+use CAWL\OnlinePayments\Sdk\Communication\InvalidResponseException;
+use CAWL\OnlinePayments\Sdk\DeclinedPaymentException;
+use CAWL\OnlinePayments\Sdk\Domain\CompletePaymentRequest;
+use CAWL\OnlinePayments\Sdk\Domain\CompletePaymentResponse;
+use CAWL\OnlinePayments\Sdk\IdempotenceException;
+use CAWL\OnlinePayments\Sdk\PlatformException;
+use CAWL\OnlinePayments\Sdk\ReferenceException;
+use CAWL\OnlinePayments\Sdk\ValidationException;
 /**
  * Complete client interface.
+ * @internal
  */
 interface CompleteClientInterface
 {

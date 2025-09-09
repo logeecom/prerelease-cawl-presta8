@@ -1,17 +1,17 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Http;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Http;
 
-use OnlinePayments\Core\Infrastructure\Configuration\Configuration;
-use OnlinePayments\Core\Infrastructure\Http\DTO\Options;
-use OnlinePayments\Core\Infrastructure\Http\Exceptions\HttpCommunicationException;
-use OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
-use OnlinePayments\Core\Infrastructure\ServiceRegister;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Configuration\Configuration;
+use CAWL\OnlinePayments\Core\Infrastructure\Http\DTO\Options;
+use CAWL\OnlinePayments\Core\Infrastructure\Http\Exceptions\HttpCommunicationException;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
+use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
 /**
  * Class HttpClient.
  *
  * @package OnlinePayments\Core\Infrastructure\Http
+ * @internal
  */
 abstract class HttpClient
 {
@@ -19,73 +19,60 @@ abstract class HttpClient
      * Fully qualified name of this class.
      */
     public const CLASS_NAME = __CLASS__;
-
     /**
      * Unauthorized HTTP status code.
      */
     public const HTTP_STATUS_CODE_UNAUTHORIZED = 401;
-
     /**
      * Forbidden HTTP status code.
      */
     public const HTTP_STATUS_CODE_FORBIDDEN = 403;
-
     /**
      * Not found HTTP status code.
      */
     public const HTTP_STATUS_CODE_NOT_FOUND = 404;
-
     /**
      * Conflict HTTP status code.
      */
     public const HTTP_STATUS_CODE_CONFLICT = 409;
-
     /**
      * HTTP GET method.
      */
     public const HTTP_METHOD_GET = 'GET';
-
     /**
      * HTTP POST method.
      */
     public const HTTP_METHOD_POST = 'POST';
-
     /**
      * HTTP PUT method.
      */
     public const HTTP_METHOD_PUT = 'PUT';
-
     /**
      * HTTP DELETE method.
      */
     public const HTTP_METHOD_DELETE = 'DELETE';
-
     /**
      * HTTP PATCH method.
      */
     public const HTTP_METHOD_PATCH = 'PATCH';
-
     /**
      * Indicates if the instance is currently in the autoconfiguration mode.
      *
      * @var bool
      */
-    protected bool $autoConfigurationMode = false;
-
+    protected bool $autoConfigurationMode = \false;
     /**
      * Configuration service.
      *
      * @var Configuration
      */
     private Configuration $configService;
-
     /**
      * An array of additional HTTP configuration options.
      *
      * @var ?array
      */
     private ?array $httpConfigurationOptions = null;
-
     /**
      * Create and send request.
      *
@@ -98,11 +85,10 @@ abstract class HttpClient
      *
      * @throws HttpCommunicationException
      */
-    public function request(string $method, string $url, ?array $headers = [], string $body = ''): HttpResponse
+    public function request(string $method, string $url, ?array $headers = [], string $body = '') : HttpResponse
     {
         return $this->sendHttpRequest($method, $url, $headers, $body);
     }
-
     /**
      * Create and send request asynchronously.
      *
@@ -112,11 +98,10 @@ abstract class HttpClient
      * @param string $body Request payload. String data to send as HTTP request payload. Optional.
      *
      */
-    public function requestAsync(string $method, string $url, ?array $headers = [], string $body = ''): void
+    public function requestAsync(string $method, string $url, ?array $headers = [], string $body = '') : void
     {
         $this->sendHttpRequestAsync($method, $url, $headers, $body);
     }
-
     /**
      * Autoconfigures http call options. Tries to make a request to the provided URL with all configured
      * configurations of HTTP options. When first succeeds, stored options should be used.
@@ -128,32 +113,26 @@ abstract class HttpClient
      *
      * @return bool TRUE if configuration went successfully; otherwise, FALSE.
      */
-    public function autoConfigure(string $method, string $url, ?array $headers = [], string $body = ''): bool
+    public function autoConfigure(string $method, string $url, ?array $headers = [], string $body = '') : bool
     {
-        $this->autoConfigurationMode = true;
+        $this->autoConfigurationMode = \true;
         if ($this->isRequestSuccessful($method, $url, $headers, $body)) {
-            return true;
+            return \true;
         }
-
-        $domain = parse_url($url, PHP_URL_HOST);
+        $domain = \parse_url($url, \PHP_URL_HOST);
         $combinations = $this->getAutoConfigurationOptionsCombinations($method, $url);
         foreach ($combinations as $combination) {
             $this->setAdditionalOptions($domain, $combination);
             if ($this->isRequestSuccessful($method, $url, $headers, $body)) {
-                $this->autoConfigurationMode = false;
-
-                return true;
+                $this->autoConfigurationMode = \false;
+                return \true;
             }
-
             // if request is not successful, reset options combination.
             $this->resetAdditionalOptions($domain);
         }
-
-        $this->autoConfigurationMode = false;
-
-        return false;
+        $this->autoConfigurationMode = \false;
+        return \false;
     }
-
     /**
      * Create and send request.
      *
@@ -167,13 +146,7 @@ abstract class HttpClient
      * @throws HttpCommunicationException
      *      Only in situation when there is no connection or no response.
      */
-    abstract protected function sendHttpRequest(
-        string $method,
-        string $url,
-        ?array $headers = [],
-        string $body = ''
-    ): HttpResponse;
-
+    protected abstract function sendHttpRequest(string $method, string $url, ?array $headers = [], string $body = '') : HttpResponse;
     /**
      * Create and send request asynchronously.
      *
@@ -185,13 +158,7 @@ abstract class HttpClient
      *
      * @return void
      */
-    abstract protected function sendHttpRequestAsync(
-        string $method,
-        string $url,
-        ?array $headers = [],
-        string $body = '1'
-    ): void;
-
+    protected abstract function sendHttpRequestAsync(string $method, string $url, ?array $headers = [], string $body = '1') : void;
     /**
      * Get additional options combinations for specified method and url.
      *
@@ -203,25 +170,23 @@ abstract class HttpClient
      *
      * @noinspection PhpUnusedParameterInspection
      */
-    protected function getAutoConfigurationOptionsCombinations(string $method, string $url): array
+    protected function getAutoConfigurationOptionsCombinations(string $method, string $url) : array
     {
         // Left blank intentionally so specific implementations can override this method,
         // in order to return all possible combinations for additional HTTP options
         return [];
     }
-
     /**
      * Save additional options for request.
      *
      * @param string $domain A domain for which to set configuration options.
      * @param Options[] $options Additional options to add to HTTP request.
      */
-    protected function setAdditionalOptions(string $domain, array $options): void
+    protected function setAdditionalOptions(string $domain, array $options) : void
     {
         $this->httpConfigurationOptions = null;
         $this->getConfigService()->setHttpConfigurationOptions($domain, $options);
     }
-
     /**
      * Reset additional options for request to default value.
      *
@@ -229,12 +194,11 @@ abstract class HttpClient
      *
      * @throws QueryFilterInvalidParamException
      */
-    protected function resetAdditionalOptions(string $domain): void
+    protected function resetAdditionalOptions(string $domain) : void
     {
         $this->httpConfigurationOptions = null;
         $this->getConfigService()->setHttpConfigurationOptions($domain, []);
     }
-
     /**
      * Gets HTTP options array from the configuration and transforms it to the key-value array.
      *
@@ -244,7 +208,7 @@ abstract class HttpClient
      *
      * @throws QueryFilterInvalidParamException
      */
-    protected function getAdditionalOptions(string $domain): array
+    protected function getAdditionalOptions(string $domain) : array
     {
         if (!$this->httpConfigurationOptions) {
             $options = $this->getConfigService()->getHttpConfigurationOptions($domain);
@@ -253,10 +217,8 @@ abstract class HttpClient
                 $this->httpConfigurationOptions[$option->getName()] = $option->getValue();
             }
         }
-
         return $this->httpConfigurationOptions;
     }
-
     /**
      * Verifies the response and returns TRUE if valid, FALSE otherwise
      *
@@ -267,33 +229,25 @@ abstract class HttpClient
      *
      * @return bool TRUE if request was successful; otherwise, FALSE.
      */
-    private function isRequestSuccessful(
-        string $method,
-        string $url,
-        ?array $headers = [],
-        string $body = ''
-    ): bool
+    private function isRequestSuccessful(string $method, string $url, ?array $headers = [], string $body = '') : bool
     {
         try {
             $response = $this->request($method, $url, $headers, $body);
         } catch (HttpCommunicationException $ex) {
             $response = null;
         }
-
         return $response !== null && $response->isSuccessful();
     }
-
     /**
      * Gets the configuration service.
      *
      * @return Configuration Configuration service instance.
      */
-    protected function getConfigService(): Configuration
+    protected function getConfigService() : Configuration
     {
         if (empty($this->configService)) {
             $this->configService = ServiceRegister::getService(Configuration::CLASS_NAME);
         }
-
         return $this->configService;
     }
 }

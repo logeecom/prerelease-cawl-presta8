@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Customer\PersonalInformation;
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Country;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Customer\PersonalInformation;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Country;
 /**
  * Class Address.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart
+ * @internal
  */
 class Address
 {
@@ -21,18 +21,8 @@ class Address
     private ?PersonalInformation $personalInformation;
     private string $companyName;
     private string $additionalInfo;
-
-    public function __construct(
-        Country $country,
-        string $state,
-        string $city,
-        string $zip,
-        string $street,
-        string $houseNumber,
-        PersonalInformation  $personalInformation = null,
-        string $companyName = '',
-        string $additionalInfo = ''
-    ) {
+    public function __construct(Country $country, string $state, string $city, string $zip, string $street, string $houseNumber, PersonalInformation $personalInformation = null, string $companyName = '', string $additionalInfo = '')
+    {
         $this->country = $country;
         $this->city = $city;
         $this->zip = $zip;
@@ -43,48 +33,39 @@ class Address
         $this->personalInformation = $personalInformation;
         $this->companyName = $companyName;
     }
-
-    public function getCountry(): Country
+    public function getCountry() : Country
     {
         return $this->country;
     }
-
-    public function getState(): string
+    public function getState() : string
     {
         return $this->state;
     }
-
-    public function getCity(): string
+    public function getCity() : string
     {
         return $this->city;
     }
-
-    public function getZip(): string
+    public function getZip() : string
     {
         return $this->zip;
     }
-
-    public function getStreet(): string
+    public function getStreet() : string
     {
         return $this->street;
     }
-
-    public function getHouseNumber(): string
+    public function getHouseNumber() : string
     {
         return $this->houseNumber;
     }
-
-    public function getPersonalInformation(): ?PersonalInformation
+    public function getPersonalInformation() : ?PersonalInformation
     {
         return $this->personalInformation;
     }
-
-    public function getCompanyName(): string
+    public function getCompanyName() : string
     {
         return $this->companyName;
     }
-
-    public function getAdditionalInfo(): string
+    public function getAdditionalInfo() : string
     {
         return $this->additionalInfo;
     }

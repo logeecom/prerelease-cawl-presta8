@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces;
 
-use OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\ProcessStarterSaveException;
-
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\ProcessStarterSaveException;
 /**
  * Interface AsyncProcessStarter.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces
+ * @internal
  */
 interface AsyncProcessService
 {
@@ -15,7 +15,6 @@ interface AsyncProcessService
      * Fully qualified name of this interface.
      */
     const CLASS_NAME = __CLASS__;
-
     /**
      * Starts given runner asynchronously (in new process/web request or similar)
      *
@@ -24,7 +23,6 @@ interface AsyncProcessService
      * @throws ProcessStarterSaveException
      */
     public function start(Runnable $runner);
-
     /**
      * Runs a process with provided identifier.
      *

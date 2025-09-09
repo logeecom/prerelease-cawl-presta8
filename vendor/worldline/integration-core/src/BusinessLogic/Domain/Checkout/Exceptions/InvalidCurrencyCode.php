@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Checkout\Exceptions;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Exceptions;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTranslatableException;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTranslatableException;
 /**
  * Class InvalidCurrencyCode
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\PaymentRequest\Exceptions
+ * @internal
  */
 class InvalidCurrencyCode extends BaseTranslatableException
 {

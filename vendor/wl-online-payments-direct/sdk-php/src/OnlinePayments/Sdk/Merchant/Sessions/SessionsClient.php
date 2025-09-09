@@ -1,25 +1,25 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Merchant\Sessions;
+namespace CAWL\OnlinePayments\Sdk\Merchant\Sessions;
 
 use Exception;
-use OnlinePayments\Sdk\ApiResource;
-use OnlinePayments\Sdk\CallContext;
-use OnlinePayments\Sdk\Communication\ErrorResponseException;
-use OnlinePayments\Sdk\Communication\ResponseClassMap;
-use OnlinePayments\Sdk\Domain\SessionRequest;
-use OnlinePayments\Sdk\ExceptionFactory;
-
+use CAWL\OnlinePayments\Sdk\ApiResource;
+use CAWL\OnlinePayments\Sdk\CallContext;
+use CAWL\OnlinePayments\Sdk\Communication\ErrorResponseException;
+use CAWL\OnlinePayments\Sdk\Communication\ResponseClassMap;
+use CAWL\OnlinePayments\Sdk\Domain\SessionRequest;
+use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * Sessions client.
+ * @internal
  */
 class SessionsClient extends ApiResource implements SessionsClientInterface
 {
     /** @var ExceptionFactory|null */
     private $responseExceptionFactory = null;
-
     /**
      * @inheritdoc
      * @throws Exception
@@ -27,30 +27,18 @@ class SessionsClient extends ApiResource implements SessionsClientInterface
     public function createSession(SessionRequest $body, ?CallContext $callContext = null)
     {
         $responseClassMap = new ResponseClassMap();
-        $responseClassMap->defaultSuccessResponseClassName = '\OnlinePayments\Sdk\Domain\SessionResponse';
-        $responseClassMap->defaultErrorResponseClassName = '\OnlinePayments\Sdk\Domain\ErrorResponse';
+        $responseClassMap->defaultSuccessResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\SessionResponse';
+        $responseClassMap->defaultErrorResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\ErrorResponse';
         try {
-            return $this->getCommunicator()->post(
-                $responseClassMap,
-                $this->instantiateUri('/v2/{merchantId}/sessions'),
-                $this->getClientMetaInfo(),
-                $body,
-                null,
-                $callContext
-            );
+            return $this->getCommunicator()->post($responseClassMap, $this->instantiateUri('/v2/{merchantId}/sessions'), $this->getClientMetaInfo(), $body, null, $callContext);
         } catch (ErrorResponseException $e) {
-            throw $this->getResponseExceptionFactory()->createException(
-                $e->getHttpStatusCode(),
-                $e->getErrorResponse(),
-                $callContext
-            );
+            throw $this->getResponseExceptionFactory()->createException($e->getHttpStatusCode(), $e->getErrorResponse(), $callContext);
         }
     }
-
     /** @return ExceptionFactory */
     private function getResponseExceptionFactory()
     {
-        if (is_null($this->responseExceptionFactory)) {
+        if (\is_null($this->responseExceptionFactory)) {
             $this->responseExceptionFactory = new ExceptionFactory();
         }
         return $this->responseExceptionFactory;

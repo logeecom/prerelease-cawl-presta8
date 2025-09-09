@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class MobilePaymentMethodSpecificOutput extends DataObject
 {
@@ -15,32 +16,26 @@ class MobilePaymentMethodSpecificOutput extends DataObject
      * @var string
      */
     public $authorisationCode = null;
-
     /**
      * @var CardFraudResults
      */
     public $fraudResults = null;
-
     /**
      * @var string
      */
     public $network = null;
-
     /**
      * @var MobilePaymentData
      */
     public $paymentData = null;
-
     /**
      * @var int
      */
     public $paymentProductId = null;
-
     /**
      * @var ThreeDSecureResults
      */
     public $threeDSecureResults = null;
-
     /**
      * @return string
      */
@@ -48,7 +43,6 @@ class MobilePaymentMethodSpecificOutput extends DataObject
     {
         return $this->authorisationCode;
     }
-
     /**
      * @param string
      */
@@ -56,7 +50,6 @@ class MobilePaymentMethodSpecificOutput extends DataObject
     {
         $this->authorisationCode = $value;
     }
-
     /**
      * @return CardFraudResults
      */
@@ -64,7 +57,6 @@ class MobilePaymentMethodSpecificOutput extends DataObject
     {
         return $this->fraudResults;
     }
-
     /**
      * @param CardFraudResults
      */
@@ -72,7 +64,6 @@ class MobilePaymentMethodSpecificOutput extends DataObject
     {
         $this->fraudResults = $value;
     }
-
     /**
      * @return string
      */
@@ -80,7 +71,6 @@ class MobilePaymentMethodSpecificOutput extends DataObject
     {
         return $this->network;
     }
-
     /**
      * @param string
      */
@@ -88,7 +78,6 @@ class MobilePaymentMethodSpecificOutput extends DataObject
     {
         $this->network = $value;
     }
-
     /**
      * @return MobilePaymentData
      */
@@ -96,7 +85,6 @@ class MobilePaymentMethodSpecificOutput extends DataObject
     {
         return $this->paymentData;
     }
-
     /**
      * @param MobilePaymentData
      */
@@ -104,7 +92,6 @@ class MobilePaymentMethodSpecificOutput extends DataObject
     {
         $this->paymentData = $value;
     }
-
     /**
      * @return int
      */
@@ -112,7 +99,6 @@ class MobilePaymentMethodSpecificOutput extends DataObject
     {
         return $this->paymentProductId;
     }
-
     /**
      * @param int
      */
@@ -120,7 +106,6 @@ class MobilePaymentMethodSpecificOutput extends DataObject
     {
         $this->paymentProductId = $value;
     }
-
     /**
      * @return ThreeDSecureResults
      */
@@ -128,7 +113,6 @@ class MobilePaymentMethodSpecificOutput extends DataObject
     {
         return $this->threeDSecureResults;
     }
-
     /**
      * @param ThreeDSecureResults
      */
@@ -136,34 +120,32 @@ class MobilePaymentMethodSpecificOutput extends DataObject
     {
         $this->threeDSecureResults = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->authorisationCode)) {
+        if (!\is_null($this->authorisationCode)) {
             $object->authorisationCode = $this->authorisationCode;
         }
-        if (!is_null($this->fraudResults)) {
+        if (!\is_null($this->fraudResults)) {
             $object->fraudResults = $this->fraudResults->toObject();
         }
-        if (!is_null($this->network)) {
+        if (!\is_null($this->network)) {
             $object->network = $this->network;
         }
-        if (!is_null($this->paymentData)) {
+        if (!\is_null($this->paymentData)) {
             $object->paymentData = $this->paymentData->toObject();
         }
-        if (!is_null($this->paymentProductId)) {
+        if (!\is_null($this->paymentProductId)) {
             $object->paymentProductId = $this->paymentProductId;
         }
-        if (!is_null($this->threeDSecureResults)) {
+        if (!\is_null($this->threeDSecureResults)) {
             $object->threeDSecureResults = $this->threeDSecureResults->toObject();
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -172,32 +154,32 @@ class MobilePaymentMethodSpecificOutput extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'authorisationCode')) {
+        if (\property_exists($object, 'authorisationCode')) {
             $this->authorisationCode = $object->authorisationCode;
         }
-        if (property_exists($object, 'fraudResults')) {
-            if (!is_object($object->fraudResults)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->fraudResults, true) . '\' is not an object');
+        if (\property_exists($object, 'fraudResults')) {
+            if (!\is_object($object->fraudResults)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->fraudResults, \true) . '\' is not an object');
             }
             $value = new CardFraudResults();
             $this->fraudResults = $value->fromObject($object->fraudResults);
         }
-        if (property_exists($object, 'network')) {
+        if (\property_exists($object, 'network')) {
             $this->network = $object->network;
         }
-        if (property_exists($object, 'paymentData')) {
-            if (!is_object($object->paymentData)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->paymentData, true) . '\' is not an object');
+        if (\property_exists($object, 'paymentData')) {
+            if (!\is_object($object->paymentData)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->paymentData, \true) . '\' is not an object');
             }
             $value = new MobilePaymentData();
             $this->paymentData = $value->fromObject($object->paymentData);
         }
-        if (property_exists($object, 'paymentProductId')) {
+        if (\property_exists($object, 'paymentProductId')) {
             $this->paymentProductId = $object->paymentProductId;
         }
-        if (property_exists($object, 'threeDSecureResults')) {
-            if (!is_object($object->threeDSecureResults)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->threeDSecureResults, true) . '\' is not an object');
+        if (\property_exists($object, 'threeDSecureResults')) {
+            if (!\is_object($object->threeDSecureResults)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->threeDSecureResults, \true) . '\' is not an object');
             }
             $value = new ThreeDSecureResults();
             $this->threeDSecureResults = $value->fromObject($object->threeDSecureResults);

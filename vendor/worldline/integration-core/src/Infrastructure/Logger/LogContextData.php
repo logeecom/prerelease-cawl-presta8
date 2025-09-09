@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Logger;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Logger;
 
-use OnlinePayments\Core\Infrastructure\Data\DataTransferObject;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Data\DataTransferObject;
 /**
  * Class LogContextData.
  *
  * @package OnlinePayments\Core\Infrastructure\Logger
+ * @internal
  */
 class LogContextData extends DataTransferObject
 {
@@ -17,14 +17,12 @@ class LogContextData extends DataTransferObject
      * @var string
      */
     private string $name;
-
     /**
      * Value of data.
      *
      * @var mixed
      */
     private $value;
-
     /**
      * LogContextData constructor.
      *
@@ -36,17 +34,15 @@ class LogContextData extends DataTransferObject
         $this->name = $name;
         $this->value = $value;
     }
-
     /**
      * Gets name of data.
      *
      * @return string Name of data.
      */
-    public function getName(): string
+    public function getName() : string
     {
         return $this->name;
     }
-
     /**
      * Gets value of data.
      *
@@ -56,23 +52,18 @@ class LogContextData extends DataTransferObject
     {
         return $this->value;
     }
-
     /**
      * @inheritDoc
      */
-    public static function fromArray(array $data): DataTransferObject
+    public static function fromArray(array $data) : DataTransferObject
     {
         return new self($data['name'], $data['value']);
     }
-
     /**
      * @inheritDoc
      */
-    public function toArray(): array
+    public function toArray() : array
     {
-        return [
-            'name' => $this->getName(),
-            'value' => $this->getValue(),
-        ];
+        return ['name' => $this->getName(), 'value' => $this->getValue()];
     }
 }

@@ -1,20 +1,20 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ConnectionAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ConnectionAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
 /**
  * Class ConnectionResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ConnectionAPI\Response
+ * @internal
  */
 class ConnectionResponse extends Response
 {
     /**
      * @inheritDoc
      */
-    public function toArray(): array
+    public function toArray() : array
     {
         return [];
     }

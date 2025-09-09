@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\ApiFacades\Response;
+namespace CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTranslatableException;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTranslatableException;
 /**
  * Class TranslatableErrorResponse
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Response
+ * @internal
  */
 class TranslatableErrorResponse extends ErrorResponse
 {
@@ -15,7 +15,6 @@ class TranslatableErrorResponse extends ErrorResponse
      * @var BaseTranslatableException
      */
     protected \Throwable $error;
-
     /**
      * @param BaseTranslatableException $error
      */
@@ -23,17 +22,11 @@ class TranslatableErrorResponse extends ErrorResponse
     {
         parent::__construct($error);
     }
-
     /**
      * @inheritDoc
      */
-    public function toArray(): array
+    public function toArray() : array
     {
-        return [
-            'statusCode' => $this->error->getCode(),
-            'errorCode' => $this->error->getTranslatableLabel()->getCode(),
-            'errorMessage' => $this->error->getTranslatableLabel()->getMessage(),
-            'errorParameters' => $this->error->getTranslatableLabel()->getParams(),
-        ];
+        return ['statusCode' => $this->error->getCode(), 'errorCode' => $this->error->getTranslatableLabel()->getCode(), 'errorMessage' => $this->error->getTranslatableLabel()->getMessage(), 'errorParameters' => $this->error->getTranslatableLabel()->getParams()];
     }
 }

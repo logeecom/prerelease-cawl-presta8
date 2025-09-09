@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\OrderStatusMapping\Models;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\OrderStatusMapping\Models;
 
 /**
  * Class OrderStatusMapping
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\OrderStatusMapping\Models
+ * @internal
  */
 class OrderStatusMapping
 {
@@ -45,7 +46,6 @@ class OrderStatusMapping
      * @var string
      */
     protected string $paymentRefundedStatus;
-
     /**
      * @param string $paymentCapturedStatus
      * @param string $paymentErrorStatus
@@ -54,14 +54,7 @@ class OrderStatusMapping
      * @param string $paymentCancelledStatus
      * @param string $paymentRefundedStatus
      */
-    public function __construct(
-        string $paymentCapturedStatus,
-        string $paymentErrorStatus,
-        string $paymentPendingStatus,
-        string $paymentAuthorizedStatus,
-        string $paymentCancelledStatus,
-        string $paymentRefundedStatus
-    )
+    public function __construct(string $paymentCapturedStatus, string $paymentErrorStatus, string $paymentPendingStatus, string $paymentAuthorizedStatus, string $paymentCancelledStatus, string $paymentRefundedStatus)
     {
         $this->paymentCapturedStatus = $paymentCapturedStatus;
         $this->paymentErrorStatus = $paymentErrorStatus;
@@ -70,51 +63,45 @@ class OrderStatusMapping
         $this->paymentCancelledStatus = $paymentCancelledStatus;
         $this->paymentRefundedStatus = $paymentRefundedStatus;
     }
-
     /**
      * @return string
      */
-    public function getPaymentCapturedStatus(): string
+    public function getPaymentCapturedStatus() : string
     {
         return $this->paymentCapturedStatus;
     }
-
     /**
      * @return string
      */
-    public function getPaymentErrorStatus(): string
+    public function getPaymentErrorStatus() : string
     {
         return $this->paymentErrorStatus;
     }
-
     /**
      * @return string
      */
-    public function getPaymentPendingStatus(): string
+    public function getPaymentPendingStatus() : string
     {
         return $this->paymentPendingStatus;
     }
-
     /**
      * @return string
      */
-    public function getPaymentAuthorizedStatus(): string
+    public function getPaymentAuthorizedStatus() : string
     {
         return $this->paymentAuthorizedStatus;
     }
-
     /**
      * @return string
      */
-    public function getPaymentCancelledStatus(): string
+    public function getPaymentCancelledStatus() : string
     {
         return $this->paymentCancelledStatus;
     }
-
     /**
      * @return string
      */
-    public function getPaymentRefundedStatus(): string
+    public function getPaymentRefundedStatus() : string
     {
         return $this->paymentRefundedStatus;
     }

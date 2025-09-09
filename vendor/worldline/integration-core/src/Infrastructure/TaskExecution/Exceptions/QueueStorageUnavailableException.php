@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions;
 
-use OnlinePayments\Core\Infrastructure\Exceptions\BaseException;
+use CAWL\OnlinePayments\Core\Infrastructure\Exceptions\BaseException;
 use Exception;
-
 /**
  * Class QueueStorageUnavailableException.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions
+ * @internal
  */
 class QueueStorageUnavailableException extends BaseException
 {
@@ -20,6 +20,6 @@ class QueueStorageUnavailableException extends BaseException
      */
     public function __construct($message = '', $previous = null)
     {
-        parent::__construct(trim($message . ' Queue storage failed to save item.'), 0, $previous);
+        parent::__construct(\trim($message . ' Queue storage failed to save item.'), 0, $previous);
     }
 }

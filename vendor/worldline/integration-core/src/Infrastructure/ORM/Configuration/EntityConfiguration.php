@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\ORM\Configuration;
+namespace CAWL\OnlinePayments\Core\Infrastructure\ORM\Configuration;
 
 /**
  * Class EntityConfiguration.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\Configuration
+ * @internal
  */
 class EntityConfiguration
 {
@@ -15,14 +16,12 @@ class EntityConfiguration
      * @var IndexMap
      */
     private IndexMap $indexMap;
-
     /**
      * Entity type.
      *
      * @var string
      */
     private string $type;
-
     /**
      * EntityConfiguration constructor.
      *
@@ -34,23 +33,21 @@ class EntityConfiguration
         $this->indexMap = $indexMap;
         $this->type = $type;
     }
-
     /**
      * Returns index map.
      *
      * @return IndexMap Index map.
      */
-    public function getIndexMap(): IndexMap
+    public function getIndexMap() : IndexMap
     {
         return $this->indexMap;
     }
-
     /**
      * Returns type.
      *
      * @return string Entity type.
      */
-    public function getType(): string
+    public function getType() : string
     {
         return $this->type;
     }

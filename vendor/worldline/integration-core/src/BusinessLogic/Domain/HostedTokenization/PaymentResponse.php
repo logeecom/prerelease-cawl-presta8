@@ -1,31 +1,28 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentTransaction;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentTransaction;
 /**
  * Class PaymentResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization
+ * @internal
  */
 class PaymentResponse
 {
     private PaymentTransaction $paymentTransaction;
     private ?string $redirectUrl;
-
     public function __construct(PaymentTransaction $paymentTransaction, ?string $redirectUrl = null)
     {
         $this->paymentTransaction = $paymentTransaction;
         $this->redirectUrl = $redirectUrl;
     }
-
-    public function getPaymentTransaction(): PaymentTransaction
+    public function getPaymentTransaction() : PaymentTransaction
     {
         return $this->paymentTransaction;
     }
-
-    public function getRedirectUrl(): ?string
+    public function getRedirectUrl() : ?string
     {
         return $this->redirectUrl;
     }

@@ -1,244 +1,147 @@
 <?php
 
-namespace OnlinePayments\Classes;
+namespace CAWL\OnlinePayments\Classes;
 
-use OnlinePayments\Classes\Repositories\BaseRepository;
-use OnlinePayments\Classes\Repositories\BaseRepositoryWithConditionalDelete;
-use OnlinePayments\Classes\Repositories\MonitoringLogsRepository;
-use OnlinePayments\Classes\Repositories\PaymentTransactionsRepository;
-use OnlinePayments\Classes\Repositories\ProductTypesRepository;
-use OnlinePayments\Classes\Repositories\QueueItemRepository;
-use OnlinePayments\Classes\Repositories\TokensRepository;
-use OnlinePayments\Classes\Repositories\WebhookLogsRepository;
-use OnlinePayments\Classes\Services\Checkout\CartProviderService;
-use OnlinePayments\Classes\Services\Checkout\PaymentOptionsService;
-use OnlinePayments\Classes\Repositories\ConfigurationRepository;
-use OnlinePayments\Classes\Services\Domain\Repositories\MonitoringLogRepository;
-use OnlinePayments\Classes\Services\Domain\Repositories\PaymentTransactionRepository;
-use OnlinePayments\Classes\Services\Domain\Repositories\WebhookLogRepository;
-use OnlinePayments\Classes\Services\Integration\ConfigService;
-use OnlinePayments\Classes\Services\Integration\Logger\LoggerService;
-use OnlinePayments\Classes\Services\Integration\MetadataProvider;
-use OnlinePayments\Classes\Services\Integration\VersionInfoService;
-use OnlinePayments\Core\Bootstrap\BootstrapComponent;
-use OnlinePayments\Core\Bootstrap\DataAccess\Connection\ConnectionConfigEntity;
-use OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\CardsSettingsEntity;
-use OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\PayByLinkSettingsEntity;
-use OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\PaymentSettingsConfigEntity;
-use OnlinePayments\Core\Bootstrap\DataAccess\Disconnect\DisconnectTime;
-use OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\LogSettingsEntity;
-use OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\MonitoringLog;
-use OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\WebhookLog;
-use OnlinePayments\Core\Bootstrap\DataAccess\PaymentLink\PaymentLinkEntity;
-use OnlinePayments\Core\Bootstrap\DataAccess\PaymentTransaction\PaymentTransactionEntity;
-use OnlinePayments\Core\Bootstrap\DataAccess\ProductTypes\ProductTypeEntity;
-use OnlinePayments\Core\Bootstrap\DataAccess\Tokens\TokenEntity;
-use OnlinePayments\Core\Bootstrap\SingleInstance;
-use OnlinePayments\Core\Branding\Brand\ActiveBrandProviderInterface;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\LogSettingsRepositoryInterface;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Payment\PaymentService;
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
-use OnlinePayments\Core\Bootstrap\DataAccess\PaymentMethod\PaymentMethodConfigEntity;
-use OnlinePayments\Core\BusinessLogic\Domain\Connection\ActiveConnectionProvider;
-use OnlinePayments\Core\BusinessLogic\Domain\Connection\Repositories\ConnectionConfigRepositoryInterface;
-use OnlinePayments\Core\BusinessLogic\Domain\Integration\Encryption\Encryptor;
-use OnlinePayments\Core\BusinessLogic\Domain\Integration\Language\LanguageService;
-use OnlinePayments\Core\BusinessLogic\Domain\Integration\Logo\LogoUrlService;
-use OnlinePayments\Core\BusinessLogic\Domain\Integration\Metadata\MetadataProviderInterface;
-use OnlinePayments\Core\BusinessLogic\Domain\Integration\Payment\ShopPaymentService;
-use OnlinePayments\Core\BusinessLogic\Domain\Integration\ShopOrderService;
-use OnlinePayments\Core\BusinessLogic\Domain\Integration\Stores\StoreService;
-use OnlinePayments\Core\BusinessLogic\Domain\Integration\Version\VersionService;
-use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\MonitoringLogRepositoryInterface;
-use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\WebhookLogRepositoryInterface;
-use OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
-use OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\PaymentTransactionRepositoryInterface;
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Repositories\PaymentConfigRepositoryInterface;
-use OnlinePayments\Core\BusinessLogic\Domain\Time\TimeProviderInterface;
-use OnlinePayments\Core\Infrastructure\Configuration\ConfigEntity;
-use OnlinePayments\Core\Infrastructure\Configuration\Configuration;
-use OnlinePayments\Core\Infrastructure\Logger\Interfaces\ShopLoggerAdapter;
-use OnlinePayments\Core\Infrastructure\ORM\RepositoryRegistry;
-use OnlinePayments\Core\Infrastructure\Serializer\Concrete\JsonSerializer;
-use OnlinePayments\Core\Infrastructure\Serializer\Serializer;
-use OnlinePayments\Core\Infrastructure\ServiceRegister;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Process;
-use OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
-
+use CAWL\OnlinePayments\Classes\Repositories\BaseRepository;
+use CAWL\OnlinePayments\Classes\Repositories\BaseRepositoryWithConditionalDelete;
+use CAWL\OnlinePayments\Classes\Repositories\MonitoringLogsRepository;
+use CAWL\OnlinePayments\Classes\Repositories\PaymentTransactionsRepository;
+use CAWL\OnlinePayments\Classes\Repositories\ProductTypesRepository;
+use CAWL\OnlinePayments\Classes\Repositories\QueueItemRepository;
+use CAWL\OnlinePayments\Classes\Repositories\TokensRepository;
+use CAWL\OnlinePayments\Classes\Repositories\WebhookLogsRepository;
+use CAWL\OnlinePayments\Classes\Services\Checkout\CartProviderService;
+use CAWL\OnlinePayments\Classes\Services\Checkout\PaymentOptionsService;
+use CAWL\OnlinePayments\Classes\Repositories\ConfigurationRepository;
+use CAWL\OnlinePayments\Classes\Services\Domain\Repositories\MonitoringLogRepository;
+use CAWL\OnlinePayments\Classes\Services\Domain\Repositories\PaymentTransactionRepository;
+use CAWL\OnlinePayments\Classes\Services\Domain\Repositories\WebhookLogRepository;
+use CAWL\OnlinePayments\Classes\Services\Integration\ConfigService;
+use CAWL\OnlinePayments\Classes\Services\Integration\Logger\LoggerService;
+use CAWL\OnlinePayments\Classes\Services\Integration\MetadataProvider;
+use CAWL\OnlinePayments\Classes\Services\Integration\VersionInfoService;
+use CAWL\OnlinePayments\Core\Bootstrap\BootstrapComponent;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Connection\ConnectionConfigEntity;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\CardsSettingsEntity;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\PayByLinkSettingsEntity;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\PaymentSettingsConfigEntity;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Disconnect\DisconnectTime;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\LogSettingsEntity;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\MonitoringLog;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\WebhookLog;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentLink\PaymentLinkEntity;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentTransaction\PaymentTransactionEntity;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\ProductTypes\ProductTypeEntity;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Tokens\TokenEntity;
+use CAWL\OnlinePayments\Core\Bootstrap\SingleInstance;
+use CAWL\OnlinePayments\Core\Branding\Brand\ActiveBrandProviderInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\LogSettingsRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Payment\PaymentService;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentMethod\PaymentMethodConfigEntity;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\ActiveConnectionProvider;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Repositories\ConnectionConfigRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Encryption\Encryptor;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Language\LanguageService;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Logo\LogoUrlService;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Metadata\MetadataProviderInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Payment\ShopPaymentService;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\ShopOrderService;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Stores\StoreService;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Version\VersionService;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\MonitoringLogRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\WebhookLogRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\PaymentTransactionRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Repositories\PaymentConfigRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Time\TimeProviderInterface;
+use CAWL\OnlinePayments\Core\Infrastructure\Configuration\ConfigEntity;
+use CAWL\OnlinePayments\Core\Infrastructure\Configuration\Configuration;
+use CAWL\OnlinePayments\Core\Infrastructure\Logger\Interfaces\ShopLoggerAdapter;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\RepositoryRegistry;
+use CAWL\OnlinePayments\Core\Infrastructure\Serializer\Concrete\JsonSerializer;
+use CAWL\OnlinePayments\Core\Infrastructure\Serializer\Serializer;
+use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Process;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
 /**
  * Class Bootstrap
  *
  * @package OnlinePayments\Classes
+ * @internal
  */
 class Bootstrap extends BootstrapComponent
 {
-
-    public static function boot(string $moduleName, string $brandCode): void
+    public static function boot(string $moduleName, string $brandCode) : void
     {
-        ServiceRegister::registerService(
-            \Module::class,
-            function () use ($moduleName) {
-                return \Module::getInstanceByName($moduleName);
-            }
-        );
-
-        static::bootstrap(function () use ($brandCode) {
-            return $brandCode;
+        ServiceRegister::registerService(\Module::class, function () use($moduleName) {
+            return \Module::getInstanceByName($moduleName);
         });
+        static::bootstrap(function () use($brandCode) {
+            return $brandCode;
+        }, __DIR__ . '/brand.json');
     }
-
-    protected static function initServices(): void
+    protected static function initServices() : void
     {
         parent::initServices();
-
-        ServiceRegister::registerService(
-            Serializer::class,
-            function () {
-                return new JsonSerializer();
-            }
-        );
-
-        ServiceRegister::registerService(
-            Configuration::class,
-            function () {
-                return ConfigService::getInstance();
-            }
-        );
-
-        ServiceRegister::registerService(
-            ShopLoggerAdapter::class,
-            function () {
-                return new LoggerService(ServiceRegister::getService(\Module::class));
-            }
-        );
-
-        ServiceRegister::registerService(
-            StoreService::class,
-            function () {
-                return new Services\Integration\StoreService(
-                    new ConfigurationRepository()
-                );
-            }
-        );
-
-        ServiceRegister::registerService(
-            VersionService::class,
-            function () {
-                return new VersionInfoService();
-            }
-        );
-
-        ServiceRegister::registerService(
-            PaymentOptionsService::class,
-            function () {
-                return new PaymentOptionsService(
-                    ServiceRegister::getService(\Module::class),
-                    \Context::getContext(),
-                    ServiceRegister::getService(CartProvider::class),
-                );
-            }
-        );
-
-        ServiceRegister::registerService(CartProvider::class, static function () {
-            return new CartProviderService(
-                \Context::getContext()
-            );
+        ServiceRegister::registerService(Serializer::class, function () {
+            return new JsonSerializer();
         });
-
-        ServiceRegister::registerService(
-            Encryptor::class,
-            function () {
-                return new Services\Integration\Encryptor();
-            }
-        );
-
-        ServiceRegister::registerService(
-            ShopPaymentService::class,
-            function () {
-                return new Services\Integration\ShopPaymentService();
-            }
-        );
-
-        ServiceRegister::registerService(
-            ShopOrderService::class,
-            function () {
-                return new Services\Integration\ShopOrderService(
-                    ServiceRegister::getService(\Module::class),
-                );
-            }
-        );
-
-        ServiceRegister::registerService(
-            \OnlinePayments\Core\BusinessLogic\Domain\Stores\StoreService::class,
-            function () {
-                return new Services\Domain\StoreService(
-                    ServiceRegister::getService(StoreService::class),
-                    ServiceRegister::getService(ConnectionConfigRepositoryInterface::class)
-                );
-            }
-        );
-
-        ServiceRegister::registerService(LanguageService::class,
-            function () {
-                return new Services\Integration\LanguageService();
-            }
-        );
-
-        ServiceRegister::registerService(MetadataProviderInterface::class,
-            function () {
-                return new MetadataProvider(ServiceRegister::getService(\Module::class));
-            }
-        );
-
-        ServiceRegister::registerService(PaymentService::class,
-            function () {
-                return new Services\Integration\PaymentService(
-                    ServiceRegister::getService(PaymentConfigRepositoryInterface::class),
-                    ServiceRegister::getService(LogoUrlService::class),
-                    ServiceRegister::getService(ActiveBrandProviderInterface::class)
-                );
-            }
-        );
-
-        ServiceRegister::registerService(
-            LogoUrlService::class,
-            function () {
-                return new Services\Integration\LogoUrlService();
-            }
-        );
+        ServiceRegister::registerService(Configuration::class, function () {
+            return ConfigService::getInstance();
+        });
+        ServiceRegister::registerService(ShopLoggerAdapter::class, function () {
+            return new LoggerService(ServiceRegister::getService(\Module::class));
+        });
+        ServiceRegister::registerService(StoreService::class, function () {
+            return new Services\Integration\StoreService(new ConfigurationRepository());
+        });
+        ServiceRegister::registerService(VersionService::class, function () {
+            return new VersionInfoService();
+        });
+        ServiceRegister::registerService(PaymentOptionsService::class, function () {
+            return new PaymentOptionsService(ServiceRegister::getService(\Module::class), \Context::getContext(), ServiceRegister::getService(CartProvider::class));
+        });
+        ServiceRegister::registerService(CartProvider::class, static function () {
+            return new CartProviderService(\Context::getContext());
+        });
+        ServiceRegister::registerService(Encryptor::class, function () {
+            return new Services\Integration\Encryptor();
+        });
+        ServiceRegister::registerService(ShopPaymentService::class, function () {
+            return new Services\Integration\ShopPaymentService();
+        });
+        ServiceRegister::registerService(ShopOrderService::class, function () {
+            return new Services\Integration\ShopOrderService(ServiceRegister::getService(\Module::class));
+        });
+        ServiceRegister::registerService(\CAWL\OnlinePayments\Core\BusinessLogic\Domain\Stores\StoreService::class, function () {
+            return new Services\Domain\StoreService(ServiceRegister::getService(StoreService::class), ServiceRegister::getService(ConnectionConfigRepositoryInterface::class));
+        });
+        ServiceRegister::registerService(LanguageService::class, function () {
+            return new Services\Integration\LanguageService();
+        });
+        ServiceRegister::registerService(MetadataProviderInterface::class, function () {
+            return new MetadataProvider(ServiceRegister::getService(\Module::class));
+        });
+        ServiceRegister::registerService(PaymentService::class, function () {
+            return new Services\Integration\PaymentService(ServiceRegister::getService(PaymentConfigRepositoryInterface::class), ServiceRegister::getService(LogoUrlService::class), ServiceRegister::getService(ActiveBrandProviderInterface::class));
+        });
+        ServiceRegister::registerService(LogoUrlService::class, function () {
+            return new Services\Integration\LogoUrlService();
+        });
     }
-
-    protected static function initRepositories(): void
+    protected static function initRepositories() : void
     {
         parent::initRepositories();
-
         ServiceRegister::registerService(PaymentTransactionRepositoryInterface::class, new SingleInstance(static function () {
-            return new PaymentTransactionRepository(
-                RepositoryRegistry::getRepository(PaymentTransactionEntity::class),
-                StoreContext::getInstance(),
-                ServiceRegister::getService(TimeProviderInterface::class)
-            );
+            return new PaymentTransactionRepository(RepositoryRegistry::getRepository(PaymentTransactionEntity::class), StoreContext::getInstance(), ServiceRegister::getService(TimeProviderInterface::class));
         }));
-
         ServiceRegister::registerService(MonitoringLogRepositoryInterface::class, new SingleInstance(static function () {
-            return new MonitoringLogRepository(
-                RepositoryRegistry::getRepository(MonitoringLog::class),
-                StoreContext::getInstance(),
-                ServiceRegister::getService(ActiveConnectionProvider::class),
-                ServiceRegister::getService(ActiveBrandProviderInterface::class),
-                ServiceRegister::getService(LogSettingsRepositoryInterface::class)
-            );
+            return new MonitoringLogRepository(RepositoryRegistry::getRepository(MonitoringLog::class), StoreContext::getInstance(), ServiceRegister::getService(ActiveConnectionProvider::class), ServiceRegister::getService(ActiveBrandProviderInterface::class), ServiceRegister::getService(LogSettingsRepositoryInterface::class));
         }));
-
         ServiceRegister::registerService(WebhookLogRepositoryInterface::class, new SingleInstance(static function () {
-            return new WebhookLogRepository(
-                RepositoryRegistry::getRepository(WebhookLog::class),
-                StoreContext::getInstance(),
-                ServiceRegister::getService(ActiveConnectionProvider::class),
-                ServiceRegister::getService(LogSettingsRepositoryInterface::class)
-            );
+            return new WebhookLogRepository(RepositoryRegistry::getRepository(WebhookLog::class), StoreContext::getInstance(), ServiceRegister::getService(ActiveConnectionProvider::class), ServiceRegister::getService(LogSettingsRepositoryInterface::class));
         }));
-
         RepositoryRegistry::registerRepository(Process::class, BaseRepository::getClassName());
         RepositoryRegistry::registerRepository(ConfigEntity::class, BaseRepository::getClassName());
         RepositoryRegistry::registerRepository(ConnectionConfigEntity::class, BaseRepositoryWithConditionalDelete::getClassName());

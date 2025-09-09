@@ -1,15 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTranslatableException;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTranslatableException;
 /**
  * Class InvalidRecurrenceTypeException
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions
+ * @internal
  */
 class InvalidRecurrenceTypeException extends BaseTranslatableException
 {
-
 }

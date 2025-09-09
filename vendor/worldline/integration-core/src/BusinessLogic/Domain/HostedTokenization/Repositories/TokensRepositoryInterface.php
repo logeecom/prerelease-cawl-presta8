@@ -1,29 +1,26 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Repositories;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Repositories;
 
-use OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
 /**
  * Interface TokensRepositoryInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories
+ * @internal
  */
 interface TokensRepositoryInterface
 {
-    public function get(string $customerId, string $tokenId): ?Token;
-
-    public function save(string $customerId, Token $token): void;
-
+    public function get(string $customerId, string $tokenId) : ?Token;
+    public function save(string $customerId, Token $token) : void;
     /**
      * @param string $customerId
      * @return Token[]
      */
-    public function getForCustomer(string $customerId): array;
-
+    public function getForCustomer(string $customerId) : array;
     /**
      * @param Token[] $tokens
      * @return void
      */
-    public function delete(array $tokens): void;
+    public function delete(array $tokens) : void;
 }

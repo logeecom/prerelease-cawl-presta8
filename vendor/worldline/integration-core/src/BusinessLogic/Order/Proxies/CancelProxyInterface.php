@@ -1,16 +1,16 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Order\Proxies;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Order\Proxies;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Cancel\CancelRequest;
-use OnlinePayments\Core\BusinessLogic\Domain\Cancel\CancelResponse;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Cancel\CancelRequest;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Cancel\CancelResponse;
 /**
  * Interface CancelProxyInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\Order\Proxies
+ * @internal
  */
 interface CancelProxyInterface
 {
-    public function create(CancelRequest $cancelRequest): CancelResponse;
+    public function create(CancelRequest $cancelRequest) : CancelResponse;
 }

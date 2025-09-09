@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization;
 
 /**
  * Class HostedTokenization.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization
+ * @internal
  */
 class HostedTokenization
 {
@@ -14,7 +15,6 @@ class HostedTokenization
      * @var string[]
      */
     private array $invalidTokens;
-
     /**
      * @param string $url
      * @param string[] $invalidTokens
@@ -24,13 +24,11 @@ class HostedTokenization
         $this->url = $url;
         $this->invalidTokens = $invalidTokens;
     }
-
-    public function getUrl(): string
+    public function getUrl() : string
     {
         return $this->url;
     }
-
-    public function getInvalidTokens(): array
+    public function getInvalidTokens() : array
     {
         return $this->invalidTokens;
     }

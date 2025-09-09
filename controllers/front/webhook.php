@@ -1,11 +1,11 @@
 <?php
 
-use OnlinePayments\Controllers\Concrete\Front\WebhooksController;
-
-/**
- * Class WorldlineopWebhookModuleFrontController
- */
-class WorldlineopWebhookModuleFrontController extends WebhooksController
-{
-
+namespace {
+    use CAWL\OnlinePayments\Controllers\Concrete\Front\WebhooksController;
+    /** @internal */
+    class CawlopWebhookModuleFrontController extends WebhooksController
+    {
+    }
+    /** @internal */
+    \class_alias('CAWL\\CawlopWebhookModuleFrontController', 'CawlopWebhookModuleFrontController', \false);
 }

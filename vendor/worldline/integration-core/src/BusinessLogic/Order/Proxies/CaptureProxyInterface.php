@@ -1,16 +1,16 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Order\Proxies;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Order\Proxies;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Capture\CaptureRequest;
-use OnlinePayments\Core\BusinessLogic\Domain\Capture\CaptureResponse;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Capture\CaptureRequest;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Capture\CaptureResponse;
 /**
  * Interface CaptureProxyInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\Order\Proxies
+ * @internal
  */
 interface CaptureProxyInterface
 {
-    public function create(CaptureRequest $captureRequest): CaptureResponse;
+    public function create(CaptureRequest $captureRequest) : CaptureResponse;
 }

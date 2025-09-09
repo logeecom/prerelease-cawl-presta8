@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Checkout;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Exceptions\InvalidTaxRate;
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Exceptions\InvalidTaxRate;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
 /**
  * Class TaxRate
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout
+ * @internal
  */
 class TaxRate
 {
@@ -16,7 +16,6 @@ class TaxRate
      * @var float
      */
     private float $taxRatePercentage;
-
     /**
      * @param float $taxRatePercentage
      * @throws InvalidTaxRate
@@ -24,24 +23,19 @@ class TaxRate
     public function __construct(float $taxRatePercentage)
     {
         if ($taxRatePercentage < 0 || $taxRatePercentage >= 100) {
-            throw new InvalidTaxRate(
-                new TranslatableLabel('Tax rate should be between 0 and 100 percents.', 'checkout.taxError'));
+            throw new InvalidTaxRate(new TranslatableLabel('Tax rate should be between 0 and 100 percents.', 'checkout.taxError'));
         }
-
         $this->taxRatePercentage = $taxRatePercentage;
     }
-
     /**
      * @return float
      */
-    public function getRate(): float
+    public function getRate() : float
     {
         return $this->taxRatePercentage;
     }
-
-    public function __toString(): string
+    public function __toString() : string
     {
-        return number_format($this->taxRatePercentage, 6);
+        return \number_format($this->taxRatePercentage, 6);
     }
-
 }

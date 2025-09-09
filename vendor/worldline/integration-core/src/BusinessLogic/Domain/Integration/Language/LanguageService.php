@@ -1,18 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Integration\Language;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Language;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Language\Language;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Language\Language;
 /**
  * Interface LanguageService
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Integration\Language
+ * @internal
  */
 interface LanguageService
 {
     /**
      * @return Language[]
      */
-    public function getEnabledLanguages(): array;
+    public function getEnabledLanguages() : array;
 }

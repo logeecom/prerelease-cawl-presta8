@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ProductTypesAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ProductTypesAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-use OnlinePayments\Core\BusinessLogic\Domain\ProductTypes\ProductType;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ProductTypes\ProductType;
 /**
  * Class ProductTypesListResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ProductTypesAPI\Response
+ * @internal
  */
 class ProductTypesListResponse extends Response
 {
@@ -17,7 +17,6 @@ class ProductTypesListResponse extends Response
      */
     private array $availableProductTypes;
     private ?ProductType $selectedProductType;
-
     /**
      * @param ProductType[] $availableProductTypes
      * @param ?ProductType $selectedProductType
@@ -27,26 +26,20 @@ class ProductTypesListResponse extends Response
         $this->availableProductTypes = $availableProductTypes;
         $this->selectedProductType = $selectedProductType;
     }
-
-    public function toArray(): array
+    public function toArray() : array
     {
-        return [
-            'availableProductTypes' => array_map(function (ProductType $productType) {
-                return (string)$productType;
-            }, $this->availableProductTypes),
-            'selectedProductType' => (string)$this->selectedProductType,
-        ];
+        return ['availableProductTypes' => \array_map(function (ProductType $productType) {
+            return (string) $productType;
+        }, $this->availableProductTypes), 'selectedProductType' => (string) $this->selectedProductType];
     }
-
     /**
      * @return ProductType[]
      */
-    public function getAvailableProductTypes(): array
+    public function getAvailableProductTypes() : array
     {
         return $this->availableProductTypes;
     }
-
-    public function getSelectedProductType(): ?ProductType
+    public function getSelectedProductType() : ?ProductType
     {
         return $this->selectedProductType;
     }

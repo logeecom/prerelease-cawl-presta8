@@ -1,30 +1,27 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\Proxies;
+namespace CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\Proxies;
 
-use OnlinePayments\Core\Bootstrap\Sdk\MerchantClientFactory;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Connection\Proxies\ConnectionProxyInterface as BaseConnectionProxy;
-use OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
-use OnlinePayments\Core\BusinessLogic\Domain\Connection\Exceptions\InvalidConnectionDetailsException;
-
+use CAWL\OnlinePayments\Core\Bootstrap\Sdk\MerchantClientFactory;
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Connection\Proxies\ConnectionProxyInterface as BaseConnectionProxy;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Exceptions\InvalidConnectionDetailsException;
+/** @internal */
 class ConnectionProxy implements BaseConnectionProxy
 {
     private const CONNECTION_VALID = 'OK';
     private MerchantClientFactory $clientFactory;
-
     public function __construct(MerchantClientFactory $clientFactory)
     {
         $this->clientFactory = $clientFactory;
     }
-
     /**
      * @inheritDoc
      *
      * @throws InvalidConnectionDetailsException
      */
-    public function isConnectionValid(ConnectionDetails $connectionDetails): bool
+    public function isConnectionValid(ConnectionDetails $connectionDetails) : bool
     {
-        return $this->clientFactory->get($connectionDetails)->services()->testConnection()->getResult()
-            === self::CONNECTION_VALID;
+        return $this->clientFactory->get($connectionDetails)->services()->testConnection()->getResult() === self::CONNECTION_VALID;
     }
 }

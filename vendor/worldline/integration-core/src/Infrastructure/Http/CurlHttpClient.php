@@ -1,16 +1,16 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Http;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Http;
 
-use OnlinePayments\Core\Infrastructure\Http\DTO\Options;
-use OnlinePayments\Core\Infrastructure\Http\Exceptions\HttpCommunicationException;
-use OnlinePayments\Core\Infrastructure\Logger\Logger;
-use OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Http\DTO\Options;
+use CAWL\OnlinePayments\Core\Infrastructure\Http\Exceptions\HttpCommunicationException;
+use CAWL\OnlinePayments\Core\Infrastructure\Logger\Logger;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
 /**
  * Class CurlHttpClient.
  *
  * @package OnlinePayments\Core\Infrastructure\Http
+ * @internal
  */
 class CurlHttpClient extends HttpClient
 {
@@ -18,48 +18,40 @@ class CurlHttpClient extends HttpClient
      * Default asynchronous request timeout value in milliseconds.
      */
     public const DEFAULT_ASYNC_REQUEST_TIMEOUT = 1000;
-
     /**
      * Default synchronous request timeout value in milliseconds.
      */
     public const DEFAULT_REQUEST_TIMEOUT = 900000;
-
     /**
      * Maximum number of 30x response redirects.
      */
     public const MAX_REDIRECTS = 10;
-
     /**
      * Config option that indicates whether to switch HTTP and HTTPS protocol.
      */
     public const SWITCH_PROTOCOL = 'SWITCH_PROTOCOL';
-
     /**
      * Indicates whether to use SSL verification.
      */
-    public const SSL_STRICT_MODE = false;
-
+    public const SSL_STRICT_MODE = \false;
     /**
      * cURL options for the request.
      *
      * @var array
      */
     protected array $curlOptions;
-
     /**
      * Indicates whether to let cURL follow location.
      *
      * @var bool
      */
-    protected bool $followLocation = true;
-
+    protected bool $followLocation = \true;
     /**
      * cURL handler.
      *
      * @var resource
      */
     private $curlSession;
-
     /**
      * Create and send request.
      *
@@ -74,20 +66,14 @@ class CurlHttpClient extends HttpClient
      * @throws QueryFilterInvalidParamException
      *      Only in situation when there is no connection or no response.
      */
-    protected function sendHttpRequest(
-        string $method,
-        string $url,
-        ?array $headers = [],
-        string $body = ''
-    ): HttpResponse {
+    protected function sendHttpRequest(string $method, string $url, ?array $headers = [], string $body = '') : HttpResponse
+    {
         $this->setCurlFollowLocationFlag();
         $this->setCurlSessionAndCommonRequestParts($method, $url, $headers, $body);
         $this->setCurlSessionOptionsForSynchronousRequest();
         $this->setCurlOptions();
-
         return $this->executeSynchronousRequest();
     }
-
     /**
      * Create and send request asynchronously.
      *
@@ -103,19 +89,13 @@ class CurlHttpClient extends HttpClient
      *
      * @throws QueryFilterInvalidParamException
      */
-    protected function sendHttpRequestAsync(
-        string $method,
-        string $url,
-        ?array $headers = [],
-        string $body = ''
-    ): void {
+    protected function sendHttpRequestAsync(string $method, string $url, ?array $headers = [], string $body = '') : void
+    {
         $this->setCurlSessionAndCommonRequestParts($method, $url, $headers, $body);
         $this->setCurlSessionOptionsForAsynchronousRequest();
         $this->setCurlOptions();
-
         $this->executeAsynchronousRequest();
     }
-
     /**
      * Executes and returns response for synchronous request.
      *
@@ -123,49 +103,36 @@ class CurlHttpClient extends HttpClient
      *
      * @throws HttpCommunicationException
      */
-    protected function executeSynchronousRequest(): HttpResponse
+    protected function executeSynchronousRequest() : HttpResponse
     {
         [$result, $statusCode, $headers] = $this->executeCurlRequest();
-
-        if ($result === false) {
-            $error = curl_errno($this->curlSession) . ' = ' . curl_error($this->curlSession);
-            curl_close($this->curlSession);
-
-            throw new HttpCommunicationException(
-                'Request ' . $this->curlOptions[CURLOPT_URL] . ' failed. ERROR: ' . $error
-            );
+        if ($result === \false) {
+            $error = \curl_errno($this->curlSession) . ' = ' . \curl_error($this->curlSession);
+            \curl_close($this->curlSession);
+            throw new HttpCommunicationException('Request ' . $this->curlOptions[\CURLOPT_URL] . ' failed. ERROR: ' . $error);
         }
-
-        curl_close($this->curlSession);
-
+        \curl_close($this->curlSession);
         return new HttpResponse($statusCode, $headers, $result);
     }
-
     /**
      * Executes asynchronous request.
      *
      * @return void
      */
-    protected function executeAsynchronousRequest(): void
+    protected function executeAsynchronousRequest() : void
     {
         [$result, $statusCode] = $this->executeCurlRequest();
-
         // 0 status code is set when timeout is reached
-        if (!in_array($statusCode, [0, 200], true)
-            && curl_errno($this->curlSession) !== CURLE_OPERATION_TIMEOUTED
-        ) {
+        if (!\in_array($statusCode, [0, 200], \true) && \curl_errno($this->curlSession) !== \CURLE_OPERATION_TIMEOUTED) {
             $curlError = '';
-            if (curl_errno($this->curlSession)) {
-                $curlError = ' cURL error: ' . curl_errno($this->curlSession) . ' > ' . curl_error($this->curlSession);
+            if (\curl_errno($this->curlSession)) {
+                $curlError = ' cURL error: ' . \curl_errno($this->curlSession) . ' > ' . \curl_error($this->curlSession);
             }
-
             $httpError = $statusCode . ' Message: ' . $result . $curlError;
             Logger::logError('Async process failed. ERROR: ' . $httpError);
         }
-
-        curl_close($this->curlSession);
+        \curl_close($this->curlSession);
     }
-
     /**
      * Sets cURL session and common request parts.
      *
@@ -176,34 +143,27 @@ class CurlHttpClient extends HttpClient
      *
      * @return void
      */
-    protected function setCurlSessionAndCommonRequestParts(
-        string $method,
-        string $url,
-        array $headers,
-        string $body
-    ): void {
+    protected function setCurlSessionAndCommonRequestParts(string $method, string $url, array $headers, string $body) : void
+    {
         $this->initializeCurlSession();
         $this->setCurlSessionOptionsBasedOnMethod($method);
         $this->setCurlSessionUrlHeadersAndBody($method, $url, $headers, $body);
         $this->setCommonOptionsForCurlSession();
     }
-
     /**
      * Initializes cURL session.
      *
      * @return void
      */
-    protected function initializeCurlSession(): void
+    protected function initializeCurlSession() : void
     {
         // this constant is not defined prior to php 7.0.7
-        if (!defined('CURL_REDIR_POST_ALL')) {
-            define('CURL_REDIR_POST_ALL', 7);
+        if (!\defined('CURL_REDIR_POST_ALL')) {
+            \define('CURL_REDIR_POST_ALL', 7);
         }
-
-        $this->curlSession = curl_init();
+        $this->curlSession = \curl_init();
         $this->curlOptions = [];
     }
-
     /**
      * Sets cURL session option based on request method.
      *
@@ -211,16 +171,14 @@ class CurlHttpClient extends HttpClient
      *
      * @return void
      */
-    protected function setCurlSessionOptionsBasedOnMethod(string $method): void
+    protected function setCurlSessionOptionsBasedOnMethod(string $method) : void
     {
         if ($method === static::HTTP_METHOD_POST) {
             // follow 30x redirects with POST
-            $this->curlOptions[CURLOPT_POSTREDIR] = CURL_REDIR_POST_ALL;
+            $this->curlOptions[\CURLOPT_POSTREDIR] = \CURL_REDIR_POST_ALL;
         }
-
-        $this->curlOptions[CURLOPT_CUSTOMREQUEST] = $method;
+        $this->curlOptions[\CURLOPT_CUSTOMREQUEST] = $method;
     }
-
     /**
      * Sets cURL session URL, headers, and request body.
      *
@@ -231,17 +189,15 @@ class CurlHttpClient extends HttpClient
      *
      * @return void
      */
-    protected function setCurlSessionUrlHeadersAndBody(string $method, string $url, array $headers, string $body): void
+    protected function setCurlSessionUrlHeadersAndBody(string $method, string $url, array $headers, string $body) : void
     {
-        $this->curlOptions[CURLOPT_URL] = $this->adjustUrlIfNeeded($url);
-        $this->curlOptions[CURLOPT_HTTPHEADER] = $headers;
-
+        $this->curlOptions[\CURLOPT_URL] = $this->adjustUrlIfNeeded($url);
+        $this->curlOptions[\CURLOPT_HTTPHEADER] = $headers;
         $methodsWithBody = [static::HTTP_METHOD_POST, static::HTTP_METHOD_PUT, static::HTTP_METHOD_PATCH];
-        if (in_array($method, $methodsWithBody, true)) {
-            $this->curlOptions[CURLOPT_POSTFIELDS] = $body;
+        if (\in_array($method, $methodsWithBody, \true)) {
+            $this->curlOptions[\CURLOPT_POSTFIELDS] = $body;
         }
     }
-
     /**
      * Sets common options for cURL session.
      *
@@ -249,24 +205,20 @@ class CurlHttpClient extends HttpClient
      *
      * @return void
      */
-    protected function setCommonOptionsForCurlSession(): void
+    protected function setCommonOptionsForCurlSession() : void
     {
-        $this->curlOptions[CURLOPT_RETURNTRANSFER] = true;
+        $this->curlOptions[\CURLOPT_RETURNTRANSFER] = \true;
         if ($this->followLocation) {
-            $this->curlOptions[CURLOPT_FOLLOWLOCATION] = true;
-
+            $this->curlOptions[\CURLOPT_FOLLOWLOCATION] = \true;
             // stop possible endless redirect loop when following 30x redirects.
-            $this->curlOptions[CURLOPT_MAXREDIRS] = static::MAX_REDIRECTS;
+            $this->curlOptions[\CURLOPT_MAXREDIRS] = static::MAX_REDIRECTS;
         }
-
-        $this->curlOptions[CURLOPT_IPRESOLVE] = CURL_IPRESOLVE_V4;
-        $this->curlOptions[CURLOPT_SSL_VERIFYPEER] = static::SSL_STRICT_MODE;
-        $this->curlOptions[CURLOPT_SSL_VERIFYHOST] = static::SSL_STRICT_MODE;
+        $this->curlOptions[\CURLOPT_IPRESOLVE] = \CURL_IPRESOLVE_V4;
+        $this->curlOptions[\CURLOPT_SSL_VERIFYPEER] = static::SSL_STRICT_MODE;
+        $this->curlOptions[\CURLOPT_SSL_VERIFYHOST] = static::SSL_STRICT_MODE;
         // Set default user agent, because for some shops if user agent is missing, request will not work.
-        $this->curlOptions[CURLOPT_USERAGENT] =
-            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36';
+        $this->curlOptions[\CURLOPT_USERAGENT] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36';
     }
-
     /**
      * Sets cURL session options for synchronous request.
      *
@@ -274,12 +226,10 @@ class CurlHttpClient extends HttpClient
      *
      * @throws QueryFilterInvalidParamException
      */
-    protected function setCurlSessionOptionsForSynchronousRequest(): void
+    protected function setCurlSessionOptionsForSynchronousRequest() : void
     {
-        $this->curlOptions[CURLOPT_TIMEOUT_MS] =
-            $this->getConfigService()->getSyncRequestTimeout() ?: static::DEFAULT_REQUEST_TIMEOUT;
+        $this->curlOptions[\CURLOPT_TIMEOUT_MS] = $this->getConfigService()->getSyncRequestTimeout() ?: static::DEFAULT_REQUEST_TIMEOUT;
     }
-
     /**
      * Sets cURL session options for asynchronous request.
      *
@@ -287,35 +237,33 @@ class CurlHttpClient extends HttpClient
      *
      * @throws QueryFilterInvalidParamException
      */
-    protected function setCurlSessionOptionsForAsynchronousRequest(): void
+    protected function setCurlSessionOptionsForAsynchronousRequest() : void
     {
         // Always ensure the connection is fresh.
-        $this->curlOptions[CURLOPT_FRESH_CONNECT] = true;
+        $this->curlOptions[\CURLOPT_FRESH_CONNECT] = \true;
         // Timeout super fast once connected, so it goes into async.
         $asyncRequestTimeout = $this->getConfigService()->getAsyncRequestTimeout();
-        $this->curlOptions[CURLOPT_TIMEOUT_MS] = $asyncRequestTimeout ?: static::DEFAULT_ASYNC_REQUEST_TIMEOUT;
+        $this->curlOptions[\CURLOPT_TIMEOUT_MS] = $asyncRequestTimeout ?: static::DEFAULT_ASYNC_REQUEST_TIMEOUT;
     }
-
     /**
      * Sets a call options to the cURL instance.
      *
      * @return void
      */
-    protected function setCurlOptions(): void
+    protected function setCurlOptions() : void
     {
         $this->setCurlSessionOptionsFromConfiguration();
-        curl_setopt_array($this->curlSession, $this->curlOptions);
+        \curl_setopt_array($this->curlSession, $this->curlOptions);
     }
-
     /**
      * If some configuration options were set in the configuration, use them.
      * This is usually done if the autoconfiguration is used.
      *
      * @return void
      */
-    protected function setCurlSessionOptionsFromConfiguration(): void
+    protected function setCurlSessionOptionsFromConfiguration() : void
     {
-        $domain = parse_url($this->curlOptions[CURLOPT_URL], PHP_URL_HOST);
+        $domain = \parse_url($this->curlOptions[\CURLOPT_URL], \PHP_URL_HOST);
         $options = $this->getAdditionalOptions($domain);
         foreach ($options as $key => $value) {
             if ($key !== static::SWITCH_PROTOCOL) {
@@ -323,34 +271,30 @@ class CurlHttpClient extends HttpClient
             }
         }
     }
-
     /**
      * Executes cURL request and returns response and status code.
      *
      * @return array Array with plain response as the first item, status code as the second item and headers as third.
      */
-    protected function executeCurlRequest(): array
+    protected function executeCurlRequest() : array
     {
         $headers = [];
-        curl_setopt(
+        \curl_setopt(
             $this->curlSession,
-            CURLOPT_HEADERFUNCTION,
+            \CURLOPT_HEADERFUNCTION,
             // Callback function is called by curl for each header line received
-            static function ($curl, $header) use (&$headers) {
+            static function ($curl, $header) use(&$headers) {
                 // Set only valid headers
-                $headerArray = explode(':', $header, 2);
-                if (count($headerArray) >= 2) {
-                    $headers[trim($headerArray[0])] = trim($headerArray[1]);
+                $headerArray = \explode(':', $header, 2);
+                if (\count($headerArray) >= 2) {
+                    $headers[\trim($headerArray[0])] = \trim($headerArray[1]);
                 }
-
                 // Do not use mb_strlen here because curl expects number of bytes to be returned not number of chars
-                return strlen($header);
+                return \strlen($header);
             }
         );
-
-        return [curl_exec($this->curlSession), curl_getinfo($this->curlSession, CURLINFO_HTTP_CODE), $headers];
+        return [\curl_exec($this->curlSession), \curl_getinfo($this->curlSession, \CURLINFO_HTTP_CODE), $headers];
     }
-
     /**
      * Get additional options combinations for request.
      *
@@ -360,7 +304,7 @@ class CurlHttpClient extends HttpClient
      * @return array
      *  Array of additional options combinations. Each array item should be an array of Options instances.
      */
-    protected function getAutoConfigurationOptionsCombinations(string $method, string $url): array
+    protected function getAutoConfigurationOptionsCombinations(string $method, string $url) : array
     {
         /**
          * Combinations to use:
@@ -368,29 +312,14 @@ class CurlHttpClient extends HttpClient
          * CURLOPT_FOLLOWLOCATION => false (default is true)
          * SWITCH_PROTOCOL => This is not a cURL option and is treated differently. Default is false.
          */
-        $switchProtocol = new Options(static::SWITCH_PROTOCOL, true);
-        $ipVersion = new Options(CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V6);
+        $switchProtocol = new Options(static::SWITCH_PROTOCOL, \true);
+        $ipVersion = new Options(\CURLOPT_IPRESOLVE, \CURL_IPRESOLVE_V6);
         if ($this->followLocation) {
-            $followLocation = new Options(CURLOPT_FOLLOWLOCATION, false);
-
-            return [
-                [$switchProtocol],
-                [$followLocation],
-                [$switchProtocol, $followLocation],
-                [$ipVersion],
-                [$switchProtocol, $ipVersion],
-                [$followLocation, $ipVersion],
-                [$switchProtocol, $followLocation, $ipVersion]
-            ];
+            $followLocation = new Options(\CURLOPT_FOLLOWLOCATION, \false);
+            return [[$switchProtocol], [$followLocation], [$switchProtocol, $followLocation], [$ipVersion], [$switchProtocol, $ipVersion], [$followLocation, $ipVersion], [$switchProtocol, $followLocation, $ipVersion]];
         }
-
-        return [
-            [$switchProtocol],
-            [$ipVersion],
-            [$switchProtocol, $ipVersion],
-        ];
+        return [[$switchProtocol], [$ipVersion], [$switchProtocol, $ipVersion]];
     }
-
     /**
      * Changes between http and https protocol if needed.
      *
@@ -398,32 +327,30 @@ class CurlHttpClient extends HttpClient
      *
      * @return string Updated URL.
      */
-    protected function adjustUrlIfNeeded(string $url): string
+    protected function adjustUrlIfNeeded(string $url) : string
     {
-        $domain = parse_url($url, PHP_URL_HOST);
+        $domain = \parse_url($url, \PHP_URL_HOST);
         $options = $this->getAdditionalOptions($domain);
         if (!empty($options[static::SWITCH_PROTOCOL])) {
-            if (mb_strpos($url, 'http:') === 0) {
-                $url = str_replace('http:', 'https:', $url);
+            if (\mb_strpos($url, 'http:') === 0) {
+                $url = \str_replace('http:', 'https:', $url);
             } else {
-                $url = str_replace('https:', 'http:', $url);
+                $url = \str_replace('https:', 'http:', $url);
             }
         }
-
         return $url;
     }
-
     /**
      * Determines whether to let cURL follow location based on the environment settings.
      *
      * @return void
      */
-    protected function setCurlFollowLocationFlag(): void
+    protected function setCurlFollowLocationFlag() : void
     {
         // when 'open_basedir' is set, some servers will return curl error upon initializing curl options
         // when setting curl option to follow location
-        if (ini_get('open_basedir')) {
-            $this->followLocation = false;
+        if (\ini_get('open_basedir')) {
+            $this->followLocation = \false;
         }
     }
 }

@@ -1,14 +1,15 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk;
+namespace CAWL\OnlinePayments\Sdk;
 
-use OnlinePayments\Sdk\Logging\CommunicatorLogger;
-use OnlinePayments\Sdk\Merchant\MerchantClientInterface;
-
+use CAWL\OnlinePayments\Sdk\Logging\CommunicatorLogger;
+use CAWL\OnlinePayments\Sdk\Merchant\MerchantClientInterface;
 /**
  * Payment platform client interface.
+ * @internal
  */
 interface ClientInterface
 {
@@ -16,18 +17,15 @@ interface ClientInterface
      * @param CommunicatorLogger $communicatorLogger
      */
     function enableLogging(CommunicatorLogger $communicatorLogger);
-
     /**
      * @return void
      */
     function disableLogging();
-
     /**
      * @param string $clientMetaInfo
      * @return $this
      */
     function setClientMetaInfo($clientMetaInfo);
-
     /**
      * Resource /v2/{merchantId}
      *

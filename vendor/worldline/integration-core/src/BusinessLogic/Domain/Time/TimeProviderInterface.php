@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Time;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Time;
 
 /**
  * Interface TimeProviderInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Time
+ * @internal
  */
 interface TimeProviderInterface
 {
@@ -14,8 +15,7 @@ interface TimeProviderInterface
      *
      * @return \DateTime Current time as @see \DateTime object.
      */
-    public function getCurrentLocalTime(): \DateTime;
-
+    public function getCurrentLocalTime() : \DateTime;
     /**
      * Returns @param int $timestamp Timestamp in seconds.
      *
@@ -23,19 +23,17 @@ interface TimeProviderInterface
      * @see \DateTime object from timestamp.
      *
      */
-    public function getDateTime(int $timestamp): \DateTime;
-
+    public function getDateTime(int $timestamp) : \DateTime;
     /**
      * Returns current timestamp with microseconds (float value with microsecond precision)
      *
      * @return float Current timestamp as float value with microseconds.
      */
-    public function getMicroTimestamp(): float;
-
+    public function getMicroTimestamp() : float;
     /**
      * Delays execution for sleep time seconds.
      *
      * @param int $sleepTime Sleep time in seconds.
      */
-    public function sleep(int $sleepTime): void;
+    public function sleep(int $sleepTime) : void;
 }

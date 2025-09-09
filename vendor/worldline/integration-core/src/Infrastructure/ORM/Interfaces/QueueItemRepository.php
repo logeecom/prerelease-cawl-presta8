@@ -1,17 +1,17 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\ORM\Interfaces;
+namespace CAWL\OnlinePayments\Core\Infrastructure\ORM\Interfaces;
 
-use OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\QueueItemSaveException;
-use OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
-
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\QueueItemSaveException;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
 /**
  * Interface QueueRepository.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\Interfaces
  * @method QueueItem[] select(QueryFilter $filter = null)
  * @method QueueItem|null selectOne(QueryFilter $filter = null)
+ * @internal
  */
 interface QueueItemRepository extends RepositoryInterface, ConditionallyDeletes
 {
@@ -27,8 +27,7 @@ interface QueueItemRepository extends RepositoryInterface, ConditionallyDeletes
      *
      * @return QueueItem[] Found queue item list
      */
-    public function findOldestQueuedItems(int $priority, int $limit = 10): array;
-
+    public function findOldestQueuedItems(int $priority, int $limit = 10) : array;
     /**
      * Creates or updates given queue item. If queue item id is not set, new queue item will be created otherwise
      * update will be performed.
@@ -42,8 +41,7 @@ interface QueueItemRepository extends RepositoryInterface, ConditionallyDeletes
      * @return int Id of saved queue item
      * @throws QueueItemSaveException if queue item could not be saved
      */
-    public function saveWithCondition(QueueItem $queueItem, array $additionalWhere = []): int;
-
+    public function saveWithCondition(QueueItem $queueItem, array $additionalWhere = []) : int;
     /**
      * Updates status of a batch of queue items.
      *

@@ -1,25 +1,25 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Merchant\Payouts;
+namespace CAWL\OnlinePayments\Sdk\Merchant\Payouts;
 
 use Exception;
-use OnlinePayments\Sdk\ApiResource;
-use OnlinePayments\Sdk\CallContext;
-use OnlinePayments\Sdk\Communication\ErrorResponseException;
-use OnlinePayments\Sdk\Communication\ResponseClassMap;
-use OnlinePayments\Sdk\Domain\CreatePayoutRequest;
-use OnlinePayments\Sdk\ExceptionFactory;
-
+use CAWL\OnlinePayments\Sdk\ApiResource;
+use CAWL\OnlinePayments\Sdk\CallContext;
+use CAWL\OnlinePayments\Sdk\Communication\ErrorResponseException;
+use CAWL\OnlinePayments\Sdk\Communication\ResponseClassMap;
+use CAWL\OnlinePayments\Sdk\Domain\CreatePayoutRequest;
+use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * Payouts client.
+ * @internal
  */
 class PayoutsClient extends ApiResource implements PayoutsClientInterface
 {
     /** @var ExceptionFactory|null */
     private $responseExceptionFactory = null;
-
     /**
      * @inheritdoc
      */
@@ -27,25 +27,14 @@ class PayoutsClient extends ApiResource implements PayoutsClientInterface
     {
         $this->context['payoutId'] = $payoutId;
         $responseClassMap = new ResponseClassMap();
-        $responseClassMap->defaultSuccessResponseClassName = '\OnlinePayments\Sdk\Domain\PayoutResponse';
-        $responseClassMap->defaultErrorResponseClassName = '\OnlinePayments\Sdk\Domain\ErrorResponse';
+        $responseClassMap->defaultSuccessResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\PayoutResponse';
+        $responseClassMap->defaultErrorResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\ErrorResponse';
         try {
-            return $this->getCommunicator()->get(
-                $responseClassMap,
-                $this->instantiateUri('/v2/{merchantId}/payouts/{payoutId}'),
-                $this->getClientMetaInfo(),
-                null,
-                $callContext
-            );
+            return $this->getCommunicator()->get($responseClassMap, $this->instantiateUri('/v2/{merchantId}/payouts/{payoutId}'), $this->getClientMetaInfo(), null, $callContext);
         } catch (ErrorResponseException $e) {
-            throw $this->getResponseExceptionFactory()->createException(
-                $e->getHttpStatusCode(),
-                $e->getErrorResponse(),
-                $callContext
-            );
+            throw $this->getResponseExceptionFactory()->createException($e->getHttpStatusCode(), $e->getErrorResponse(), $callContext);
         }
     }
-
     /**
      * @inheritdoc
      * @throws Exception
@@ -53,30 +42,18 @@ class PayoutsClient extends ApiResource implements PayoutsClientInterface
     public function createPayout(CreatePayoutRequest $body, ?CallContext $callContext = null)
     {
         $responseClassMap = new ResponseClassMap();
-        $responseClassMap->defaultSuccessResponseClassName = '\OnlinePayments\Sdk\Domain\PayoutResponse';
-        $responseClassMap->defaultErrorResponseClassName = '\OnlinePayments\Sdk\Domain\PayoutErrorResponse';
+        $responseClassMap->defaultSuccessResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\PayoutResponse';
+        $responseClassMap->defaultErrorResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\PayoutErrorResponse';
         try {
-            return $this->getCommunicator()->post(
-                $responseClassMap,
-                $this->instantiateUri('/v2/{merchantId}/payouts'),
-                $this->getClientMetaInfo(),
-                $body,
-                null,
-                $callContext
-            );
+            return $this->getCommunicator()->post($responseClassMap, $this->instantiateUri('/v2/{merchantId}/payouts'), $this->getClientMetaInfo(), $body, null, $callContext);
         } catch (ErrorResponseException $e) {
-            throw $this->getResponseExceptionFactory()->createException(
-                $e->getHttpStatusCode(),
-                $e->getErrorResponse(),
-                $callContext
-            );
+            throw $this->getResponseExceptionFactory()->createException($e->getHttpStatusCode(), $e->getErrorResponse(), $callContext);
         }
     }
-
     /** @return ExceptionFactory */
     private function getResponseExceptionFactory()
     {
-        if (is_null($this->responseExceptionFactory)) {
+        if (\is_null($this->responseExceptionFactory)) {
             $this->responseExceptionFactory = new ExceptionFactory();
         }
         return $this->responseExceptionFactory;

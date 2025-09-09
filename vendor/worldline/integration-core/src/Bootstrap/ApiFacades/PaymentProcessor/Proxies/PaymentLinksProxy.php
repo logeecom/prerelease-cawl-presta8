@@ -1,60 +1,39 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies;
+namespace CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies;
 
-use OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers\CreatePaymentLinkRequestTransformer;
-use OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers\CreatePaymentLinkResponseTransformer;
-use OnlinePayments\Core\Bootstrap\Sdk\MerchantClientFactory;
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkSettings;
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
-use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\ContextLogProvider;
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkRequest;
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkResponse;
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
-use OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentLinksProxyInterface;
-
+use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers\CreatePaymentLinkRequestTransformer;
+use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers\CreatePaymentLinkResponseTransformer;
+use CAWL\OnlinePayments\Core\Bootstrap\Sdk\MerchantClientFactory;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkSettings;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\ContextLogProvider;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkRequest;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkResponse;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
+use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentLinksProxyInterface;
 /**
  * Class PaymentLinksProxy.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies
+ * @internal
  */
 class PaymentLinksProxy implements PaymentLinksProxyInterface
 {
     private MerchantClientFactory $clientFactory;
-
     public function __construct(MerchantClientFactory $clientFactory)
     {
         $this->clientFactory = $clientFactory;
     }
-
-    public function create(
-        PaymentLinkRequest $request,
-        CardsSettings $cardsSettings,
-        PaymentSettings $paymentSettings,
-        PayByLinkSettings $payByLinkSettings,
-        PaymentMethodCollection $paymentMethodCollection
-    ): PaymentLinkResponse
+    public function create(PaymentLinkRequest $request, CardsSettings $cardsSettings, PaymentSettings $paymentSettings, PayByLinkSettings $payByLinkSettings, PaymentMethodCollection $paymentMethodCollection) : PaymentLinkResponse
     {
-        ContextLogProvider::getInstance()->setCurrentOrder(
-            $request->getCartProvider()->get()->getMerchantReference()
-        );
-
-        return CreatePaymentLinkResponseTransformer::transform(
-            $this->clientFactory->get()->paymentLinks()->createPaymentLink(
-                CreatePaymentLinkRequestTransformer::transform(
-                    $request, $cardsSettings, $paymentSettings, $payByLinkSettings, $paymentMethodCollection
-                )
-            )
-        );
+        ContextLogProvider::getInstance()->setCurrentOrder($request->getCartProvider()->get()->getMerchantReference());
+        return CreatePaymentLinkResponseTransformer::transform($this->clientFactory->get()->paymentLinks()->createPaymentLink(CreatePaymentLinkRequestTransformer::transform($request, $cardsSettings, $paymentSettings, $payByLinkSettings, $paymentMethodCollection)));
     }
-
-    public function getById(string $paymentLinkId, string $merchantReference): PaymentLinkResponse
+    public function getById(string $paymentLinkId, string $merchantReference) : PaymentLinkResponse
     {
         ContextLogProvider::getInstance()->setCurrentOrder($merchantReference);
-
-        return CreatePaymentLinkResponseTransformer::transform(
-            $this->clientFactory->get()->paymentLinks()->getPaymentLinkById($paymentLinkId)
-        );
+        return CreatePaymentLinkResponseTransformer::transform($this->clientFactory->get()->paymentLinks()->getPaymentLinkById($paymentLinkId));
     }
 }

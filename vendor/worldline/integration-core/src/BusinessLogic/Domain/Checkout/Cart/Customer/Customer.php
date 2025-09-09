@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Customer;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Customer;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Address;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Address;
 /**
  * Class Customer.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart
+ * @internal
  */
 class Customer
 {
@@ -17,15 +17,8 @@ class Customer
     private string $merchantCustomerId;
     private string $locale;
     private ?Device $device;
-
-    public function __construct(
-        ContactDetails $contactDetails,
-        Address $billingAddress,
-        string $merchantCustomerId = '',
-        bool $isGuest = false,
-        string $locale = 'en_GB',
-        ?Device $device = null
-    ) {
+    public function __construct(ContactDetails $contactDetails, Address $billingAddress, string $merchantCustomerId = '', bool $isGuest = \false, string $locale = 'en_GB', ?Device $device = null)
+    {
         $this->contactDetails = $contactDetails;
         $this->billingAddress = $billingAddress;
         $this->isGuest = $isGuest;
@@ -33,53 +26,43 @@ class Customer
         $this->locale = $locale;
         $this->device = $device;
     }
-
-    public function getContactDetails(): ContactDetails
+    public function getContactDetails() : ContactDetails
     {
         return $this->contactDetails;
     }
-
-    public function getBillingAddress(): Address
+    public function getBillingAddress() : Address
     {
         return $this->billingAddress;
     }
-
-    public function isGuest(): bool
+    public function isGuest() : bool
     {
         return $this->isGuest;
     }
-
-    public function getMerchantCustomerId(): string
+    public function getMerchantCustomerId() : string
     {
         return $this->merchantCustomerId;
     }
-
-    public function getLocale(): string
+    public function getLocale() : string
     {
         return $this->locale;
     }
-
-    public function setIsGuest(bool $isGuest): void
+    public function setIsGuest(bool $isGuest) : void
     {
         $this->isGuest = $isGuest;
     }
-
-    public function setMerchantCustomerId(string $merchantCustomerId): void
+    public function setMerchantCustomerId(string $merchantCustomerId) : void
     {
         $this->merchantCustomerId = $merchantCustomerId;
     }
-
-    public function setLocale(string $locale): void
+    public function setLocale(string $locale) : void
     {
         $this->locale = $locale;
     }
-
-    public function getDevice(): ?Device
+    public function getDevice() : ?Device
     {
         return $this->device;
     }
-
-    public function setDevice(?Device $device): void
+    public function setDevice(?Device $device) : void
     {
         $this->device = $device;
     }

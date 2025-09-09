@@ -1,16 +1,16 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\LogCleanup;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\LogCleanup;
 
 /**
  * Class LogCleanupListener
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\LogCleanup
+ * @internal
  */
 class LogCleanupListener
 {
     protected LogCleanupTaskServiceInterface $service;
-
     /**
      * @param LogCleanupTaskServiceInterface $service
      */
@@ -18,27 +18,22 @@ class LogCleanupListener
     {
         $this->service = $service;
     }
-
     /**
      * @return void
      */
-    public function handle(): void
+    public function handle() : void
     {
         if (!$this->canHandle()) {
             return;
         }
-
         $this->doHandle();
     }
-
-    protected function canHandle(): bool
+    protected function canHandle() : bool
     {
         $lastExecutionTime = $this->service->findLatestExecutionTimestamp();
-
         return $lastExecutionTime < (new \DateTime())->sub(new \DateInterval('P1D'))->getTimestamp();
     }
-
-    protected function doHandle(): void
+    protected function doHandle() : void
     {
         $this->service->enqueueLogCleanupTask();
     }

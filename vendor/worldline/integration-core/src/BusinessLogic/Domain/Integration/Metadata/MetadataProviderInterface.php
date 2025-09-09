@@ -1,13 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Integration\Metadata;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Metadata;
 
 /**
  * Interface MetadataProviderInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Integration\Metadata
+ * @internal
  */
 interface MetadataProviderInterface
 {
-    public function getMetadata(): Metadata;
+    public function getMetadata() : Metadata;
 }

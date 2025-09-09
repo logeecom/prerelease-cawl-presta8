@@ -1,15 +1,15 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories;
 
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
 /**
  * Interface CardsSettingsRepositoryInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories
+ * @internal
  */
 interface CardsSettingsRepositoryInterface
 {
-    public function getCardsSettings(): ?CardsSettings;
+    public function getCardsSettings() : ?CardsSettings;
 }

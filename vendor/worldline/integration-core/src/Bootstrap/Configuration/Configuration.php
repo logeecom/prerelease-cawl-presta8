@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\Configuration;
+namespace CAWL\OnlinePayments\Core\Bootstrap\Configuration;
 
-use OnlinePayments\Core\Infrastructure\Configuration\Configuration as InfrastructureConfiguration;
-use OnlinePayments\Core\Infrastructure\Singleton;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Configuration\Configuration as InfrastructureConfiguration;
+use CAWL\OnlinePayments\Core\Infrastructure\Singleton;
 /**
  * Class Configuration
  *
  * @package OnlinePayments\Core\Bootstrap\Configuration
+ * @internal
  */
 abstract class Configuration extends InfrastructureConfiguration
 {
@@ -18,25 +18,22 @@ abstract class Configuration extends InfrastructureConfiguration
      * @var ?Singleton
      */
     protected static ?Singleton $instance = null;
-
     /**
      * Retrieves integration version.
      *
      * @return string Integration version.
      */
-    abstract public function getIntegrationVersion(): string;
-
+    public abstract function getIntegrationVersion() : string;
     /**
      * Gets the current plugin name
      *
      * @return string
      */
-    abstract public function getPluginName(): string;
-
+    public abstract function getPluginName() : string;
     /**
      * Gets the current plugin version (e.g. 1.2.5)
      *
      * @return string
      */
-    abstract public function getPluginVersion(): string;
+    public abstract function getPluginVersion() : string;
 }

@@ -1,21 +1,19 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Order\ApiFacades\CancelAPI\Controller;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Order\ApiFacades\CancelAPI\Controller;
 
-
-use OnlinePayments\Core\BusinessLogic\Domain\Cancel\CancelRequest;
-use OnlinePayments\Core\BusinessLogic\Order\ApiFacades\CancelAPI\Response\CreateCancelResponse;
-use OnlinePayments\Core\BusinessLogic\Order\Services\Cancel\CancelService;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Cancel\CancelRequest;
+use CAWL\OnlinePayments\Core\BusinessLogic\Order\ApiFacades\CancelAPI\Response\CreateCancelResponse;
+use CAWL\OnlinePayments\Core\BusinessLogic\Order\Services\Cancel\CancelService;
 /**
  * Class CancelController
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\CancelAPI\Controller
+ * @internal
  */
 class CancelController
 {
     private CancelService $cancelService;
-
     /**
      * @param CancelService $cancelService
      */
@@ -23,8 +21,7 @@ class CancelController
     {
         $this->cancelService = $cancelService;
     }
-
-    public function handle(CancelRequest $request): CreateCancelResponse
+    public function handle(CancelRequest $request) : CreateCancelResponse
     {
         return new CreateCancelResponse($this->cancelService->handle($request));
     }

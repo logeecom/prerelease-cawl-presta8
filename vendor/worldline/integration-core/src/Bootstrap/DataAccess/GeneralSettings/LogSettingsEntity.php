@@ -1,17 +1,17 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings;
+namespace CAWL\OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings;
 
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\LogRecordsLifetime;
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\LogSettings;
-use OnlinePayments\Core\Infrastructure\ORM\Configuration\EntityConfiguration;
-use OnlinePayments\Core\Infrastructure\ORM\Configuration\IndexMap;
-use OnlinePayments\Core\Infrastructure\ORM\Entity;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\LogRecordsLifetime;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\LogSettings;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Configuration\EntityConfiguration;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Configuration\IndexMap;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
 /**
  * Class LogSettingsEntity
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings
+ * @internal
  */
 class LogSettingsEntity extends Entity
 {
@@ -19,73 +19,53 @@ class LogSettingsEntity extends Entity
     protected string $storeId;
     protected string $mode;
     protected LogSettings $logSettings;
-
     /**
      * @inheritDoc
      */
-    public function getConfig(): EntityConfiguration
+    public function getConfig() : EntityConfiguration
     {
         $indexMap = new IndexMap();
-
         $indexMap->addStringIndex('storeId');
         $indexMap->addStringIndex('mode');
-
         return new EntityConfiguration($indexMap, 'LogSettings');
     }
-
-    public function inflate(array $data): void
+    public function inflate(array $data) : void
     {
         parent::inflate($data);
-
         $this->storeId = $data['storeId'];
         $this->mode = $data['mode'];
         $logSettings = $data['logSettings'];
-        $this->logSettings = new LogSettings(
-            $logSettings['debugMode'],
-            LogRecordsLifetime::create($logSettings['logRecordsLifetime'])
-        );
+        $this->logSettings = new LogSettings($logSettings['debugMode'], LogRecordsLifetime::create($logSettings['logRecordsLifetime']));
     }
-
-    public function toArray(): array
+    public function toArray() : array
     {
         $data = parent::toArray();
-
         $data['storeId'] = $this->storeId;
         $data['mode'] = $this->mode;
-        $data['logSettings'] = [
-            'debugMode' => $this->logSettings->isDebugMode(),
-            'logRecordsLifetime' => $this->logSettings->getLogRecordsLifetime()->getDays(),
-        ];
-
+        $data['logSettings'] = ['debugMode' => $this->logSettings->isDebugMode(), 'logRecordsLifetime' => $this->logSettings->getLogRecordsLifetime()->getDays()];
         return $data;
     }
-
-    public function getStoreId(): string
+    public function getStoreId() : string
     {
         return $this->storeId;
     }
-
-    public function setStoreId(string $storeId): void
+    public function setStoreId(string $storeId) : void
     {
         $this->storeId = $storeId;
     }
-
-    public function getMode(): string
+    public function getMode() : string
     {
         return $this->mode;
     }
-
-    public function setMode(string $mode): void
+    public function setMode(string $mode) : void
     {
         $this->mode = $mode;
     }
-
-    public function getLogSettings(): LogSettings
+    public function getLogSettings() : LogSettings
     {
         return $this->logSettings;
     }
-
-    public function setLogSettings(LogSettings $logSettings): void
+    public function setLogSettings(LogSettings $logSettings) : void
     {
         $this->logSettings = $logSettings;
     }

@@ -1,20 +1,19 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings;
 
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidPayByLinkExpirationTimeException;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidPayByLinkExpirationTimeException;
 /**
  * Class PayByLinkSettings
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings
+ * @internal
  */
 class PayByLinkSettings
 {
     protected bool $enable;
     protected string $title;
     protected PayByLinkExpirationTime $expirationTime;
-
     /**
      * @param bool $enable
      * @param string $title
@@ -22,36 +21,30 @@ class PayByLinkSettings
      *
      * @throws InvalidPayByLinkExpirationTimeException
      */
-    public function __construct(
-        bool $enable = false,
-        string $title = 'Worldline Pay by Link',
-        ?PayByLinkExpirationTime $expirationTime = null
-    ) {
+    public function __construct(bool $enable = \false, string $title = 'Worldline Pay by Link', ?PayByLinkExpirationTime $expirationTime = null)
+    {
         $this->enable = $enable;
         $this->title = $title;
         $this->expirationTime = $expirationTime ?: PayByLinkExpirationTime::create(7);
     }
-
     /**
      * @return bool
      */
-    public function isEnable(): bool
+    public function isEnable() : bool
     {
         return $this->enable;
     }
-
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle() : string
     {
         return $this->title;
     }
-
     /**
      * @return PayByLinkExpirationTime
      */
-    public function getExpirationTime(): PayByLinkExpirationTime
+    public function getExpirationTime() : PayByLinkExpirationTime
     {
         return $this->expirationTime;
     }

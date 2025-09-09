@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\ORM\Exceptions;
+namespace CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions;
 
-use OnlinePayments\Core\Infrastructure\Exceptions\BaseException;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Exceptions\BaseException;
 /**
  * Class EntityClassException.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\Exceptions
+ * @internal
  */
 class EntityClassException extends BaseException
 {

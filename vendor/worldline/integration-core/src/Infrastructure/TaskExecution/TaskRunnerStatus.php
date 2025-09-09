@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution;
 
-use OnlinePayments\Core\Infrastructure\Configuration\Configuration;
-use OnlinePayments\Core\Infrastructure\ServiceRegister;
-use OnlinePayments\Core\Infrastructure\Utility\TimeProvider;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Configuration\Configuration;
+use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
+use CAWL\OnlinePayments\Core\Infrastructure\Utility\TimeProvider;
 /**
  * Class TaskRunnerStatus
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
+ * @internal
  */
 class TaskRunnerStatus
 {
@@ -16,21 +16,18 @@ class TaskRunnerStatus
      * Maximal time allowed for runner instance to stay in alive (running) status in seconds
      */
     const MAX_ALIVE_TIME = 15;
-
     /**
      * Identifier of task runner.
      *
      * @var string
      */
     private string $guid;
-
     /**
      * Timestamp since task runner is alive.
      *
      * @var int|null
      */
     private ?int $aliveSinceTimestamp;
-
     /**
      * Time provider service instance.
      *
@@ -43,7 +40,6 @@ class TaskRunnerStatus
      * @var Configuration
      */
     private $configService;
-
     /**
      * TaskRunnerStatus constructor.
      *
@@ -57,59 +53,51 @@ class TaskRunnerStatus
         $this->timeProvider = ServiceRegister::getService(TimeProvider::CLASS_NAME);
         $this->configService = ServiceRegister::getService(Configuration::CLASS_NAME);
     }
-
     /**
      * Creates empty status object.
      *
      * @return TaskRunnerStatus Empty status object.
      */
-    public static function createNullStatus(): TaskRunnerStatus
+    public static function createNullStatus() : TaskRunnerStatus
     {
         return new self('', null);
     }
-
     /**
      * Gets runner instance identifier.
      *
      * @return string Instance identifier.
      */
-    public function getGuid(): string
+    public function getGuid() : string
     {
         return $this->guid;
     }
-
     /**
      * Gets timestamp since runner is in alive status.
      *
      * @return int|null Timestamp since runner is in alive status; otherwise, NULL.
      */
-    public function getAliveSinceTimestamp(): ?int
+    public function getAliveSinceTimestamp() : ?int
     {
         return $this->aliveSinceTimestamp;
     }
-
     /**
      * Checks if task is expired.
      *
      * @return bool TRUE if task expired; otherwise, FALSE.
      */
-    public function isExpired(): bool
+    public function isExpired() : bool
     {
         $currentTimestamp = $this->timeProvider->getCurrentLocalTime()->getTimestamp();
-
-        return $this->aliveSinceTimestamp > 0 &&
-            ($this->aliveSinceTimestamp + $this->getMaxAliveTimestamp() < $currentTimestamp);
+        return $this->aliveSinceTimestamp > 0 && $this->aliveSinceTimestamp + $this->getMaxAliveTimestamp() < $currentTimestamp;
     }
-
     /**
      * Retrieves max alive timestamp.
      *
      * @return int Max alive timestamp.
      */
-    private function getMaxAliveTimestamp(): int
+    private function getMaxAliveTimestamp() : int
     {
         $configurationValue = $this->configService->getTaskRunnerMaxAliveTime();
-
         return $configurationValue !== null ? $configurationValue : self::MAX_ALIVE_TIME;
     }
 }

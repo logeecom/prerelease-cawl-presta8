@@ -1,19 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Order\ApiFacades\CancelAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Order\ApiFacades\CancelAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-use OnlinePayments\Core\BusinessLogic\Domain\Cancel\CancelResponse;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Cancel\CancelResponse;
 /**
  * Class CreateCancelResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\CancelAPI\Controller
+ * @internal
  */
 class CreateCancelResponse extends Response
 {
     private CancelResponse $response;
-
     /**
      * @param CancelResponse $response
      */
@@ -21,17 +20,12 @@ class CreateCancelResponse extends Response
     {
         $this->response = $response;
     }
-
-    public function getResponse(): CancelResponse
+    public function getResponse() : CancelResponse
     {
         return $this->response;
     }
-
-    public function toArray(): array
+    public function toArray() : array
     {
-        return [
-            'status' => $this->response->getStatus(),
-            'statusCode' => $this->response->getStatusCode()->getCode(),
-        ];
+        return ['status' => $this->response->getStatus(), 'statusCode' => $this->response->getStatusCode()->getCode()];
     }
 }

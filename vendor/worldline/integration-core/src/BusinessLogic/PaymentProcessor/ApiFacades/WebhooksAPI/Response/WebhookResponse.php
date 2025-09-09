@@ -1,20 +1,20 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\WebhooksAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\WebhooksAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
 /**
  * Class WebhookResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\WebhooksAPI\Response
+ * @internal
  */
 class WebhookResponse extends Response
 {
     /**
      * @inheritDoc
      */
-    public function toArray(): array
+    public function toArray() : array
     {
         return [];
     }

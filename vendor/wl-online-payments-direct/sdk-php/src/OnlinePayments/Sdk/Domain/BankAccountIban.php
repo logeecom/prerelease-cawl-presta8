@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class BankAccountIban extends DataObject
 {
@@ -15,7 +16,6 @@ class BankAccountIban extends DataObject
      * @var string
      */
     public $iban = null;
-
     /**
      * @return string
      */
@@ -23,7 +23,6 @@ class BankAccountIban extends DataObject
     {
         return $this->iban;
     }
-
     /**
      * @param string
      */
@@ -31,19 +30,17 @@ class BankAccountIban extends DataObject
     {
         $this->iban = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->iban)) {
+        if (!\is_null($this->iban)) {
             $object->iban = $this->iban;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -52,7 +49,7 @@ class BankAccountIban extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'iban')) {
+        if (\property_exists($object, 'iban')) {
             $this->iban = $object->iban;
         }
         return $this;

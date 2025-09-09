@@ -1,23 +1,22 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk;
+namespace CAWL\OnlinePayments\Sdk;
 
-use OnlinePayments\Sdk\Logging\CommunicatorLogger;
-use OnlinePayments\Sdk\Merchant\MerchantClient;
-
+use CAWL\OnlinePayments\Sdk\Logging\CommunicatorLogger;
+use CAWL\OnlinePayments\Sdk\Merchant\MerchantClient;
 /**
  * Payment platform client.
+ * @internal
  */
 class Client extends ApiResource implements ClientInterface
 {
     /** @var CommunicatorInterface */
     private $communicator;
-
     /** @var string */
     private $clientMetaInfo;
-
     /**
      * Construct a new Payment platform API client.
      *
@@ -31,7 +30,6 @@ class Client extends ApiResource implements ClientInterface
         $this->setClientMetaInfo($clientMetaInfo);
         $this->context = array();
     }
-
     /**
      * @return CommunicatorInterface
      */
@@ -39,7 +37,6 @@ class Client extends ApiResource implements ClientInterface
     {
         return $this->communicator;
     }
-
     /**
      * @inheritdoc
      */
@@ -47,7 +44,6 @@ class Client extends ApiResource implements ClientInterface
     {
         $this->getCommunicator()->enableLogging($communicatorLogger);
     }
-
     /**
      * @inheritdoc
      */
@@ -55,16 +51,14 @@ class Client extends ApiResource implements ClientInterface
     {
         $this->getCommunicator()->disableLogging();
     }
-
     /**
      * @inheritdoc
      */
     public function setClientMetaInfo($clientMetaInfo)
     {
-        $this->clientMetaInfo = $clientMetaInfo ? base64_encode($clientMetaInfo) : '';
+        $this->clientMetaInfo = $clientMetaInfo ? \base64_encode($clientMetaInfo) : '';
         return $this;
     }
-
     /**
      * @return string
      */
@@ -72,7 +66,6 @@ class Client extends ApiResource implements ClientInterface
     {
         return $this->clientMetaInfo;
     }
-
     /**
      * @inheritdoc
      */

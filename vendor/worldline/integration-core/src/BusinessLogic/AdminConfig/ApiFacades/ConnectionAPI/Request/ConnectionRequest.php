@@ -1,18 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ConnectionAPI\Request;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ConnectionAPI\Request;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Request\Request;
-use OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
-use OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionMode;
-use OnlinePayments\Core\BusinessLogic\Domain\Connection\Credentials;
-use OnlinePayments\Core\BusinessLogic\Domain\Connection\Exceptions\InvalidConnectionDetailsException;
-use OnlinePayments\Core\BusinessLogic\Domain\Connection\Exceptions\InvalidConnectionModeException;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Request\Request;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionMode;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Credentials;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Exceptions\InvalidConnectionDetailsException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Exceptions\InvalidConnectionModeException;
 /**
  * Class ConnectionRequest
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ConnectionAPI\Request
+ * @internal
  */
 class ConnectionRequest extends Request
 {
@@ -27,7 +27,6 @@ class ConnectionRequest extends Request
     private ?string $liveApiSecret;
     private ?string $liveWebhooksKey;
     private ?string $liveWebhooksSecret;
-
     /**
      * @param string $mode
      * @param string|null $testPspid
@@ -41,19 +40,7 @@ class ConnectionRequest extends Request
      * @param string|null $liveWebhooksKey
      * @param string|null $liveWebhooksSecret
      */
-    public function __construct(
-        string $mode,
-        ?string $testPspid,
-        ?string $testApiKey,
-        ?string $testApiSecret,
-        ?string $testWebhooksKey,
-        ?string $testWebhooksSecret,
-        ?string $livePspid = null,
-        ?string $liveApiKey = null,
-        ?string $liveApiSecret = null,
-        ?string $liveWebhooksKey = null,
-        ?string $liveWebhooksSecret = null
-    )
+    public function __construct(string $mode, ?string $testPspid, ?string $testApiKey, ?string $testApiSecret, ?string $testWebhooksKey, ?string $testWebhooksSecret, ?string $livePspid = null, ?string $liveApiKey = null, ?string $liveApiSecret = null, ?string $liveWebhooksKey = null, ?string $liveWebhooksSecret = null)
     {
         $this->mode = $mode;
         $this->testPspid = $testPspid;
@@ -67,31 +54,14 @@ class ConnectionRequest extends Request
         $this->liveWebhooksKey = $liveWebhooksKey;
         $this->liveWebhooksSecret = $liveWebhooksSecret;
     }
-
     /**
      * @return object|ConnectionDetails
      *
      * @throws InvalidConnectionDetailsException
      * @throws InvalidConnectionModeException
      */
-    public function transformToDomainModel(): object
+    public function transformToDomainModel() : object
     {
-        return new ConnectionDetails(
-            ConnectionMode::parse($this->mode),
-            $this->liveApiKey ? new Credentials(
-                $this->livePspid,
-                $this->liveApiKey,
-                $this->liveApiSecret,
-                $this->liveWebhooksKey,
-                $this->liveWebhooksSecret
-            ) : null,
-            $this->testApiKey ? new Credentials(
-                $this->testPspid,
-                $this->testApiKey,
-                $this->testApiSecret,
-                $this->testWebhooksKey,
-                $this->testWebhooksSecret
-            ) : null
-        );
+        return new ConnectionDetails(ConnectionMode::parse($this->mode), $this->liveApiKey ? new Credentials($this->livePspid, $this->liveApiKey, $this->liveApiSecret, $this->liveWebhooksKey, $this->liveWebhooksSecret) : null, $this->testApiKey ? new Credentials($this->testPspid, $this->testApiKey, $this->testApiSecret, $this->testWebhooksKey, $this->testWebhooksSecret) : null);
     }
 }

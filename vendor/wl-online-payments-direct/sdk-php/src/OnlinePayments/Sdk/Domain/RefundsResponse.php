@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class RefundsResponse extends DataObject
 {
@@ -15,7 +16,6 @@ class RefundsResponse extends DataObject
      * @var RefundResponse[]
      */
     public $refunds = null;
-
     /**
      * @return RefundResponse[]
      */
@@ -23,7 +23,6 @@ class RefundsResponse extends DataObject
     {
         return $this->refunds;
     }
-
     /**
      * @param RefundResponse[]
      */
@@ -31,24 +30,22 @@ class RefundsResponse extends DataObject
     {
         $this->refunds = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->refunds)) {
+        if (!\is_null($this->refunds)) {
             $object->refunds = [];
             foreach ($this->refunds as $element) {
-                if (!is_null($element)) {
+                if (!\is_null($element)) {
                     $object->refunds[] = $element->toObject();
                 }
             }
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -57,9 +54,9 @@ class RefundsResponse extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'refunds')) {
-            if (!is_array($object->refunds) && !is_object($object->refunds)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->refunds, true) . '\' is not an array or object');
+        if (\property_exists($object, 'refunds')) {
+            if (!\is_array($object->refunds) && !\is_object($object->refunds)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->refunds, \true) . '\' is not an array or object');
             }
             $this->refunds = [];
             foreach ($object->refunds as $element) {

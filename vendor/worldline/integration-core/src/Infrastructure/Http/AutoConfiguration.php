@@ -1,19 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Http;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Http;
 
-use OnlinePayments\Core\Infrastructure\Configuration\Configuration;
-use OnlinePayments\Core\Infrastructure\Exceptions\BaseException;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Configuration\Configuration;
+use CAWL\OnlinePayments\Core\Infrastructure\Exceptions\BaseException;
 /**
  * Class AutoConfigurationController.
  *
  * @package OnlinePayments\Core\Infrastructure\Http\Configuration
+ * @internal
  */
 class AutoConfiguration
 {
     const CLASS_NAME = __CLASS__;
-
     /**
      * Process state: Not started.
      */
@@ -30,17 +29,14 @@ class AutoConfiguration
      * Process state: Failed.
      */
     const STATE_FAILED = 'failed';
-
     /**
      * @var Configuration
      */
     private Configuration $configService;
-
     /**
      * @var HttpClient
      */
     private HttpClient $httpClient;
-
     /**
      * AutoConfigurationController constructor.
      *
@@ -52,7 +48,6 @@ class AutoConfiguration
         $this->configService = $configService;
         $this->httpClient = $httpClient;
     }
-
     /**
      * Starts the auto-configuration process.
      *
@@ -61,29 +56,24 @@ class AutoConfiguration
      * @throws BaseException <p>When configuration service did not implement
      *  a method to return auto-configuration URL.</p>
      */
-    public function start(): bool
+    public function start() : bool
     {
         $this->configService->setAutoConfigurationState(self::STATE_STARTED);
         $url = $this->configService->getAutoConfigurationUrl();
         if (!$url) {
             throw new BaseException('Configuration service is not set to return auto-configuration URL');
         }
-
         $this->configService->setAsyncProcessCallHttpMethod(HttpClient::HTTP_METHOD_POST);
         $result = $this->httpClient->autoConfigure(HttpClient::HTTP_METHOD_POST, $url);
-
         if (!$result) {
             $result = $this->httpClient->autoConfigure(HttpClient::HTTP_METHOD_GET, $url);
             if ($result) {
                 $this->configService->setAsyncProcessCallHttpMethod(HttpClient::HTTP_METHOD_GET);
             }
         }
-
         $this->configService->setAutoConfigurationState($result ? self::STATE_SUCCEEDED : self::STATE_FAILED);
-
         return $result;
     }
-
     /**
      * Retrieves the current auto-configuration state.
      *

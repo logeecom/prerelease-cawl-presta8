@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure;
+namespace CAWL\OnlinePayments\Core\Infrastructure;
 
 use InvalidArgumentException;
-use OnlinePayments\Core\Infrastructure\Exceptions\ServiceNotRegisteredException;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Exceptions\ServiceNotRegisteredException;
 /**
  * Class ServiceRegister.
  *
  * @package OnlinePayments\Core\Infrastructure
+ * @internal
  */
 class ServiceRegister
 {
@@ -24,7 +24,6 @@ class ServiceRegister
      * @var array
      */
     protected array $services;
-
     /**
      * ServiceRegister constructor.
      *
@@ -40,24 +39,20 @@ class ServiceRegister
                 $this->register($type, $service);
             }
         }
-
         self::$instance = $this;
     }
-
     /**
      * Getting service register instance
      *
      * @return ServiceRegister
      */
-    public static function getInstance(): ServiceRegister
+    public static function getInstance() : ServiceRegister
     {
         if (self::$instance === null) {
             self::$instance = new ServiceRegister();
         }
-
         return self::$instance;
     }
-
     /**
      * Gets service for specified type.
      *
@@ -74,7 +69,6 @@ class ServiceRegister
         /** @noinspection PhpUnhandledExceptionInspection */
         return self::getInstance()->get($type);
     }
-
     /**
      * Registers service with delegate as second parameter which represents function for creating new service instance.
      *
@@ -84,11 +78,10 @@ class ServiceRegister
      * @throws InvalidArgumentException
      *  In case delegate is not a callable.
      */
-    public static function registerService(string $type, callable $delegate): void
+    public static function registerService(string $type, callable $delegate) : void
     {
         self::getInstance()->register($type, $delegate);
     }
-
     /**
      * Register service class.
      *
@@ -98,15 +91,13 @@ class ServiceRegister
      * @throws InvalidArgumentException
      *  In case delegate is not a callable.
      */
-    protected function register(string $type, $delegate): void
+    protected function register(string $type, $delegate) : void
     {
-        if (!is_callable($delegate)) {
-            throw new InvalidArgumentException("$type delegate is not callable.");
+        if (!\is_callable($delegate)) {
+            throw new InvalidArgumentException("{$type} delegate is not callable.");
         }
-
         $this->services[$type] = $delegate;
     }
-
     /**
      * Getting service instance.
      *
@@ -121,7 +112,6 @@ class ServiceRegister
         if (empty($this->services[$type])) {
             throw new ServiceNotRegisteredException($type);
         }
-
-        return call_user_func($this->services[$type]);
+        return \call_user_func($this->services[$type]);
     }
 }

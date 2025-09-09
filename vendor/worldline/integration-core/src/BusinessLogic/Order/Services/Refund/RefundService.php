@@ -1,26 +1,24 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Order\Services\Refund;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Order\Services\Refund;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Refund\RefundRequest;
-use OnlinePayments\Core\BusinessLogic\Domain\Refund\RefundResponse;
-use OnlinePayments\Core\BusinessLogic\Order\Proxies\RefundProxyInterface;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Refund\RefundRequest;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Refund\RefundResponse;
+use CAWL\OnlinePayments\Core\BusinessLogic\Order\Proxies\RefundProxyInterface;
 /**
  * Class RefundService
  *
  * @package OnlinePayments\Core\BusinessLogic\Order\Services\Refund
+ * @internal
  */
 class RefundService
 {
     private RefundProxyInterface $refundProxy;
-
     public function __construct(RefundProxyInterface $refundProxy)
     {
         $this->refundProxy = $refundProxy;
     }
-
-    public function handle(RefundRequest $request): RefundResponse
+    public function handle(RefundRequest $request) : RefundResponse
     {
         return $this->refundProxy->create($request);
     }

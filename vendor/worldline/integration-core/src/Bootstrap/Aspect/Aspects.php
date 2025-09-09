@@ -1,15 +1,15 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\Aspect;
+namespace CAWL\OnlinePayments\Core\Bootstrap\Aspect;
 
-use OnlinePayments\Core\Infrastructure\ServiceRegister;
-
+use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
 /**
  * Class Aspects
  *
  * @template T
  *
  * @package OnlinePayments\Core\Bootstrap\Aspect
+ * @internal
  */
 class Aspects
 {
@@ -25,25 +25,20 @@ class Aspects
      * @var Aspect
      */
     private Aspect $aspect;
-
     protected function __construct(Aspect $aspect)
     {
         $this->aspect = $aspect;
     }
-
-    public static function run(Aspect $aspect): self
+    public static function run(Aspect $aspect) : self
     {
         return new static($aspect);
     }
-
-    public function andRun(Aspect $aspect): self
+    public function andRun(Aspect $aspect) : self
     {
         $this->aspect = new CompositeAspect($this->aspect);
         $this->aspect->append($aspect);
-
         return $this;
     }
-
     /**
      * @param T $subject
      *
@@ -53,10 +48,8 @@ class Aspects
     {
         $this->subject = $subject;
         $this->subjectClassName = null;
-
         return $this;
     }
-
     /**
      * @param class-string<T> $serviceClass
      *
@@ -66,20 +59,16 @@ class Aspects
     {
         $this->subjectClassName = $serviceClass;
         $this->subject = null;
-
         return $this;
     }
-
     public function __call($methodName, $arguments)
     {
         if ($this->subject) {
             return $this->aspect->applyOn([$this->subject, $methodName], $arguments);
         }
-
-        return $this->aspect->applyOn(function() use ($methodName, $arguments) {
+        return $this->aspect->applyOn(function () use($methodName, $arguments) {
             $subject = ServiceRegister::getService($this->subjectClassName);
-
-            return call_user_func_array([$subject, $methodName], $arguments);
+            return \call_user_func_array([$subject, $methodName], $arguments);
         });
     }
 }

@@ -1,23 +1,24 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Merchant\Tokens;
+namespace CAWL\OnlinePayments\Sdk\Merchant\Tokens;
 
-use OnlinePayments\Sdk\ApiException;
-use OnlinePayments\Sdk\AuthorizationException;
-use OnlinePayments\Sdk\CallContext;
-use OnlinePayments\Sdk\Communication\InvalidResponseException;
-use OnlinePayments\Sdk\Domain\CreateTokenRequest;
-use OnlinePayments\Sdk\Domain\CreatedTokenResponse;
-use OnlinePayments\Sdk\Domain\TokenResponse;
-use OnlinePayments\Sdk\IdempotenceException;
-use OnlinePayments\Sdk\PlatformException;
-use OnlinePayments\Sdk\ReferenceException;
-use OnlinePayments\Sdk\ValidationException;
-
+use CAWL\OnlinePayments\Sdk\ApiException;
+use CAWL\OnlinePayments\Sdk\AuthorizationException;
+use CAWL\OnlinePayments\Sdk\CallContext;
+use CAWL\OnlinePayments\Sdk\Communication\InvalidResponseException;
+use CAWL\OnlinePayments\Sdk\Domain\CreateTokenRequest;
+use CAWL\OnlinePayments\Sdk\Domain\CreatedTokenResponse;
+use CAWL\OnlinePayments\Sdk\Domain\TokenResponse;
+use CAWL\OnlinePayments\Sdk\IdempotenceException;
+use CAWL\OnlinePayments\Sdk\PlatformException;
+use CAWL\OnlinePayments\Sdk\ReferenceException;
+use CAWL\OnlinePayments\Sdk\ValidationException;
 /**
  * Tokens client interface.
+ * @internal
  */
 interface TokensClientInterface
 {
@@ -37,7 +38,6 @@ interface TokensClientInterface
      * @throws InvalidResponseException
      */
     function getToken($tokenId, ?CallContext $callContext = null);
-
     /**
      * Resource /v2/{merchantId}/tokens/{tokenId} - Delete token
      *
@@ -54,7 +54,6 @@ interface TokensClientInterface
      * @throws InvalidResponseException
      */
     function deleteToken($tokenId, ?CallContext $callContext = null);
-
     /**
      * Resource /v2/{merchantId}/tokens - Create token
      *

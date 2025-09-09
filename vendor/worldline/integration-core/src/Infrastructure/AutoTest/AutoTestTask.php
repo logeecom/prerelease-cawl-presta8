@@ -1,16 +1,16 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\AutoTest;
+namespace CAWL\OnlinePayments\Core\Infrastructure\AutoTest;
 
-use OnlinePayments\Core\Infrastructure\Logger\Logger;
-use OnlinePayments\Core\Infrastructure\Serializer\Interfaces\Serializable;
-use OnlinePayments\Core\Infrastructure\Serializer\Serializer;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Task;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Logger\Logger;
+use CAWL\OnlinePayments\Core\Infrastructure\Serializer\Interfaces\Serializable;
+use CAWL\OnlinePayments\Core\Infrastructure\Serializer\Serializer;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Task;
 /**
  * Class AutoTestTask.
  *
  * @package OnlinePayments\Core\Infrastructure\AutoTest
+ * @internal
  */
 class AutoTestTask extends Task
 {
@@ -20,7 +20,6 @@ class AutoTestTask extends Task
      * @var string
      */
     protected string $data;
-
     /**
      * AutoTestTask constructor.
      *
@@ -30,7 +29,6 @@ class AutoTestTask extends Task
     {
         $this->data = $data;
     }
-
     /**
      * Transforms array into an serializable object,
      *
@@ -39,31 +37,28 @@ class AutoTestTask extends Task
      * @return Serializable
      *      Instance of serialized object.
      */
-    public static function fromArray(array $array): Serializable
+    public static function fromArray(array $array) : Serializable
     {
         return new static($array['data']);
     }
-
     /**
      * Transforms serializable object into an array.
      *
      * @return array Array representation of a serializable object.
      */
-    public function toArray(): array
+    public function toArray() : array
     {
         return array('data' => $this->data);
     }
-
     /**
      * String representation of object.
      *
      * @return string The string representation of the object or null.
      */
-    public function serialize(): string
+    public function serialize() : string
     {
         return Serializer::serialize(array($this->data));
     }
-
     /**
      * Constructs the object.
      *
@@ -71,11 +66,10 @@ class AutoTestTask extends Task
      * The string representation of the object.
      * </p>
      */
-    public function unserialize(string $serialized): void
+    public function unserialize(string $serialized) : void
     {
         list($this->data) = Serializer::unserialize($serialized);
     }
-
     /**
      * Runs task logic.
      */
@@ -83,10 +77,8 @@ class AutoTestTask extends Task
     {
         $this->reportProgress(5);
         Logger::logInfo('Auto-test task started');
-
         $this->reportProgress(50);
         Logger::logInfo('Auto-test task parameters', 'Core', [$this->data]);
-
         $this->reportProgress(100);
         Logger::logInfo('Auto-test task ended');
     }

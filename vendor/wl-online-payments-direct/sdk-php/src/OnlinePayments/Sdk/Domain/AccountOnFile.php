@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class AccountOnFile extends DataObject
 {
@@ -15,22 +16,18 @@ class AccountOnFile extends DataObject
      * @var AccountOnFileAttribute[]
      */
     public $attributes = null;
-
     /**
      * @var AccountOnFileDisplayHints
      */
     public $displayHints = null;
-
     /**
      * @var int
      */
     public $id = null;
-
     /**
      * @var int
      */
     public $paymentProductId = null;
-
     /**
      * @return AccountOnFileAttribute[]
      */
@@ -38,7 +35,6 @@ class AccountOnFile extends DataObject
     {
         return $this->attributes;
     }
-
     /**
      * @param AccountOnFileAttribute[]
      */
@@ -46,7 +42,6 @@ class AccountOnFile extends DataObject
     {
         $this->attributes = $value;
     }
-
     /**
      * @return AccountOnFileDisplayHints
      */
@@ -54,7 +49,6 @@ class AccountOnFile extends DataObject
     {
         return $this->displayHints;
     }
-
     /**
      * @param AccountOnFileDisplayHints
      */
@@ -62,7 +56,6 @@ class AccountOnFile extends DataObject
     {
         $this->displayHints = $value;
     }
-
     /**
      * @return int
      */
@@ -70,7 +63,6 @@ class AccountOnFile extends DataObject
     {
         return $this->id;
     }
-
     /**
      * @param int
      */
@@ -78,7 +70,6 @@ class AccountOnFile extends DataObject
     {
         $this->id = $value;
     }
-
     /**
      * @return int
      */
@@ -86,7 +77,6 @@ class AccountOnFile extends DataObject
     {
         return $this->paymentProductId;
     }
-
     /**
      * @param int
      */
@@ -94,33 +84,31 @@ class AccountOnFile extends DataObject
     {
         $this->paymentProductId = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->attributes)) {
+        if (!\is_null($this->attributes)) {
             $object->attributes = [];
             foreach ($this->attributes as $element) {
-                if (!is_null($element)) {
+                if (!\is_null($element)) {
                     $object->attributes[] = $element->toObject();
                 }
             }
         }
-        if (!is_null($this->displayHints)) {
+        if (!\is_null($this->displayHints)) {
             $object->displayHints = $this->displayHints->toObject();
         }
-        if (!is_null($this->id)) {
+        if (!\is_null($this->id)) {
             $object->id = $this->id;
         }
-        if (!is_null($this->paymentProductId)) {
+        if (!\is_null($this->paymentProductId)) {
             $object->paymentProductId = $this->paymentProductId;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -129,9 +117,9 @@ class AccountOnFile extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'attributes')) {
-            if (!is_array($object->attributes) && !is_object($object->attributes)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->attributes, true) . '\' is not an array or object');
+        if (\property_exists($object, 'attributes')) {
+            if (!\is_array($object->attributes) && !\is_object($object->attributes)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->attributes, \true) . '\' is not an array or object');
             }
             $this->attributes = [];
             foreach ($object->attributes as $element) {
@@ -139,17 +127,17 @@ class AccountOnFile extends DataObject
                 $this->attributes[] = $value->fromObject($element);
             }
         }
-        if (property_exists($object, 'displayHints')) {
-            if (!is_object($object->displayHints)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->displayHints, true) . '\' is not an object');
+        if (\property_exists($object, 'displayHints')) {
+            if (!\is_object($object->displayHints)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->displayHints, \true) . '\' is not an object');
             }
             $value = new AccountOnFileDisplayHints();
             $this->displayHints = $value->fromObject($object->displayHints);
         }
-        if (property_exists($object, 'id')) {
+        if (\property_exists($object, 'id')) {
             $this->id = $object->id;
         }
-        if (property_exists($object, 'paymentProductId')) {
+        if (\property_exists($object, 'paymentProductId')) {
             $this->paymentProductId = $object->paymentProductId;
         }
         return $this;

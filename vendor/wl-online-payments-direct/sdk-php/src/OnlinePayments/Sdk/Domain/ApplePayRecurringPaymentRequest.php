@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class ApplePayRecurringPaymentRequest extends DataObject
 {
@@ -15,27 +16,22 @@ class ApplePayRecurringPaymentRequest extends DataObject
      * @var string
      */
     public $billingAgreement = null;
-
     /**
      * @var string
      */
     public $managementUrl = null;
-
     /**
      * @var string
      */
     public $paymentDescription = null;
-
     /**
      * @var ApplePayLineItem
      */
     public $regularBilling = null;
-
     /**
      * @var ApplePayLineItem
      */
     public $trialBilling = null;
-
     /**
      * @return string
      */
@@ -43,7 +39,6 @@ class ApplePayRecurringPaymentRequest extends DataObject
     {
         return $this->billingAgreement;
     }
-
     /**
      * @param string
      */
@@ -51,7 +46,6 @@ class ApplePayRecurringPaymentRequest extends DataObject
     {
         $this->billingAgreement = $value;
     }
-
     /**
      * @return string
      */
@@ -59,7 +53,6 @@ class ApplePayRecurringPaymentRequest extends DataObject
     {
         return $this->managementUrl;
     }
-
     /**
      * @param string
      */
@@ -67,7 +60,6 @@ class ApplePayRecurringPaymentRequest extends DataObject
     {
         $this->managementUrl = $value;
     }
-
     /**
      * @return string
      */
@@ -75,7 +67,6 @@ class ApplePayRecurringPaymentRequest extends DataObject
     {
         return $this->paymentDescription;
     }
-
     /**
      * @param string
      */
@@ -83,7 +74,6 @@ class ApplePayRecurringPaymentRequest extends DataObject
     {
         $this->paymentDescription = $value;
     }
-
     /**
      * @return ApplePayLineItem
      */
@@ -91,7 +81,6 @@ class ApplePayRecurringPaymentRequest extends DataObject
     {
         return $this->regularBilling;
     }
-
     /**
      * @param ApplePayLineItem
      */
@@ -99,7 +88,6 @@ class ApplePayRecurringPaymentRequest extends DataObject
     {
         $this->regularBilling = $value;
     }
-
     /**
      * @return ApplePayLineItem
      */
@@ -107,7 +95,6 @@ class ApplePayRecurringPaymentRequest extends DataObject
     {
         return $this->trialBilling;
     }
-
     /**
      * @param ApplePayLineItem
      */
@@ -115,31 +102,29 @@ class ApplePayRecurringPaymentRequest extends DataObject
     {
         $this->trialBilling = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->billingAgreement)) {
+        if (!\is_null($this->billingAgreement)) {
             $object->billingAgreement = $this->billingAgreement;
         }
-        if (!is_null($this->managementUrl)) {
+        if (!\is_null($this->managementUrl)) {
             $object->managementUrl = $this->managementUrl;
         }
-        if (!is_null($this->paymentDescription)) {
+        if (!\is_null($this->paymentDescription)) {
             $object->paymentDescription = $this->paymentDescription;
         }
-        if (!is_null($this->regularBilling)) {
+        if (!\is_null($this->regularBilling)) {
             $object->regularBilling = $this->regularBilling->toObject();
         }
-        if (!is_null($this->trialBilling)) {
+        if (!\is_null($this->trialBilling)) {
             $object->trialBilling = $this->trialBilling->toObject();
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -148,25 +133,25 @@ class ApplePayRecurringPaymentRequest extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'billingAgreement')) {
+        if (\property_exists($object, 'billingAgreement')) {
             $this->billingAgreement = $object->billingAgreement;
         }
-        if (property_exists($object, 'managementUrl')) {
+        if (\property_exists($object, 'managementUrl')) {
             $this->managementUrl = $object->managementUrl;
         }
-        if (property_exists($object, 'paymentDescription')) {
+        if (\property_exists($object, 'paymentDescription')) {
             $this->paymentDescription = $object->paymentDescription;
         }
-        if (property_exists($object, 'regularBilling')) {
-            if (!is_object($object->regularBilling)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->regularBilling, true) . '\' is not an object');
+        if (\property_exists($object, 'regularBilling')) {
+            if (!\is_object($object->regularBilling)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->regularBilling, \true) . '\' is not an object');
             }
             $value = new ApplePayLineItem();
             $this->regularBilling = $value->fromObject($object->regularBilling);
         }
-        if (property_exists($object, 'trialBilling')) {
-            if (!is_object($object->trialBilling)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->trialBilling, true) . '\' is not an object');
+        if (\property_exists($object, 'trialBilling')) {
+            if (!\is_object($object->trialBilling)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->trialBilling, \true) . '\' is not an object');
             }
             $value = new ApplePayLineItem();
             $this->trialBilling = $value->fromObject($object->trialBilling);

@@ -1,15 +1,15 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces;
 
-use OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\TaskRunnerStatusChangeException;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\TaskRunnerStatusStorageUnavailableException;
-use OnlinePayments\Core\Infrastructure\TaskExecution\TaskRunnerStatus;
-
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\TaskRunnerStatusChangeException;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\TaskRunnerStatusStorageUnavailableException;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\TaskRunnerStatus;
 /**
  * Interface RunnerStatusStorage.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces
+ * @internal
  */
 interface TaskRunnerStatusStorage
 {
@@ -17,15 +17,13 @@ interface TaskRunnerStatusStorage
      * Fully qualified name of this interface.
      */
     const CLASS_NAME = __CLASS__;
-
     /**
      * Gets current task runner status
      *
      * @return TaskRunnerStatus Current runner status
      * @throws TaskRunnerStatusStorageUnavailableException When task storage is not available
      */
-    public function getStatus(): TaskRunnerStatus;
-
+    public function getStatus() : TaskRunnerStatus;
     /**
      * Sets status of task runner to provided status.
      * Setting new task status to nonempty guid must fail if currently set guid is not empty.

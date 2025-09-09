@@ -1,15 +1,16 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk;
+namespace CAWL\OnlinePayments\Sdk;
 
-use OnlinePayments\Sdk\Domain\DataObject;
-
+use CAWL\OnlinePayments\Sdk\Domain\DataObject;
 /**
  * Class ValidationException
  *
  * @package OnlinePayments\Sdk
+ * @internal
  */
 class ValidationException extends ResponseException
 {
@@ -20,7 +21,7 @@ class ValidationException extends ResponseException
      */
     public function __construct($httpStatusCode, DataObject $response, $message = null)
     {
-        if (is_null($message)) {
+        if (\is_null($message)) {
             $message = 'the payment platform returned an incorrect request error response';
         }
         parent::__construct($httpStatusCode, $response, $message);

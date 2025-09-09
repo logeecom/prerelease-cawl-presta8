@@ -1,16 +1,16 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Order\Proxies;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Order\Proxies;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Refund\RefundRequest;
-use OnlinePayments\Core\BusinessLogic\Domain\Refund\RefundResponse;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Refund\RefundRequest;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Refund\RefundResponse;
 /**
  * Interface RefundProxyInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\Order\Proxies
+ * @internal
  */
 interface RefundProxyInterface
 {
-    public function create(RefundRequest $refundRequest): RefundResponse;
+    public function create(RefundRequest $refundRequest) : RefundResponse;
 }

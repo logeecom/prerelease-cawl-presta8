@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Integration\Encryption;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Encryption;
 
 /**
  * Interface Encryptor
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Integration\Encryption
+ * @internal
  */
 interface Encryptor
 {
@@ -16,8 +17,7 @@ interface Encryptor
      *
      * @return string
      */
-    public function encrypt(string $data): string;
-
+    public function encrypt(string $data) : string;
     /**
      * Decrypts a given string.
      *
@@ -25,5 +25,5 @@ interface Encryptor
      *
      * @return string
      */
-    public function decrypt(string $encryptedData): string;
+    public function decrypt(string $encryptedData) : string;
 }

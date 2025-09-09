@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class LengthValidator extends DataObject
 {
@@ -15,12 +16,10 @@ class LengthValidator extends DataObject
      * @var int
      */
     public $maxLength = null;
-
     /**
      * @var int
      */
     public $minLength = null;
-
     /**
      * @return int
      */
@@ -28,7 +27,6 @@ class LengthValidator extends DataObject
     {
         return $this->maxLength;
     }
-
     /**
      * @param int
      */
@@ -36,7 +34,6 @@ class LengthValidator extends DataObject
     {
         $this->maxLength = $value;
     }
-
     /**
      * @return int
      */
@@ -44,7 +41,6 @@ class LengthValidator extends DataObject
     {
         return $this->minLength;
     }
-
     /**
      * @param int
      */
@@ -52,22 +48,20 @@ class LengthValidator extends DataObject
     {
         $this->minLength = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->maxLength)) {
+        if (!\is_null($this->maxLength)) {
             $object->maxLength = $this->maxLength;
         }
-        if (!is_null($this->minLength)) {
+        if (!\is_null($this->minLength)) {
             $object->minLength = $this->minLength;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -76,10 +70,10 @@ class LengthValidator extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'maxLength')) {
+        if (\property_exists($object, 'maxLength')) {
             $this->maxLength = $object->maxLength;
         }
-        if (property_exists($object, 'minLength')) {
+        if (\property_exists($object, 'minLength')) {
             $this->minLength = $object->minLength;
         }
         return $this;

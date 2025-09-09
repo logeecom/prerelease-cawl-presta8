@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\ORM\Interfaces;
+namespace CAWL\OnlinePayments\Core\Infrastructure\ORM\Interfaces;
 
-use OnlinePayments\Core\Infrastructure\ORM\Entity;
-
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
 /**
  * Interface MassInsert.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\Interfaces
+ * @internal
  */
 interface MassInsert extends RepositoryInterface
 {
@@ -18,5 +18,5 @@ interface MassInsert extends RepositoryInterface
      *
      * @return void
      */
-    public function massInsert(array $entities): void;
+    public function massInsert(array $entities) : void;
 }

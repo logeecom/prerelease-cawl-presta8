@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution\TaskEvents;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\TaskEvents;
 
-use OnlinePayments\Core\Infrastructure\Utility\Events\Event;
+use CAWL\OnlinePayments\Core\Infrastructure\Utility\Events\Event;
 use InvalidArgumentException;
-
 /**
  * Class TaskProgressEvent.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\TaskEvents
+ * @internal
  */
 class TaskProgressEvent extends Event
 {
@@ -16,14 +16,12 @@ class TaskProgressEvent extends Event
      * Fully qualified name of this class.
      */
     const CLASS_NAME = __CLASS__;
-
     /**
      * Progress in base points.
      *
      * @var int
      */
     private int $progressPercentBasePoints;
-
     /**
      * TaskProgressEvent constructor.
      *
@@ -35,33 +33,27 @@ class TaskProgressEvent extends Event
      */
     public function __construct(int $progressPercentBasePoints)
     {
-        if (!is_int($progressPercentBasePoints)
-            || $progressPercentBasePoints < 0
-            || 10000 < $progressPercentBasePoints
-        ) {
+        if (!\is_int($progressPercentBasePoints) || $progressPercentBasePoints < 0 || 10000 < $progressPercentBasePoints) {
             throw new InvalidArgumentException('Progress percentage must be value between 0 and 10000.');
         }
-
         $this->progressPercentBasePoints = $progressPercentBasePoints;
     }
-
     /**
      * Gets progress base points in form of integer value between 0 and 10000.
      *
      * @return int Progress base points.
      */
-    public function getProgressBasePoints(): int
+    public function getProgressBasePoints() : int
     {
         return $this->progressPercentBasePoints;
     }
-
     /**
      * Gets progress in percentage rounded to 2 decimals.
      *
      * @return float Progress in percentage rounded to 2 decimals.
      */
-    public function getProgressFormatted(): float
+    public function getProgressFormatted() : float
     {
-        return round($this->progressPercentBasePoints / 100, 2);
+        return \round($this->progressPercentBasePoints / 100, 2);
     }
 }

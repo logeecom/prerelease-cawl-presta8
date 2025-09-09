@@ -1,22 +1,21 @@
 <?php
-namespace OnlinePayments\Sdk\Communication;
+
+namespace CAWL\OnlinePayments\Sdk\Communication;
 
 /**
  * Class ResponseClassMap
  *
  * @package OnlinePayments\Sdk\Communication
+ * @internal
  */
 class ResponseClassMap
 {
     /** @var string */
     public $defaultSuccessResponseClassName = '';
-
     /** @var string */
     public $defaultErrorResponseClassName = '';
-
     /** @var string[]  */
     private $responseClassNamesByHttpStatusCode = array();
-
     /**
      * @param int $httpStatusCode
      * @param string $responseClassName
@@ -27,14 +26,13 @@ class ResponseClassMap
         $this->responseClassNamesByHttpStatusCode[$httpStatusCode] = $responseClassName;
         return $this;
     }
-
     /**
      * @param int $httpStatusCode
      * @return string
      */
     public function getResponseClassName($httpStatusCode)
     {
-        if (array_key_exists($httpStatusCode, $this->responseClassNamesByHttpStatusCode)) {
+        if (\array_key_exists($httpStatusCode, $this->responseClassNamesByHttpStatusCode)) {
             return $this->responseClassNamesByHttpStatusCode[$httpStatusCode];
         }
         if ($httpStatusCode < 400) {

@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Payment;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
 /**
  * Class PaymentDetails.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Payment
+ * @internal
  */
 class PaymentDetails
 {
@@ -22,19 +22,8 @@ class PaymentDetails
     private ?string $status;
     /** @var PaymentOperation[] */
     private array $operations;
-
-    public function __construct(
-        StatusCode $statusCode,
-        Amount $amount,
-        ?string $tokenId,
-        ?PaymentAmounts $amounts = null,
-        bool $fullyPaid = false,
-        string $paymentMethod = '',
-        ?StatusOutput $statusOutput = null,
-        ?PaymentSpecificOutput $paymentSpecificOutput = null,
-        ?string $status = null,
-        $operations = []
-    ) {
+    public function __construct(StatusCode $statusCode, Amount $amount, ?string $tokenId, ?PaymentAmounts $amounts = null, bool $fullyPaid = \false, string $paymentMethod = '', ?StatusOutput $statusOutput = null, ?PaymentSpecificOutput $paymentSpecificOutput = null, ?string $status = null, $operations = [])
+    {
         $this->statusCode = $statusCode;
         $this->amount = $amount;
         $this->tokenId = $tokenId;
@@ -46,53 +35,43 @@ class PaymentDetails
         $this->status = $status;
         $this->operations = $operations;
     }
-
-    public function getStatusCode(): StatusCode
+    public function getStatusCode() : StatusCode
     {
         return $this->statusCode;
     }
-
-    public function getAmount(): Amount
+    public function getAmount() : Amount
     {
         return $this->amount;
     }
-
-    public function getTokenId(): ?string
+    public function getTokenId() : ?string
     {
         return $this->tokenId;
     }
-
-    public function getAmounts(): ?PaymentAmounts
+    public function getAmounts() : ?PaymentAmounts
     {
         return $this->amounts;
     }
-
-    public function isFullyPaid(): bool
+    public function isFullyPaid() : bool
     {
         return $this->fullyPaid;
     }
-
-    public function getPaymentMethod(): string
+    public function getPaymentMethod() : string
     {
         return $this->paymentMethod;
     }
-
-    public function getStatusOutput(): ?StatusOutput
+    public function getStatusOutput() : ?StatusOutput
     {
         return $this->statusOutput;
     }
-
-    public function getPaymentSpecificOutput(): ?PaymentSpecificOutput
+    public function getPaymentSpecificOutput() : ?PaymentSpecificOutput
     {
         return $this->paymentSpecificOutput;
     }
-
-    public function getStatus(): ?string
+    public function getStatus() : ?string
     {
         return $this->status;
     }
-
-    public function getOperations(): array
+    public function getOperations() : array
     {
         return $this->operations;
     }

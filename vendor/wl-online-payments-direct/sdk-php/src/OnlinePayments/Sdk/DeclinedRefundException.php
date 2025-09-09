@@ -1,17 +1,18 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk;
+namespace CAWL\OnlinePayments\Sdk;
 
-use OnlinePayments\Sdk\Domain\DataObject;
-use OnlinePayments\Sdk\Domain\RefundErrorResponse;
-use OnlinePayments\Sdk\Domain\RefundResponse;
-
+use CAWL\OnlinePayments\Sdk\Domain\DataObject;
+use CAWL\OnlinePayments\Sdk\Domain\RefundErrorResponse;
+use CAWL\OnlinePayments\Sdk\Domain\RefundResponse;
 /**
  * Class DeclinedRefundException
  *
  * @package OnlinePayments\Sdk
+ * @internal
  */
 class DeclinedRefundException extends ResponseException
 {
@@ -22,32 +23,30 @@ class DeclinedRefundException extends ResponseException
      */
     public function __construct($httpStatusCode, DataObject $response, $message = null)
     {
-        if (is_null($message)) {
+        if (\is_null($message)) {
             $message = DeclinedRefundException::buildMessage($response);
         }
         parent::__construct($httpStatusCode, $response, $message);
     }
-
     private static function buildMessage(DataObject $response)
     {
         if ($response instanceof RefundErrorResponse && $response->refundResult != null) {
             $refundResult = $response->refundResult;
-            return "declined refund '$refundResult->id' with status '$refundResult->status'";
+            return "declined refund '{$refundResult->id}' with status '{$refundResult->status}'";
         }
         return 'the payment platform returned a declined refund response';
     }
-
     /**
      * @return RefundResponse
      */
     public function getRefundResponse()
     {
-        $responseVariables = get_object_vars($this->getResponse());
-        if (!array_key_exists('refundResult', $responseVariables)) {
+        $responseVariables = \get_object_vars($this->getResponse());
+        if (!\array_key_exists('refundResult', $responseVariables)) {
             return new RefundResponse();
         }
         $refundResult = $responseVariables['refundResult'];
-        if (!($refundResult instanceof RefundResponse)) {
+        if (!$refundResult instanceof RefundResponse) {
             return new RefundResponse();
         }
         return $refundResult;

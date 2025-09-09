@@ -1,19 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Order\ApiFacades\RefundAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Order\ApiFacades\RefundAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-use OnlinePayments\Core\BusinessLogic\Domain\Refund\RefundResponse;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Refund\RefundResponse;
 /**
  * Class CreateRefundResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\RefundAPI\Response
+ * @internal
  */
 class CreateRefundResponse extends Response
 {
     private RefundResponse $response;
-
     /**
      * @param RefundResponse $response
      */
@@ -21,17 +20,12 @@ class CreateRefundResponse extends Response
     {
         $this->response = $response;
     }
-
-    public function getResponse(): RefundResponse
+    public function getResponse() : RefundResponse
     {
         return $this->response;
     }
-
-    public function toArray(): array
+    public function toArray() : array
     {
-        return [
-            'status' => $this->response->getStatus(),
-            'statusCode' => $this->response->getStatusCode()->getCode(),
-        ];
+        return ['status' => $this->response->getStatus(), 'statusCode' => $this->response->getStatusCode()->getCode()];
     }
 }

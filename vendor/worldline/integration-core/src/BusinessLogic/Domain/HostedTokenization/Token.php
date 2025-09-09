@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization;
 
 /**
  * Class Token.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization
+ * @internal
  */
 class Token
 {
@@ -14,42 +15,31 @@ class Token
     private string $productId;
     private string $cardNumber;
     private string $expiryDate;
-
-    public function __construct(
-        string $customerId,
-        string $tokenId,
-        string $productId,
-        string $cardNumber,
-        string $expiryDate
-    ) {
+    public function __construct(string $customerId, string $tokenId, string $productId, string $cardNumber, string $expiryDate)
+    {
         $this->customerId = $customerId;
         $this->tokenId = $tokenId;
         $this->productId = $productId;
         $this->cardNumber = $cardNumber;
         $this->expiryDate = $expiryDate;
     }
-
-    public function getCustomerId(): string
+    public function getCustomerId() : string
     {
         return $this->customerId;
     }
-
-    public function getTokenId(): string
+    public function getTokenId() : string
     {
         return $this->tokenId;
     }
-
-    public function getProductId(): string
+    public function getProductId() : string
     {
         return $this->productId;
     }
-
-    public function getCardNumber(): string
+    public function getCardNumber() : string
     {
         return $this->cardNumber;
     }
-
-    public function getExpiryDate(): string
+    public function getExpiryDate() : string
     {
         return $this->expiryDate;
     }

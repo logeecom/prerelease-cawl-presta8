@@ -1,12 +1,13 @@
 <?php
-namespace OnlinePayments\Sdk\Logging;
+
+namespace CAWL\OnlinePayments\Sdk\Logging;
 
 use Exception;
-
 /**
  * Class CommunicatorLogger
  *
  * @package OnlinePayments\Sdk\Logging
+ * @internal
  */
 interface CommunicatorLogger
 {
@@ -14,7 +15,6 @@ interface CommunicatorLogger
      * @param string $message
      */
     public function log($message);
-
     /**
      * @param string $message
      * @param Exception $exception

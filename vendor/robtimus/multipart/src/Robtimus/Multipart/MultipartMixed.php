@@ -1,5 +1,6 @@
 <?php
-namespace Robtimus\Multipart;
+
+namespace CAWL\Robtimus\Multipart;
 
 /**
  * A multipart/mixed object.
@@ -7,6 +8,7 @@ namespace Robtimus\Multipart;
  * @package Robtimus\Multipart
  * @author  Rob Spoor
  * @license https://www.apache.org/licenses/LICENSE-2.0.txt The Apache Software License, Version 2.0
+ * @internal
  */
 final class MultipartMixed extends Multipart
 {
@@ -19,7 +21,6 @@ final class MultipartMixed extends Multipart
     {
         parent::__construct($boundary, 'multipart/mixed');
     }
-
     /**
      * Adds a nested multipart.
      *
@@ -32,7 +33,6 @@ final class MultipartMixed extends Multipart
         $this->addNestedMultipart($multipart);
         return $this;
     }
-
     /**
      * Adds a part.
      *
@@ -52,7 +52,6 @@ final class MultipartMixed extends Multipart
         Util::validateNonEmptyString($contentType, '$contentType');
         Util::validateInt($contentLength, '$contentLength');
         Util::validateString($contentTransferEncoding, '$contentTransferEncoding');
-
         $this->startPart();
         $this->addContentType($contentType);
         if ($contentTransferEncoding !== '') {
@@ -61,10 +60,8 @@ final class MultipartMixed extends Multipart
         $this->endHeaders();
         $this->addContent($content, $contentLength);
         $this->endPart();
-
         return $this;
     }
-
     /**
      * Adds a file attachment.
      *
@@ -86,7 +83,6 @@ final class MultipartMixed extends Multipart
         Util::validateNonEmptyString($contentType, '$contentType');
         Util::validateInt($contentLength, '$contentLength');
         Util::validateString($contentTransferEncoding, '$contentTransferEncoding');
-
         $this->startPart();
         $this->addContentType($contentType);
         if ($contentTransferEncoding !== '') {
@@ -96,7 +92,6 @@ final class MultipartMixed extends Multipart
         $this->endHeaders();
         $this->addContent($content, $contentLength);
         $this->endPart();
-
         return $this;
     }
 }

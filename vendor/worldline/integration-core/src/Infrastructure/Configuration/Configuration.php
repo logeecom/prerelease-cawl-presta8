@@ -1,17 +1,17 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Configuration;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Configuration;
 
-use OnlinePayments\Core\Infrastructure\Http\DTO\Options;
-use OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
-use OnlinePayments\Core\Infrastructure\ServiceRegister;
-use OnlinePayments\Core\Infrastructure\Singleton;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\TaskRunnerStatusStorageUnavailableException;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Http\DTO\Options;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
+use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
+use CAWL\OnlinePayments\Core\Infrastructure\Singleton;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\TaskRunnerStatusStorageUnavailableException;
 /**
  * Class Configuration.
  *
  * @package OnlinePayments\Core\Infrastructure\Configuration
+ * @internal
  */
 abstract class Configuration extends Singleton
 {
@@ -19,67 +19,46 @@ abstract class Configuration extends Singleton
      * Fully qualified name of this interface.
      */
     const CLASS_NAME = __CLASS__;
-
     /**
      * Minimal log level
      */
     const MIN_LOG_LEVEL = 2;
-
     /**
      * Default maximum number of tasks that can run in the same time
      */
     const DEFAULT_MAX_STARTED_TASK_LIMIT = 64;
-
     /**
      * Default batch size for the asynchronous execution.
      */
     const DEFAULT_ASYNC_STARTER_BATCH_SIZE = 8;
-
     /**
      * Default HTTP method to use for async call.
      */
     const ASYNC_CALL_METHOD = 'POST';
-
     /**
      * List of global (non-user specific) values
      *
      * @var string[]
      */
-    protected static array $globalConfigValues = [
-        'taskRunnerStatus',
-        'isTaskRunnerHalted',
-        'maxTaskInactivityPeriod',
-        'maxTaskExecutionRetries',
-        'maxStartedTasksLimit',
-        'taskRunnerMaxAliveTime',
-        'taskRunnerWakeupDelay',
-        'asyncStarterBatchSize',
-        'asyncRequestTimeout',
-        'syncRequestTimeout',
-        'asyncRequestWithProgress'
-    ];
-
+    protected static array $globalConfigValues = ['taskRunnerStatus', 'isTaskRunnerHalted', 'maxTaskInactivityPeriod', 'maxTaskExecutionRetries', 'maxStartedTasksLimit', 'taskRunnerMaxAliveTime', 'taskRunnerWakeupDelay', 'asyncStarterBatchSize', 'asyncRequestTimeout', 'syncRequestTimeout', 'asyncRequestWithProgress'];
     /**
      * Singleton instance of this class.
      *
      * @var ?Singleton
      */
     protected static ?Singleton $instance;
-
     /**
      * Instance of the configuration manager.
      *
      * @var ?ConfigurationManager Configuration manager.
      */
     protected ?ConfigurationManager $configurationManager = null;
-
     /**
      * Retrieves integration name.
      *
      * @return string Integration name.
      */
-    abstract public function getIntegrationName(): string;
-
+    public abstract function getIntegrationName() : string;
     /**
      * Returns async process starter url, always in http.
      *
@@ -87,8 +66,7 @@ abstract class Configuration extends Singleton
      *
      * @return string Formatted URL of async process starter endpoint.
      */
-    abstract public function getAsyncProcessUrl(string $guid): string;
-
+    public abstract function getAsyncProcessUrl(string $guid) : string;
     /**
      * Saves min log level in integration database.
      *
@@ -96,11 +74,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function saveMinLogLevel(int $minLogLevel): void
+    public function saveMinLogLevel(int $minLogLevel) : void
     {
         $this->saveConfigValue('minLogLevel', $minLogLevel);
     }
-
     /**
      * Retrieves min log level from integration database.
      *
@@ -108,11 +85,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function getMinLogLevel(): int
+    public function getMinLogLevel() : int
     {
         return $this->getConfigValue('minLogLevel', static::MIN_LOG_LEVEL);
     }
-
     /**
      * Set default logger status (enabled/disabled).
      *
@@ -124,7 +100,6 @@ abstract class Configuration extends Singleton
     {
         $this->saveConfigValue('defaultLoggerEnabled', $status);
     }
-
     /**
      * Return whether default logger is enabled or not.
      *
@@ -132,11 +107,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function isDefaultLoggerEnabled(): bool
+    public function isDefaultLoggerEnabled() : bool
     {
-        return $this->getConfigValue('defaultLoggerEnabled', false);
+        return $this->getConfigValue('defaultLoggerEnabled', \false);
     }
-
     /**
      * Sets debug mode status (enabled/disabled).
      *
@@ -146,9 +120,8 @@ abstract class Configuration extends Singleton
      */
     public function setDebugModeEnabled(bool $status)
     {
-        $this->saveConfigValue('debugModeEnabled', (bool)$status);
+        $this->saveConfigValue('debugModeEnabled', (bool) $status);
     }
-
     /**
      * Returns debug mode status.
      *
@@ -156,11 +129,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function isDebugModeEnabled(): bool
+    public function isDebugModeEnabled() : bool
     {
-        return $this->getConfigValue('debugModeEnabled', false);
+        return $this->getConfigValue('debugModeEnabled', \false);
     }
-
     /**
      * Returns synchronous process timeout in milliseconds.
      *
@@ -168,11 +140,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function getSyncRequestTimeout(): ?int
+    public function getSyncRequestTimeout() : ?int
     {
         return $this->getConfigValue('syncRequestTimeout');
     }
-
     /**
      * Gets maximal time in seconds allowed for runner instance to stay in alive (running) status. After this period
      * system will automatically start new runner instance and shutdown old one. Return null to use default system
@@ -185,7 +156,6 @@ abstract class Configuration extends Singleton
     {
         return $this->getConfigValue('taskRunnerMaxAliveTime');
     }
-
     /**
      * Sets max alive time.
      *
@@ -197,7 +167,6 @@ abstract class Configuration extends Singleton
     {
         $this->saveConfigValue('taskRunnerMaxAliveTime', $maxAliveTime);
     }
-
     /**
      * Sets synchronous process timeout in milliseconds.
      *
@@ -205,11 +174,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function setSyncRequestTimeout(int $timeout): void
+    public function setSyncRequestTimeout(int $timeout) : void
     {
         $this->saveConfigValue('syncRequestTimeout', $timeout);
     }
-
     /**
      * Returns async process timeout in milliseconds.
      *
@@ -217,11 +185,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function getAsyncRequestTimeout(): ?int
+    public function getAsyncRequestTimeout() : ?int
     {
         return $this->getConfigValue('asyncRequestTimeout');
     }
-
     /**
      * Sets async process timeout in milliseconds.
      *
@@ -229,21 +196,19 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function setAsyncRequestTimeout(int $timeout): void
+    public function setAsyncRequestTimeout(int $timeout) : void
     {
         $this->saveConfigValue('asyncRequestTimeout', $timeout);
     }
-
     /**
      * Gets auto-configuration controller URL.
      *
      * @return ?string Auto-configuration URL.
      */
-    public function getAutoConfigurationUrl(): ?string
+    public function getAutoConfigurationUrl() : ?string
     {
         return $this->getAsyncProcessUrl('auto-configure');
     }
-
     /**
      * Sets the HTTP method to be used for the async call.
      *
@@ -251,11 +216,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function setAsyncProcessCallHttpMethod(string $method): void
+    public function setAsyncProcessCallHttpMethod(string $method) : void
     {
         $this->saveConfigValue('asyncProcessCallHttpMethod', $method);
     }
-
     /**
      * Sets config value for task runner halted flag.
      *
@@ -263,11 +227,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function setTaskRunnerHalted(bool $isHalted): void
+    public function setTaskRunnerHalted(bool $isHalted) : void
     {
         $this->saveConfigValue('isTaskRunnerHalted', $isHalted);
     }
-
     /**
      * Retrieves config value that indicates whether task runner is halted or not.
      *
@@ -275,11 +238,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function isTaskRunnerHalted(): bool
+    public function isTaskRunnerHalted() : bool
     {
-        return (bool)$this->getConfigValue('isTaskRunnerHalted', false);
+        return (bool) $this->getConfigValue('isTaskRunnerHalted', \false);
     }
-
     /**
      * Gets the number of maximum allowed started task at the point in time. This number will determine how many tasks
      * can be in "in_progress" status at the same time.
@@ -288,22 +250,20 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function getMaxStartedTasksLimit(): int
+    public function getMaxStartedTasksLimit() : int
     {
         return $this->getConfigValue('maxStartedTasksLimit', static::DEFAULT_MAX_STARTED_TASK_LIMIT);
     }
-
     /**
      * Returns task runner status information
      *
      * @return array Guid and timestamp information
      * @throws QueryFilterInvalidParamException
      */
-    public function getTaskRunnerStatus(): array
+    public function getTaskRunnerStatus() : array
     {
         return $this->getConfigValue('taskRunnerStatus', []);
     }
-
     /**
      * Sets task runner status information as JSON encoded string.
      *
@@ -313,16 +273,14 @@ abstract class Configuration extends Singleton
      * @throws TaskRunnerStatusStorageUnavailableException
      * @throws QueryFilterInvalidParamException
      */
-    public function setTaskRunnerStatus(string $guid, ?int $timestamp): void
+    public function setTaskRunnerStatus(string $guid, ?int $timestamp) : void
     {
         $taskRunnerStatus = ['guid' => $guid, 'timestamp' => $timestamp];
         $config = $this->saveConfigValue('taskRunnerStatus', $taskRunnerStatus);
-
         if (!$config || !$config->getId()) {
             throw new TaskRunnerStatusStorageUnavailableException('Task runner status storage is not available.');
         }
     }
-
     /**
      * Gets maximum number of failed task execution retries. System will retry task execution in case of error until
      * this number is reached. Return null to use default system value (5).
@@ -331,11 +289,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function getMaxTaskExecutionRetries(): ?int
+    public function getMaxTaskExecutionRetries() : ?int
     {
         return $this->getConfigValue('maxTaskExecutionRetries');
     }
-
     /**
      * Sets max task execution retries.
      *
@@ -347,7 +304,6 @@ abstract class Configuration extends Singleton
     {
         $this->saveConfigValue('maxTaskExecutionRetries', $maxRetries);
     }
-
     /**
      * Gets max inactivity period for a task in seconds. After inactivity period is passed, system will fail such tasks
      * as expired. Return null to use default system value (30).
@@ -356,11 +312,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function getMaxTaskInactivityPeriod(): ?int
+    public function getMaxTaskInactivityPeriod() : ?int
     {
         return $this->getConfigValue('maxTaskInactivityPeriod');
     }
-
     /**
      * Sets max task inactivity period.
      *
@@ -372,7 +327,6 @@ abstract class Configuration extends Singleton
     {
         $this->saveConfigValue('maxTaskInactivityPeriod', $maxInactivityPeriod);
     }
-
     /**
      * Automatic task runner wakeup delay in seconds. Task runner will sleep at the end of its lifecycle for this value
      * seconds before it sends wakeup signal for a new lifecycle. Return null to use default system value (10).
@@ -381,11 +335,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function getTaskRunnerWakeupDelay(): ?int
+    public function getTaskRunnerWakeupDelay() : ?int
     {
         return $this->getConfigValue('taskRunnerWakeupDelay');
     }
-
     /**
      * Sets task runner wakeup delay.
      *
@@ -397,7 +350,6 @@ abstract class Configuration extends Singleton
     {
         $this->saveConfigValue('taskRunnerWakeupDelay', $delay);
     }
-
     /**
      * Sets the number of maximum allowed started task at the point in time. This number will determine how many tasks
      * can be in "in_progress" status at the same time.
@@ -410,7 +362,6 @@ abstract class Configuration extends Singleton
     {
         $this->saveConfigValue('maxStartedTasksLimit', $limit);
     }
-
     /**
      * Retrieves async starter batch size.
      *
@@ -418,11 +369,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function getAsyncStarterBatchSize(): int
+    public function getAsyncStarterBatchSize() : int
     {
         return $this->getConfigValue('asyncStarterBatchSize', static::DEFAULT_ASYNC_STARTER_BATCH_SIZE);
     }
-
     /**
      * Sets async process batch size.
      *
@@ -434,18 +384,16 @@ abstract class Configuration extends Singleton
     {
         $this->saveConfigValue('asyncStarterBatchSize', $size);
     }
-
     /**
      * Returns current HTTP method used for the async call.
      *
      * @return string The async call HTTP method (GET or POST).
      * @throws QueryFilterInvalidParamException
      */
-    public function getAsyncProcessCallHttpMethod(): string
+    public function getAsyncProcessCallHttpMethod() : string
     {
         return $this->getConfigValue('asyncProcessCallHttpMethod', static::ASYNC_CALL_METHOD);
     }
-
     /**
      * Sets current auto-configuration state.
      *
@@ -453,11 +401,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function setAutoConfigurationState(string $state): void
+    public function setAutoConfigurationState(string $state) : void
     {
         $this->saveConfigValue('autoConfigurationState', $state);
     }
-
     /**
      * Save config value.
      *
@@ -468,12 +415,11 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    protected function saveConfigValue(string $name, $value): ConfigEntity
+    protected function saveConfigValue(string $name, $value) : ConfigEntity
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         return $this->getConfigurationManager()->saveConfigValue($name, $value, $this->isContextSpecific($name));
     }
-
     /**
      * Retrieves saved config value.
      *
@@ -489,7 +435,6 @@ abstract class Configuration extends Singleton
         /** @noinspection PhpUnhandledExceptionInspection */
         return $this->getConfigurationManager()->getConfigValue($name, $default, $this->isContextSpecific($name));
     }
-
     /**
      * Removes configuration entity.
      *
@@ -497,12 +442,11 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    protected function deleteConfig(string $name): void
+    protected function deleteConfig(string $name) : void
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         $this->getConfigurationManager()->deleteConfigEntity($name, $this->isContextSpecific($name));
     }
-
     /**
      * Gets current auto-configuration state.
      *
@@ -510,11 +454,10 @@ abstract class Configuration extends Singleton
      *
      * @throws QueryFilterInvalidParamException
      */
-    public function getAutoConfigurationState(): string
+    public function getAutoConfigurationState() : string
     {
         return $this->getConfigValue('autoConfigurationState', '');
     }
-
     /**
      * Gets current HTTP configuration options for given domain.
      *
@@ -523,16 +466,14 @@ abstract class Configuration extends Singleton
      * @return Options[]
      * @throws QueryFilterInvalidParamException
      */
-    public function getHttpConfigurationOptions(string $domain): array
+    public function getHttpConfigurationOptions(string $domain) : array
     {
-        $data = json_decode($this->getConfigValue('httpConfigurationOptions', '[]'), true);
+        $data = \json_decode($this->getConfigValue('httpConfigurationOptions', '[]'), \true);
         if (isset($data[$domain])) {
             return Options::fromBatch($data[$domain]);
         }
-
         return [];
     }
-
     /**
      * Sets HTTP configuration options for given domain.
      *
@@ -545,15 +486,13 @@ abstract class Configuration extends Singleton
     public function setHttpConfigurationOptions(string $domain, array $options)
     {
         // get all current options and append new ones for given domain
-        $data = json_decode($this->getConfigValue('httpConfigurationOptions', '[]'), true);
+        $data = \json_decode($this->getConfigValue('httpConfigurationOptions', '[]'), \true);
         $data[$domain] = [];
         foreach ($options as $option) {
             $data[$domain][] = $option->toArray();
         }
-
-        $this->saveConfigValue('httpConfigurationOptions', json_encode($data));
+        $this->saveConfigValue('httpConfigurationOptions', \json_encode($data));
     }
-
     /**
      * Sets the auto-test mode flag.
      *
@@ -563,17 +502,15 @@ abstract class Configuration extends Singleton
     {
         $this->saveConfigValue('autoTestMode', $status);
     }
-
     /**
      * Returns whether the auto-test mode is active.
      *
      * @return bool TRUE if the auto-test mode is active; otherwise, FALSE.
      */
-    public function isAutoTestMode(): bool
+    public function isAutoTestMode() : bool
     {
-        return (bool)$this->getConfigValue('autoTestMode', false);
+        return (bool) $this->getConfigValue('autoTestMode', \false);
     }
-
     /**
      * Determines whether the configuration entry is system specific.
      *
@@ -581,22 +518,20 @@ abstract class Configuration extends Singleton
      *
      * @return bool
      */
-    protected function isContextSpecific(string $name): bool
+    protected function isContextSpecific(string $name) : bool
     {
-        return !in_array($name, static::$globalConfigValues, true);
+        return !\in_array($name, static::$globalConfigValues, \true);
     }
-
     /**
      * Retrieves configuration manager.
      *
      * @return ConfigurationManager Configuration manager instance.
      */
-    protected function getConfigurationManager(): ConfigurationManager
+    protected function getConfigurationManager() : ConfigurationManager
     {
         if ($this->configurationManager === null) {
             $this->configurationManager = ServiceRegister::getService(ConfigurationManager::CLASS_NAME);
         }
-
         return $this->configurationManager;
     }
 }

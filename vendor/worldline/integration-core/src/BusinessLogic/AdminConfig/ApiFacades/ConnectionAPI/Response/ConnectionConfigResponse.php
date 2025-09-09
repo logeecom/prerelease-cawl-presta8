@@ -1,19 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ConnectionAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ConnectionAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-use OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
 /**
  * Class ConnectionConfigResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ConnectionAPI\Response
+ * @internal
  */
 class ConnectionConfigResponse extends Response
 {
     private ?ConnectionDetails $connection;
-
     /**
      * @param ConnectionDetails|null $connection
      */
@@ -21,39 +20,11 @@ class ConnectionConfigResponse extends Response
     {
         $this->connection = $connection;
     }
-
-    public function toArray(): array
+    public function toArray() : array
     {
         if (!$this->connection) {
             return [];
         }
-
-        return [
-            'mode' => (string)$this->connection->getMode(),
-            'sandboxData' => [
-                'pspid' => $this->connection->getTestCredentials() ?
-                    $this->connection->getTestCredentials()->getPspid() : '',
-                'apiKey' => $this->connection->getTestCredentials() ?
-                    $this->connection->getTestCredentials()->getApiKey() : '',
-                'apiSecret' => $this->connection->getTestCredentials() ?
-                    $this->connection->getTestCredentials()->getApiSecret() : '',
-                'webhooksKey' => $this->connection->getTestCredentials() ?
-                    $this->connection->getTestCredentials()->getWebhookKey() : '',
-                'webhooksSecret' => $this->connection->getTestCredentials() ?
-                    $this->connection->getTestCredentials()->getWebhookSecret() : '',
-            ],
-            'liveData' => [
-                'pspid' => $this->connection->getLiveCredentials() ?
-                    $this->connection->getLiveCredentials()->getPspid() : '',
-                'apiKey' => $this->connection->getLiveCredentials() ?
-                    $this->connection->getLiveCredentials()->getApiKey() : '',
-                'apiSecret' => $this->connection->getLiveCredentials() ?
-                    $this->connection->getLiveCredentials()->getApiSecret() : '',
-                'webhooksKey' =>  $this->connection->getLiveCredentials() ?
-                    $this->connection->getLiveCredentials()->getWebhookKey() : null,
-                'webhooksSecret' => $this->connection->getLiveCredentials() ?
-                    $this->connection->getLiveCredentials()->getWebhookSecret() : null,
-            ]
-        ];
+        return ['mode' => (string) $this->connection->getMode(), 'sandboxData' => ['pspid' => $this->connection->getTestCredentials() ? $this->connection->getTestCredentials()->getPspid() : '', 'apiKey' => $this->connection->getTestCredentials() ? $this->connection->getTestCredentials()->getApiKey() : '', 'apiSecret' => $this->connection->getTestCredentials() ? $this->connection->getTestCredentials()->getApiSecret() : '', 'webhooksKey' => $this->connection->getTestCredentials() ? $this->connection->getTestCredentials()->getWebhookKey() : '', 'webhooksSecret' => $this->connection->getTestCredentials() ? $this->connection->getTestCredentials()->getWebhookSecret() : ''], 'liveData' => ['pspid' => $this->connection->getLiveCredentials() ? $this->connection->getLiveCredentials()->getPspid() : '', 'apiKey' => $this->connection->getLiveCredentials() ? $this->connection->getLiveCredentials()->getApiKey() : '', 'apiSecret' => $this->connection->getLiveCredentials() ? $this->connection->getLiveCredentials()->getApiSecret() : '', 'webhooksKey' => $this->connection->getLiveCredentials() ? $this->connection->getLiveCredentials()->getWebhookKey() : null, 'webhooksSecret' => $this->connection->getLiveCredentials() ? $this->connection->getLiveCredentials()->getWebhookSecret() : null]];
     }
 }

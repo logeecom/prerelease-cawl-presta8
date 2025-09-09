@@ -1,32 +1,29 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\ApiFacades\Order\Proxies\Transformers;
+namespace CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\Order\Proxies\Transformers;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Capture\CaptureRequest;
-use OnlinePayments\Sdk\Domain\CapturePaymentRequest;
-use OnlinePayments\Sdk\Domain\OperationPaymentReferences;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Capture\CaptureRequest;
+use CAWL\OnlinePayments\Sdk\Domain\CapturePaymentRequest;
+use CAWL\OnlinePayments\Sdk\Domain\OperationPaymentReferences;
 /**
  * CreateCaptureRequestTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Order\Proxies\Transformers
+ * @internal
  */
 class CreateCaptureRequestTransformer
 {
-    public static function transform(CaptureRequest $captureRequest): CapturePaymentRequest
+    public static function transform(CaptureRequest $captureRequest) : CapturePaymentRequest
     {
         $sdkRequest = new CapturePaymentRequest();
-
         if ($captureRequest->getAmount()) {
             $sdkRequest->setAmount($captureRequest->getAmount()->getValue());
         }
-
         if ($captureRequest->getMerchantReference()) {
             $references = new OperationPaymentReferences();
             $references->setMerchantReference($captureRequest->getMerchantReference());
             $sdkRequest->setOperationReferences($references);
         }
-
         return $sdkRequest;
     }
 }

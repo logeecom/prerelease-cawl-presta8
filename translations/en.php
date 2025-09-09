@@ -1,17 +1,33 @@
 <?php
 
-global $_MODULE;
-$_MODULE = [];
-$_MODULE['<{worldlineop}prestashop>worldlineop_a9928cf14ad15878c88657a133832f4b'] = 'This module offers a 1-click integration to start accepting payments with the Worldline Direct APIs (former Ingenico-Ogone). Grow your revenues by offering your customers with global and regional payment methods to sell across Europe.';
-$_MODULE['<{worldlineop}prestashop>advancedsettingsupdater_9a2dda2e822a0b696c747714dc396a36'] = 'Error while uploading logo';
-$_MODULE['<{worldlineop}prestashop>paymentmethodssettingsupdater_9a2dda2e822a0b696c747714dc396a36'] = 'Error while uploading the logo';
-$_MODULE['<{worldlineop}prestashop>paymentmethodsvalidationdata_7f11141dcf0805c283ec31580c13c6f0'] = 'Please fill a valid iframe template filename (Eg. Filename.html)';
-$_MODULE['<{worldlineop}prestashop>paymentmethodsvalidationdata_807287a94a5b9c2acad32e32fa7966f9'] = 'Please fill a valid iframe template filename (Eg. Filename.html)';
-$_MODULE['<{worldlineop}prestashop>_account_4d5affc0cf00aa4491eb8f0fcade26c8'] = '> Login to the Ingenico Back Office. Go to Configuration > Technical information > Ingenico Direct Settings > Direct API Key';
-$_MODULE['<{worldlineop}prestashop>_account_bb29639e1609579b384863eebae33fc5'] = 'To retrieve the webhooks credentials, login to the Ingenico Back Office.';
-$_MODULE['<{worldlineop}prestashop>_paymentmethodssettings_002c18d9b9b0bcb5eb2888cdfeb6373a'] = 'A unique pay button to be redirected to pay on a Worldline hosted page';
-$_MODULE['<{worldlineop}prestashop>_paymentmethodssettings_df2a60fbc299477de52630ae7fe6e477'] = 'Each payment method identified by a button. On click, customer is redirected to pay on the brand specific payment page';
-$_MODULE['<{worldlineop}prestashop>_whatsnew_bf94bb27e01b50f305eb2cd7eeee3fff'] = 'Automatic update of available payment methods';
-$_MODULE['<{worldlineop}prestashop>_whatsnew_7c83c5af9f8757a8f3ca62f847af6263'] = 'Improvements in the following work steps';
-$_MODULE['<{worldlineop}prestashop>_whatsnew_82fa2b0be155e54abc1aa10f10c501ea'] = 'Easy to use split order management/multi-shipment';
-$_MODULE['<{worldlineop}prestashop>_whatsnew_e051c855c860234bc684044983fa422e'] = 'Dynamic feedback retrieval – if no feedback is received on a transaction, the plugin queries it itself !';
+namespace {
+    global $_MODULE;
+    $_MODULE = array();
+    $_MODULE['<{cawlop}prestashop>cawlop_a9928cf14ad15878c88657a133832f4b'] = 'This module offers a 1-click integration to start accepting payments and grow your revenues by offering your customers with global and regional payment methods to sell across Europe.';
+    $_MODULE['<{cawlop}prestashop>onlinepaymentsmodule_b44ba42b352146bf2fe51a2c6264cb0c'] = 'Please select the specific shop to configure.';
+    $_MODULE['<{cawlop}prestashop>onlinepaymentsmodule_e89daa9df8a55b1329488a95eb11045b'] = 'Please enable the module.';
+    $_MODULE['<{cawlop}prestashop>onlinepaymentsmodule_35eedfe47e1e044854d5f05bdaaca80c'] = 'An error occurred while processing your request. Please try again.';
+    $_MODULE['<{cawlop}prestashop>onlinepaymentsmodule_97b2ab491f2b6cb5af9a361aa94e6239'] = 'Do you confirm the refund of the funds?';
+    $_MODULE['<{cawlop}prestashop>onlinepaymentsmodule_ea70ced75c5a05889a136ee4601a4cdc'] = 'Do you confirm the capture of the transaction?';
+    $_MODULE['<{cawlop}prestashop>onlinepaymentsmodule_7e88a04fdd0e912139dde623e5a330b6'] = 'Do you confirm the cancellation of the transaction?';
+    $_MODULE['<{cawlop}prestashop>onlinepaymentsmodule_7586f8c94ba7301b159984a8f3d1a700'] = 'Please change shop context to shop ID %d';
+    $_MODULE['<{cawlop}prestashop>onlinepaymentsmodule_614adc8c0f0f72ef1192968ea945c510'] = 'Food & Drink';
+    $_MODULE['<{cawlop}prestashop>onlinepaymentsmodule_a2e5784ae0bdcdb1b0379b1ebd8d08f1'] = 'Home & Garden';
+    $_MODULE['<{cawlop}prestashop>onlinepaymentsmodule_428b704bdc795904dc51671ee47092ba'] = 'Gift & Flowers';
+    $_MODULE['<{cawlop}prestashop>onlinepaymentsmodule_d4b88dc2ca0a94f74f48aacc94b36ea2'] = 'Please configure this section in case you accept gift cards as payment methods with %s';
+    $_MODULE['<{cawlop}prestashop>onlinepaymentsmodule_548abdca4d5c34725a83825691a58de7'] = 'Payment link successfully generated.';
+    $_MODULE['<{cawlop}prestashop>onlinepaymentsmodule_404381dc0aac848d76897f9f4c5085c1'] = 'Payment link generation failed. Reason:';
+    $_MODULE['<{cawlop}prestashop>paymentoptionsservice_6294b8b61ea3540661e970803ddc382c'] = 'Pay with my previously saved card %s';
+    $_MODULE['<{cawlop}prestashop>cancelservice_f23864b36b1b7b82e983d15f10eb44df'] = 'Unexpected error occurred during refund.';
+    $_MODULE['<{cawlop}prestashop>cancelservice_5e7825b74250aebcde06c1e77ebc9709'] = 'Cancellation request successfully sent.';
+    $_MODULE['<{cawlop}prestashop>captureservice_f23864b36b1b7b82e983d15f10eb44df'] = 'Unexpected error occurred during refund.';
+    $_MODULE['<{cawlop}prestashop>refundservice_f23864b36b1b7b82e983d15f10eb44df'] = 'Unexpected error occurred during refund.';
+    $_MODULE['<{cawlop}prestashop>refundservice_48373583c611d226c86ee1ad21912c23'] = 'Unexpected error occurred during refund';
+    $_MODULE['<{cawlop}prestashop>customeraccountextensioncontroller_0d02a983cd676aa3b4d555cb6918dff5'] = 'Could not delete stored card.';
+    $_MODULE['<{cawlop}prestashop>customeraccountextensioncontroller_70f6d9f3075b1ecd1768624894a94472'] = 'Card deleted successfully.';
+    $_MODULE['<{cawlop}prestashop>redirectmodulefrontcontroller_187370742861bbe6eb6468a587e055d4'] = 'An error occurred while fetching the payment status.';
+    $_MODULE['<{cawlop}prestashop>paymentmodulefrontcontroller_abcd10a3b2f38f78042c8fd5f5e30ca4'] = 'An error occurred while processing the payment.';
+    $_MODULE['<{cawlop}prestashop>transactioncontroller_96ffad83b6b1b37f4ea7b290958c98d3'] = 'You do not have permission to capture funds.';
+    $_MODULE['<{cawlop}prestashop>transactioncontroller_8ff2a8d9d1c17495a20bbce1770dbc0d'] = 'You do not have permission to refund funds.';
+    $_MODULE['<{cawlop}prestashop>transactioncontroller_316a88b88dbc5fbf5efd3bc6030865d4'] = 'You do not have permission to cancel transactions.';
+}

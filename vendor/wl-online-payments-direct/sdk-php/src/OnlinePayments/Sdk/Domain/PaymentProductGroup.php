@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class PaymentProductGroup extends DataObject
 {
@@ -15,22 +16,18 @@ class PaymentProductGroup extends DataObject
      * @var AccountOnFile
      */
     public $accountOnFile = null;
-
     /**
      * @var PaymentProductDisplayHints
      */
     public $displayHints = null;
-
     /**
      * @var PaymentProductDisplayHints[]
      */
     public $displayHintsList = null;
-
     /**
      * @var string
      */
     public $id = null;
-
     /**
      * @return AccountOnFile
      */
@@ -38,7 +35,6 @@ class PaymentProductGroup extends DataObject
     {
         return $this->accountOnFile;
     }
-
     /**
      * @param AccountOnFile
      */
@@ -46,7 +42,6 @@ class PaymentProductGroup extends DataObject
     {
         $this->accountOnFile = $value;
     }
-
     /**
      * @return PaymentProductDisplayHints
      */
@@ -54,7 +49,6 @@ class PaymentProductGroup extends DataObject
     {
         return $this->displayHints;
     }
-
     /**
      * @param PaymentProductDisplayHints
      */
@@ -62,7 +56,6 @@ class PaymentProductGroup extends DataObject
     {
         $this->displayHints = $value;
     }
-
     /**
      * @return PaymentProductDisplayHints[]
      */
@@ -70,7 +63,6 @@ class PaymentProductGroup extends DataObject
     {
         return $this->displayHintsList;
     }
-
     /**
      * @param PaymentProductDisplayHints[]
      */
@@ -78,7 +70,6 @@ class PaymentProductGroup extends DataObject
     {
         $this->displayHintsList = $value;
     }
-
     /**
      * @return string
      */
@@ -86,7 +77,6 @@ class PaymentProductGroup extends DataObject
     {
         return $this->id;
     }
-
     /**
      * @param string
      */
@@ -94,33 +84,31 @@ class PaymentProductGroup extends DataObject
     {
         $this->id = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->accountOnFile)) {
+        if (!\is_null($this->accountOnFile)) {
             $object->accountOnFile = $this->accountOnFile->toObject();
         }
-        if (!is_null($this->displayHints)) {
+        if (!\is_null($this->displayHints)) {
             $object->displayHints = $this->displayHints->toObject();
         }
-        if (!is_null($this->displayHintsList)) {
+        if (!\is_null($this->displayHintsList)) {
             $object->displayHintsList = [];
             foreach ($this->displayHintsList as $element) {
-                if (!is_null($element)) {
+                if (!\is_null($element)) {
                     $object->displayHintsList[] = $element->toObject();
                 }
             }
         }
-        if (!is_null($this->id)) {
+        if (!\is_null($this->id)) {
             $object->id = $this->id;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -129,23 +117,23 @@ class PaymentProductGroup extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'accountOnFile')) {
-            if (!is_object($object->accountOnFile)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->accountOnFile, true) . '\' is not an object');
+        if (\property_exists($object, 'accountOnFile')) {
+            if (!\is_object($object->accountOnFile)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->accountOnFile, \true) . '\' is not an object');
             }
             $value = new AccountOnFile();
             $this->accountOnFile = $value->fromObject($object->accountOnFile);
         }
-        if (property_exists($object, 'displayHints')) {
-            if (!is_object($object->displayHints)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->displayHints, true) . '\' is not an object');
+        if (\property_exists($object, 'displayHints')) {
+            if (!\is_object($object->displayHints)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->displayHints, \true) . '\' is not an object');
             }
             $value = new PaymentProductDisplayHints();
             $this->displayHints = $value->fromObject($object->displayHints);
         }
-        if (property_exists($object, 'displayHintsList')) {
-            if (!is_array($object->displayHintsList) && !is_object($object->displayHintsList)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->displayHintsList, true) . '\' is not an array or object');
+        if (\property_exists($object, 'displayHintsList')) {
+            if (!\is_array($object->displayHintsList) && !\is_object($object->displayHintsList)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->displayHintsList, \true) . '\' is not an array or object');
             }
             $this->displayHintsList = [];
             foreach ($object->displayHintsList as $element) {
@@ -153,7 +141,7 @@ class PaymentProductGroup extends DataObject
                 $this->displayHintsList[] = $value->fromObject($element);
             }
         }
-        if (property_exists($object, 'id')) {
+        if (\property_exists($object, 'id')) {
             $this->id = $object->id;
         }
         return $this;

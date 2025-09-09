@@ -1,25 +1,25 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Merchant\HostedCheckout;
+namespace CAWL\OnlinePayments\Sdk\Merchant\HostedCheckout;
 
 use Exception;
-use OnlinePayments\Sdk\ApiResource;
-use OnlinePayments\Sdk\CallContext;
-use OnlinePayments\Sdk\Communication\ErrorResponseException;
-use OnlinePayments\Sdk\Communication\ResponseClassMap;
-use OnlinePayments\Sdk\Domain\CreateHostedCheckoutRequest;
-use OnlinePayments\Sdk\ExceptionFactory;
-
+use CAWL\OnlinePayments\Sdk\ApiResource;
+use CAWL\OnlinePayments\Sdk\CallContext;
+use CAWL\OnlinePayments\Sdk\Communication\ErrorResponseException;
+use CAWL\OnlinePayments\Sdk\Communication\ResponseClassMap;
+use CAWL\OnlinePayments\Sdk\Domain\CreateHostedCheckoutRequest;
+use CAWL\OnlinePayments\Sdk\ExceptionFactory;
 /**
  * HostedCheckout client.
+ * @internal
  */
 class HostedCheckoutClient extends ApiResource implements HostedCheckoutClientInterface
 {
     /** @var ExceptionFactory|null */
     private $responseExceptionFactory = null;
-
     /**
      * @inheritdoc
      * @throws Exception
@@ -27,26 +27,14 @@ class HostedCheckoutClient extends ApiResource implements HostedCheckoutClientIn
     public function createHostedCheckout(CreateHostedCheckoutRequest $body, ?CallContext $callContext = null)
     {
         $responseClassMap = new ResponseClassMap();
-        $responseClassMap->defaultSuccessResponseClassName = '\OnlinePayments\Sdk\Domain\CreateHostedCheckoutResponse';
-        $responseClassMap->defaultErrorResponseClassName = '\OnlinePayments\Sdk\Domain\ErrorResponse';
+        $responseClassMap->defaultSuccessResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\CreateHostedCheckoutResponse';
+        $responseClassMap->defaultErrorResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\ErrorResponse';
         try {
-            return $this->getCommunicator()->post(
-                $responseClassMap,
-                $this->instantiateUri('/v2/{merchantId}/hostedcheckouts'),
-                $this->getClientMetaInfo(),
-                $body,
-                null,
-                $callContext
-            );
+            return $this->getCommunicator()->post($responseClassMap, $this->instantiateUri('/v2/{merchantId}/hostedcheckouts'), $this->getClientMetaInfo(), $body, null, $callContext);
         } catch (ErrorResponseException $e) {
-            throw $this->getResponseExceptionFactory()->createException(
-                $e->getHttpStatusCode(),
-                $e->getErrorResponse(),
-                $callContext
-            );
+            throw $this->getResponseExceptionFactory()->createException($e->getHttpStatusCode(), $e->getErrorResponse(), $callContext);
         }
     }
-
     /**
      * @inheritdoc
      */
@@ -54,29 +42,18 @@ class HostedCheckoutClient extends ApiResource implements HostedCheckoutClientIn
     {
         $this->context['hostedCheckoutId'] = $hostedCheckoutId;
         $responseClassMap = new ResponseClassMap();
-        $responseClassMap->defaultSuccessResponseClassName = '\OnlinePayments\Sdk\Domain\GetHostedCheckoutResponse';
-        $responseClassMap->defaultErrorResponseClassName = '\OnlinePayments\Sdk\Domain\ErrorResponse';
+        $responseClassMap->defaultSuccessResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\GetHostedCheckoutResponse';
+        $responseClassMap->defaultErrorResponseClassName = 'CAWL\\OnlinePayments\\Sdk\\Domain\\ErrorResponse';
         try {
-            return $this->getCommunicator()->get(
-                $responseClassMap,
-                $this->instantiateUri('/v2/{merchantId}/hostedcheckouts/{hostedCheckoutId}'),
-                $this->getClientMetaInfo(),
-                null,
-                $callContext
-            );
+            return $this->getCommunicator()->get($responseClassMap, $this->instantiateUri('/v2/{merchantId}/hostedcheckouts/{hostedCheckoutId}'), $this->getClientMetaInfo(), null, $callContext);
         } catch (ErrorResponseException $e) {
-            throw $this->getResponseExceptionFactory()->createException(
-                $e->getHttpStatusCode(),
-                $e->getErrorResponse(),
-                $callContext
-            );
+            throw $this->getResponseExceptionFactory()->createException($e->getHttpStatusCode(), $e->getErrorResponse(), $callContext);
         }
     }
-
     /** @return ExceptionFactory */
     private function getResponseExceptionFactory()
     {
-        if (is_null($this->responseExceptionFactory)) {
+        if (\is_null($this->responseExceptionFactory)) {
             $this->responseExceptionFactory = new ExceptionFactory();
         }
         return $this->responseExceptionFactory;

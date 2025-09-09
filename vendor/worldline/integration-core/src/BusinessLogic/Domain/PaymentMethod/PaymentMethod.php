@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod;
 
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\PaymentMethodAdditionalData;
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslationCollection;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\PaymentMethodAdditionalData;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslationCollection;
 /**
  * Class PaymentMethod.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod
+ * @internal
  */
 class PaymentMethod
 {
@@ -17,7 +17,6 @@ class PaymentMethod
     protected bool $enabled;
     protected string $template;
     protected ?PaymentMethodAdditionalData $additionalData;
-
     /**
      * @param PaymentProductId $productId
      * @param TranslationCollection $name
@@ -25,13 +24,7 @@ class PaymentMethod
      * @param string $template
      * @param PaymentMethodAdditionalData|null $additionalData
      */
-    public function __construct(
-        PaymentProductId $productId,
-        TranslationCollection $name,
-        bool $enabled,
-        string $template = '',
-        ?PaymentMethodAdditionalData $additionalData = null
-    )
+    public function __construct(PaymentProductId $productId, TranslationCollection $name, bool $enabled, string $template = '', ?PaymentMethodAdditionalData $additionalData = null)
     {
         $this->productId = $productId;
         $this->name = $name;
@@ -39,40 +32,35 @@ class PaymentMethod
         $this->template = $template;
         $this->additionalData = $additionalData;
     }
-
     /**
      * @return PaymentProductId
      */
-    public function getProductId(): PaymentProductId
+    public function getProductId() : PaymentProductId
     {
         return $this->productId;
     }
-
     /**
      * @return TranslationCollection
      */
-    public function getName(): TranslationCollection
+    public function getName() : TranslationCollection
     {
         return $this->name;
     }
-
     /**
      * @return bool
      */
-    public function isEnabled(): bool
+    public function isEnabled() : bool
     {
         return $this->enabled;
     }
-
     /**
      * @return string
      */
-    public function getTemplate(): string
+    public function getTemplate() : string
     {
         return $this->template;
     }
-
-    public function getAdditionalData(): ?PaymentMethodAdditionalData
+    public function getAdditionalData() : ?PaymentMethodAdditionalData
     {
         return $this->additionalData;
     }

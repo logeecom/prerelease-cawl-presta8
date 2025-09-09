@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Disconnect\Repositories;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Disconnect\Repositories;
 
 use DateTime;
 use Exception;
-
 /**
  * Interface DisconnectRepositoryInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Disconnect\Repositories
+ * @internal
  */
 interface DisconnectRepositoryInterface
 {
@@ -19,8 +19,7 @@ interface DisconnectRepositoryInterface
      *
      * @throws Exception
      */
-    public function getDisconnectTime(): ?DateTime;
-
+    public function getDisconnectTime() : ?DateTime;
     /**
      * Sets disconnect time.
      *
@@ -30,8 +29,7 @@ interface DisconnectRepositoryInterface
      *
      * @throws Exception
      */
-    public function setDisconnectTime(DateTime $disconnectTime): void;
-
+    public function setDisconnectTime(DateTime $disconnectTime) : void;
     /**
      * Deletes disconnect time.
      *
@@ -39,5 +37,5 @@ interface DisconnectRepositoryInterface
      *
      * @throws Exception
      */
-    public function deleteDisconnectTime(): void;
+    public function deleteDisconnectTime() : void;
 }

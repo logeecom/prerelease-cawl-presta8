@@ -1,8 +1,8 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData;
 
+/** @internal */
 interface PaymentMethodAdditionalData
 {
-
 }

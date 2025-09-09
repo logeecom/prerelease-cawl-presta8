@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class MobilePaymentMethodSpecificInput extends DataObject
 {
@@ -15,42 +16,34 @@ class MobilePaymentMethodSpecificInput extends DataObject
      * @var string
      */
     public $authorizationMode = null;
-
     /**
      * @var DecryptedPaymentData
      */
     public $decryptedPaymentData = null;
-
     /**
      * @var string
      */
     public $encryptedPaymentData = null;
-
     /**
      * @var string
      */
     public $ephemeralKey = null;
-
     /**
      * @var MobilePaymentProduct320SpecificInput
      */
     public $paymentProduct320SpecificInput = null;
-
     /**
      * @var int
      */
     public $paymentProductId = null;
-
     /**
      * @var string
      */
     public $publicKeyHash = null;
-
     /**
      * @var bool
      */
     public $requiresApproval = null;
-
     /**
      * @return string
      */
@@ -58,7 +51,6 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         return $this->authorizationMode;
     }
-
     /**
      * @param string
      */
@@ -66,7 +58,6 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         $this->authorizationMode = $value;
     }
-
     /**
      * @return DecryptedPaymentData
      */
@@ -74,7 +65,6 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         return $this->decryptedPaymentData;
     }
-
     /**
      * @param DecryptedPaymentData
      */
@@ -82,7 +72,6 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         $this->decryptedPaymentData = $value;
     }
-
     /**
      * @return string
      */
@@ -90,7 +79,6 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         return $this->encryptedPaymentData;
     }
-
     /**
      * @param string
      */
@@ -98,7 +86,6 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         $this->encryptedPaymentData = $value;
     }
-
     /**
      * @return string
      */
@@ -106,7 +93,6 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         return $this->ephemeralKey;
     }
-
     /**
      * @param string
      */
@@ -114,7 +100,6 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         $this->ephemeralKey = $value;
     }
-
     /**
      * @return MobilePaymentProduct320SpecificInput
      */
@@ -122,7 +107,6 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         return $this->paymentProduct320SpecificInput;
     }
-
     /**
      * @param MobilePaymentProduct320SpecificInput
      */
@@ -130,7 +114,6 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         $this->paymentProduct320SpecificInput = $value;
     }
-
     /**
      * @return int
      */
@@ -138,7 +121,6 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         return $this->paymentProductId;
     }
-
     /**
      * @param int
      */
@@ -146,7 +128,6 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         $this->paymentProductId = $value;
     }
-
     /**
      * @return string
      */
@@ -154,7 +135,6 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         return $this->publicKeyHash;
     }
-
     /**
      * @param string
      */
@@ -162,7 +142,6 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         $this->publicKeyHash = $value;
     }
-
     /**
      * @return bool
      */
@@ -170,7 +149,6 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         return $this->requiresApproval;
     }
-
     /**
      * @param bool
      */
@@ -178,40 +156,38 @@ class MobilePaymentMethodSpecificInput extends DataObject
     {
         $this->requiresApproval = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->authorizationMode)) {
+        if (!\is_null($this->authorizationMode)) {
             $object->authorizationMode = $this->authorizationMode;
         }
-        if (!is_null($this->decryptedPaymentData)) {
+        if (!\is_null($this->decryptedPaymentData)) {
             $object->decryptedPaymentData = $this->decryptedPaymentData->toObject();
         }
-        if (!is_null($this->encryptedPaymentData)) {
+        if (!\is_null($this->encryptedPaymentData)) {
             $object->encryptedPaymentData = $this->encryptedPaymentData;
         }
-        if (!is_null($this->ephemeralKey)) {
+        if (!\is_null($this->ephemeralKey)) {
             $object->ephemeralKey = $this->ephemeralKey;
         }
-        if (!is_null($this->paymentProduct320SpecificInput)) {
+        if (!\is_null($this->paymentProduct320SpecificInput)) {
             $object->paymentProduct320SpecificInput = $this->paymentProduct320SpecificInput->toObject();
         }
-        if (!is_null($this->paymentProductId)) {
+        if (!\is_null($this->paymentProductId)) {
             $object->paymentProductId = $this->paymentProductId;
         }
-        if (!is_null($this->publicKeyHash)) {
+        if (!\is_null($this->publicKeyHash)) {
             $object->publicKeyHash = $this->publicKeyHash;
         }
-        if (!is_null($this->requiresApproval)) {
+        if (!\is_null($this->requiresApproval)) {
             $object->requiresApproval = $this->requiresApproval;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -220,36 +196,36 @@ class MobilePaymentMethodSpecificInput extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'authorizationMode')) {
+        if (\property_exists($object, 'authorizationMode')) {
             $this->authorizationMode = $object->authorizationMode;
         }
-        if (property_exists($object, 'decryptedPaymentData')) {
-            if (!is_object($object->decryptedPaymentData)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->decryptedPaymentData, true) . '\' is not an object');
+        if (\property_exists($object, 'decryptedPaymentData')) {
+            if (!\is_object($object->decryptedPaymentData)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->decryptedPaymentData, \true) . '\' is not an object');
             }
             $value = new DecryptedPaymentData();
             $this->decryptedPaymentData = $value->fromObject($object->decryptedPaymentData);
         }
-        if (property_exists($object, 'encryptedPaymentData')) {
+        if (\property_exists($object, 'encryptedPaymentData')) {
             $this->encryptedPaymentData = $object->encryptedPaymentData;
         }
-        if (property_exists($object, 'ephemeralKey')) {
+        if (\property_exists($object, 'ephemeralKey')) {
             $this->ephemeralKey = $object->ephemeralKey;
         }
-        if (property_exists($object, 'paymentProduct320SpecificInput')) {
-            if (!is_object($object->paymentProduct320SpecificInput)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->paymentProduct320SpecificInput, true) . '\' is not an object');
+        if (\property_exists($object, 'paymentProduct320SpecificInput')) {
+            if (!\is_object($object->paymentProduct320SpecificInput)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->paymentProduct320SpecificInput, \true) . '\' is not an object');
             }
             $value = new MobilePaymentProduct320SpecificInput();
             $this->paymentProduct320SpecificInput = $value->fromObject($object->paymentProduct320SpecificInput);
         }
-        if (property_exists($object, 'paymentProductId')) {
+        if (\property_exists($object, 'paymentProductId')) {
             $this->paymentProductId = $object->paymentProductId;
         }
-        if (property_exists($object, 'publicKeyHash')) {
+        if (\property_exists($object, 'publicKeyHash')) {
             $this->publicKeyHash = $object->publicKeyHash;
         }
-        if (property_exists($object, 'requiresApproval')) {
+        if (\property_exists($object, 'requiresApproval')) {
             $this->requiresApproval = $object->requiresApproval;
         }
         return $this;

@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Http;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Http;
 
 /**
  * Class HttpResponse.
  *
  * @package OnlinePayments\Core\Infrastructure\Http
+ * @internal
  */
 class HttpResponse
 {
@@ -13,28 +14,24 @@ class HttpResponse
      * Fully qualified name of this class.
      */
     const CLASS_NAME = __CLASS__;
-
     /**
      * HTTP status.
      *
      * @var int
      */
     private int $status;
-
     /**
      * Response body.
      *
      * @var string
      */
     private string $body;
-
     /**
      * HTTP headers.
      *
      * @var array
      */
     private array $headers;
-
     /**
      * HttpResponse constructor.
      *
@@ -48,55 +45,49 @@ class HttpResponse
         $this->headers = $headers;
         $this->body = $body;
     }
-
     /**
      * Returns response status.
      *
      * @return int HTTPS status.
      */
-    public function getStatus(): int
+    public function getStatus() : int
     {
         return $this->status;
     }
-
     /**
      * Returns response body.
      *
      * @return string Response body.
      */
-    public function getBody(): string
+    public function getBody() : string
     {
         return $this->body;
     }
-
     /**
      * Returns json decoded response body.
      *
      * @return array Response body decoded as json decode.
      */
-    public function decodeBodyToArray(): array
+    public function decodeBodyToArray() : array
     {
-        $result = json_decode($this->body, true);
-
+        $result = \json_decode($this->body, \true);
         return !empty($result) ? $result : [];
     }
-
     /**
      * Return. response headers.
      *
      * @return array Array of HTTP headers.
      */
-    public function getHeaders(): array
+    public function getHeaders() : array
     {
         return $this->headers;
     }
-
     /**
      * Verifies HTTP status code.
      *
      * @return bool Returns TRUE if in success range [200, 300); otherwise, FALSE.
      */
-    public function isSuccessful(): bool
+    public function isSuccessful() : bool
     {
         return $this->status !== null && $this->getStatus() >= 200 && $this->getStatus() < 300;
     }

@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\IntegrationAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\IntegrationAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
 /**
  * Class StateResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\IntegrationAPI\Response
+ * @internal
  */
 class StateResponse extends Response
 {
@@ -15,19 +15,16 @@ class StateResponse extends Response
      * Connection string constant.
      */
     private const CONNECTION = 'connection';
-
     /**
      * Dashboard string constant.
      */
     private const PAYMENTS = 'payments';
-
     /**
      * String representation of state.
      *
      * @var string
      */
     private $state;
-
     /**
      * @param string $state
      */
@@ -35,36 +32,31 @@ class StateResponse extends Response
     {
         $this->state = $state;
     }
-
     /**
      * Called when user is not logged in.
      *
      * @return StateResponse
      */
-    public static function connection(): self
+    public static function connection() : self
     {
         return new self(self::CONNECTION);
     }
-
     /**
      * Called when user is loggedIn.
      *
      * @return StateResponse
      */
-    public static function payments(): self
+    public static function payments() : self
     {
         return new self(self::PAYMENTS);
     }
-
     /**
      *  Transforms state to array.
      *
      * @return array Array representation of state.
      */
-    public function toArray(): array
+    public function toArray() : array
     {
-        return [
-            'state' => $this->state
-        ];
+        return ['state' => $this->state];
     }
 }

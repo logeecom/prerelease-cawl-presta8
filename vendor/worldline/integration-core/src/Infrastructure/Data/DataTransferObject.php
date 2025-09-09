@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Data;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Data;
 
 use RuntimeException;
-
 /**
  * Class DataTransferObject.
  *
  * @package OnlinePayments\Core\Infrastructure\Data
+ * @internal
  */
 abstract class DataTransferObject
 {
@@ -18,11 +18,10 @@ abstract class DataTransferObject
      *
      * @return DataTransferObject An instance of the data transfer object.
      */
-    public static function fromArray(array $data): DataTransferObject
+    public static function fromArray(array $data) : DataTransferObject
     {
         throw new RuntimeException('Method from array not implemented');
     }
-
     /**
      * Creates list of DTOs from a batch of raw data.
      *
@@ -30,17 +29,14 @@ abstract class DataTransferObject
      *
      * @return array List of DTO instances.
      */
-    public static function fromBatch(array $batch): array
+    public static function fromBatch(array $batch) : array
     {
         $result = [];
-
         foreach ($batch as $index => $item) {
             $result[$index] = static::fromArray($item);
         }
-
         return $result;
     }
-
     /**
      * Transforms batch of data transfer objects to array.
      *
@@ -48,24 +44,20 @@ abstract class DataTransferObject
      *
      * @return array Transformed data transfer objects batch.
      */
-    public static function toBatchArray(array $batch): array
+    public static function toBatchArray(array $batch) : array
     {
         $result = [];
-
         foreach ($batch as $index => $item) {
             $result[$index] = $item->toArray();
         }
-
         return $result;
     }
-
     /**
      * Transforms data transfer object to array.
      *
      * @return array Array representation of data transfer object.
      */
-    abstract public function toArray(): array;
-
+    public abstract function toArray() : array;
     /**
      * Retrieves value from raw data.
      *

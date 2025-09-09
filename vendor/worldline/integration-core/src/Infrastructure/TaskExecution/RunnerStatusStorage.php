@@ -1,18 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution;
 
-use OnlinePayments\Core\Infrastructure\Configuration\Configuration;
-use OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
-use OnlinePayments\Core\Infrastructure\ServiceRegister;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\TaskRunnerStatusChangeException;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\TaskRunnerStatusStorageUnavailableException;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\TaskRunnerStatusStorage;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Configuration\Configuration;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
+use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\TaskRunnerStatusChangeException;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\TaskRunnerStatusStorageUnavailableException;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\TaskRunnerStatusStorage;
 /**
  * Class RunnerStatusStorage.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
+ * @internal
  */
 class RunnerStatusStorage implements TaskRunnerStatusStorage
 {
@@ -22,7 +22,6 @@ class RunnerStatusStorage implements TaskRunnerStatusStorage
      * @var Configuration
      */
     private ?Configuration $configService = null;
-
     /**
      * Returns task runner status.
      *
@@ -31,18 +30,15 @@ class RunnerStatusStorage implements TaskRunnerStatusStorage
      * @throws TaskRunnerStatusStorageUnavailableException
      * @throws QueryFilterInvalidParamException
      */
-    public function getStatus(): TaskRunnerStatus
+    public function getStatus() : TaskRunnerStatus
     {
         $result = $this->getConfigService()->getTaskRunnerStatus();
         if (empty($result)) {
             $this->getConfigService()->setTaskRunnerStatus('', null);
-
             return TaskRunnerStatus::createNullStatus();
         }
-
         return new TaskRunnerStatus($result['guid'], $result['timestamp']);
     }
-
     /**
      * Sets task runner status.
      *
@@ -57,7 +53,6 @@ class RunnerStatusStorage implements TaskRunnerStatusStorage
         $this->checkTaskRunnerStatusChangeAvailability($status);
         $this->getConfigService()->setTaskRunnerStatus($status->getGuid(), $status->getAliveSinceTimestamp());
     }
-
     /**
      * Checks if task runner can change availability status.
      *
@@ -71,25 +66,20 @@ class RunnerStatusStorage implements TaskRunnerStatusStorage
     {
         $currentGuid = $this->getStatus()->getGuid();
         $guidForUpdate = $status->getGuid();
-
         if (!empty($currentGuid) && !empty($guidForUpdate) && $currentGuid !== $guidForUpdate) {
-            throw new TaskRunnerStatusChangeException(
-                'Task runner with guid: ' . $guidForUpdate . ' can not change the status.'
-            );
+            throw new TaskRunnerStatusChangeException('Task runner with guid: ' . $guidForUpdate . ' can not change the status.');
         }
     }
-
     /**
      * Gets instance of @return Configuration Service instance.
      * @see Configuration service.
      *
      */
-    private function getConfigService(): Configuration
+    private function getConfigService() : Configuration
     {
         if ($this->configService === null) {
             $this->configService = ServiceRegister::getService(Configuration::CLASS_NAME);
         }
-
         return $this->configService;
     }
 }

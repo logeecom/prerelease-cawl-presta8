@@ -1,22 +1,21 @@
 <?php
-namespace OnlinePayments\Sdk\Communication;
+
+namespace CAWL\OnlinePayments\Sdk\Communication;
 
 /**
  * Class ResponseBuilder
  *
  * @package OnlinePayments\Sdk\Communication
+ * @internal
  */
 class ResponseBuilder
 {
     /** @var int */
     private $httpStatusCode;
-
     /** @var array */
     private $headers;
-
     /** @var string */
     private $body = '';
-
     /**
      * @param int $httpStatusCode
      */
@@ -24,7 +23,6 @@ class ResponseBuilder
     {
         $this->httpStatusCode = $httpStatusCode;
     }
-
     /**
      * @param array $headers
      */
@@ -32,7 +30,6 @@ class ResponseBuilder
     {
         $this->headers = $headers;
     }
-
     /**
      * @param string $data
      */
@@ -40,7 +37,6 @@ class ResponseBuilder
     {
         $this->body .= $data;
     }
-
     /**
      * @param string $body
      */
@@ -48,7 +44,6 @@ class ResponseBuilder
     {
         $this->body = $body;
     }
-
     /**
      * @return ConnectionResponseInterface
      */

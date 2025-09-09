@@ -1,16 +1,16 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Merchant\PrivacyPolicy;
+namespace CAWL\OnlinePayments\Sdk\Merchant\PrivacyPolicy;
 
-
-use OnlinePayments\Sdk\Communication\RequestObject;
-
+use CAWL\OnlinePayments\Sdk\Communication\RequestObject;
 /**
  * Query parameters for Get Privacy Policy
  *
  * @package OnlinePayments\Sdk\Merchant\PrivacyPolicy
+ * @internal
  */
 class GetPrivacyPolicyParams extends RequestObject
 {
@@ -18,12 +18,10 @@ class GetPrivacyPolicyParams extends RequestObject
      * @var string
      */
     public $locale;
-
     /**
      * @var int
      */
     public $paymentProductId;
-
     /**
      * @return string
      */
@@ -31,7 +29,6 @@ class GetPrivacyPolicyParams extends RequestObject
     {
         return $this->locale;
     }
-
     /**
      * @param string
      */
@@ -39,18 +36,16 @@ class GetPrivacyPolicyParams extends RequestObject
     {
         $this->locale = $value;
     }
-
     /**
      * @param string
      */
     public function addLocale($value)
     {
-        if (is_null($this->locale)) {
+        if (\is_null($this->locale)) {
             $this->locale = [];
         }
         $this->locale[] = $value;
     }
-
     /**
      * @return int
      */
@@ -58,7 +53,6 @@ class GetPrivacyPolicyParams extends RequestObject
     {
         return $this->paymentProductId;
     }
-
     /**
      * @param int
      */
@@ -66,18 +60,16 @@ class GetPrivacyPolicyParams extends RequestObject
     {
         $this->paymentProductId = $value;
     }
-
     /**
      * @param int
      */
     public function addPaymentProductId($value)
     {
-        if (is_null($this->paymentProductId)) {
+        if (\is_null($this->paymentProductId)) {
             $this->paymentProductId = [];
         }
         $this->paymentProductId[] = $value;
     }
-
     /**
      * @return array
      */

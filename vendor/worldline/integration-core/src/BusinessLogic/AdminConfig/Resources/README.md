@@ -1,1 +1,0 @@
-# OnlinePayments Core - Admin interface

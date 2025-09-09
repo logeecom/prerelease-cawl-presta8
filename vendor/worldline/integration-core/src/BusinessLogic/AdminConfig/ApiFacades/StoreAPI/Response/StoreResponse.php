@@ -1,19 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\StoreAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\StoreAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-use OnlinePayments\Core\BusinessLogic\Domain\Stores\Models\Store;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Stores\Models\Store;
 /**
  * Class StoreResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\StoreAPI\Response
+ * @internal
  */
 class StoreResponse extends Response
 {
     private Store $store;
-
     /**
      * @param Store $store
      */
@@ -21,16 +20,11 @@ class StoreResponse extends Response
     {
         $this->store = $store;
     }
-
     /**
      * @inheritDoc
      */
-    public function toArray(): array
+    public function toArray() : array
     {
-        return [
-            'storeId' => $this->store->getStoreId(),
-            'storeName' => $this->store->getStoreName(),
-            'maintenanceMode' => $this->store->isMaintenanceMode(),
-        ];
+        return ['storeId' => $this->store->getStoreId(), 'storeName' => $this->store->getStoreName(), 'maintenanceMode' => $this->store->isMaintenanceMode()];
     }
 }

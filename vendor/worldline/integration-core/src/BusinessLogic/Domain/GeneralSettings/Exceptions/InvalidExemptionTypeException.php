@@ -1,15 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTranslatableException;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTranslatableException;
 /**
  * Class InvalidExemptionTypeException
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions
+ * @internal
  */
 class InvalidExemptionTypeException extends BaseTranslatableException
 {
-
 }

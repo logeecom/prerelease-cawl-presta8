@@ -1,16 +1,16 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers;
+namespace CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\SurchargeRequest;
-use OnlinePayments\Sdk\Domain\AmountOfMoney;
-use OnlinePayments\Sdk\Domain\CalculateSurchargeRequest;
-use OnlinePayments\Sdk\Domain\CardSource;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\SurchargeRequest;
+use CAWL\OnlinePayments\Sdk\Domain\AmountOfMoney;
+use CAWL\OnlinePayments\Sdk\Domain\CalculateSurchargeRequest;
+use CAWL\OnlinePayments\Sdk\Domain\CardSource;
 /**
  * Class CalculateSurchargeRequestTransformer
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
+ * @internal
  */
 class CalculateSurchargeRequestTransformer
 {
@@ -19,7 +19,7 @@ class CalculateSurchargeRequestTransformer
      *
      * @return CalculateSurchargeRequest
      */
-    public static function transform(SurchargeRequest $request): CalculateSurchargeRequest
+    public static function transform(SurchargeRequest $request) : CalculateSurchargeRequest
     {
         $calculateSurchargeRequest = new CalculateSurchargeRequest();
         $amountOfMoney = new AmountOfMoney();
@@ -27,10 +27,8 @@ class CalculateSurchargeRequestTransformer
         $amountOfMoney->setCurrencyCode($request->getAmount()->getCurrency()->getIsoCode());
         $card = new CardSource();
         $card->setToken($request->getToken());
-
         $calculateSurchargeRequest->setAmountOfMoney($amountOfMoney);
         $calculateSurchargeRequest->setCardSource($card);
-
         return $calculateSurchargeRequest;
     }
 }

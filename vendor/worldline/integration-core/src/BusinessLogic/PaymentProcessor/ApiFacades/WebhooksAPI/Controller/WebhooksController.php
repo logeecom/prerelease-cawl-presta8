@@ -1,40 +1,35 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\WebhooksAPI\Controller;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\WebhooksAPI\Controller;
 
 use Exception;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Monitoring\WebhookLogsService;
-use OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
-use OnlinePayments\Core\BusinessLogic\Domain\Webhook\Transformers\WebhookTransformerInterface;
-use OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\WebhooksAPI\Response\WebhookResponse;
-use OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\Webhooks\WebhookService;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Monitoring\WebhookLogsService;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Webhook\Transformers\WebhookTransformerInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\WebhooksAPI\Response\WebhookResponse;
+use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\Webhooks\WebhookService;
 /**
  * Class WebhooksController
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\WebhooksAPI\Controller
+ * @internal
  */
 class WebhooksController
 {
     protected WebhookTransformerInterface $transformer;
     protected WebhookService $webhookService;
     protected WebhookLogsService $webhookLogsService;
-
     /**
      * @param WebhookTransformerInterface $transformer
      * @param WebhookService $webhookService
      * @param WebhookLogsService $webhookLogsService
      */
-    public function __construct(
-        WebhookTransformerInterface $transformer,
-        WebhookService $webhookService,
-        WebhookLogsService $webhookLogsService
-    ) {
+    public function __construct(WebhookTransformerInterface $transformer, WebhookService $webhookService, WebhookLogsService $webhookLogsService)
+    {
         $this->transformer = $transformer;
         $this->webhookService = $webhookService;
         $this->webhookLogsService = $webhookLogsService;
     }
-
     /**
      * @param string $webhookBody
      * @param array $requestHeaders
@@ -43,12 +38,11 @@ class WebhooksController
      *
      * @throws Exception
      */
-    public function process(string $webhookBody, array $requestHeaders): WebhookResponse
+    public function process(string $webhookBody, array $requestHeaders) : WebhookResponse
     {
         $webhook = $this->transformer->transform($webhookBody, $requestHeaders);
         $this->webhookLogsService->logWebhook($webhook);
         $this->webhookService->process($webhook);
-
         return new WebhookResponse();
     }
 }

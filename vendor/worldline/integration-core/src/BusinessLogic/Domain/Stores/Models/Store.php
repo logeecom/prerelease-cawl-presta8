@@ -1,18 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Stores\Models;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Stores\Models;
 
 /**
  * Class Store
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Stores\Models
+ * @internal
  */
 class Store
 {
     private string $storeId;
     private string $storeName;
     private bool $maintenanceMode;
-
     /**
      * @param string $storeId
      * @param string $storeName
@@ -24,27 +24,24 @@ class Store
         $this->storeName = $storeName;
         $this->maintenanceMode = $maintenanceMode;
     }
-
     /**
      * @return string
      */
-    public function getStoreId(): string
+    public function getStoreId() : string
     {
         return $this->storeId;
     }
-
     /**
      * @return string
      */
-    public function getStoreName(): string
+    public function getStoreName() : string
     {
         return $this->storeName;
     }
-
     /**
      * @return bool
      */
-    public function isMaintenanceMode(): bool
+    public function isMaintenanceMode() : bool
     {
         return $this->maintenanceMode;
     }

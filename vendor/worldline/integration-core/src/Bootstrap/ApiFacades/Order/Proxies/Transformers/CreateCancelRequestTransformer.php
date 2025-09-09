@@ -1,27 +1,25 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\ApiFacades\Order\Proxies\Transformers;
+namespace CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\Order\Proxies\Transformers;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Cancel\CancelRequest;
-use OnlinePayments\Sdk\Domain\AmountOfMoney;
-use OnlinePayments\Sdk\Domain\CancelPaymentRequest;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Cancel\CancelRequest;
+use CAWL\OnlinePayments\Sdk\Domain\AmountOfMoney;
+use CAWL\OnlinePayments\Sdk\Domain\CancelPaymentRequest;
 /**
  * CreateCancelRequestTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Order\Proxies\Transformers
+ * @internal
  */
 class CreateCancelRequestTransformer
 {
-    public static function transform(CancelRequest $captureRequest): CancelPaymentRequest
+    public static function transform(CancelRequest $captureRequest) : CancelPaymentRequest
     {
         $sdkRequest = new CancelPaymentRequest();
-
         $amountOfMoney = new AmountOfMoney();
         $amountOfMoney->setAmount($captureRequest->getAmount()->getValue());
         $amountOfMoney->setCurrencyCode($captureRequest->getAmount()->getCurrency()->getIsoCode());
         $sdkRequest->setAmountOfMoney($amountOfMoney);
-
         return $sdkRequest;
     }
 }

@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class CustomerDevice extends DataObject
 {
@@ -15,37 +16,30 @@ class CustomerDevice extends DataObject
      * @var string
      */
     public $acceptHeader = null;
-
     /**
      * @var BrowserData
      */
     public $browserData = null;
-
     /**
      * @var string
      */
     public $deviceFingerprint = null;
-
     /**
      * @var string
      */
     public $ipAddress = null;
-
     /**
      * @var string
      */
     public $locale = null;
-
     /**
      * @var string
      */
     public $timezoneOffsetUtcMinutes = null;
-
     /**
      * @var string
      */
     public $userAgent = null;
-
     /**
      * @return string
      */
@@ -53,7 +47,6 @@ class CustomerDevice extends DataObject
     {
         return $this->acceptHeader;
     }
-
     /**
      * @param string
      */
@@ -61,7 +54,6 @@ class CustomerDevice extends DataObject
     {
         $this->acceptHeader = $value;
     }
-
     /**
      * @return BrowserData
      */
@@ -69,7 +61,6 @@ class CustomerDevice extends DataObject
     {
         return $this->browserData;
     }
-
     /**
      * @param BrowserData
      */
@@ -77,7 +68,6 @@ class CustomerDevice extends DataObject
     {
         $this->browserData = $value;
     }
-
     /**
      * @return string
      */
@@ -85,7 +75,6 @@ class CustomerDevice extends DataObject
     {
         return $this->deviceFingerprint;
     }
-
     /**
      * @param string
      */
@@ -93,7 +82,6 @@ class CustomerDevice extends DataObject
     {
         $this->deviceFingerprint = $value;
     }
-
     /**
      * @return string
      */
@@ -101,7 +89,6 @@ class CustomerDevice extends DataObject
     {
         return $this->ipAddress;
     }
-
     /**
      * @param string
      */
@@ -109,7 +96,6 @@ class CustomerDevice extends DataObject
     {
         $this->ipAddress = $value;
     }
-
     /**
      * @return string
      */
@@ -117,7 +103,6 @@ class CustomerDevice extends DataObject
     {
         return $this->locale;
     }
-
     /**
      * @param string
      */
@@ -125,7 +110,6 @@ class CustomerDevice extends DataObject
     {
         $this->locale = $value;
     }
-
     /**
      * @return string
      */
@@ -133,7 +117,6 @@ class CustomerDevice extends DataObject
     {
         return $this->timezoneOffsetUtcMinutes;
     }
-
     /**
      * @param string
      */
@@ -141,7 +124,6 @@ class CustomerDevice extends DataObject
     {
         $this->timezoneOffsetUtcMinutes = $value;
     }
-
     /**
      * @return string
      */
@@ -149,7 +131,6 @@ class CustomerDevice extends DataObject
     {
         return $this->userAgent;
     }
-
     /**
      * @param string
      */
@@ -157,37 +138,35 @@ class CustomerDevice extends DataObject
     {
         $this->userAgent = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->acceptHeader)) {
+        if (!\is_null($this->acceptHeader)) {
             $object->acceptHeader = $this->acceptHeader;
         }
-        if (!is_null($this->browserData)) {
+        if (!\is_null($this->browserData)) {
             $object->browserData = $this->browserData->toObject();
         }
-        if (!is_null($this->deviceFingerprint)) {
+        if (!\is_null($this->deviceFingerprint)) {
             $object->deviceFingerprint = $this->deviceFingerprint;
         }
-        if (!is_null($this->ipAddress)) {
+        if (!\is_null($this->ipAddress)) {
             $object->ipAddress = $this->ipAddress;
         }
-        if (!is_null($this->locale)) {
+        if (!\is_null($this->locale)) {
             $object->locale = $this->locale;
         }
-        if (!is_null($this->timezoneOffsetUtcMinutes)) {
+        if (!\is_null($this->timezoneOffsetUtcMinutes)) {
             $object->timezoneOffsetUtcMinutes = $this->timezoneOffsetUtcMinutes;
         }
-        if (!is_null($this->userAgent)) {
+        if (!\is_null($this->userAgent)) {
             $object->userAgent = $this->userAgent;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -196,29 +175,29 @@ class CustomerDevice extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'acceptHeader')) {
+        if (\property_exists($object, 'acceptHeader')) {
             $this->acceptHeader = $object->acceptHeader;
         }
-        if (property_exists($object, 'browserData')) {
-            if (!is_object($object->browserData)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->browserData, true) . '\' is not an object');
+        if (\property_exists($object, 'browserData')) {
+            if (!\is_object($object->browserData)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->browserData, \true) . '\' is not an object');
             }
             $value = new BrowserData();
             $this->browserData = $value->fromObject($object->browserData);
         }
-        if (property_exists($object, 'deviceFingerprint')) {
+        if (\property_exists($object, 'deviceFingerprint')) {
             $this->deviceFingerprint = $object->deviceFingerprint;
         }
-        if (property_exists($object, 'ipAddress')) {
+        if (\property_exists($object, 'ipAddress')) {
             $this->ipAddress = $object->ipAddress;
         }
-        if (property_exists($object, 'locale')) {
+        if (\property_exists($object, 'locale')) {
             $this->locale = $object->locale;
         }
-        if (property_exists($object, 'timezoneOffsetUtcMinutes')) {
+        if (\property_exists($object, 'timezoneOffsetUtcMinutes')) {
             $this->timezoneOffsetUtcMinutes = $object->timezoneOffsetUtcMinutes;
         }
-        if (property_exists($object, 'userAgent')) {
+        if (\property_exists($object, 'userAgent')) {
             $this->userAgent = $object->userAgent;
         }
         return $this;

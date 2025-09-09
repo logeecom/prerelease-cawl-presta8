@@ -1,24 +1,24 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution;
 
-use OnlinePayments\Core\Infrastructure\Logger\Logger;
-use OnlinePayments\Core\Infrastructure\Serializer\Interfaces\Serializable;
-use OnlinePayments\Core\Infrastructure\Serializer\Serializer;
-use OnlinePayments\Core\Infrastructure\ServiceRegister;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\TaskRunnerRunException;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\TaskRunnerStatusStorageUnavailableException;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\Runnable;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\TaskRunnerStatusStorage;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\TaskRunnerWakeup;
-use OnlinePayments\Core\Infrastructure\TaskExecution\TaskEvents\TickEvent;
-use OnlinePayments\Core\Infrastructure\Utility\Events\EventBus;
+use CAWL\OnlinePayments\Core\Infrastructure\Logger\Logger;
+use CAWL\OnlinePayments\Core\Infrastructure\Serializer\Interfaces\Serializable;
+use CAWL\OnlinePayments\Core\Infrastructure\Serializer\Serializer;
+use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\TaskRunnerRunException;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\TaskRunnerStatusStorageUnavailableException;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\Runnable;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\TaskRunnerStatusStorage;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\TaskRunnerWakeup;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\TaskEvents\TickEvent;
+use CAWL\OnlinePayments\Core\Infrastructure\Utility\Events\EventBus;
 use Exception;
-
 /**
  * Class TaskRunnerStarter.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
+ * @internal
  */
 class TaskRunnerStarter implements Runnable
 {
@@ -28,28 +28,24 @@ class TaskRunnerStarter implements Runnable
      * @var string
      */
     private string $guid;
-
     /**
      * Instance of task runner status storage.
      *
      * @var ?TaskRunnerStatusStorage
      */
     private ?TaskRunnerStatusStorage $runnerStatusStorage = null;
-
     /**
      * Instance of task runner.
      *
      * @var ?TaskRunner
      */
     private ?TaskRunner $taskRunner = null;
-
     /**
      * Instance of task runner wakeup service.
      *
      * @var ?TaskRunnerWakeup
      */
     private ?TaskRunnerWakeup $taskWakeup = null;
-
     /**
      * TaskRunnerStarter constructor.
      *
@@ -59,7 +55,6 @@ class TaskRunnerStarter implements Runnable
     {
         $this->guid = $guid;
     }
-
     /**
      * Transforms array into an serializable object,
      *
@@ -68,31 +63,28 @@ class TaskRunnerStarter implements Runnable
      * @return Serializable
      *      Instance of serialized object.
      */
-    public static function fromArray(array $array): Serializable
+    public static function fromArray(array $array) : Serializable
     {
         return new static($array['guid']);
     }
-
     /**
      * Transforms serializable object into an array.
      *
      * @return array Array representation of a serializable object.
      */
-    public function toArray(): array
+    public function toArray() : array
     {
         return ['guid' => $this->guid];
     }
-
     /**
      * String representation of object.
      *
      * @inheritdoc
      */
-    public function serialize(): string
+    public function serialize() : string
     {
         return Serializer::serialize([$this->guid]);
     }
-
     /**
      * Constructs the object.
      *
@@ -102,17 +94,15 @@ class TaskRunnerStarter implements Runnable
     {
         list($this->guid) = Serializer::unserialize($serialized);
     }
-
     /**
      * Get unique runner guid.
      *
      * @return string Unique runner string.
      */
-    public function getGuid(): string
+    public function getGuid() : string
     {
         return $this->guid;
     }
-
     /**
      * Starts synchronously currently active task runner instance.
      */
@@ -121,39 +111,16 @@ class TaskRunnerStarter implements Runnable
         try {
             $this->doRun();
         } catch (TaskRunnerStatusStorageUnavailableException $ex) {
-            Logger::logError(
-                'Failed to run task runner. Runner status storage unavailable.',
-                'Core',
-                ['ExceptionMessage' => $ex->getMessage()]
-            );
-            Logger::logDebug(
-                'Failed to run task runner. Runner status storage unavailable.',
-                'Core',
-                [
-                    'ExceptionMessage' => $ex->getMessage(),
-                    'ExceptionTrace' => $ex->getTraceAsString(),
-                ]
-            );
+            Logger::logError('Failed to run task runner. Runner status storage unavailable.', 'Core', ['ExceptionMessage' => $ex->getMessage()]);
+            Logger::logDebug('Failed to run task runner. Runner status storage unavailable.', 'Core', ['ExceptionMessage' => $ex->getMessage(), 'ExceptionTrace' => $ex->getTraceAsString()]);
         } catch (TaskRunnerRunException $ex) {
             Logger::logInfo($ex->getMessage());
             Logger::logDebug($ex->getMessage(), 'Core', ['ExceptionTrace' => $ex->getTraceAsString()]);
         } catch (Exception $ex) {
-            Logger::logError(
-                'Failed to run task runner. Unexpected error occurred.',
-                'Core',
-                ['ExceptionMessage' => $ex->getMessage()]
-            );
-            Logger::logDebug(
-                'Failed to run task runner. Unexpected error occurred.',
-                'Core',
-                [
-                    'ExceptionMessage' => $ex->getMessage(),
-                    'ExceptionTrace' => $ex->getTraceAsString(),
-                ]
-            );
+            Logger::logError('Failed to run task runner. Unexpected error occurred.', 'Core', ['ExceptionMessage' => $ex->getMessage()]);
+            Logger::logDebug('Failed to run task runner. Unexpected error occurred.', 'Core', ['ExceptionMessage' => $ex->getMessage(), 'ExceptionTrace' => $ex->getTraceAsString()]);
         }
     }
-
     /**
      * Runs task execution.
      *
@@ -166,62 +133,52 @@ class TaskRunnerStarter implements Runnable
         if ($this->guid !== $runnerStatus->getGuid()) {
             throw new TaskRunnerRunException('Failed to run task runner. Runner guid is not set as active.');
         }
-
         if ($runnerStatus->isExpired()) {
             $this->getTaskWakeup()->wakeup();
             throw new TaskRunnerRunException('Failed to run task runner. Runner is expired.');
         }
-
         $this->getTaskRunner()->setGuid($this->guid);
         $this->getTaskRunner()->run();
-
         /** @var EventBus $eventBus */
         $eventBus = ServiceRegister::getService(EventBus::CLASS_NAME);
         $eventBus->fire(new TickEvent());
-
         // Send wakeup signal when runner is completed.
         $this->getTaskWakeup()->wakeup();
     }
-
     /**
      * Gets task runner status storage instance.
      *
      * @return TaskRunnerStatusStorage Instance of runner status storage service.
      */
-    private function getRunnerStorage(): TaskRunnerStatusStorage
+    private function getRunnerStorage() : TaskRunnerStatusStorage
     {
         if ($this->runnerStatusStorage === null) {
             $this->runnerStatusStorage = ServiceRegister::getService(TaskRunnerStatusStorage::CLASS_NAME);
         }
-
         return $this->runnerStatusStorage;
     }
-
     /**
      * Gets task runner instance.
      *
      * @return TaskRunner Instance of runner service.
      */
-    private function getTaskRunner(): TaskRunner
+    private function getTaskRunner() : TaskRunner
     {
         if ($this->taskRunner === null) {
             $this->taskRunner = ServiceRegister::getService(TaskRunner::CLASS_NAME);
         }
-
         return $this->taskRunner;
     }
-
     /**
      * Gets task runner wakeup instance.
      *
      * @return TaskRunnerWakeup Instance of runner wakeup service.
      */
-    private function getTaskWakeup(): TaskRunnerWakeup
+    private function getTaskWakeup() : TaskRunnerWakeup
     {
         if ($this->taskWakeup === null) {
             $this->taskWakeup = ServiceRegister::getService(TaskRunnerWakeup::CLASS_NAME);
         }
-
         return $this->taskWakeup;
     }
 }

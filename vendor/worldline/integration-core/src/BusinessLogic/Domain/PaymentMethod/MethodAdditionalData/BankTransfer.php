@@ -1,16 +1,16 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData;
 
 /**
  * Class BankTransfer
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\RedirectPaymentMethod
+ * @internal
  */
 class BankTransfer implements PaymentMethodAdditionalData
 {
-    protected bool $instantPayment = false;
-
+    protected bool $instantPayment = \false;
     /**
      * @param bool $instantPayment
      */
@@ -18,11 +18,10 @@ class BankTransfer implements PaymentMethodAdditionalData
     {
         $this->instantPayment = $instantPayment;
     }
-
     /**
      * @return bool
      */
-    public function isInstantPayment(): bool
+    public function isInstantPayment() : bool
     {
         return $this->instantPayment;
     }

@@ -1,10 +1,12 @@
 <?php
-namespace OnlinePayments\Sdk;
+
+namespace CAWL\OnlinePayments\Sdk;
 
 /**
  * Class ProxyConfiguration
  *
  * @package OnlinePayments\Sdk
+ * @internal
  */
 class ProxyConfiguration
 {
@@ -24,7 +26,6 @@ class ProxyConfiguration
      * @var string|null
      */
     private $password = null;
-
     /**
      * @param string $host
      * @param string|int|null $port
@@ -40,25 +41,23 @@ class ProxyConfiguration
             $this->password = $password;
         }
     }
-
     /**
      * @return string
      */
     public function getCurlProxy()
     {
-        if (!is_null($this->host)) {
-            return $this->host . (is_null($this->port) ? '' : ':'. $this->port);
+        if (!\is_null($this->host)) {
+            return $this->host . (\is_null($this->port) ? '' : ':' . $this->port);
         }
         return '';
     }
-
     /**
      * @return string
      */
     public function getCurlProxyUserPwd()
     {
-        if (!is_null($this->username)) {
-            return $this->username . (is_null($this->password) ? '' : ':'. $this->password);
+        if (!\is_null($this->username)) {
+            return $this->username . (\is_null($this->password) ? '' : ':' . $this->password);
         }
         return '';
     }

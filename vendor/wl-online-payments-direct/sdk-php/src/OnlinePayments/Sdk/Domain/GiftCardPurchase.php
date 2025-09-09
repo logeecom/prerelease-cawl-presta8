@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class GiftCardPurchase extends DataObject
 {
@@ -15,12 +16,10 @@ class GiftCardPurchase extends DataObject
      * @var AmountOfMoney
      */
     public $amountOfMoney = null;
-
     /**
      * @var int
      */
     public $numberOfGiftCards = null;
-
     /**
      * @return AmountOfMoney
      */
@@ -28,7 +27,6 @@ class GiftCardPurchase extends DataObject
     {
         return $this->amountOfMoney;
     }
-
     /**
      * @param AmountOfMoney
      */
@@ -36,7 +34,6 @@ class GiftCardPurchase extends DataObject
     {
         $this->amountOfMoney = $value;
     }
-
     /**
      * @return int
      */
@@ -44,7 +41,6 @@ class GiftCardPurchase extends DataObject
     {
         return $this->numberOfGiftCards;
     }
-
     /**
      * @param int
      */
@@ -52,22 +48,20 @@ class GiftCardPurchase extends DataObject
     {
         $this->numberOfGiftCards = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->amountOfMoney)) {
+        if (!\is_null($this->amountOfMoney)) {
             $object->amountOfMoney = $this->amountOfMoney->toObject();
         }
-        if (!is_null($this->numberOfGiftCards)) {
+        if (!\is_null($this->numberOfGiftCards)) {
             $object->numberOfGiftCards = $this->numberOfGiftCards;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -76,14 +70,14 @@ class GiftCardPurchase extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'amountOfMoney')) {
-            if (!is_object($object->amountOfMoney)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->amountOfMoney, true) . '\' is not an object');
+        if (\property_exists($object, 'amountOfMoney')) {
+            if (!\is_object($object->amountOfMoney)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->amountOfMoney, \true) . '\' is not an object');
             }
             $value = new AmountOfMoney();
             $this->amountOfMoney = $value->fromObject($object->amountOfMoney);
         }
-        if (property_exists($object, 'numberOfGiftCards')) {
+        if (\property_exists($object, 'numberOfGiftCards')) {
             $this->numberOfGiftCards = $object->numberOfGiftCards;
         }
         return $this;

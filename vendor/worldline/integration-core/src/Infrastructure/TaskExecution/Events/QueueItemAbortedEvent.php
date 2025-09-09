@@ -1,18 +1,17 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution\Events;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Events;
 
-use OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
-
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\QueueItem;
 /**
  * Class QueueItemAbortedEvent
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Events
+ * @internal
  */
 class QueueItemAbortedEvent extends BaseQueueItemEvent
 {
     protected $abortDescription;
-
     /**
      * QueueItemAbortedEvent constructor.
      *
@@ -24,7 +23,6 @@ class QueueItemAbortedEvent extends BaseQueueItemEvent
         parent::__construct($queueItem);
         $this->abortDescription = $abortDescription;
     }
-
     /**
      * @return mixed
      */

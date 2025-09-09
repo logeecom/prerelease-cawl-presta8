@@ -1,13 +1,14 @@
 <?php
-namespace OnlinePayments\Sdk\Webhooks;
+
+namespace CAWL\OnlinePayments\Sdk\Webhooks;
 
 use Exception;
 use RuntimeException;
-
 /**
  * Class SignatureValidationException
  *
  * @package OnlinePayments\Sdk\Webhooks
+ * @internal
  */
 class SignatureValidationException extends RuntimeException
 {

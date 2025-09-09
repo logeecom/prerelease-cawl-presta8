@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Payment;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
 /**
  * Class PaymentSpecificOutput.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Payment
+ * @internal
  */
 class PaymentSpecificOutput
 {
@@ -16,7 +16,6 @@ class PaymentSpecificOutput
     private ?string $threeDsLiability;
     private ?string $threeDsExemptionType;
     private ?Amount $surchargeAmount;
-
     /**
      * @param string|null $productId
      * @param string|null $fraudResult
@@ -24,13 +23,7 @@ class PaymentSpecificOutput
      * @param string|null $threeDsExemptionType
      * @param Amount|null $surchargeAmount
      */
-    public function __construct(
-        ?string $productId,
-        ?string $fraudResult,
-        ?string $threeDsLiability,
-        ?string $threeDsExemptionType,
-        ?Amount $surchargeAmount
-    )
+    public function __construct(?string $productId, ?string $fraudResult, ?string $threeDsLiability, ?string $threeDsExemptionType, ?Amount $surchargeAmount)
     {
         $this->productId = $productId;
         $this->fraudResult = $fraudResult;
@@ -38,28 +31,23 @@ class PaymentSpecificOutput
         $this->threeDsExemptionType = $threeDsExemptionType;
         $this->surchargeAmount = $surchargeAmount;
     }
-
-    public function getProductId(): ?string
+    public function getProductId() : ?string
     {
         return $this->productId;
     }
-
-    public function getFraudResult(): ?string
+    public function getFraudResult() : ?string
     {
         return $this->fraudResult;
     }
-
-    public function getThreeDsLiability(): ?string
+    public function getThreeDsLiability() : ?string
     {
         return $this->threeDsLiability;
     }
-
-    public function getThreeDsExemptionType(): ?string
+    public function getThreeDsExemptionType() : ?string
     {
         return $this->threeDsExemptionType;
     }
-
-    public function getSurchargeAmount(): ?Amount
+    public function getSurchargeAmount() : ?Amount
     {
         return $this->surchargeAmount;
     }

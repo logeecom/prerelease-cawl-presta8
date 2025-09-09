@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions;
 
-use OnlinePayments\Core\Infrastructure\Exceptions\BaseException;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Exceptions\BaseException;
 /**
  * Class TaskRunnerStatusChangeException.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions
+ * @internal
  */
 class TaskRunnerStatusChangeException extends BaseException
 {

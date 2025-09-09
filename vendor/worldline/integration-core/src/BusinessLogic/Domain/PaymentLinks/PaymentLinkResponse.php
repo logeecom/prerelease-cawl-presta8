@@ -1,16 +1,16 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks;
 
 /**
  * Class PaymentLinkResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks
+ * @internal
  */
 class PaymentLinkResponse
 {
     private ?PaymentLink $paymentLink;
-
     /**
      * @param PaymentLink|null $paymentLink
      */
@@ -18,8 +18,7 @@ class PaymentLinkResponse
     {
         $this->paymentLink = $paymentLink;
     }
-
-    public function getPaymentLink(): ?PaymentLink
+    public function getPaymentLink() : ?PaymentLink
     {
         return $this->paymentLink;
     }

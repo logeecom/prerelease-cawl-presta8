@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Checkout\Exceptions;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Exceptions;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTranslatableException;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTranslatableException;
 /**
  * Class InvalidTaxRate
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\Exceptions
+ * @internal
  */
 class InvalidTaxRate extends BaseTranslatableException
 {

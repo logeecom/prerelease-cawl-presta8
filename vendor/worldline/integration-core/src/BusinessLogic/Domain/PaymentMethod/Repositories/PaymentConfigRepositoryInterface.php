@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Repositories;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Repositories;
 
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethod;
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethod;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 /**
  * Interface PaymentConfigRepositoryInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Repositories
+ * @internal
  */
 interface PaymentConfigRepositoryInterface
 {
@@ -17,16 +17,13 @@ interface PaymentConfigRepositoryInterface
      *
      * @return PaymentMethodCollection
      */
-    public function getPaymentMethods(): PaymentMethodCollection;
-
-    public function getPaymentMethod(string $productId): ?PaymentMethod;
-
-    public function savePaymentMethod(PaymentMethod $paymentMethod): void;
-
+    public function getPaymentMethods() : PaymentMethodCollection;
+    public function getPaymentMethod(string $productId) : ?PaymentMethod;
+    public function savePaymentMethod(PaymentMethod $paymentMethod) : void;
     /**
      * @param string $mode
      *
      * @return void
      */
-    public function deleteByMode(string $mode): void;
+    public function deleteByMode(string $mode) : void;
 }

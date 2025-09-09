@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class MerchantAction extends DataObject
 {
@@ -15,27 +16,22 @@ class MerchantAction extends DataObject
      * @var string
      */
     public $actionType = null;
-
     /**
      * @var MobileThreeDSecureChallengeParameters
      */
     public $mobileThreeDSecureChallengeParameters = null;
-
     /**
      * @var RedirectData
      */
     public $redirectData = null;
-
     /**
      * @var ShowFormData
      */
     public $showFormData = null;
-
     /**
      * @var ShowInstructionsData
      */
     public $showInstructionsData = null;
-
     /**
      * @return string
      */
@@ -43,7 +39,6 @@ class MerchantAction extends DataObject
     {
         return $this->actionType;
     }
-
     /**
      * @param string
      */
@@ -51,7 +46,6 @@ class MerchantAction extends DataObject
     {
         $this->actionType = $value;
     }
-
     /**
      * @return MobileThreeDSecureChallengeParameters
      */
@@ -59,7 +53,6 @@ class MerchantAction extends DataObject
     {
         return $this->mobileThreeDSecureChallengeParameters;
     }
-
     /**
      * @param MobileThreeDSecureChallengeParameters
      */
@@ -67,7 +60,6 @@ class MerchantAction extends DataObject
     {
         $this->mobileThreeDSecureChallengeParameters = $value;
     }
-
     /**
      * @return RedirectData
      */
@@ -75,7 +67,6 @@ class MerchantAction extends DataObject
     {
         return $this->redirectData;
     }
-
     /**
      * @param RedirectData
      */
@@ -83,7 +74,6 @@ class MerchantAction extends DataObject
     {
         $this->redirectData = $value;
     }
-
     /**
      * @return ShowFormData
      */
@@ -91,7 +81,6 @@ class MerchantAction extends DataObject
     {
         return $this->showFormData;
     }
-
     /**
      * @param ShowFormData
      */
@@ -99,7 +88,6 @@ class MerchantAction extends DataObject
     {
         $this->showFormData = $value;
     }
-
     /**
      * @return ShowInstructionsData
      */
@@ -107,7 +95,6 @@ class MerchantAction extends DataObject
     {
         return $this->showInstructionsData;
     }
-
     /**
      * @param ShowInstructionsData
      */
@@ -115,31 +102,29 @@ class MerchantAction extends DataObject
     {
         $this->showInstructionsData = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->actionType)) {
+        if (!\is_null($this->actionType)) {
             $object->actionType = $this->actionType;
         }
-        if (!is_null($this->mobileThreeDSecureChallengeParameters)) {
+        if (!\is_null($this->mobileThreeDSecureChallengeParameters)) {
             $object->mobileThreeDSecureChallengeParameters = $this->mobileThreeDSecureChallengeParameters->toObject();
         }
-        if (!is_null($this->redirectData)) {
+        if (!\is_null($this->redirectData)) {
             $object->redirectData = $this->redirectData->toObject();
         }
-        if (!is_null($this->showFormData)) {
+        if (!\is_null($this->showFormData)) {
             $object->showFormData = $this->showFormData->toObject();
         }
-        if (!is_null($this->showInstructionsData)) {
+        if (!\is_null($this->showInstructionsData)) {
             $object->showInstructionsData = $this->showInstructionsData->toObject();
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -148,33 +133,33 @@ class MerchantAction extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'actionType')) {
+        if (\property_exists($object, 'actionType')) {
             $this->actionType = $object->actionType;
         }
-        if (property_exists($object, 'mobileThreeDSecureChallengeParameters')) {
-            if (!is_object($object->mobileThreeDSecureChallengeParameters)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->mobileThreeDSecureChallengeParameters, true) . '\' is not an object');
+        if (\property_exists($object, 'mobileThreeDSecureChallengeParameters')) {
+            if (!\is_object($object->mobileThreeDSecureChallengeParameters)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->mobileThreeDSecureChallengeParameters, \true) . '\' is not an object');
             }
             $value = new MobileThreeDSecureChallengeParameters();
             $this->mobileThreeDSecureChallengeParameters = $value->fromObject($object->mobileThreeDSecureChallengeParameters);
         }
-        if (property_exists($object, 'redirectData')) {
-            if (!is_object($object->redirectData)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->redirectData, true) . '\' is not an object');
+        if (\property_exists($object, 'redirectData')) {
+            if (!\is_object($object->redirectData)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->redirectData, \true) . '\' is not an object');
             }
             $value = new RedirectData();
             $this->redirectData = $value->fromObject($object->redirectData);
         }
-        if (property_exists($object, 'showFormData')) {
-            if (!is_object($object->showFormData)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->showFormData, true) . '\' is not an object');
+        if (\property_exists($object, 'showFormData')) {
+            if (!\is_object($object->showFormData)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->showFormData, \true) . '\' is not an object');
             }
             $value = new ShowFormData();
             $this->showFormData = $value->fromObject($object->showFormData);
         }
-        if (property_exists($object, 'showInstructionsData')) {
-            if (!is_object($object->showInstructionsData)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->showInstructionsData, true) . '\' is not an object');
+        if (\property_exists($object, 'showInstructionsData')) {
+            if (!\is_object($object->showInstructionsData)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->showInstructionsData, \true) . '\' is not an object');
             }
             $value = new ShowInstructionsData();
             $this->showInstructionsData = $value->fromObject($object->showInstructionsData);

@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Classes\Utility;
+namespace CAWL\OnlinePayments\Classes\Utility;
 
 /**
  * Class Request
  *
  * @package OnlinePayments\Classes\Utility
+ * @internal
  */
 class Request
 {
@@ -14,10 +15,9 @@ class Request
      *
      * @return array
      */
-    public static function getPostData(): array
+    public static function getPostData() : array
     {
-        $result = json_decode(file_get_contents('php://input'), true);
-
-        return !empty($result) && is_array($result) ? $result : [];
+        $result = \json_decode(\file_get_contents('php://input'), \true);
+        return !empty($result) && \is_array($result) ? $result : [];
     }
 }

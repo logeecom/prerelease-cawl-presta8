@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Serializer\Concrete;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Serializer\Concrete;
 
-use OnlinePayments\Core\Infrastructure\Serializer\Serializer;
+use CAWL\OnlinePayments\Core\Infrastructure\Serializer\Serializer;
 use Exception;
-
 /**
  * Class NativeSerializer
  *
  * @package OnlinePayments\Core\Infrastructure\Serializer\Concrete
+ * @internal
  */
 class NativeSerializer extends Serializer
 {
@@ -19,11 +19,10 @@ class NativeSerializer extends Serializer
      *
      * @return string String representation of the serialized data.
      */
-    protected function doSerialize($data): string
+    protected function doSerialize($data) : string
     {
-        return serialize($data);
+        return \serialize($data);
     }
-
     /**
      * Unserializes data.
      *
@@ -34,11 +33,10 @@ class NativeSerializer extends Serializer
     protected function doUnserialize(string $serialized)
     {
         try {
-            $unserialized = unserialize($serialized);
+            $unserialized = \unserialize($serialized);
         } catch (Exception $e) {
             return null;
         }
-
         return $unserialized;
     }
 }

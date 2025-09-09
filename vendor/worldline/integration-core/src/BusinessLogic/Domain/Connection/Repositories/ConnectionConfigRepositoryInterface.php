@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Connection\Repositories;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Repositories;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
 /**
  * Interface ConnectionConfigRepositoryInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Connection\Repositories
+ * @internal
  */
 interface ConnectionConfigRepositoryInterface
 {
@@ -18,33 +18,29 @@ interface ConnectionConfigRepositoryInterface
      *
      * @return void
      */
-    public function saveConnection(ConnectionDetails $connectionDetails): void;
-
+    public function saveConnection(ConnectionDetails $connectionDetails) : void;
     /**
      * Retrieves connection details.
      *
      * @return ConnectionDetails|null
      */
-    public function getConnection(): ?ConnectionDetails;
-
+    public function getConnection() : ?ConnectionDetails;
     /**
      * Retrieves oldest connection details.
      *
      * @return ConnectionDetails|null
      */
-    public function getOldestConnection(): ?ConnectionDetails;
-
+    public function getOldestConnection() : ?ConnectionDetails;
     /**
      * Retrieves oldest connected store.
      *
      * @return string
      */
-    public function getOldestConnectedStore(): string;
-
+    public function getOldestConnectedStore() : string;
     /**
      * Disconnects currently active connection.
      *
      * @return void
      */
-    public function disconnect(): void;
+    public function disconnect() : void;
 }

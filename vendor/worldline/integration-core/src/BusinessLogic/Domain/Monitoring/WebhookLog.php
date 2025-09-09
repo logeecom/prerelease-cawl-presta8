@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Monitoring;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring;
 
 use DateTime;
 use DateTimeInterface;
-
 /**
  * Class WebhookLog
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Monitoring
+ * @internal
  */
 class WebhookLog
 {
@@ -22,7 +22,6 @@ class WebhookLog
     private string $webhookBody;
     private string $transactionLink;
     private string $orderLink;
-
     /**
      * @param string $orderId
      * @param string $paymentNumber
@@ -35,18 +34,7 @@ class WebhookLog
      * @param string $transactionLink
      * @param string $orderLink
      */
-    public function __construct(
-        string $orderId,
-        string $paymentNumber,
-        string $paymentMethod,
-        string $status,
-        string $type,
-        ?DateTime $createdAt,
-        int $statusCode,
-        string $webhookBody,
-        string $transactionLink = '',
-        string $orderLink = ''
-    )
+    public function __construct(string $orderId, string $paymentNumber, string $paymentMethod, string $status, string $type, ?DateTime $createdAt, int $statusCode, string $webhookBody, string $transactionLink = '', string $orderLink = '')
     {
         $this->orderId = $orderId;
         $this->paymentNumber = $paymentNumber;
@@ -59,79 +47,55 @@ class WebhookLog
         $this->transactionLink = $transactionLink;
         $this->orderLink = $orderLink;
     }
-
-    public function toArray(): array
+    public function toArray() : array
     {
-        return [
-            'orderId' => $this->orderId,
-            'paymentNumber' => $this->paymentNumber,
-            'paymentMethod' => $this->paymentMethod,
-            'status' => $this->status,
-            'type' => $this->type,
-            'createdAt' => $this->createdAt->format(DateTimeInterface::ATOM),
-            'statusCode' => $this->statusCode,
-            'webhookBody' => $this->webhookBody,
-            'transactionLink' => $this->transactionLink,
-            'orderLink' => $this->orderLink
-        ];
+        return ['orderId' => $this->orderId, 'paymentNumber' => $this->paymentNumber, 'paymentMethod' => $this->paymentMethod, 'status' => $this->status, 'type' => $this->type, 'createdAt' => $this->createdAt->format(DateTimeInterface::ATOM), 'statusCode' => $this->statusCode, 'webhookBody' => $this->webhookBody, 'transactionLink' => $this->transactionLink, 'orderLink' => $this->orderLink];
     }
-
-    public function getOrderId(): string
+    public function getOrderId() : string
     {
         return $this->orderId;
     }
-
-    public function getPaymentNumber(): string
+    public function getPaymentNumber() : string
     {
         return $this->paymentNumber;
     }
-
-    public function getPaymentMethod(): string
+    public function getPaymentMethod() : string
     {
         return $this->paymentMethod;
     }
-
-    public function getStatus(): string
+    public function getStatus() : string
     {
         return $this->status;
     }
-
-    public function getType(): string
+    public function getType() : string
     {
         return $this->type;
     }
-
-    public function getCreatedAt(): ?DateTime
+    public function getCreatedAt() : ?DateTime
     {
         return $this->createdAt;
     }
-
-    public function getStatusCode(): int
+    public function getStatusCode() : int
     {
         return $this->statusCode;
     }
-
-    public function getWebhookBody(): string
+    public function getWebhookBody() : string
     {
         return $this->webhookBody;
     }
-
-    public function getTransactionLink(): string
+    public function getTransactionLink() : string
     {
         return $this->transactionLink;
     }
-
-    public function setTransactionLink(string $transactionLink): void
+    public function setTransactionLink(string $transactionLink) : void
     {
         $this->transactionLink = $transactionLink;
     }
-
-    public function getOrderLink(): string
+    public function getOrderLink() : string
     {
         return $this->orderLink;
     }
-
-    public function setOrderLink(string $orderLink): void
+    public function setOrderLink(string $orderLink) : void
     {
         $this->orderLink = $orderLink;
     }

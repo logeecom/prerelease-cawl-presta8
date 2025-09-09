@@ -1,15 +1,15 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\ORM;
+namespace CAWL\OnlinePayments\Core\Infrastructure\ORM;
 
 use InvalidArgumentException;
-use OnlinePayments\Core\Infrastructure\Data\DataTransferObject;
-use OnlinePayments\Core\Infrastructure\ORM\Configuration\EntityConfiguration;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Data\DataTransferObject;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Configuration\EntityConfiguration;
 /**
  * Class Entity.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM
+ * @internal
  */
 abstract class Entity extends DataTransferObject
 {
@@ -29,17 +29,15 @@ abstract class Entity extends DataTransferObject
      * @var array
      */
     protected array $fields = ['id'];
-
     /**
      * Returns full class name.
      *
      * @return string Fully qualified class name.
      */
-    public static function getClassName(): string
+    public static function getClassName() : string
     {
         return static::CLASS_NAME;
     }
-
     /**
      * Transforms raw array data to this entity instance.
      *
@@ -47,21 +45,18 @@ abstract class Entity extends DataTransferObject
      *
      * @return static Transformed entity object.
      */
-    public static function fromArray(array $data): DataTransferObject
+    public static function fromArray(array $data) : DataTransferObject
     {
         $instance = new static();
         $instance->inflate($data);
-
         return $instance;
     }
-
     /**
      * Returns entity configuration object.
      *
      * @return EntityConfiguration Configuration object.
      */
-    abstract public function getConfig(): EntityConfiguration;
-
+    public abstract function getConfig() : EntityConfiguration;
     /**
      * Sets raw array data to this entity instance properties.
      *
@@ -70,35 +65,31 @@ abstract class Entity extends DataTransferObject
     public function inflate(array $data)
     {
         foreach ($this->fields as $fieldName) {
-            $this->$fieldName = static::getArrayValue($data, $fieldName, $this->$fieldName);
+            $this->{$fieldName} = static::getArrayValue($data, $fieldName, $this->{$fieldName});
         }
     }
-
     /**
      * Transforms entity to its array format representation.
      *
      * @return array Entity in array format.
      */
-    public function toArray(): array
+    public function toArray() : array
     {
         $data = ['class_name' => static::getClassName()];
         foreach ($this->fields as $fieldName) {
-            $data[$fieldName] = $this->$fieldName;
+            $data[$fieldName] = $this->{$fieldName};
         }
-
         return $data;
     }
-
     /**
      * Gets entity identifier.
      *
      * @return int|null Identifier.
      */
-    public function getId(): ?int
+    public function getId() : ?int
     {
         return $this->id;
     }
-
     /**
      * Sets entity identifier.
      *
@@ -106,11 +97,10 @@ abstract class Entity extends DataTransferObject
      *
      * @return void
      */
-    public function setId(int $id): void
+    public function setId(int $id) : void
     {
         $this->id = $id;
     }
-
     /**
      * Gets instance value for given index key.
      *
@@ -120,23 +110,19 @@ abstract class Entity extends DataTransferObject
      */
     public function getIndexValue(string $indexKey)
     {
-        $methodName = 'get' . ucfirst($indexKey);
-        if (method_exists($this, $methodName)) {
-            return $this->$methodName();
+        $methodName = 'get' . \ucfirst($indexKey);
+        if (\method_exists($this, $methodName)) {
+            return $this->{$methodName}();
         }
-
-        $methodName = 'is' . ucfirst($indexKey);
-        if (method_exists($this, $methodName)) {
-            return $this->$methodName();
+        $methodName = 'is' . \ucfirst($indexKey);
+        if (\method_exists($this, $methodName)) {
+            return $this->{$methodName}();
         }
-
-        if (property_exists($this, $indexKey)) {
-            return $this->$indexKey;
+        if (\property_exists($this, $indexKey)) {
+            return $this->{$indexKey};
         }
-
         throw new InvalidArgumentException('Neither field not getter found for index "' . $indexKey . '".');
     }
-
     /**
      * Gets value from the array for given key.
      *
@@ -148,6 +134,6 @@ abstract class Entity extends DataTransferObject
      */
     protected static function getArrayValue(array $search, string $key, $default = null)
     {
-        return array_key_exists($key, $search) ? $search[$key] : $default;
+        return \array_key_exists($key, $search) ? $search[$key] : $default;
     }
 }

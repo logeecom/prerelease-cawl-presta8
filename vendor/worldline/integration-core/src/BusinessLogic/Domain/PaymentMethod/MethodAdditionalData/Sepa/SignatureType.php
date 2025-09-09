@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Sepa;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Sepa;
 
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidSignatureTypeException;
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidSignatureTypeException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
 /**
  * Class SignatureType
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\RedirectPaymentMethod\Sepa
+ * @internal
  */
 class SignatureType
 {
@@ -16,7 +16,6 @@ class SignatureType
     public const UNSIGNED = 'UNSIGNED';
     public const TICK_BOX = 'TICK_BOX';
     protected string $type;
-
     /**
      * @param string $type
      */
@@ -24,31 +23,27 @@ class SignatureType
     {
         $this->type = $type;
     }
-
     /**
      * @return self
      */
-    public static function sms(): self
+    public static function sms() : self
     {
         return new self(self::SMS);
     }
-
     /**
      * @return self
      */
-    public static function unsigned(): self
+    public static function unsigned() : self
     {
         return new self(self::UNSIGNED);
     }
-
     /**
      * @return self
      */
-    public static function tickBox(): self
+    public static function tickBox() : self
     {
         return new self(self::TICK_BOX);
     }
-
     /**
      * @param string $type
      *
@@ -56,41 +51,31 @@ class SignatureType
      *
      * @throws InvalidSignatureTypeException
      */
-    public static function parse(string $type): self
+    public static function parse(string $type) : self
     {
         if ($type === self::SMS) {
             return new self(self::SMS);
         }
-
         if ($type === self::UNSIGNED) {
             return new self(self::UNSIGNED);
         }
-
         if ($type === self::TICK_BOX) {
             return new self(self::TICK_BOX);
         }
-
-        throw new InvalidSignatureTypeException(
-            new TranslatableLabel(
-                'Invalid signature type. Signature type must be "SMS", "UNSIGNED" or "TICK_BOX".',
-                'payment.invalidSignatureType'
-            )
-        );
+        throw new InvalidSignatureTypeException(new TranslatableLabel('Invalid signature type. Signature type must be "SMS", "UNSIGNED" or "TICK_BOX".', 'payment.invalidSignatureType'));
     }
-
     /**
      * @return string
      */
-    public function getType(): string
+    public function getType() : string
     {
         return $this->type;
     }
-
     /**
      * @param SignatureType $type
      * @return bool
      */
-    public function equals(SignatureType $type): bool
+    public function equals(SignatureType $type) : bool
     {
         return $this->type === $type->getType();
     }

@@ -1,21 +1,20 @@
 <?php
-namespace OnlinePayments\Sdk\Webhooks;
+
+namespace CAWL\OnlinePayments\Sdk\Webhooks;
 
 use RuntimeException;
-
 /**
  * Class ApiVersionMismatchException
  *
  * @package OnlinePayments\Sdk\Webhooks
+ * @internal
  */
 class ApiVersionMismatchException extends RuntimeException
 {
     /** @var string */
     private $eventApiVersion;
-
     /** @var string */
     private $sdkApiVersion;
-
     /**
      * @param string $eventApiVersion
      * @param string $sdkApiVersion
@@ -26,7 +25,6 @@ class ApiVersionMismatchException extends RuntimeException
         $this->eventApiVersion = $eventApiVersion;
         $this->sdkApiVersion = $sdkApiVersion;
     }
-
     /**
      * @return string
      */
@@ -34,7 +32,6 @@ class ApiVersionMismatchException extends RuntimeException
     {
         return $this->eventApiVersion;
     }
-
     /**
      * @return string
      */

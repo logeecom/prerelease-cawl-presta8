@@ -1,17 +1,17 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\AutoTest;
+namespace CAWL\OnlinePayments\Core\Infrastructure\AutoTest;
 
-use OnlinePayments\Core\Infrastructure\Logger\Interfaces\ShopLoggerAdapter;
-use OnlinePayments\Core\Infrastructure\Logger\LogData;
-use OnlinePayments\Core\Infrastructure\ORM\Exceptions\RepositoryNotRegisteredException;
-use OnlinePayments\Core\Infrastructure\ORM\RepositoryRegistry;
-use OnlinePayments\Core\Infrastructure\Singleton;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Logger\Interfaces\ShopLoggerAdapter;
+use CAWL\OnlinePayments\Core\Infrastructure\Logger\LogData;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\RepositoryNotRegisteredException;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\RepositoryRegistry;
+use CAWL\OnlinePayments\Core\Infrastructure\Singleton;
 /**
  * Class AutoTestLogger.
  *
  * @package OnlinePayments\Core\Infrastructure\AutoConfiguration
+ * @internal
  */
 class AutoTestLogger extends Singleton implements ShopLoggerAdapter
 {
@@ -21,7 +21,6 @@ class AutoTestLogger extends Singleton implements ShopLoggerAdapter
      * @var static
      */
     protected static ?Singleton $instance = null;
-
     /**
      * Logs a message in system.
      *
@@ -29,12 +28,11 @@ class AutoTestLogger extends Singleton implements ShopLoggerAdapter
      *
      * @throws RepositoryNotRegisteredException
      */
-    public function logMessage(LogData $data): void
+    public function logMessage(LogData $data) : void
     {
         $repo = RepositoryRegistry::getRepository(LogData::CLASS_NAME);
         $repo->save($data);
     }
-
     /**
      * Gets all log entities.
      *
@@ -42,11 +40,10 @@ class AutoTestLogger extends Singleton implements ShopLoggerAdapter
      *
      * @throws RepositoryNotRegisteredException
      */
-    public function getLogs(): array
+    public function getLogs() : array
     {
         return RepositoryRegistry::getRepository(LogData::CLASS_NAME)->select();
     }
-
     /**
      * Transforms logs to the plain array.
      *
@@ -54,13 +51,12 @@ class AutoTestLogger extends Singleton implements ShopLoggerAdapter
      *
      * @throws RepositoryNotRegisteredException
      */
-    public function getLogsArray(): array
+    public function getLogsArray() : array
     {
         $result = array();
         foreach ($this->getLogs() as $log) {
             $result[] = $log->toArray();
         }
-
         return $result;
     }
 }

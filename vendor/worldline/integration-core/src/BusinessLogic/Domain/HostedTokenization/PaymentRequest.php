@@ -1,15 +1,15 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\MemoryCachingCartProvider;
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\RoundingTotalsCartProvider;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\MemoryCachingCartProvider;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\RoundingTotalsCartProvider;
 /**
  * Class PaymentRequest.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization
+ * @internal
  */
 class PaymentRequest
 {
@@ -17,7 +17,6 @@ class PaymentRequest
     private CartProvider $cartProvider;
     private string $returnUrl;
     private ?string $tokenId;
-
     public function __construct(string $hostedTokenizationId, CartProvider $cart, string $returnUrl, ?string $tokenId = null)
     {
         $this->hostedTokenizationId = $hostedTokenizationId;
@@ -25,23 +24,19 @@ class PaymentRequest
         $this->returnUrl = $returnUrl;
         $this->tokenId = $tokenId;
     }
-
-    public function getHostedTokenizationId(): string
+    public function getHostedTokenizationId() : string
     {
         return $this->hostedTokenizationId;
     }
-
-    public function getCartProvider(): CartProvider
+    public function getCartProvider() : CartProvider
     {
         return $this->cartProvider;
     }
-
-    public function getReturnUrl(): string
+    public function getReturnUrl() : string
     {
         return $this->returnUrl;
     }
-
-    public function getTokenId(): ?string
+    public function getTokenId() : ?string
     {
         return $this->tokenId;
     }

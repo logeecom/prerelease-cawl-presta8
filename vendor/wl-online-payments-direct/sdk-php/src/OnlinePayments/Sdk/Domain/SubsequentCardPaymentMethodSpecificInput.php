@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class SubsequentCardPaymentMethodSpecificInput extends DataObject
 {
@@ -15,34 +16,28 @@ class SubsequentCardPaymentMethodSpecificInput extends DataObject
      * @var string
      */
     public $authorizationMode = null;
-
     /**
      * @var int
      */
     public $paymentNumber = null;
-
     /**
      * @var string
      * @deprecated Deprecated
      */
     public $schemeReferenceData = null;
-
     /**
      * @var string
      */
     public $subsequentType = null;
-
     /**
      * @var string
      * @deprecated ID of the token to use to create the payment.
      */
     public $token = null;
-
     /**
      * @var string
      */
     public $transactionChannel = null;
-
     /**
      * @return string
      */
@@ -50,7 +45,6 @@ class SubsequentCardPaymentMethodSpecificInput extends DataObject
     {
         return $this->authorizationMode;
     }
-
     /**
      * @param string
      */
@@ -58,7 +52,6 @@ class SubsequentCardPaymentMethodSpecificInput extends DataObject
     {
         $this->authorizationMode = $value;
     }
-
     /**
      * @return int
      */
@@ -66,7 +59,6 @@ class SubsequentCardPaymentMethodSpecificInput extends DataObject
     {
         return $this->paymentNumber;
     }
-
     /**
      * @param int
      */
@@ -74,7 +66,6 @@ class SubsequentCardPaymentMethodSpecificInput extends DataObject
     {
         $this->paymentNumber = $value;
     }
-
     /**
      * @return string
      * @deprecated Deprecated
@@ -83,7 +74,6 @@ class SubsequentCardPaymentMethodSpecificInput extends DataObject
     {
         return $this->schemeReferenceData;
     }
-
     /**
      * @param string
      * @deprecated Deprecated
@@ -92,7 +82,6 @@ class SubsequentCardPaymentMethodSpecificInput extends DataObject
     {
         $this->schemeReferenceData = $value;
     }
-
     /**
      * @return string
      */
@@ -100,7 +89,6 @@ class SubsequentCardPaymentMethodSpecificInput extends DataObject
     {
         return $this->subsequentType;
     }
-
     /**
      * @param string
      */
@@ -108,7 +96,6 @@ class SubsequentCardPaymentMethodSpecificInput extends DataObject
     {
         $this->subsequentType = $value;
     }
-
     /**
      * @return string
      * @deprecated ID of the token to use to create the payment.
@@ -117,7 +104,6 @@ class SubsequentCardPaymentMethodSpecificInput extends DataObject
     {
         return $this->token;
     }
-
     /**
      * @param string
      * @deprecated ID of the token to use to create the payment.
@@ -126,7 +112,6 @@ class SubsequentCardPaymentMethodSpecificInput extends DataObject
     {
         $this->token = $value;
     }
-
     /**
      * @return string
      */
@@ -134,7 +119,6 @@ class SubsequentCardPaymentMethodSpecificInput extends DataObject
     {
         return $this->transactionChannel;
     }
-
     /**
      * @param string
      */
@@ -142,34 +126,32 @@ class SubsequentCardPaymentMethodSpecificInput extends DataObject
     {
         $this->transactionChannel = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->authorizationMode)) {
+        if (!\is_null($this->authorizationMode)) {
             $object->authorizationMode = $this->authorizationMode;
         }
-        if (!is_null($this->paymentNumber)) {
+        if (!\is_null($this->paymentNumber)) {
             $object->paymentNumber = $this->paymentNumber;
         }
-        if (!is_null($this->schemeReferenceData)) {
+        if (!\is_null($this->schemeReferenceData)) {
             $object->schemeReferenceData = $this->schemeReferenceData;
         }
-        if (!is_null($this->subsequentType)) {
+        if (!\is_null($this->subsequentType)) {
             $object->subsequentType = $this->subsequentType;
         }
-        if (!is_null($this->token)) {
+        if (!\is_null($this->token)) {
             $object->token = $this->token;
         }
-        if (!is_null($this->transactionChannel)) {
+        if (!\is_null($this->transactionChannel)) {
             $object->transactionChannel = $this->transactionChannel;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -178,22 +160,22 @@ class SubsequentCardPaymentMethodSpecificInput extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'authorizationMode')) {
+        if (\property_exists($object, 'authorizationMode')) {
             $this->authorizationMode = $object->authorizationMode;
         }
-        if (property_exists($object, 'paymentNumber')) {
+        if (\property_exists($object, 'paymentNumber')) {
             $this->paymentNumber = $object->paymentNumber;
         }
-        if (property_exists($object, 'schemeReferenceData')) {
+        if (\property_exists($object, 'schemeReferenceData')) {
             $this->schemeReferenceData = $object->schemeReferenceData;
         }
-        if (property_exists($object, 'subsequentType')) {
+        if (\property_exists($object, 'subsequentType')) {
             $this->subsequentType = $object->subsequentType;
         }
-        if (property_exists($object, 'token')) {
+        if (\property_exists($object, 'token')) {
             $this->token = $object->token;
         }
-        if (property_exists($object, 'transactionChannel')) {
+        if (\property_exists($object, 'transactionChannel')) {
             $this->transactionChannel = $object->transactionChannel;
         }
         return $this;

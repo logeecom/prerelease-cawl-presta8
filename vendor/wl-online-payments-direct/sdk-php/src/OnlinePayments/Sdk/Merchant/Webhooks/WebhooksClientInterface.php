@@ -1,23 +1,24 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Merchant\Webhooks;
+namespace CAWL\OnlinePayments\Sdk\Merchant\Webhooks;
 
-use OnlinePayments\Sdk\ApiException;
-use OnlinePayments\Sdk\AuthorizationException;
-use OnlinePayments\Sdk\CallContext;
-use OnlinePayments\Sdk\Communication\InvalidResponseException;
-use OnlinePayments\Sdk\Domain\SendTestRequest;
-use OnlinePayments\Sdk\Domain\ValidateCredentialsRequest;
-use OnlinePayments\Sdk\Domain\ValidateCredentialsResponse;
-use OnlinePayments\Sdk\IdempotenceException;
-use OnlinePayments\Sdk\PlatformException;
-use OnlinePayments\Sdk\ReferenceException;
-use OnlinePayments\Sdk\ValidationException;
-
+use CAWL\OnlinePayments\Sdk\ApiException;
+use CAWL\OnlinePayments\Sdk\AuthorizationException;
+use CAWL\OnlinePayments\Sdk\CallContext;
+use CAWL\OnlinePayments\Sdk\Communication\InvalidResponseException;
+use CAWL\OnlinePayments\Sdk\Domain\SendTestRequest;
+use CAWL\OnlinePayments\Sdk\Domain\ValidateCredentialsRequest;
+use CAWL\OnlinePayments\Sdk\Domain\ValidateCredentialsResponse;
+use CAWL\OnlinePayments\Sdk\IdempotenceException;
+use CAWL\OnlinePayments\Sdk\PlatformException;
+use CAWL\OnlinePayments\Sdk\ReferenceException;
+use CAWL\OnlinePayments\Sdk\ValidationException;
 /**
  * Webhooks client interface.
+ * @internal
  */
 interface WebhooksClientInterface
 {
@@ -37,7 +38,6 @@ interface WebhooksClientInterface
      * @throws InvalidResponseException
      */
     function validateWebhookCredentials(ValidateCredentialsRequest $body, ?CallContext $callContext = null);
-
     /**
      * Resource /v2/{merchantId}/webhooks/sendtest - Send test
      *

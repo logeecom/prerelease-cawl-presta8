@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class RedirectPaymentProduct3306SpecificInput extends DataObject
 {
@@ -15,7 +16,6 @@ class RedirectPaymentProduct3306SpecificInput extends DataObject
      * @var string
      */
     public $extraMerchantData = null;
-
     /**
      * @return string
      */
@@ -23,7 +23,6 @@ class RedirectPaymentProduct3306SpecificInput extends DataObject
     {
         return $this->extraMerchantData;
     }
-
     /**
      * @param string
      */
@@ -31,19 +30,17 @@ class RedirectPaymentProduct3306SpecificInput extends DataObject
     {
         $this->extraMerchantData = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->extraMerchantData)) {
+        if (!\is_null($this->extraMerchantData)) {
             $object->extraMerchantData = $this->extraMerchantData;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -52,7 +49,7 @@ class RedirectPaymentProduct3306SpecificInput extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'extraMerchantData')) {
+        if (\property_exists($object, 'extraMerchantData')) {
             $this->extraMerchantData = $object->extraMerchantData;
         }
         return $this;

@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories;
 
-use OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\MonitoringLog;
-use OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\WebhookLog;
-
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\MonitoringLog;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\WebhookLog;
 /**
  * Interface RepositoryWithAdvancedSearchInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories
+ * @internal
  */
 interface RepositoryWithAdvancedSearchInterface
 {
@@ -19,5 +19,5 @@ interface RepositoryWithAdvancedSearchInterface
      *
      * @return WebhookLog[]|MonitoringLog[]
      */
-    public function getLogs(int $pageNumber, int $pageSize, string $searchTerm): array;
+    public function getLogs(int $pageNumber, int $pageSize, string $searchTerm) : array;
 }

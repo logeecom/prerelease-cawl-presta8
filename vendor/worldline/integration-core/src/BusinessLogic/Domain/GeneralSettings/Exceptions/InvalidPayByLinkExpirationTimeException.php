@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTranslatableException;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions\BaseTranslatableException;
 /**
  * Class InvalidPayByLinkExpirationTimeException
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions
+ * @internal
  */
 class InvalidPayByLinkExpirationTimeException extends BaseTranslatableException
 {

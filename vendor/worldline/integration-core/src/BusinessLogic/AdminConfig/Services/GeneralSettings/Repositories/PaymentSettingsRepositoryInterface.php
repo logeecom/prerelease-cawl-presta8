@@ -1,32 +1,30 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories;
 
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 /**
  * Interface PaymentSettingsRepositoryInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Repositories
+ * @internal
  */
 interface PaymentSettingsRepositoryInterface
 {
     /**
      * @return PaymentSettings|null
      */
-    public function getPaymentSettings(): ?PaymentSettings;
-
+    public function getPaymentSettings() : ?PaymentSettings;
     /**
      * @param PaymentSettings $paymentSettings
      *
      * @return void
      */
-    public function savePaymentSettings(PaymentSettings $paymentSettings): void;
-
+    public function savePaymentSettings(PaymentSettings $paymentSettings) : void;
     /**
      * @param string $mode
      *
      * @return void
      */
-    public function deleteByMode(string $mode): void;
+    public function deleteByMode(string $mode) : void;
 }

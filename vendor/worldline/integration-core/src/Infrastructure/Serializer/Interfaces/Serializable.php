@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Serializer\Interfaces;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Serializer\Interfaces;
 
 /**
  * Interface Serializable
  *
  * @package OnlinePayments\Core\Infrastructure\Serializer\Interfaces
+ * @internal
  */
 interface Serializable
 {
@@ -17,12 +18,11 @@ interface Serializable
      * @return Serializable
      *      Instance of serialized object.
      */
-    public static function fromArray(array $array): Serializable;
-
+    public static function fromArray(array $array) : Serializable;
     /**
      * Transforms serializable object into an array.
      *
      * @return array Array representation of a serializable object.
      */
-    public function toArray(): array;
+    public function toArray() : array;
 }

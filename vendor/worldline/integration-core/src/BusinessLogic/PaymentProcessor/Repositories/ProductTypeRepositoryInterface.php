@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\PaymentProcessor\Repositories;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Repositories;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
-use OnlinePayments\Core\BusinessLogic\Domain\ProductTypes\ProductType;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ProductTypes\ProductType;
 /**
  * Interface ProductTypeRepositoryInterface.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Repositories
+ * @internal
  */
 interface ProductTypeRepositoryInterface
 {
@@ -18,5 +18,5 @@ interface ProductTypeRepositoryInterface
      * @param CartProvider $cartProvider
      * @return array<string, ProductType>
      */
-    public function getProductTypesMap(CartProvider $cartProvider): array;
+    public function getProductTypesMap(CartProvider $cartProvider) : array;
 }

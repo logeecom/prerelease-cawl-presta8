@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class GPayThreeDSecure extends DataObject
 {
@@ -15,27 +16,22 @@ class GPayThreeDSecure extends DataObject
      * @var string
      */
     public $challengeCanvasSize = null;
-
     /**
      * @var string
      */
     public $challengeIndicator = null;
-
     /**
      * @var string
      */
     public $exemptionRequest = null;
-
     /**
      * @var RedirectionData
      */
     public $redirectionData = null;
-
     /**
      * @var bool
      */
     public $skipAuthentication = null;
-
     /**
      * @return string
      */
@@ -43,7 +39,6 @@ class GPayThreeDSecure extends DataObject
     {
         return $this->challengeCanvasSize;
     }
-
     /**
      * @param string
      */
@@ -51,7 +46,6 @@ class GPayThreeDSecure extends DataObject
     {
         $this->challengeCanvasSize = $value;
     }
-
     /**
      * @return string
      */
@@ -59,7 +53,6 @@ class GPayThreeDSecure extends DataObject
     {
         return $this->challengeIndicator;
     }
-
     /**
      * @param string
      */
@@ -67,7 +60,6 @@ class GPayThreeDSecure extends DataObject
     {
         $this->challengeIndicator = $value;
     }
-
     /**
      * @return string
      */
@@ -75,7 +67,6 @@ class GPayThreeDSecure extends DataObject
     {
         return $this->exemptionRequest;
     }
-
     /**
      * @param string
      */
@@ -83,7 +74,6 @@ class GPayThreeDSecure extends DataObject
     {
         $this->exemptionRequest = $value;
     }
-
     /**
      * @return RedirectionData
      */
@@ -91,7 +81,6 @@ class GPayThreeDSecure extends DataObject
     {
         return $this->redirectionData;
     }
-
     /**
      * @param RedirectionData
      */
@@ -99,7 +88,6 @@ class GPayThreeDSecure extends DataObject
     {
         $this->redirectionData = $value;
     }
-
     /**
      * @return bool
      */
@@ -107,7 +95,6 @@ class GPayThreeDSecure extends DataObject
     {
         return $this->skipAuthentication;
     }
-
     /**
      * @param bool
      */
@@ -115,31 +102,29 @@ class GPayThreeDSecure extends DataObject
     {
         $this->skipAuthentication = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->challengeCanvasSize)) {
+        if (!\is_null($this->challengeCanvasSize)) {
             $object->challengeCanvasSize = $this->challengeCanvasSize;
         }
-        if (!is_null($this->challengeIndicator)) {
+        if (!\is_null($this->challengeIndicator)) {
             $object->challengeIndicator = $this->challengeIndicator;
         }
-        if (!is_null($this->exemptionRequest)) {
+        if (!\is_null($this->exemptionRequest)) {
             $object->exemptionRequest = $this->exemptionRequest;
         }
-        if (!is_null($this->redirectionData)) {
+        if (!\is_null($this->redirectionData)) {
             $object->redirectionData = $this->redirectionData->toObject();
         }
-        if (!is_null($this->skipAuthentication)) {
+        if (!\is_null($this->skipAuthentication)) {
             $object->skipAuthentication = $this->skipAuthentication;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -148,23 +133,23 @@ class GPayThreeDSecure extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'challengeCanvasSize')) {
+        if (\property_exists($object, 'challengeCanvasSize')) {
             $this->challengeCanvasSize = $object->challengeCanvasSize;
         }
-        if (property_exists($object, 'challengeIndicator')) {
+        if (\property_exists($object, 'challengeIndicator')) {
             $this->challengeIndicator = $object->challengeIndicator;
         }
-        if (property_exists($object, 'exemptionRequest')) {
+        if (\property_exists($object, 'exemptionRequest')) {
             $this->exemptionRequest = $object->exemptionRequest;
         }
-        if (property_exists($object, 'redirectionData')) {
-            if (!is_object($object->redirectionData)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->redirectionData, true) . '\' is not an object');
+        if (\property_exists($object, 'redirectionData')) {
+            if (!\is_object($object->redirectionData)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->redirectionData, \true) . '\' is not an object');
             }
             $value = new RedirectionData();
             $this->redirectionData = $value->fromObject($object->redirectionData);
         }
-        if (property_exists($object, 'skipAuthentication')) {
+        if (\property_exists($object, 'skipAuthentication')) {
             $this->skipAuthentication = $object->skipAuthentication;
         }
         return $this;

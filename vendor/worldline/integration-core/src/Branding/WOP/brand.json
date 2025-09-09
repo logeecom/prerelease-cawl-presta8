@@ -1,9 +1,0 @@
-{
-  "code": "WOP",
-  "name": "Worldline Online Payments",
-  "liveApiEndpoint": "https://payment.direct.worldline-solutions.com",
-  "testApiEndpoint": "https://payment.preprod.direct.worldline-solutions.com",
-  "liveUrl": "https://merchant-portal.prod.worldline-solutions.com",
-  "testUrl": "https://merchant-portal.preprod.worldline-solutions.com",
-  "paymentMethodName": "Worldline"
-}

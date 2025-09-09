@@ -1,24 +1,19 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\Sdk;
+namespace CAWL\OnlinePayments\Core\Bootstrap\Sdk;
 
-use OnlinePayments\Sdk\Communication\DefaultConnection;
-use OnlinePayments\Sdk\CommunicatorConfiguration;
-
+use CAWL\OnlinePayments\Sdk\Communication\DefaultConnection;
+use CAWL\OnlinePayments\Sdk\CommunicatorConfiguration;
+/** @internal */
 class DbLogConnection extends DefaultConnection
 {
     private CommunicatorLoggerHelper $communicatorLoggerHelper;
-
-    public function __construct(
-        CommunicatorLoggerHelper $communicatorLoggerHelper,
-        ?CommunicatorConfiguration $communicatorConfiguration = null
-    ) {
+    public function __construct(CommunicatorLoggerHelper $communicatorLoggerHelper, ?CommunicatorConfiguration $communicatorConfiguration = null)
+    {
         parent::__construct($communicatorConfiguration);
-
         $this->communicatorLoggerHelper = $communicatorLoggerHelper;
     }
-
-    protected function getCommunicatorLoggerHelper(): CommunicatorLoggerHelper
+    protected function getCommunicatorLoggerHelper() : CommunicatorLoggerHelper
     {
         return $this->communicatorLoggerHelper;
     }

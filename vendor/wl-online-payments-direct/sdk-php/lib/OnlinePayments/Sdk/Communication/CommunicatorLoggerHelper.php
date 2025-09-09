@@ -1,21 +1,21 @@
 <?php
-namespace OnlinePayments\Sdk\Communication;
+
+namespace CAWL\OnlinePayments\Sdk\Communication;
 
 use Exception;
-use OnlinePayments\Sdk\Logging\BodyObfuscator;
-use OnlinePayments\Sdk\Logging\CommunicatorLogger;
-use OnlinePayments\Sdk\Logging\HeaderObfuscator;
-
+use CAWL\OnlinePayments\Sdk\Logging\BodyObfuscator;
+use CAWL\OnlinePayments\Sdk\Logging\CommunicatorLogger;
+use CAWL\OnlinePayments\Sdk\Logging\HeaderObfuscator;
 /**
  * Class CommunicatorLoggerHelper
  *
  * @package OnlinePayments\Sdk\Communication
+ * @internal
  */
 class CommunicatorLoggerHelper
 {
     /** @var HttpObfuscator|null */
     private $httpObfuscator = null;
-
     /**
      * @param CommunicatorLogger $communicatorLogger
      * @param string $requestId
@@ -24,27 +24,10 @@ class CommunicatorLoggerHelper
      * @param array $requestHeaders
      * @param string $requestBody
      */
-    public function logRequest(
-        CommunicatorLogger $communicatorLogger,
-        $requestId,
-        $requestMethod,
-        $requestUri,
-        array $requestHeaders,
-        $requestBody = ''
-    ) {
-        $communicatorLogger->log(sprintf(
-            "Outgoing request to %s (requestId='%s')\n%s",
-            $this->getEndpoint($requestUri),
-            $requestId,
-            $this->getHttpObfuscator()->getRawObfuscatedRequest(
-                $requestMethod,
-                $this->getRelativeUriPathWithRequestParameters($requestUri),
-                $requestHeaders,
-                $requestBody
-            )
-        ));
+    public function logRequest(CommunicatorLogger $communicatorLogger, $requestId, $requestMethod, $requestUri, array $requestHeaders, $requestBody = '')
+    {
+        $communicatorLogger->log(\sprintf("Outgoing request to %s (requestId='%s')\n%s", $this->getEndpoint($requestUri), $requestId, $this->getHttpObfuscator()->getRawObfuscatedRequest($requestMethod, $this->getRelativeUriPathWithRequestParameters($requestUri), $requestHeaders, $requestBody)));
     }
-
     /**
      * @param CommunicatorLogger $communicatorLogger
      * @param string $requestId
@@ -53,14 +36,8 @@ class CommunicatorLoggerHelper
      */
     public function logResponse(CommunicatorLogger $communicatorLogger, $requestId, $requestUri, ConnectionResponseInterface $response)
     {
-        $communicatorLogger->log(sprintf(
-            "Incoming response from %s (requestId='%s')\n%s",
-            $this->getEndpoint($requestUri),
-            $requestId,
-            $this->getHttpObfuscator()->getRawObfuscatedResponse($response)
-        ));
+        $communicatorLogger->log(\sprintf("Incoming response from %s (requestId='%s')\n%s", $this->getEndpoint($requestUri), $requestId, $this->getHttpObfuscator()->getRawObfuscatedResponse($response)));
     }
-
     /**
      * @param CommunicatorLogger $communicatorLogger
      * @param string $requestId
@@ -69,22 +46,16 @@ class CommunicatorLoggerHelper
      */
     public function logException(CommunicatorLogger $communicatorLogger, $requestId, $requestUri, Exception $exception)
     {
-        $communicatorLogger->logException(sprintf(
-            "Error occurred while executing request to %s (requestId='%s')",
-            $this->getEndpoint($requestUri),
-            $requestId
-        ), $exception);
+        $communicatorLogger->logException(\sprintf("Error occurred while executing request to %s (requestId='%s')", $this->getEndpoint($requestUri), $requestId), $exception);
     }
-
     /** @return HttpObfuscator */
     protected function getHttpObfuscator()
     {
-        if (is_null($this->httpObfuscator)) {
+        if (\is_null($this->httpObfuscator)) {
             $this->httpObfuscator = new HttpObfuscator();
         }
         return $this->httpObfuscator;
     }
-
     /**
      * @param BodyObfuscator $bodyObfuscator
      */
@@ -92,7 +63,6 @@ class CommunicatorLoggerHelper
     {
         $this->getHttpObfuscator()->setBodyObfuscator($bodyObfuscator);
     }
-
     /**
      * @param HeaderObfuscator $headerObfuscator
      */
@@ -100,35 +70,33 @@ class CommunicatorLoggerHelper
     {
         $this->getHttpObfuscator()->setHeaderObfuscator($headerObfuscator);
     }
-
     /**
      * @param string $requestUri
      * @return string
      */
     public function getEndpoint($requestUri)
     {
-        $index = strpos($requestUri, '://');
-        if ($index !== false) {
-            $index = strpos($requestUri, '/', $index + 3);
+        $index = \strpos($requestUri, '://');
+        if ($index !== \false) {
+            $index = \strpos($requestUri, '/', $index + 3);
             // $index === false means there's no / after the host; there is no relative URI
-            return $index !== false ? substr($requestUri, 0, $index) : $requestUri;
+            return $index !== \false ? \substr($requestUri, 0, $index) : $requestUri;
         } else {
             // not an absolute URI
             return '';
         }
     }
-
     /**
      * @param string $requestUri
      * @return string
      */
     public function getRelativeUriPathWithRequestParameters($requestUri)
     {
-        $index = strpos($requestUri, '://');
-        if ($index !== false) {
-            $index = strpos($requestUri, '/', $index + 3);
+        $index = \strpos($requestUri, '://');
+        if ($index !== \false) {
+            $index = \strpos($requestUri, '/', $index + 3);
             // $index === false means there's no / after the host; there is no relative URI
-            return $index !== false ? substr($requestUri, $index) : '';
+            return $index !== \false ? \substr($requestUri, $index) : '';
         } else {
             // not an absolute URI
             return $requestUri;

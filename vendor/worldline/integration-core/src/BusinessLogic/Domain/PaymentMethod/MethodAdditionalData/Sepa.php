@@ -1,20 +1,19 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData;
 
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Sepa\RecurrenceType;
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Sepa\SignatureType;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Sepa\RecurrenceType;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Sepa\SignatureType;
 /**
  * Class Sepa
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\RedirectPaymentMethod
+ * @internal
  */
 class Sepa implements PaymentMethodAdditionalData
 {
     protected ?RecurrenceType $recurrenceType = null;
     protected ?SignatureType $signatureType = null;
-
     /**
      * @param RecurrenceType|null $recurrenceType
      * @param SignatureType|null $signatureType
@@ -24,13 +23,11 @@ class Sepa implements PaymentMethodAdditionalData
         $this->recurrenceType = $recurrenceType;
         $this->signatureType = $signatureType;
     }
-
-    public function getRecurrenceType(): ?RecurrenceType
+    public function getRecurrenceType() : ?RecurrenceType
     {
         return $this->recurrenceType;
     }
-
-    public function getSignatureType(): ?SignatureType
+    public function getSignatureType() : ?SignatureType
     {
         return $this->signatureType;
     }

@@ -1,20 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Cancel;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Cancel;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusCode;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusCode;
 /**
  * Class CancelResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Cancel
+ * @internal
  */
 class CancelResponse
 {
     private StatusCode $statusCode;
-
     private string $status;
-
     /**
      * @param StatusCode $statusCode
      * @param string $status
@@ -24,13 +22,11 @@ class CancelResponse
         $this->statusCode = $statusCode;
         $this->status = $status;
     }
-
-    public function getStatusCode(): StatusCode
+    public function getStatusCode() : StatusCode
     {
         return $this->statusCode;
     }
-
-    public function getStatus(): string
+    public function getStatus() : string
     {
         return $this->status;
     }

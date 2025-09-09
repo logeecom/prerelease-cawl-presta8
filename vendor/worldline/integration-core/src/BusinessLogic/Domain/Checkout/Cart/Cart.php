@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Customer\Customer;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Customer\Customer;
 /**
  * Class Cart
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart
+ * @internal
  */
 class Cart
 {
@@ -19,7 +19,6 @@ class Cart
     private ?Shipping $shipping;
     private ?Amount $discount;
     private LineItemCollection $lineItems;
-
     /**
      * @param string $merchantReference
      * @param Amount $total
@@ -29,15 +28,8 @@ class Cart
      * @param Shipping|null $shipping
      * @param Amount|null $discount
      */
-    public function __construct(
-        string $merchantReference,
-        Amount $total,
-        ?Amount $totalInEUR,
-        Customer $customer,
-        ?LineItemCollection $lineItems = null,
-        ?Shipping $shipping = null,
-        ?Amount $discount = null
-    ) {
+    public function __construct(string $merchantReference, Amount $total, ?Amount $totalInEUR, Customer $customer, ?LineItemCollection $lineItems = null, ?Shipping $shipping = null, ?Amount $discount = null)
+    {
         $this->merchantReference = $merchantReference;
         $this->total = $total;
         $this->totalInEUR = $totalInEUR;
@@ -46,51 +38,42 @@ class Cart
         $this->shipping = $shipping;
         $this->discount = $discount;
     }
-
-    public function getMerchantReference(): string
+    public function getMerchantReference() : string
     {
         return $this->merchantReference;
     }
-
     /**
      * @return Amount Total cart amount that should be paid in the end (with all taxes and discounts calculated)
      */
-    public function getTotal(): Amount
+    public function getTotal() : Amount
     {
         return $this->total;
     }
-
-    public function getTotalInEUR(): ?Amount
+    public function getTotalInEUR() : ?Amount
     {
         return $this->totalInEUR;
     }
-
-    public function getCustomer(): Customer
+    public function getCustomer() : Customer
     {
         return $this->customer;
     }
-
-    public function getLineItems(): LineItemCollection
+    public function getLineItems() : LineItemCollection
     {
         return $this->lineItems;
     }
-
-    public function getShipping(): ?Shipping
+    public function getShipping() : ?Shipping
     {
         return $this->shipping;
     }
-
-    public function setShipping(Shipping $shipping): void
+    public function setShipping(Shipping $shipping) : void
     {
         $this->shipping = $shipping;
     }
-
-    public function getDiscount(): ?Amount
+    public function getDiscount() : ?Amount
     {
         return $this->discount;
     }
-
-    public function setDiscount(Amount $discount): void
+    public function setDiscount(Amount $discount) : void
     {
         $this->discount = $discount;
     }

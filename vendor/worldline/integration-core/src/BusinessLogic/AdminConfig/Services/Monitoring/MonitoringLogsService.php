@@ -1,22 +1,21 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Monitoring;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Monitoring;
 
 use Exception;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Disconnect\Repositories\DisconnectRepositoryInterface;
-use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\MonitoringLog;
-use OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\MonitoringLogRepositoryInterface;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Disconnect\Repositories\DisconnectRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\MonitoringLog;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\MonitoringLogRepositoryInterface;
 /**
  * Class MonitoringLogsService
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Monitoring
+ * @internal
  */
 class MonitoringLogsService
 {
     protected MonitoringLogRepositoryInterface $monitoringLogRepository;
     protected DisconnectRepositoryInterface $repository;
-
     /**
      * @param MonitoringLogRepositoryInterface $monitoringLogRepository
      * @param DisconnectRepositoryInterface $repository
@@ -26,7 +25,6 @@ class MonitoringLogsService
         $this->monitoringLogRepository = $monitoringLogRepository;
         $this->repository = $repository;
     }
-
     /**
      * @param int $pageNumber
      * @param int $pageSize
@@ -34,38 +32,32 @@ class MonitoringLogsService
      *
      * @return MonitoringLog[]
      */
-    public function getLogs(int $pageNumber, int $pageSize, string $searchTerm): array
+    public function getLogs(int $pageNumber, int $pageSize, string $searchTerm) : array
     {
         return $this->monitoringLogRepository->getLogs($pageNumber, $pageSize, $searchTerm);
     }
-
     /**
      * @return array
      */
-    public function getAllLogs(): array
+    public function getAllLogs() : array
     {
         $logs = $this->monitoringLogRepository->getAllLogs();
         $result = [];
-
         foreach ($logs as $log) {
             $result[] = $log->toArray();
         }
-
         return $result;
     }
-
     /**
      * @return int
      *
      * @throws Exception
      */
-    public function count(): int
+    public function count() : int
     {
         $disconnectTime = $this->repository->getDisconnectTime();
-
         return $this->monitoringLogRepository->count($disconnectTime);
     }
-
     /**
      * @param string $mode
      * @param int $limit
@@ -74,10 +66,9 @@ class MonitoringLogsService
      *
      * @throws Exception
      */
-    public function delete(string $mode, int $limit = 5000): void
+    public function delete(string $mode, int $limit = 5000) : void
     {
         $disconnectTime = $this->repository->getDisconnectTime();
-
         $this->monitoringLogRepository->deleteByMode($disconnectTime, $mode, $limit);
     }
 }

@@ -1,16 +1,16 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\BackgroundProcesses;
+namespace CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\BackgroundProcesses;
 
-use OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\CheckoutAPI\CheckoutAPI;
-use OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
-use OnlinePayments\Core\Infrastructure\Serializer\Interfaces\Serializable;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\Runnable;
-
+use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\CheckoutAPI\CheckoutAPI;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
+use CAWL\OnlinePayments\Core\Infrastructure\Serializer\Interfaces\Serializable;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\Runnable;
 /**
  * Class WaitPaymentOutcomeProcessRunner.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\BackgroundProcesses
+ * @internal
  */
 class WaitPaymentOutcomeProcessRunner implements Runnable
 {
@@ -18,7 +18,6 @@ class WaitPaymentOutcomeProcessRunner implements Runnable
     private ?string $returnHmac;
     private ?string $merchantReference;
     private string $storeId;
-
     public function __construct(PaymentId $paymentId, ?string $returnHmac, ?string $merchantReference, string $storeId)
     {
         $this->paymentId = $paymentId;
@@ -26,29 +25,16 @@ class WaitPaymentOutcomeProcessRunner implements Runnable
         $this->merchantReference = $merchantReference;
         $this->storeId = $storeId;
     }
-
-    public function run(): void
+    public function run() : void
     {
         CheckoutAPI::get()->payment($this->storeId)->startWaitingForOutcome($this->paymentId, $this->returnHmac, $this->merchantReference);
     }
-
-    public static function fromArray(array $array): Serializable
+    public static function fromArray(array $array) : Serializable
     {
-        return new WaitPaymentOutcomeProcessRunner(
-            PaymentId::parse($array['paymentId']),
-            $array['returnHmac'],
-            $array['merchantReference'],
-            $array['storeId']
-        );
+        return new WaitPaymentOutcomeProcessRunner(PaymentId::parse($array['paymentId']), $array['returnHmac'], $array['merchantReference'], $array['storeId']);
     }
-
-    public function toArray(): array
+    public function toArray() : array
     {
-        return [
-            'paymentId' => (string)$this->paymentId,
-            'returnHmac' => $this->returnHmac,
-            'merchantReference' => $this->merchantReference,
-            'storeId' => $this->storeId,
-        ];
+        return ['paymentId' => (string) $this->paymentId, 'returnHmac' => $this->returnHmac, 'merchantReference' => $this->merchantReference, 'storeId' => $this->storeId];
     }
 }

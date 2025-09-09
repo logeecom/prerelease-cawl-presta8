@@ -1,31 +1,26 @@
 <?php
 
-namespace OnlinePayments\Sdk\Authentication;
+namespace CAWL\OnlinePayments\Sdk\Authentication;
 
-use OnlinePayments\Sdk\CommunicatorConfiguration;
-
+use CAWL\OnlinePayments\Sdk\CommunicatorConfiguration;
+/** @internal */
 class V1HmacAuthenticator implements Authenticator
 {
     const AUTHORIZATION_ID = 'GCS';
-
     const AUTHORIZATION_TYPE = 'v1HMAC';
-
     const HASH_ALGORITHM = 'sha256';
-
     /**
      * API Key ID obtained in the merchant portal.
      *
      * @var string
      */
     private string $apiKeyId;
-
     /**
      * API Secret obtained in the merchant portal.
      *
      * @var string
      */
     private string $apiSecret;
-
     /**
      * @param CommunicatorConfiguration $communicatorConfiguration
      */
@@ -34,68 +29,57 @@ class V1HmacAuthenticator implements Authenticator
         $this->apiKeyId = $communicatorConfiguration->getApiKeyId();
         $this->apiSecret = $communicatorConfiguration->getApiSecret();
     }
-
     /**
-    * @inheritDoc
-    */
-    public function getAuthorization(string $httpMethod, string $uriPath, array $requestHeaders = []): string
+     * @inheritDoc
+     */
+    public function getAuthorization(string $httpMethod, string $uriPath, array $requestHeaders = []) : string
     {
         return $this->getAuthorizationHeaderValue($httpMethod, $uriPath, $requestHeaders);
     }
-
     /**
-    * Generates authorization header value.
-    *
-    * @param string $httpMethod
-    * @param string $uriPath
-    * @param array $requestHeaders
-    *
-    * @return string
-    */
-    private function getAuthorizationHeaderValue(string $httpMethod, string $uriPath, array $requestHeaders): string
+     * Generates authorization header value.
+     *
+     * @param string $httpMethod
+     * @param string $uriPath
+     * @param array $requestHeaders
+     *
+     * @return string
+     */
+    private function getAuthorizationHeaderValue(string $httpMethod, string $uriPath, array $requestHeaders) : string
     {
-        return static::AUTHORIZATION_ID . ' ' . static::AUTHORIZATION_TYPE . ':' . $this->apiKeyId . ':' . base64_encode(hash_hmac(static::HASH_ALGORITHM, $this->prepareDataForSignature($httpMethod, $uriPath, $requestHeaders), $this->apiSecret, true));
+        return static::AUTHORIZATION_ID . ' ' . static::AUTHORIZATION_TYPE . ':' . $this->apiKeyId . ':' . \base64_encode(\hash_hmac(static::HASH_ALGORITHM, $this->prepareDataForSignature($httpMethod, $uriPath, $requestHeaders), $this->apiSecret, \true));
     }
-
     /**
-    * Prepares data to be signed.
-    *
-    * @param string $httpMethod
-    * @param string $uriPath
-    * @param array $requestHeaders
-    *
-    * @return string
-    */
+     * Prepares data to be signed.
+     *
+     * @param string $httpMethod
+     * @param string $uriPath
+     * @param array $requestHeaders
+     *
+     * @return string
+     */
     private function prepareDataForSignature(string $httpMethod, string $uriPath, array $requestHeaders) : string
     {
         $signData = $httpMethod . "\n";
-
         if (isset($requestHeaders['Content-Type'])) {
             $signData .= $requestHeaders['Content-Type'] . "\n";
         } else {
             $signData .= "\n";
         }
-
         if (isset($requestHeaders['Date'])) {
             $signData .= $requestHeaders['Date'] . "\n";
         } else {
             $signData .= "\n";
         }
-
-        $gcsHeaders = array_filter($requestHeaders, function ($headerKey) {
-            return preg_match('/X-GCS/i', $headerKey);
-        }, ARRAY_FILTER_USE_KEY);
-
-        ksort($gcsHeaders);
+        $gcsHeaders = \array_filter($requestHeaders, function ($headerKey) {
+            return \preg_match('/X-GCS/i', $headerKey);
+        }, \ARRAY_FILTER_USE_KEY);
+        \ksort($gcsHeaders);
         foreach ($gcsHeaders as $gcsHeaderKey => $gcsHeaderValue) {
-            $gcsEncodedHeaderValue = trim(preg_replace('/\r?\n[\h]*/', ' ', $gcsHeaderValue));
-
-            $signData .= strtolower($gcsHeaderKey) . ':' . $gcsEncodedHeaderValue . "\n";
+            $gcsEncodedHeaderValue = \trim(\preg_replace('/\\r?\\n[\\h]*/', ' ', $gcsHeaderValue));
+            $signData .= \strtolower($gcsHeaderKey) . ':' . $gcsEncodedHeaderValue . "\n";
         }
-
         $signData .= $uriPath . "\n";
-
         return $signData;
     }
 }
-

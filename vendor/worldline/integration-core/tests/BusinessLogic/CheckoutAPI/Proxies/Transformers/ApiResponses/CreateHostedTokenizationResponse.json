@@ -1,7 +1,0 @@
-{
-  "hostedTokenizationUrl": "https://test.hostedtokenization.url/form/123saa",
-  "partialRedirectUrl": "preprod.direct.worldline-solutions.com/hostedtokenization/tokenization/form/03f1f38c52ba4a568f88e6a4ededefe9",
-  "hostedTokenizationId": "03f1f38c52ba4a568f88e6a4ededefe9",
-  "invalidTokens": [],
-  "expiredCardTokens": []
-}

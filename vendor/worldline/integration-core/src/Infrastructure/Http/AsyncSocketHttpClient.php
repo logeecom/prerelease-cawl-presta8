@@ -1,10 +1,9 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Http;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Http;
 
-use OnlinePayments\Core\Infrastructure\Http\Exceptions\HttpRequestException;
-use OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Http\Exceptions\HttpRequestException;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
 /**
  * Class AsyncSocketHttpClient
  *
@@ -23,15 +22,14 @@ use OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamExc
  * request would imply supporting complete HTTP specification.
  *
  * @package OnlinePayments\Core\Infrastructure\Http
+ * @internal
  */
 class AsyncSocketHttpClient extends CurlHttpClient
 {
     /** @var int  */
     const DEFAULT_ASYNC_REQUEST_TIMEOUT = 5;
-
     /** @var int  */
     const FWRITE_SLEEP_USECONDS = 300000;
-
     /**
      * Create and send request asynchronously.
      *
@@ -43,24 +41,20 @@ class AsyncSocketHttpClient extends CurlHttpClient
      *
      * @throws HttpRequestException
      */
-    protected function sendHttpRequestAsync(string $method, string $url, ?array $headers = [], string $body = '1'): void
+    protected function sendHttpRequestAsync(string $method, string $url, ?array $headers = [], string $body = '1') : void
     {
         $url = $this->adjustUrlIfNeeded($url);
-        $urlDetails = parse_url($url);
-
-        if ($urlDetails === false) {
+        $urlDetails = \parse_url($url);
+        if ($urlDetails === \false) {
             throw new HttpRequestException('Unable to parse request url.');
         }
-
         $transferProtocol = $this->getTransferProtocol($urlDetails);
         $port = $this->getTargetPort($urlDetails);
         $path = $this->getPath($urlDetails);
-        $payload = $this->getRequestPayload(strtoupper($method), $urlDetails['host'], $path, $headers, $body);
+        $payload = $this->getRequestPayload(\strtoupper($method), $urlDetails['host'], $path, $headers, $body);
         $timeOut = $this->getRequestTimeOut();
-
         $this->executeRequest($transferProtocol, $urlDetails['host'], $port, $timeOut, $payload);
     }
-
     /**
      * Deduces transfer protocol based ont the url scheme.
      *
@@ -68,15 +62,13 @@ class AsyncSocketHttpClient extends CurlHttpClient
      *
      * @return string Returns ssl:// if scheme is HTTPS, tcp:// otherwise.
      */
-    protected function getTransferProtocol(array $urlDetails): string
+    protected function getTransferProtocol(array $urlDetails) : string
     {
         if ($urlDetails['scheme'] === 'https') {
             return 'tls://';
         }
-
         return 'tcp://';
     }
-
     /**
      * Provides request port based on the url details.
      *
@@ -88,19 +80,16 @@ class AsyncSocketHttpClient extends CurlHttpClient
      *
      * @return int Request port.
      */
-    protected function getTargetPort(array $urlDetails): int
+    protected function getTargetPort(array $urlDetails) : int
     {
         if (!empty($urlDetails['port'])) {
             return $urlDetails['port'];
         }
-
         if ($urlDetails['scheme'] === 'https') {
             return 443;
         }
-
         return 80;
     }
-
     /**
      * Retrieves request path based on url details.
      *
@@ -108,11 +97,10 @@ class AsyncSocketHttpClient extends CurlHttpClient
      *
      * @return string Request path.
      */
-    protected function getPath(array $urlDetails): string
+    protected function getPath(array $urlDetails) : string
     {
         return !empty($urlDetails['path']) ? $urlDetails['path'] : '/';
     }
-
     /**
      * Retrieves request time out in seconds.
      *
@@ -120,13 +108,11 @@ class AsyncSocketHttpClient extends CurlHttpClient
      *
      * @throws QueryFilterInvalidParamException
      */
-    protected function getRequestTimeOut(): int
+    protected function getRequestTimeOut() : int
     {
         $timeout = $this->getConfigService()->getAsyncRequestTimeout();
-
         return !empty($timeout) ? $timeout : static::DEFAULT_ASYNC_REQUEST_TIMEOUT;
     }
-
     /**
      * Generates request payload in accordance with the HTTP 1.1.
      *
@@ -138,23 +124,18 @@ class AsyncSocketHttpClient extends CurlHttpClient
      *
      * @return string
      */
-    protected function getRequestPayload(string $method, string $host, string $path, array $headers, string $body): string
+    protected function getRequestPayload(string $method, string $host, string $path, array $headers, string $body) : string
     {
-        $payload = "$method $path HTTP/1.1\r\n";
-        $payload .= "Host: $host\r\n";
-
+        $payload = "{$method} {$path} HTTP/1.1\r\n";
+        $payload .= "Host: {$host}\r\n";
         foreach ($headers as $header => $value) {
-            $payload .= $header . (!empty($value) ? ": $value" : '') . "\r\n";
+            $payload .= $header . (!empty($value) ? ": {$value}" : '') . "\r\n";
         }
-
-        $payload .= "Content-Length: " . strlen($body) . "\r\n";
+        $payload .= "Content-Length: " . \strlen($body) . "\r\n";
         $payload .= "Connection: close\r\n\r\n";
-
         $payload .= $body . "\r\n\r\n";
-
         return $payload;
     }
-
     /**
      * Executes request by writing to the php web socket.
      *
@@ -169,21 +150,18 @@ class AsyncSocketHttpClient extends CurlHttpClient
      */
     protected function executeRequest(string $transferProtocol, string $host, int $port, int $timeOut, string $payload)
     {
-        $socket = pfsockopen($transferProtocol . $host, $port, $errorCode, $errorMsg, $timeOut);
-        if ($socket === false) {
+        $socket = \pfsockopen($transferProtocol . $host, $port, $errorCode, $errorMsg, $timeOut);
+        if ($socket === \false) {
             throw new HttpRequestException($errorMsg, $errorCode);
         }
-
-        $writeResult = fwrite($socket, $payload);
-        if ($writeResult === false) {
+        $writeResult = \fwrite($socket, $payload);
+        if ($writeResult === \false) {
             throw new HttpRequestException('Unable to write to php socket.');
         }
-
         // Even though php reports that the write has been completed
         // The data is not necessarily been written
         // We must wait to make sure that the write is actually complete
-        usleep(self::FWRITE_SLEEP_USECONDS);
-
-        fclose($socket);
+        \usleep(self::FWRITE_SLEEP_USECONDS);
+        \fclose($socket);
     }
 }

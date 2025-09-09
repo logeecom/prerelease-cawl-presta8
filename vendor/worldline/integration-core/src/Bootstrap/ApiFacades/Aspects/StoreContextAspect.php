@@ -1,15 +1,15 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\ApiFacades\Aspects;
+namespace CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\Aspects;
 
 use Exception;
-use OnlinePayments\Core\Bootstrap\Aspect\Aspect;
-use OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
-
+use CAWL\OnlinePayments\Core\Bootstrap\Aspect\Aspect;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
 /**
  * Class StoreContextAspect.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\Aspects
+ * @internal
  */
 class StoreContextAspect implements Aspect
 {
@@ -17,7 +17,6 @@ class StoreContextAspect implements Aspect
      * @var string
      */
     private string $storeId;
-
     /**
      * @param string $storeId
      */
@@ -25,7 +24,6 @@ class StoreContextAspect implements Aspect
     {
         $this->storeId = $storeId;
     }
-
     /**
      * @throws Exception
      */

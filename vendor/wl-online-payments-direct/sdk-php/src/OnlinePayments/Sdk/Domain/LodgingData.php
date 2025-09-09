@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class LodgingData extends DataObject
 {
@@ -15,7 +16,6 @@ class LodgingData extends DataObject
      * @var string
      */
     public $checkInDate = null;
-
     /**
      * @return string
      */
@@ -23,7 +23,6 @@ class LodgingData extends DataObject
     {
         return $this->checkInDate;
     }
-
     /**
      * @param string
      */
@@ -31,19 +30,17 @@ class LodgingData extends DataObject
     {
         $this->checkInDate = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->checkInDate)) {
+        if (!\is_null($this->checkInDate)) {
             $object->checkInDate = $this->checkInDate;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -52,7 +49,7 @@ class LodgingData extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'checkInDate')) {
+        if (\property_exists($object, 'checkInDate')) {
             $this->checkInDate = $object->checkInDate;
         }
         return $this;

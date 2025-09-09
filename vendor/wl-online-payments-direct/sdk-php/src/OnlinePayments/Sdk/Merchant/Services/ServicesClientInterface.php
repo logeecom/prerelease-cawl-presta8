@@ -1,27 +1,28 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Merchant\Services;
+namespace CAWL\OnlinePayments\Sdk\Merchant\Services;
 
-use OnlinePayments\Sdk\ApiException;
-use OnlinePayments\Sdk\AuthorizationException;
-use OnlinePayments\Sdk\CallContext;
-use OnlinePayments\Sdk\Communication\InvalidResponseException;
-use OnlinePayments\Sdk\Domain\CalculateSurchargeRequest;
-use OnlinePayments\Sdk\Domain\CalculateSurchargeResponse;
-use OnlinePayments\Sdk\Domain\CurrencyConversionRequest;
-use OnlinePayments\Sdk\Domain\CurrencyConversionResponse;
-use OnlinePayments\Sdk\Domain\GetIINDetailsRequest;
-use OnlinePayments\Sdk\Domain\GetIINDetailsResponse;
-use OnlinePayments\Sdk\Domain\TestConnection;
-use OnlinePayments\Sdk\IdempotenceException;
-use OnlinePayments\Sdk\PlatformException;
-use OnlinePayments\Sdk\ReferenceException;
-use OnlinePayments\Sdk\ValidationException;
-
+use CAWL\OnlinePayments\Sdk\ApiException;
+use CAWL\OnlinePayments\Sdk\AuthorizationException;
+use CAWL\OnlinePayments\Sdk\CallContext;
+use CAWL\OnlinePayments\Sdk\Communication\InvalidResponseException;
+use CAWL\OnlinePayments\Sdk\Domain\CalculateSurchargeRequest;
+use CAWL\OnlinePayments\Sdk\Domain\CalculateSurchargeResponse;
+use CAWL\OnlinePayments\Sdk\Domain\CurrencyConversionRequest;
+use CAWL\OnlinePayments\Sdk\Domain\CurrencyConversionResponse;
+use CAWL\OnlinePayments\Sdk\Domain\GetIINDetailsRequest;
+use CAWL\OnlinePayments\Sdk\Domain\GetIINDetailsResponse;
+use CAWL\OnlinePayments\Sdk\Domain\TestConnection;
+use CAWL\OnlinePayments\Sdk\IdempotenceException;
+use CAWL\OnlinePayments\Sdk\PlatformException;
+use CAWL\OnlinePayments\Sdk\ReferenceException;
+use CAWL\OnlinePayments\Sdk\ValidationException;
 /**
  * Services client interface.
+ * @internal
  */
 interface ServicesClientInterface
 {
@@ -40,7 +41,6 @@ interface ServicesClientInterface
      * @throws InvalidResponseException
      */
     function testConnection(?CallContext $callContext = null);
-
     /**
      * Resource /v2/{merchantId}/services/getIINdetails - Get IIN details
      *
@@ -57,7 +57,6 @@ interface ServicesClientInterface
      * @throws InvalidResponseException
      */
     function getIINDetails(GetIINDetailsRequest $body, ?CallContext $callContext = null);
-
     /**
      * Resource /v2/{merchantId}/services/dccrate - Get currency conversion quote
      *
@@ -74,7 +73,6 @@ interface ServicesClientInterface
      * @throws InvalidResponseException
      */
     function getDccRateInquiry(CurrencyConversionRequest $body, ?CallContext $callContext = null);
-
     /**
      * Resource /v2/{merchantId}/services/surchargecalculation - Surcharge Calculation
      *

@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\TaxableAmount;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\TaxableAmount;
 /**
  * Class LineItem.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart
+ * @internal
  */
 class LineItem
 {
@@ -16,45 +16,34 @@ class LineItem
     private TaxableAmount $unitPrice;
     private int $quantity;
     private ?Amount $discount;
-
-    public function __construct(
-        Product $product,
-        TaxableAmount $unitPrice,
-        int $quantity,
-        Amount $discount = null
-    ) {
+    public function __construct(Product $product, TaxableAmount $unitPrice, int $quantity, Amount $discount = null)
+    {
         $this->product = $product;
         $this->unitPrice = $unitPrice;
         $this->quantity = $quantity;
         $this->discount = $discount;
     }
-
-    public function getTotal(): Amount
+    public function getTotal() : Amount
     {
         $total = $this->unitPrice->getAmountInclTax();
         if ($this->discount) {
             $total = $total->minus($this->discount);
         }
-
         return $total->multiply($this->quantity);
     }
-
-    public function getProduct(): Product
+    public function getProduct() : Product
     {
         return $this->product;
     }
-
-    public function getUnitPrice(): TaxableAmount
+    public function getUnitPrice() : TaxableAmount
     {
         return $this->unitPrice;
     }
-
-    public function getQuantity(): int
+    public function getQuantity() : int
     {
         return $this->quantity;
     }
-
-    public function getDiscount(): ?Amount
+    public function getDiscount() : ?Amount
     {
         return $this->discount;
     }

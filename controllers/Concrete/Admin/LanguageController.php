@@ -1,15 +1,15 @@
 <?php
 
-namespace OnlinePayments\Controllers\Concrete\Admin;
+namespace CAWL\OnlinePayments\Controllers\Concrete\Admin;
 
 use ModuleAdminController;
-use OnlinePayments\Classes\Utility\OnlinePaymentsPrestaShopUtility;
-use OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\AdminAPI\AdminAPI;
-
+use CAWL\OnlinePayments\Classes\Utility\OnlinePaymentsPrestaShopUtility;
+use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\AdminAPI\AdminAPI;
 /**
  * Class LanguageController
  *
  * @package OnlinePayments\Controllers\Concrete\Admin
+ * @internal
  */
 class LanguageController extends ModuleAdminController
 {
@@ -17,7 +17,6 @@ class LanguageController extends ModuleAdminController
     {
         $storeId = \Tools::getValue('storeId');
         $result = AdminAPI::get()->language($storeId)->getLanguages();
-
         OnlinePaymentsPrestaShopUtility::dieJson($result);
     }
 }

@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Order;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Order;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
-use OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
 /**
  * Class OrderPayment
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Order
+ * @internal
  */
 class OrderPayment
 {
@@ -21,7 +21,6 @@ class OrderPayment
     private ?string $fraudResult;
     private ?string $liability;
     private ?string $exemptionType;
-
     /**
      * @param PaymentId $id
      * @param string $status
@@ -45,48 +44,39 @@ class OrderPayment
         $this->liability = $liability;
         $this->exemptionType = $exemptionType;
     }
-
-    public function getId(): PaymentId
+    public function getId() : PaymentId
     {
         return $this->id;
     }
-
-    public function getStatus(): string
+    public function getStatus() : string
     {
         return $this->status;
     }
-
-    public function getAmount(): Amount
+    public function getAmount() : Amount
     {
         return $this->amount;
     }
-
-    public function getSurcharge(): ?Amount
+    public function getSurcharge() : ?Amount
     {
         return $this->surcharge;
     }
-
-    public function getPaymentMethodName(): ?string
+    public function getPaymentMethodName() : ?string
     {
         return $this->paymentMethodName;
     }
-
-    public function getPaymentMethodId(): ?string
+    public function getPaymentMethodId() : ?string
     {
         return $this->paymentMethodId;
     }
-
-    public function getFraudResult(): ?string
+    public function getFraudResult() : ?string
     {
         return $this->fraudResult;
     }
-
-    public function getLiability(): ?string
+    public function getLiability() : ?string
     {
         return $this->liability;
     }
-
-    public function getExemptionType(): ?string
+    public function getExemptionType() : ?string
     {
         return $this->exemptionType;
     }

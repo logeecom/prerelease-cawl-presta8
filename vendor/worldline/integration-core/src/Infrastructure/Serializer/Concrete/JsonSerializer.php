@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\Serializer\Concrete;
+namespace CAWL\OnlinePayments\Core\Infrastructure\Serializer\Concrete;
 
-use OnlinePayments\Core\Infrastructure\Serializer\Serializer;
+use CAWL\OnlinePayments\Core\Infrastructure\Serializer\Serializer;
 use stdClass;
-
 /**
  * Class JsonSerializer
  *
  * @package OnlinePayments\Core\Infrastructure\Serializer\Concrete
+ * @internal
  */
 class JsonSerializer extends Serializer
 {
@@ -19,30 +19,24 @@ class JsonSerializer extends Serializer
      *
      * @return string String representation of the serialized data.
      */
-    protected function doSerialize($data): string
+    protected function doSerialize($data) : string
     {
-        if (is_object($data)) {
-
-            if (method_exists($data, 'toArray')) {
+        if (\is_object($data)) {
+            if (\method_exists($data, 'toArray')) {
                 $preparedArray = $data->toArray();
-                $preparedArray['class_name'] = get_class($data);
-                return json_encode($preparedArray);
+                $preparedArray['class_name'] = \get_class($data);
+                return \json_encode($preparedArray);
             }
-
             if ($data instanceof stdClass) {
-                $data->className = get_class($data);
+                $data->className = \get_class($data);
             }
-
-            return json_encode($data);
+            return \json_encode($data);
         }
-
-        if (is_array($data)) {
-            return json_encode($data);
+        if (\is_array($data)) {
+            return \json_encode($data);
         }
-
-        return json_encode($data);
+        return \json_encode($data);
     }
-
     /**
      * Unserializes data.
      *
@@ -52,15 +46,12 @@ class JsonSerializer extends Serializer
      */
     protected function doUnserialize(string $serialized)
     {
-        $unserialized = json_decode($serialized, true);
-
-        if (!is_array($unserialized) || !array_key_exists('class_name', $unserialized)) {
+        $unserialized = \json_decode($serialized, \true);
+        if (!\is_array($unserialized) || !\array_key_exists('class_name', $unserialized)) {
             return $unserialized;
         }
-
         $class = $unserialized['class_name'];
         unset($unserialized['class_name']);
-
         return $class::fromArray($unserialized);
     }
 }

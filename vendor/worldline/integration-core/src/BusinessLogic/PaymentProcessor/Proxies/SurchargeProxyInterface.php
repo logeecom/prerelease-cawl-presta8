@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\SurchargeRequest;
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\SurchargeResponse;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\SurchargeRequest;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\SurchargeResponse;
 /**
  * Interface SurchargeProxyInterface
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies
+ * @internal
  */
 interface SurchargeProxyInterface
 {
@@ -17,5 +17,5 @@ interface SurchargeProxyInterface
      *
      * @return SurchargeResponse|null
      */
-    public function calculateSurcharge(SurchargeRequest $request): ?SurchargeResponse;
+    public function calculateSurcharge(SurchargeRequest $request) : ?SurchargeResponse;
 }

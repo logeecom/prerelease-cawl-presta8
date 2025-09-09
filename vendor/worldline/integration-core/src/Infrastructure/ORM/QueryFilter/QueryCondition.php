@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\ORM\QueryFilter;
+namespace CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter;
 
 use DateTime;
-
 /**
  * Class QueryCondition.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\QueryFilter
+ * @internal
  */
 class QueryCondition
 {
@@ -15,27 +15,22 @@ class QueryCondition
      * @var string - AND | OR
      */
     private string $chainOperator;
-
     /**
      * @var string
      */
     private string $column;
-
     /**
      * @var string
      */
     private string $operator;
-
     /**
      * @var mixed
      */
     private $value;
-
     /**
      * @var string
      */
     private string $valueType;
-
     /**
      * Condition constructor.
      *
@@ -50,37 +45,32 @@ class QueryCondition
         $this->column = $column;
         $this->operator = $operator;
         $this->value = $value;
-
-        $this->valueType = gettype($value);
+        $this->valueType = \gettype($value);
         if ($this->valueType === 'object' && $value instanceof DateTime) {
             $this->valueType = 'dateTime';
         }
     }
-
     /**
      * @return string
      */
-    public function getChainOperator(): string
+    public function getChainOperator() : string
     {
         return $this->chainOperator;
     }
-
     /**
      * @return string
      */
-    public function getColumn(): string
+    public function getColumn() : string
     {
         return $this->column;
     }
-
     /**
      * @return string
      */
-    public function getOperator(): string
+    public function getOperator() : string
     {
         return $this->operator;
     }
-
     /**
      * @return mixed
      */
@@ -88,11 +78,10 @@ class QueryCondition
     {
         return $this->value;
     }
-
     /**
      * @return string
      */
-    public function getValueType(): string
+    public function getValueType() : string
     {
         return $this->valueType;
     }

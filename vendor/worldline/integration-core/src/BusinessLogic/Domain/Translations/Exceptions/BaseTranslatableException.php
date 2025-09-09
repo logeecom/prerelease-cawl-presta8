@@ -1,15 +1,15 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Exceptions;
 
 use Exception;
 use Throwable;
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
 /**
  * Class BaseTranslatableException
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Translations\Model
+ * @internal
  */
 class BaseTranslatableException extends Exception
 {
@@ -17,7 +17,6 @@ class BaseTranslatableException extends Exception
      * @var TranslatableLabel
      */
     protected TranslatableLabel $translatableLabel;
-
     /**
      * @param TranslatableLabel $translatableLabel
      * @param Throwable|null $previous
@@ -25,14 +24,12 @@ class BaseTranslatableException extends Exception
     public function __construct(TranslatableLabel $translatableLabel, Throwable $previous = null)
     {
         parent::__construct($translatableLabel->getMessage(), $this->code, $previous);
-
         $this->translatableLabel = $translatableLabel;
     }
-
     /**
      * @return TranslatableLabel
      */
-    public function getTranslatableLabel(): TranslatableLabel
+    public function getTranslatableLabel() : TranslatableLabel
     {
         return $this->translatableLabel;
     }

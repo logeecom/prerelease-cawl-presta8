@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\HostedTokenization;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\HostedTokenization;
 
-use OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\HostedTokenization;
-use OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\HostedTokenization;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
 /**
  * Class ValidTokensResponse.
  *
  * @package OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\HostedTokenization
+ * @internal
  */
 class ValidTokensResponse
 {
@@ -17,7 +17,6 @@ class ValidTokensResponse
      * @var Token[]
      */
     private array $tokens;
-
     /**
      * @param HostedTokenization $hostedTokenization
      * @param Token[] $tokens
@@ -27,16 +26,14 @@ class ValidTokensResponse
         $this->hostedTokenization = $hostedTokenization;
         $this->tokens = $tokens;
     }
-
-    public function getHostedTokenization(): HostedTokenization
+    public function getHostedTokenization() : HostedTokenization
     {
         return $this->hostedTokenization;
     }
-
     /**
      * @return Token[]
      */
-    public function getTokens(): array
+    public function getTokens() : array
     {
         return $this->tokens;
     }

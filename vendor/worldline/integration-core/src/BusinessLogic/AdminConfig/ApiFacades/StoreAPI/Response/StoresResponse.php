@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\StoreAPI\Response;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\StoreAPI\Response;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
-use OnlinePayments\Core\BusinessLogic\Domain\Stores\Models\Store;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Stores\Models\Store;
 /**
  * Class StoresResponse
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\StoreAPI\Response
+ * @internal
  */
 class StoresResponse extends Response
 {
@@ -16,7 +16,6 @@ class StoresResponse extends Response
      * @var Store[]
      */
     private array $stores;
-
     /**
      * @param Store[] $stores
      */
@@ -24,13 +23,12 @@ class StoresResponse extends Response
     {
         $this->stores = $stores;
     }
-
     /**
      * @inheritDoc
      */
-    public function toArray(): array
+    public function toArray() : array
     {
-        return array_map(static function (Store $store): array {
+        return \array_map(static function (Store $store) : array {
             return (new StoreResponse($store))->toArray();
         }, $this->stores);
     }

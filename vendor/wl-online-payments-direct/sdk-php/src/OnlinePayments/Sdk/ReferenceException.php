@@ -1,15 +1,16 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk;
+namespace CAWL\OnlinePayments\Sdk;
 
-use OnlinePayments\Sdk\Domain\DataObject;
-
+use CAWL\OnlinePayments\Sdk\Domain\DataObject;
 /**
  * Class ReferenceException
  *
  * @package OnlinePayments\Sdk
+ * @internal
  */
 class ReferenceException extends ResponseException
 {
@@ -20,7 +21,7 @@ class ReferenceException extends ResponseException
      */
     public function __construct($httpStatusCode, DataObject $response, $message = null)
     {
-        if (is_null($message)) {
+        if (\is_null($message)) {
             $message = 'the payment platform returned a reference error response';
         }
         parent::__construct($httpStatusCode, $response, $message);

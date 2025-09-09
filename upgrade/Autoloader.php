@@ -28,16 +28,16 @@ class Autoloader
      */
     public static function loader(string $className)
     {
-        if (strpos($className, 'OnlinePayments\Core') !== false) {
-            $path = str_replace('OnlinePayments\Core\\', '', $className);
+        if (strpos($className, 'CAWL\\OnlinePayments\\Core') !== false) {
+            $path = str_replace('CAWL\\OnlinePayments\\Core\\', '', $className);
 
             include_once static::$pathTop . '/vendor/' . trim(static::$coreLibSourcePath, '/') . '/' . str_replace('\\', '/', $path) . static::$fileExt;
 
             return;
         }
 
-        if (strpos($className, 'OnlinePayments') !== false) {
-            $path = str_replace('OnlinePayments\\', '', $className);
+        if (strpos($className, 'CAWL\\OnlinePayments') !== false) {
+            $path = str_replace('CAWL\\OnlinePayments\\', '', $className);
             $parts = explode('\\', $path);
             $firstDir = strtolower($parts[0]);
             unset($parts[0]);

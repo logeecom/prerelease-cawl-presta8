@@ -1,16 +1,16 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Request;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Request;
 
-use OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Request\Request;
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\AutomaticCapture;
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidActionTypeException;
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidAutomaticCaptureValueException;
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidPaymentAttemptsNumberException;
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAction;
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAttemptsNumber;
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Request\Request;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\AutomaticCapture;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidActionTypeException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidAutomaticCaptureValueException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidPaymentAttemptsNumberException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAction;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAttemptsNumber;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
+/** @internal */
 class PaymentSettingsRequest extends Request
 {
     protected string $paymentAction;
@@ -23,7 +23,6 @@ class PaymentSettingsRequest extends Request
     protected string $paymentAuthorizedStatus;
     protected string $paymentCancelledStatus;
     protected string $paymentRefundedStatus;
-
     /**
      * @param string $paymentAction
      * @param int $automaticCapture
@@ -31,18 +30,8 @@ class PaymentSettingsRequest extends Request
      * @param bool $applySurcharge
      * @param string $paymentCapturedStatus
      */
-    public function __construct(
-        string $paymentAction,
-        int $automaticCapture,
-        int $paymentAttemptsNumber,
-        bool $applySurcharge,
-        string $paymentCapturedStatus,
-        string $paymentErrorStatus,
-        string $paymentPendingStatus,
-        string $paymentAuthorizedStatus,
-        string $paymentCancelledStatus,
-        string $paymentRefundedStatus
-    ) {
+    public function __construct(string $paymentAction, int $automaticCapture, int $paymentAttemptsNumber, bool $applySurcharge, string $paymentCapturedStatus, string $paymentErrorStatus, string $paymentPendingStatus, string $paymentAuthorizedStatus, string $paymentCancelledStatus, string $paymentRefundedStatus)
+    {
         $this->paymentAction = $paymentAction;
         $this->automaticCapture = $automaticCapture;
         $this->paymentAttemptsNumber = $paymentAttemptsNumber;
@@ -54,7 +43,6 @@ class PaymentSettingsRequest extends Request
         $this->paymentCancelledStatus = $paymentCancelledStatus;
         $this->paymentRefundedStatus = $paymentRefundedStatus;
     }
-
     /**
      * @inheritDoc
      *
@@ -62,19 +50,8 @@ class PaymentSettingsRequest extends Request
      * @throws InvalidAutomaticCaptureValueException
      * @throws InvalidPaymentAttemptsNumberException
      */
-    public function transformToDomainModel(): object
+    public function transformToDomainModel() : object
     {
-        return new PaymentSettings(
-            PaymentAction::fromState($this->paymentAction),
-            AutomaticCapture::create($this->automaticCapture),
-            PaymentAttemptsNumber::create($this->paymentAttemptsNumber),
-            $this->applySurcharge,
-            $this->paymentCapturedStatus,
-            $this->paymentErrorStatus,
-            $this->paymentPendingStatus,
-            $this->paymentAuthorizedStatus,
-            $this->paymentCancelledStatus,
-            $this->paymentRefundedStatus
-        );
+        return new PaymentSettings(PaymentAction::fromState($this->paymentAction), AutomaticCapture::create($this->automaticCapture), PaymentAttemptsNumber::create($this->paymentAttemptsNumber), $this->applySurcharge, $this->paymentCapturedStatus, $this->paymentErrorStatus, $this->paymentPendingStatus, $this->paymentAuthorizedStatus, $this->paymentCancelledStatus, $this->paymentRefundedStatus);
     }
 }

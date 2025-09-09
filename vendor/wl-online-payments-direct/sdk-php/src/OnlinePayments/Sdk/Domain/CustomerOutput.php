@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class CustomerOutput extends DataObject
 {
@@ -15,7 +16,6 @@ class CustomerOutput extends DataObject
      * @var CustomerDeviceOutput
      */
     public $device = null;
-
     /**
      * @return CustomerDeviceOutput
      */
@@ -23,7 +23,6 @@ class CustomerOutput extends DataObject
     {
         return $this->device;
     }
-
     /**
      * @param CustomerDeviceOutput
      */
@@ -31,19 +30,17 @@ class CustomerOutput extends DataObject
     {
         $this->device = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->device)) {
+        if (!\is_null($this->device)) {
             $object->device = $this->device->toObject();
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -52,9 +49,9 @@ class CustomerOutput extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'device')) {
-            if (!is_object($object->device)) {
-                throw new UnexpectedValueException('value \'' . print_r($object->device, true) . '\' is not an object');
+        if (\property_exists($object, 'device')) {
+            if (!\is_object($object->device)) {
+                throw new UnexpectedValueException('value \'' . \print_r($object->device, \true) . '\' is not an object');
             }
             $value = new CustomerDeviceOutput();
             $this->device = $value->fromObject($object->device);

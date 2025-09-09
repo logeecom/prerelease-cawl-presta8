@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\ORM\Interfaces;
+namespace CAWL\OnlinePayments\Core\Infrastructure\ORM\Interfaces;
 
-use OnlinePayments\Core\Infrastructure\ORM\Entity;
-use OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
-
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
 /**
  * Interface RepositoryInterface.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\Interfaces
+ * @internal
  */
 interface RepositoryInterface
 {
@@ -16,21 +16,18 @@ interface RepositoryInterface
      * Fully qualified name of this interface.
      */
     const CLASS_NAME = __CLASS__;
-
     /**
      * Returns full class name.
      *
      * @return string Full class name.
      */
-    public static function getClassName(): string;
-
+    public static function getClassName() : string;
     /**
      * Sets repository entity.
      *
      * @param string $entityClass Repository entity class.
      */
     public function setEntityClass(string $entityClass);
-
     /**
      * Executes select query.
      *
@@ -38,8 +35,7 @@ interface RepositoryInterface
      *
      * @return Entity[] A list of found entities ot empty array.
      */
-    public function select(QueryFilter $filter = null): array;
-
+    public function select(QueryFilter $filter = null) : array;
     /**
      * Executes select query and returns first result.
      *
@@ -47,8 +43,7 @@ interface RepositoryInterface
      *
      * @return Entity|null First found entity or NULL.
      */
-    public function selectOne(QueryFilter $filter = null): ?Entity;
-
+    public function selectOne(QueryFilter $filter = null) : ?Entity;
     /**
      * Executes insert query and returns ID of created entity. Entity will be updated with new ID.
      *
@@ -56,8 +51,7 @@ interface RepositoryInterface
      *
      * @return int Identifier of saved entity.
      */
-    public function save(Entity $entity): int;
-
+    public function save(Entity $entity) : int;
     /**
      * Executes update query and returns success flag.
      *
@@ -66,8 +60,7 @@ interface RepositoryInterface
      *
      * @return bool TRUE if operation succeeded; otherwise, FALSE.
      */
-    public function update(Entity $entity, QueryFilter $queryFilter = null): bool;
-
+    public function update(Entity $entity, QueryFilter $queryFilter = null) : bool;
     /**
      * Executes delete query and returns success flag.
      *
@@ -75,8 +68,7 @@ interface RepositoryInterface
      *
      * @return bool TRUE if operation succeeded; otherwise, FALSE.
      */
-    public function delete(Entity $entity): bool;
-
+    public function delete(Entity $entity) : bool;
     /**
      * Counts records that match filter criteria.
      *
@@ -84,5 +76,5 @@ interface RepositoryInterface
      *
      * @return int Number of records that match filter criteria.
      */
-    public function count(QueryFilter $filter = null): int;
+    public function count(QueryFilter $filter = null) : int;
 }

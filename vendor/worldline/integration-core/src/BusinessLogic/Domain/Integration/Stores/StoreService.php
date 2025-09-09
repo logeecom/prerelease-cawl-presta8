@@ -1,15 +1,15 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Integration\Stores;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Stores;
 
-use OnlinePayments\Core\BusinessLogic\Domain\OrderStatusMapping\Models\OrderStatusMapping;
-use OnlinePayments\Core\BusinessLogic\Domain\Stores\Models\Store;
-use OnlinePayments\Core\BusinessLogic\Domain\Stores\Models\StoreOrderStatus;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\OrderStatusMapping\Models\OrderStatusMapping;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Stores\Models\Store;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Stores\Models\StoreOrderStatus;
 /**
  * Interface StoreService
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Integration\Stores
+ * @internal
  */
 interface StoreService
 {
@@ -18,22 +18,19 @@ interface StoreService
      *
      * @return string
      */
-    public function getStoreDomain(): string;
-
+    public function getStoreDomain() : string;
     /**
      * Returns all stores within a multiple environment.
      *
      * @return Store[]
      */
-    public function getStores(): array;
-
+    public function getStores() : array;
     /**
      * Returns current active store.
      *
      * @return Store|null
      */
-    public function getDefaultStore(): ?Store;
-
+    public function getDefaultStore() : ?Store;
     /**
      * Returns Store object based on id given as first parameter.
      *
@@ -41,19 +38,17 @@ interface StoreService
      *
      * @return Store|null
      */
-    public function getStoreById(string $id): ?Store;
-
+    public function getStoreById(string $id) : ?Store;
     /**
      * Returns default status mapping.
      *
      * @return OrderStatusMapping
      */
-    public function getDefaultOrderStatusMapping(): OrderStatusMapping;
-
+    public function getDefaultOrderStatusMapping() : OrderStatusMapping;
     /**
      * Returns array of StoreOrderStatus objects.
      *
      * @return StoreOrderStatus[]
      */
-    public function getStoreOrderStatuses(): array;
+    public function getStoreOrderStatuses() : array;
 }

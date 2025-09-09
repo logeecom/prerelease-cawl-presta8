@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\ORM\Interfaces;
+namespace CAWL\OnlinePayments\Core\Infrastructure\ORM\Interfaces;
 
-use OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
-
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
 /**
  * Interface ConditionallyDeletes.
  *
  * @package OnlinePayments\Core\Infrastructure\ORM\Interfaces
+ * @internal
  */
 interface ConditionallyDeletes extends RepositoryInterface
 {

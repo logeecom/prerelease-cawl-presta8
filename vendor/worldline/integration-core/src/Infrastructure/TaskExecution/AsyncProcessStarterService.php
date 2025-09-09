@@ -1,27 +1,27 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution;
 
-use OnlinePayments\Core\Infrastructure\Configuration\Configuration;
-use OnlinePayments\Core\Infrastructure\Http\Exceptions\HttpRequestException;
-use OnlinePayments\Core\Infrastructure\Http\HttpClient;
-use OnlinePayments\Core\Infrastructure\Logger\Logger;
-use OnlinePayments\Core\Infrastructure\ORM\Exceptions\RepositoryNotRegisteredException;
-use OnlinePayments\Core\Infrastructure\ORM\Interfaces\RepositoryInterface;
-use OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
-use OnlinePayments\Core\Infrastructure\ORM\RepositoryRegistry;
-use OnlinePayments\Core\Infrastructure\ServiceRegister;
-use OnlinePayments\Core\Infrastructure\Singleton;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\ProcessStarterSaveException;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\AsyncProcessService;
-use OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\Runnable;
-use OnlinePayments\Core\Infrastructure\Utility\GuidProvider;
+use CAWL\OnlinePayments\Core\Infrastructure\Configuration\Configuration;
+use CAWL\OnlinePayments\Core\Infrastructure\Http\Exceptions\HttpRequestException;
+use CAWL\OnlinePayments\Core\Infrastructure\Http\HttpClient;
+use CAWL\OnlinePayments\Core\Infrastructure\Logger\Logger;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\RepositoryNotRegisteredException;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Interfaces\RepositoryInterface;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\RepositoryRegistry;
+use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
+use CAWL\OnlinePayments\Core\Infrastructure\Singleton;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Exceptions\ProcessStarterSaveException;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\AsyncProcessService;
+use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\Runnable;
+use CAWL\OnlinePayments\Core\Infrastructure\Utility\GuidProvider;
 use Exception;
-
 /**
  * Class AsyncProcessStarter.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution
+ * @internal
  */
 class AsyncProcessStarterService extends Singleton implements AsyncProcessService
 {
@@ -31,35 +31,30 @@ class AsyncProcessStarterService extends Singleton implements AsyncProcessServic
      * @var ?Singleton
      */
     protected static ?Singleton $instance = null;
-
     /**
      * Configuration instance.
      *
      * @var Configuration
      */
     private $configuration;
-
     /**
      * Process entity repository.
      *
      * @var RepositoryInterface
      */
     private RepositoryInterface $processRepository;
-
     /**
      * GUID provider instance.
      *
      * @var GuidProvider
      */
     private $guidProvider;
-
     /**
      * HTTP client.
      *
      * @var HttpClient
      */
     private $httpClient;
-
     /**
      * AsyncProcessStarterService constructor.
      * @throws RepositoryNotRegisteredException
@@ -67,13 +62,11 @@ class AsyncProcessStarterService extends Singleton implements AsyncProcessServic
     protected function __construct()
     {
         parent::__construct();
-
         $this->httpClient = ServiceRegister::getService(HttpClient::CLASS_NAME);
         $this->guidProvider = ServiceRegister::getService(GuidProvider::CLASS_NAME);
         $this->configuration = ServiceRegister::getService(Configuration::CLASS_NAME);
         $this->processRepository = RepositoryRegistry::getRepository(Process::CLASS_NAME);
     }
-
     /**
      * Starts given runner asynchronously (in new process/web request or similar).
      *
@@ -84,12 +77,10 @@ class AsyncProcessStarterService extends Singleton implements AsyncProcessServic
      */
     public function start(Runnable $runner)
     {
-        $guid = trim($this->guidProvider->generateGuid());
-
+        $guid = \trim($this->guidProvider->generateGuid());
         $this->saveGuidAndRunner($guid, $runner);
         $this->startRunnerAsynchronously($guid);
     }
-
     /**
      * Runs a process with provided identifier.
      *
@@ -100,7 +91,6 @@ class AsyncProcessStarterService extends Singleton implements AsyncProcessServic
         try {
             $filter = new QueryFilter();
             $filter->where('guid', '=', $guid);
-
             /** @var Process $process */
             $process = $this->processRepository->selectOne($filter);
             if ($process !== null) {
@@ -111,7 +101,6 @@ class AsyncProcessStarterService extends Singleton implements AsyncProcessServic
             Logger::logError($e->getMessage(), 'Core', ['guid' => $guid, 'trace' => $e->getTraceAsString()]);
         }
     }
-
     /**
      * Saves runner and guid to storage.
      *
@@ -126,14 +115,12 @@ class AsyncProcessStarterService extends Singleton implements AsyncProcessServic
             $process = new Process();
             $process->setGuid($guid);
             $process->setRunner($runner);
-
             $this->processRepository->save($process);
         } catch (Exception $e) {
             Logger::logError($e->getMessage());
             throw new ProcessStarterSaveException($e->getMessage(), 0, $e);
         }
     }
-
     /**
      * Starts runnable asynchronously.
      *
@@ -144,10 +131,7 @@ class AsyncProcessStarterService extends Singleton implements AsyncProcessServic
     private function startRunnerAsynchronously(string $guid)
     {
         try {
-            $this->httpClient->requestAsync(
-                $this->configuration->getAsyncProcessCallHttpMethod(),
-                $this->configuration->getAsyncProcessUrl($guid)
-            );
+            $this->httpClient->requestAsync($this->configuration->getAsyncProcessCallHttpMethod(), $this->configuration->getAsyncProcessUrl($guid));
         } catch (Exception $e) {
             Logger::logError($e->getMessage(), 'Integration');
             throw new HttpRequestException($e->getMessage(), 0, $e);

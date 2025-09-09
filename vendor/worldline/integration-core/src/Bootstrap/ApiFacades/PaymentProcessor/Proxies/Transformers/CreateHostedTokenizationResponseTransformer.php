@@ -1,23 +1,19 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers;
+namespace CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers;
 
-use OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\HostedTokenization;
-use OnlinePayments\Sdk\Domain\CreateHostedTokenizationResponse;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\HostedTokenization;
+use CAWL\OnlinePayments\Sdk\Domain\CreateHostedTokenizationResponse;
 /**
  * Class CreateHostedTokenizationResponseTransformer.
  *
  * @package OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers
+ * @internal
  */
 class CreateHostedTokenizationResponseTransformer
 {
-
-    public static function transform(CreateHostedTokenizationResponse $response): HostedTokenization
+    public static function transform(CreateHostedTokenizationResponse $response) : HostedTokenization
     {
-        return new HostedTokenization(
-            (string)$response->getHostedTokenizationUrl(),
-                $response->getInvalidTokens() ?? []
-        );
+        return new HostedTokenization((string) $response->getHostedTokenizationUrl(), $response->getInvalidTokens() ?? []);
     }
 }

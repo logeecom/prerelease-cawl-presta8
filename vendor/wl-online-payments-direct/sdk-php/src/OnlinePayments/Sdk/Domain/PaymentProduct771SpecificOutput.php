@@ -1,13 +1,14 @@
 <?php
+
 /*
  * This file was automatically generated.
  */
-namespace OnlinePayments\Sdk\Domain;
+namespace CAWL\OnlinePayments\Sdk\Domain;
 
 use UnexpectedValueException;
-
 /**
  * @package OnlinePayments\Sdk\Domain
+ * @internal
  */
 class PaymentProduct771SpecificOutput extends DataObject
 {
@@ -15,7 +16,6 @@ class PaymentProduct771SpecificOutput extends DataObject
      * @var string
      */
     public $mandateReference = null;
-
     /**
      * @return string
      */
@@ -23,7 +23,6 @@ class PaymentProduct771SpecificOutput extends DataObject
     {
         return $this->mandateReference;
     }
-
     /**
      * @param string
      */
@@ -31,19 +30,17 @@ class PaymentProduct771SpecificOutput extends DataObject
     {
         $this->mandateReference = $value;
     }
-
     /**
      * @return object
      */
     public function toObject()
     {
         $object = parent::toObject();
-        if (!is_null($this->mandateReference)) {
+        if (!\is_null($this->mandateReference)) {
             $object->mandateReference = $this->mandateReference;
         }
         return $object;
     }
-
     /**
      * @param object $object
      * @return $this
@@ -52,7 +49,7 @@ class PaymentProduct771SpecificOutput extends DataObject
     public function fromObject($object)
     {
         parent::fromObject($object);
-        if (property_exists($object, 'mandateReference')) {
+        if (\property_exists($object, 'mandateReference')) {
             $this->mandateReference = $object->mandateReference;
         }
         return $this;

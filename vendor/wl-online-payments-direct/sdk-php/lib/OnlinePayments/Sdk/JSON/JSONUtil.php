@@ -1,20 +1,20 @@
 <?php
-namespace OnlinePayments\Sdk\JSON;
+
+namespace CAWL\OnlinePayments\Sdk\JSON;
 
 use stdClass;
 use UnexpectedValueException;
-
 /**
  * Class JSONUtil
  *
  * @package OnlinePayments\Sdk
+ * @internal
  */
 class JSONUtil
 {
     private function __construct()
     {
     }
-
     /**
      * @param string $value
      * @return stdClass
@@ -22,9 +22,9 @@ class JSONUtil
      */
     public static function decode($value)
     {
-        $object = json_decode($value);
-        if (json_last_error()) {
-            throw new UnexpectedValueException('Invalid JSON value: ' . json_last_error_msg());
+        $object = \json_decode($value);
+        if (\json_last_error()) {
+            throw new UnexpectedValueException('Invalid JSON value: ' . \json_last_error_msg());
         }
         return $object;
     }

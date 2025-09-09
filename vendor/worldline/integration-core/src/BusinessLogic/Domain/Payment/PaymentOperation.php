@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Payment;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
 /**
  * Class PaymentOperation.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Payment
+ * @internal
  */
 class PaymentOperation
 {
@@ -15,7 +15,6 @@ class PaymentOperation
     private Amount $amount;
     private StatusCode $statusCode;
     private string $status;
-
     /**
      * @param PaymentId $id
      * @param Amount $amount
@@ -29,23 +28,19 @@ class PaymentOperation
         $this->statusCode = $statusCode;
         $this->status = $status;
     }
-
-    public function getId(): PaymentId
+    public function getId() : PaymentId
     {
         return $this->id;
     }
-
-    public function getAmount(): Amount
+    public function getAmount() : Amount
     {
         return $this->amount;
     }
-
-    public function getStatusCode(): StatusCode
+    public function getStatusCode() : StatusCode
     {
         return $this->statusCode;
     }
-
-    public function getStatus(): string
+    public function getStatus() : string
     {
         return $this->status;
     }

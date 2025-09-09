@@ -1,19 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\IntegrationAPI\Controller;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\IntegrationAPI\Controller;
 
-use OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\IntegrationAPI\Response\StateResponse;
-use OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Connection\ConnectionService;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\IntegrationAPI\Response\StateResponse;
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Connection\ConnectionService;
 /**
  * Class IntegrationController
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\IntegrationAPI\Controller
+ * @internal
  */
 class IntegrationController
 {
     private ConnectionService $connectionService;
-
     /**
      * @param ConnectionService $connectionService
      */
@@ -21,11 +20,10 @@ class IntegrationController
     {
         $this->connectionService = $connectionService;
     }
-
     /**
      * @return StateResponse
      */
-    public function getState(): StateResponse
+    public function getState() : StateResponse
     {
         return $this->connectionService->isLoggedIn() ? StateResponse::payments() : StateResponse::connection();
     }

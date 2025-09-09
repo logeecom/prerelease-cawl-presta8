@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces;
+namespace CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces;
 
-use OnlinePayments\Core\Infrastructure\Serializer\Interfaces\Serializable;
-
+use CAWL\OnlinePayments\Core\Infrastructure\Serializer\Interfaces\Serializable;
 /**
  * Interface Runnable.
  *
  * @package OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces
+ * @internal
  */
 interface Runnable extends Serializable
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings;
 
-use OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidAutomaticCaptureValueException;
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidAutomaticCaptureValueException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
 /**
  * Class AutomaticCapture
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings
+ * @internal
  */
 class AutomaticCapture
 {
@@ -20,19 +20,15 @@ class AutomaticCapture
     protected const ONE_DAY = 1440;
     protected const TWO_DAYS = 2880;
     protected const FIVE_DAYS = 7200;
-
     protected int $value;
-
     private function __construct(int $value)
     {
         $this->value = $value;
     }
-
-    public static function never(): self
+    public static function never() : self
     {
         return self::create(self::NEVER);
     }
-
     /**
      * @param int $value
      *
@@ -40,41 +36,18 @@ class AutomaticCapture
      *
      * @throws InvalidAutomaticCaptureValueException
      */
-    public static function create(int $value): self
+    public static function create(int $value) : self
     {
-        if (
-            !in_array(
-                $value,
-                [
-                    self::NEVER,
-                    self::ONE_HOUR,
-                    self::TWO_HOURS,
-                    self::FOUR_HOURS,
-                    self::EIGHT_HOURS,
-                    self::ONE_DAY,
-                    self::TWO_DAYS,
-                    self::FIVE_DAYS,
-                ]
-            )
-        ) {
-            throw new InvalidAutomaticCaptureValueException(
-                new TranslatableLabel(
-                    'Invalid automatic capture value ' . $value,
-                    'generalSettings.automaticCaptureValue.error',
-                    [(string)$value]
-                )
-            );
+        if (!\in_array($value, [self::NEVER, self::ONE_HOUR, self::TWO_HOURS, self::FOUR_HOURS, self::EIGHT_HOURS, self::ONE_DAY, self::TWO_DAYS, self::FIVE_DAYS])) {
+            throw new InvalidAutomaticCaptureValueException(new TranslatableLabel('Invalid automatic capture value ' . $value, 'generalSettings.automaticCaptureValue.error', [(string) $value]));
         }
-
         return new self($value);
     }
-
-    public function equals(AutomaticCapture $automaticCapture): bool
+    public function equals(AutomaticCapture $automaticCapture) : bool
     {
         return $this->value === $automaticCapture->getValue();
     }
-
-    public function getValue(): int
+    public function getValue() : int
     {
         return $this->value;
     }

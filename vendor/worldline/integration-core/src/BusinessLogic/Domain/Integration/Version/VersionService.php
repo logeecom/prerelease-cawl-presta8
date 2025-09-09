@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Integration\Version;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Version;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Version\VersionInfo;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Version\VersionInfo;
 /**
  * Interface VersionService
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Integration\Version
+ * @internal
  */
 interface VersionService
 {
@@ -16,5 +16,5 @@ interface VersionService
      *
      * @return VersionInfo
      */
-    public function getVersionInfo(): VersionInfo;
+    public function getVersionInfo() : VersionInfo;
 }

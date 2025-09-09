@@ -1,113 +1,82 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\DataAccess\Tokens;
+namespace CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Tokens;
 
-use OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Repositories\TokensRepositoryInterface;
-use OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
-use OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
-use OnlinePayments\Core\Infrastructure\ORM\Interfaces\ConditionallyDeletes;
-use OnlinePayments\Core\Infrastructure\ORM\QueryFilter\Operators;
-use OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Repositories\TokensRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Interfaces\ConditionallyDeletes;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\Operators;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
 /**
  * Class TokensRepository.
  *
  * @package OnlinePayments\Core\Bootstrap\DataAccess\Tokens
+ * @internal
  */
 class TokensRepository implements TokensRepositoryInterface
 {
     private ConditionallyDeletes $repository;
     private StoreContext $storeContext;
-
-
-    public function __construct(
-        ConditionallyDeletes $repository,
-        StoreContext $storeContext
-    ) {
+    public function __construct(ConditionallyDeletes $repository, StoreContext $storeContext)
+    {
         $this->repository = $repository;
         $this->storeContext = $storeContext;
     }
-
-    public function get(string $customerId, string $tokenId): ?Token
+    public function get(string $customerId, string $tokenId) : ?Token
     {
         $tokenEntity = $this->getTokensEntity($customerId, $tokenId);
-
         return null !== $tokenEntity ? $tokenEntity->getToken() : null;
     }
-
-    public function save(string $getCustomerId, Token $token): void
+    public function save(string $getCustomerId, Token $token) : void
     {
         $entity = $this->getTokensEntity($getCustomerId, $token->getTokenId());
-
         if (null !== $entity) {
             $entity->setToken($token);
             $this->repository->update($entity);
-
             return;
         }
-
         $entity = new TokenEntity();
         $entity->setStoreId($this->storeContext->getStoreId());
         $entity->setToken($token);
-
         $this->repository->save($entity);
     }
-
     /**
      * @param string $customerId
      * @return Token[]
      */
-    public function getForCustomer(string $customerId): array
+    public function getForCustomer(string $customerId) : array
     {
-        return array_map(function (TokenEntity $entity) {
+        return \array_map(function (TokenEntity $entity) {
             return $entity->getToken();
         }, $this->getCustomerTokensEntities($customerId));
     }
-
-    public function delete(array $tokens): void
+    public function delete(array $tokens) : void
     {
         $queryFilter = new QueryFilter();
-
-        $queryFilter
-            ->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())
-            ->where('tokenId', Operators::IN, array_map(function (Token $token) {
-                return $token->getTokenId();
-            }, $tokens));
-
+        $queryFilter->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())->where('tokenId', Operators::IN, \array_map(function (Token $token) {
+            return $token->getTokenId();
+        }, $tokens));
         $this->repository->deleteWhere($queryFilter);
     }
-
-    private function getTokensEntity(string $customerId, string $tokenId): ?TokenEntity
+    private function getTokensEntity(string $customerId, string $tokenId) : ?TokenEntity
     {
         $queryFilter = new QueryFilter();
-
-        $queryFilter
-            ->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())
-            ->where('customerId', Operators::EQUALS, $customerId)
-            ->where('tokenId', Operators::EQUALS, $tokenId);
-
+        $queryFilter->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())->where('customerId', Operators::EQUALS, $customerId)->where('tokenId', Operators::EQUALS, $tokenId);
         /** @var ?TokenEntity $token */
         $token = $this->repository->selectOne($queryFilter);
-
         return $token;
     }
-
     /**
      * @param string $customerId
      * @return TokenEntity[]
      */
-    private function getCustomerTokensEntities(string $customerId): array
+    private function getCustomerTokensEntities(string $customerId) : array
     {
         $queryFilter = new QueryFilter();
-
-        $queryFilter
-            ->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())
-            ->where('customerId', Operators::EQUALS, $customerId);
-
+        $queryFilter->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())->where('customerId', Operators::EQUALS, $customerId);
         /** @var TokenEntity[] $tokens */
         $tokens = $this->repository->select($queryFilter);
-
         return $tokens;
-
     }
 }

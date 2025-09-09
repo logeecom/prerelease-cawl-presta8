@@ -1,64 +1,18 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod;
 
-use OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidPaymentProductIdException;
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidPaymentProductIdException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
 /**
  * Class PaymentProductId.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod
+ * @internal
  */
 class PaymentProductId
 {
-    const SUPPORTED_PAYMENT_PRODUCTS = [
-        self::CARDS,
-        self::HOSTED_CHECKOUT,
-        self::ALIPAY,
-        self::APPLE_PAY,
-        self::BANK_TRANSFER,
-        self::CADO,
-        self::BIZUM,
-        self::CADHOC,
-        self::CHEQUE_VACANCES_CONNECT,
-        self::CETELEM,
-        self::COFIDIS,
-        self::CPAY,
-        self::AMERICAN_EXPRESS,
-        self::BANCONTACT,
-        self::CARTE_BANCAIRE,
-        self::DINERS_CLUB,
-        self::DISCOVER,
-        self::JCB,
-        self::MASTERCARD,
-        self::MAESTRO,
-        self::UPI,
-        self::VISA,
-        self::EPS,
-        self::GOOGLE_PAY,
-        self::IDEAL,
-        self::ILLICADO,
-        self::INTERSOLVE,
-        self::KLARNA,
-        self::MB_WAY,
-        self::MEALVOUCHERS,
-        self::MULTIBANCO,
-        self::ONEY_3X,
-        self::ONEY_4X,
-        self::ONEY_BANK_CARD,
-        self::ONEY_FINANCEMENT_LONG,
-        self::ONEY_BRANDED_GIFT_CARD,
-        self::PRZELEWY24,
-        self::PAYPAL,
-        self::POSTFINANCE_PAY,
-        self::SEPA_DIRECT_DEBIT,
-        self::SOFINCO,
-        self::SPIRIT_OF_CADEAU,
-        self::TWINT,
-        self::WECHAT_PAY,
-    ];
-
+    const SUPPORTED_PAYMENT_PRODUCTS = [self::CARDS, self::HOSTED_CHECKOUT, self::ALIPAY, self::APPLE_PAY, self::BANK_TRANSFER, self::CADO, self::BIZUM, self::CADHOC, self::CHEQUE_VACANCES_CONNECT, self::CETELEM, self::COFIDIS, self::CPAY, self::AMERICAN_EXPRESS, self::BANCONTACT, self::CARTE_BANCAIRE, self::DINERS_CLUB, self::DISCOVER, self::JCB, self::MASTERCARD, self::MAESTRO, self::UPI, self::VISA, self::EPS, self::GOOGLE_PAY, self::IDEAL, self::ILLICADO, self::INTERSOLVE, self::KLARNA, self::MB_WAY, self::MEALVOUCHERS, self::MULTIBANCO, self::ONEY_3X, self::ONEY_4X, self::ONEY_BANK_CARD, self::ONEY_FINANCEMENT_LONG, self::ONEY_BRANDED_GIFT_CARD, self::PRZELEWY24, self::PAYPAL, self::POSTFINANCE_PAY, self::SEPA_DIRECT_DEBIT, self::SOFINCO, self::SPIRIT_OF_CADEAU, self::TWINT, self::WECHAT_PAY];
     public const CARDS = 'cards';
     public const HOSTED_CHECKOUT = 'hosted_checkout';
     public const ALIPAY = '5405';
@@ -71,7 +25,6 @@ class PaymentProductId
     public const CETELEM = '5133';
     public const COFIDIS = '5129';
     public const CPAY = '5100';
-
     // Cards
     public const AMERICAN_EXPRESS = '2';
     public const BANCONTACT = '3012';
@@ -106,316 +59,228 @@ class PaymentProductId
     public const SPIRIT_OF_CADEAU = '3116';
     public const TWINT = '5407';
     public const WECHAT_PAY = '5404';
-
-
     private string $id;
-
     private function __construct(string $id)
     {
         $this->id = $id;
     }
-
     /**
      * String representation of the payment method id
      *
      * @return string
      */
-    public function __toString(): string
+    public function __toString() : string
     {
         return $this->id;
     }
-
-    public static function parse(string $id): PaymentProductId
+    public static function parse(string $id) : PaymentProductId
     {
         if (!self::isSupported($id)) {
-            throw new InvalidPaymentProductIdException(
-                new TranslatableLabel(
-                    sprintf('Payment prodcut ID is invalid %s.', $id),
-                    'paymentMethod.invalidProductId',
-                    [$id]
-                )
-            );
+            throw new InvalidPaymentProductIdException(new TranslatableLabel(\sprintf('Payment prodcut ID is invalid %s.', $id), 'paymentMethod.invalidProductId', [$id]));
         }
-
         return new self($id);
     }
-
-    public static function getForHostedCheckoutPage(): array
+    public static function getForHostedCheckoutPage() : array
     {
-        return array_diff(
-            self::SUPPORTED_PAYMENT_PRODUCTS,
-            [
-                self::CARDS,
-                self::HOSTED_CHECKOUT,
-                self::MEALVOUCHERS,
-            ]
-        );
+        return \array_diff(self::SUPPORTED_PAYMENT_PRODUCTS, [self::CARDS, self::HOSTED_CHECKOUT, self::MEALVOUCHERS]);
     }
-
-    public static function isSupported(string $id): bool
+    public static function isSupported(string $id) : bool
     {
-        return in_array($id, self::SUPPORTED_PAYMENT_PRODUCTS, true);
+        return \in_array($id, self::SUPPORTED_PAYMENT_PRODUCTS, \true);
     }
-
-    public function equals(string $id): bool
+    public function equals(string $id) : bool
     {
         return $this->id === $id;
     }
-
-    public static function cards(): PaymentProductId
+    public static function cards() : PaymentProductId
     {
         return new self(self::CARDS);
     }
-
-    public static function hostedCheckout(): PaymentProductId
+    public static function hostedCheckout() : PaymentProductId
     {
         return new self(self::HOSTED_CHECKOUT);
     }
-
-    public static function alipay(): PaymentProductId
+    public static function alipay() : PaymentProductId
     {
         return new self(self::ALIPAY);
     }
-
-    public static function applePay(): PaymentProductId
+    public static function applePay() : PaymentProductId
     {
         return new self(self::APPLE_PAY);
     }
-
-    public static function bankTransfer(): PaymentProductId
+    public static function bankTransfer() : PaymentProductId
     {
         return new self(self::BANK_TRANSFER);
     }
-
-    public static function cado(): PaymentProductId
+    public static function cado() : PaymentProductId
     {
         return new self(self::CADO);
     }
-
-    public static function bizum(): PaymentProductId
+    public static function bizum() : PaymentProductId
     {
         return new self(self::BIZUM);
     }
-
-    public static function cadhoc(): PaymentProductId
+    public static function cadhoc() : PaymentProductId
     {
         return new self(self::CADHOC);
     }
-
-    public static function chequeVacancesConnect(): PaymentProductId
+    public static function chequeVacancesConnect() : PaymentProductId
     {
         return new self(self::CHEQUE_VACANCES_CONNECT);
     }
-
-    public static function cetelem(): PaymentProductId
+    public static function cetelem() : PaymentProductId
     {
         return new self(self::CETELEM);
     }
-
-    public static function cofidis(): PaymentProductId
+    public static function cofidis() : PaymentProductId
     {
         return new self(self::COFIDIS);
     }
-
-    public static function cpay(): PaymentProductId
+    public static function cpay() : PaymentProductId
     {
         return new self(self::CPAY);
     }
-
-    public static function americanExpress(): PaymentProductId
+    public static function americanExpress() : PaymentProductId
     {
         return new self(self::AMERICAN_EXPRESS);
     }
-
-    public static function bancontact(): PaymentProductId
+    public static function bancontact() : PaymentProductId
     {
         return new self(self::BANCONTACT);
     }
-
-    public static function carteBancaire(): PaymentProductId
+    public static function carteBancaire() : PaymentProductId
     {
         return new self(self::CARTE_BANCAIRE);
     }
-
-    public static function dinersClub(): PaymentProductId
+    public static function dinersClub() : PaymentProductId
     {
         return new self(self::DINERS_CLUB);
     }
-
-    public static function discover(): PaymentProductId
+    public static function discover() : PaymentProductId
     {
         return new self(self::DISCOVER);
     }
-
-    public static function jcb(): PaymentProductId
+    public static function jcb() : PaymentProductId
     {
         return new self(self::JCB);
     }
-
-    public static function mastercard(): PaymentProductId
+    public static function mastercard() : PaymentProductId
     {
         return new self(self::MASTERCARD);
     }
-
-    public static function maestro(): PaymentProductId
+    public static function maestro() : PaymentProductId
     {
         return new self(self::MAESTRO);
     }
-
-    public static function upi(): PaymentProductId
+    public static function upi() : PaymentProductId
     {
         return new self(self::UPI);
     }
-
-    public static function visa(): PaymentProductId
+    public static function visa() : PaymentProductId
     {
         return new self(self::VISA);
     }
-
-    public static function eps(): PaymentProductId
+    public static function eps() : PaymentProductId
     {
         return new self(self::EPS);
     }
-
-    public static function googlePay(): PaymentProductId
+    public static function googlePay() : PaymentProductId
     {
         return new self(self::GOOGLE_PAY);
     }
-
-    public static function ideal(): PaymentProductId
+    public static function ideal() : PaymentProductId
     {
         return new self(self::IDEAL);
     }
-
-    public static function illicado(): PaymentProductId
+    public static function illicado() : PaymentProductId
     {
         return new self(self::ILLICADO);
     }
-
-    public static function intersolve(): PaymentProductId
+    public static function intersolve() : PaymentProductId
     {
         return new self(self::INTERSOLVE);
     }
-
-    public static function klarna(): PaymentProductId
+    public static function klarna() : PaymentProductId
     {
         return new self(self::KLARNA);
     }
-
-    public static function mbWay(): PaymentProductId
+    public static function mbWay() : PaymentProductId
     {
         return new self(self::MB_WAY);
     }
-
-    public static function mealvouchers(): PaymentProductId
+    public static function mealvouchers() : PaymentProductId
     {
         return new self(self::MEALVOUCHERS);
     }
-
-    public static function multibanco(): PaymentProductId
+    public static function multibanco() : PaymentProductId
     {
         return new self(self::MULTIBANCO);
     }
-
-    public static function oney3x(): PaymentProductId
+    public static function oney3x() : PaymentProductId
     {
         return new self(self::ONEY_3X);
     }
-
-    public static function oney4x(): PaymentProductId
+    public static function oney4x() : PaymentProductId
     {
         return new self(self::ONEY_4X);
     }
-
-    public static function oneyBankCard(): PaymentProductId
+    public static function oneyBankCard() : PaymentProductId
     {
         return new self(self::ONEY_BANK_CARD);
     }
-
-    public static function oneyFinancementLong(): PaymentProductId
+    public static function oneyFinancementLong() : PaymentProductId
     {
         return new self(self::ONEY_FINANCEMENT_LONG);
     }
-
-    public static function oneyBrandedGiftCard(): PaymentProductId
+    public static function oneyBrandedGiftCard() : PaymentProductId
     {
         return new self(self::ONEY_BRANDED_GIFT_CARD);
     }
-
-    public static function przelewy24(): PaymentProductId
+    public static function przelewy24() : PaymentProductId
     {
         return new self(self::PRZELEWY24);
     }
-
-    public static function paypal(): PaymentProductId
+    public static function paypal() : PaymentProductId
     {
         return new self(self::PAYPAL);
     }
-
-    public static function postfinancePay(): PaymentProductId
+    public static function postfinancePay() : PaymentProductId
     {
         return new self(self::POSTFINANCE_PAY);
     }
-
-    public static function sepaDirectDebit(): PaymentProductId
+    public static function sepaDirectDebit() : PaymentProductId
     {
         return new self(self::SEPA_DIRECT_DEBIT);
     }
-
-    public static function sofinco(): PaymentProductId
+    public static function sofinco() : PaymentProductId
     {
         return new self(self::SOFINCO);
     }
-
-    public static function spiritOfCadeau(): PaymentProductId
+    public static function spiritOfCadeau() : PaymentProductId
     {
         return new self(self::SPIRIT_OF_CADEAU);
     }
-
-    public static function twint(): PaymentProductId
+    public static function twint() : PaymentProductId
     {
         return new self(self::TWINT);
     }
-
-    public static function wechatPay(): PaymentProductId
+    public static function wechatPay() : PaymentProductId
     {
         return new self(self::WECHAT_PAY);
     }
-
-    public function getId(): string
+    public function getId() : string
     {
         return $this->id;
     }
-
-    public function isCardType(): bool
+    public function isCardType() : bool
     {
-        return in_array($this->id, [
-            self::AMERICAN_EXPRESS,
-            self::BANCONTACT,
-            self::CARTE_BANCAIRE,
-            self::DINERS_CLUB,
-            self::DISCOVER,
-            self::JCB,
-            self::MASTERCARD,
-            self::MAESTRO,
-            self::UPI,
-            self::VISA,
-            self::INTERSOLVE,
-            self::CPAY,
-        ], true);
+        return \in_array($this->id, [self::AMERICAN_EXPRESS, self::BANCONTACT, self::CARTE_BANCAIRE, self::DINERS_CLUB, self::DISCOVER, self::JCB, self::MASTERCARD, self::MAESTRO, self::UPI, self::VISA, self::INTERSOLVE, self::CPAY], \true);
     }
-
-    public function isMobileType(): bool
+    public function isMobileType() : bool
     {
-        return in_array($this->id, [
-            self::ALIPAY,
-            self::APPLE_PAY,
-            self::GOOGLE_PAY,
-            self::WECHAT_PAY,
-        ], true);
+        return \in_array($this->id, [self::ALIPAY, self::APPLE_PAY, self::GOOGLE_PAY, self::WECHAT_PAY], \true);
     }
-
-    public function isRedirectType(): bool
+    public function isRedirectType() : bool
     {
         return !$this->isMobileType() && !$this->isCardType();
     }

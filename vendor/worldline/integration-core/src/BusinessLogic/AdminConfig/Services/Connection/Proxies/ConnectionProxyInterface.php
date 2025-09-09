@@ -1,13 +1,13 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Connection\Proxies;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Connection\Proxies;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
 /**
  * Interface ConnectionProxy
  *
  * @package OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Connection\Proxies
+ * @internal
  */
 interface ConnectionProxyInterface
 {
@@ -18,5 +18,5 @@ interface ConnectionProxyInterface
      *
      * @return bool
      */
-    public function isConnectionValid(ConnectionDetails $connectionDetails): bool;
+    public function isConnectionValid(ConnectionDetails $connectionDetails) : bool;
 }

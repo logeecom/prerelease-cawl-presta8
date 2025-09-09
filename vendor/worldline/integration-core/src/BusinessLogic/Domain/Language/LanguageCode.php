@@ -1,20 +1,19 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Language;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Language;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Language\Exception\InvalidIsoCodeException;
-use OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Language\Exception\InvalidIsoCodeException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
 /**
  * Class LanguageCode
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Language
+ * @internal
  */
 class LanguageCode
 {
     private string $language;
     private string $country;
-
     /**
      * @param string $language
      * @param string $country
@@ -24,7 +23,6 @@ class LanguageCode
         $this->language = $language;
         $this->country = $country;
     }
-
     /**
      * @param string $isoCode
      *
@@ -32,55 +30,43 @@ class LanguageCode
      *
      * @throws InvalidIsoCodeException
      */
-    public static function fromIso(string $isoCode): LanguageCode
+    public static function fromIso(string $isoCode) : LanguageCode
     {
-        $parts = explode('_', $isoCode);
+        $parts = \explode('_', $isoCode);
         if (isset($parts[1])) {
             return new LanguageCode($parts[0], $parts[1]);
         }
-
-        $parts = explode('-', $isoCode);
-
+        $parts = \explode('-', $isoCode);
         if (isset($parts[1])) {
             return new LanguageCode($parts[0], $parts[1]);
         }
-
-        throw new InvalidIsoCodeException(
-            new TranslatableLabel(
-                'Invalid ISO code',
-                'general.error.invalidIsoCode',
-            )
-        );
+        throw new InvalidIsoCodeException(new TranslatableLabel('Invalid ISO code', 'general.error.invalidIsoCode'));
     }
-
     /**
      * @return string
      */
-    public function getFormattedWithDash(): string
+    public function getFormattedWithDash() : string
     {
-        return strtolower($this->language) . '-' . strtoupper($this->country);
+        return \strtolower($this->language) . '-' . \strtoupper($this->country);
     }
-
     /**
      * @return string
      */
-    public function getFormattedWithUnderscore(): string
+    public function getFormattedWithUnderscore() : string
     {
-        return strtolower($this->language) . '_' . strtoupper($this->country);
+        return \strtolower($this->language) . '_' . \strtoupper($this->country);
     }
-
     /**
      * @return string
      */
-    public function getLanguage(): string
+    public function getLanguage() : string
     {
         return $this->language;
     }
-
     /**
      * @return string
      */
-    public function getCountry(): string
+    public function getCountry() : string
     {
         return $this->country;
     }

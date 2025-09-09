@@ -1,21 +1,20 @@
 <?php
 
-namespace OnlinePayments\Core\BusinessLogic\Domain\Cancel;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\Cancel;
 
-use OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
-use OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
-
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
 /**
  * Class CancelRequest.
  *
  * @package OnlinePayments\Core\BusinessLogic\Domain\Cancel
+ * @internal
  */
 class CancelRequest
 {
     private PaymentId $paymentId;
     private Amount $amount;
     private ?string $merchantReference;
-
     /**
      * @param PaymentId $paymentId
      * @param Amount $amount
@@ -27,18 +26,15 @@ class CancelRequest
         $this->amount = $amount;
         $this->merchantReference = $merchantReference;
     }
-
-    public function getPaymentId(): PaymentId
+    public function getPaymentId() : PaymentId
     {
         return $this->paymentId;
     }
-
-    public function getAmount(): Amount
+    public function getAmount() : Amount
     {
         return $this->amount;
     }
-
-    public function getMerchantReference(): ?string
+    public function getMerchantReference() : ?string
     {
         return $this->merchantReference;
     }

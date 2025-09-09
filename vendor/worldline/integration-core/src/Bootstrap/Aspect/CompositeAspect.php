@@ -1,11 +1,12 @@
 <?php
 
-namespace OnlinePayments\Core\Bootstrap\Aspect;
+namespace CAWL\OnlinePayments\Core\Bootstrap\Aspect;
 
 /**
  * Class CompositeAspect
  *
  * @package OnlinePayments\Core\Bootstrap\Aspect
+ * @internal
  */
 class CompositeAspect implements Aspect
 {
@@ -13,22 +14,18 @@ class CompositeAspect implements Aspect
      * @var Aspect
      */
     private Aspect $aspect;
-
     /**
      * @var Aspect|null
      */
     private ?Aspect $next = null;
-
     public function __construct(Aspect $aspect)
     {
         $this->aspect = $aspect;
     }
-
-    public function append(Aspect $aspect): void
+    public function append(Aspect $aspect) : void
     {
         $this->next = new self($aspect);
     }
-
     /**
      * @throws \Exception
      */
@@ -38,13 +35,11 @@ class CompositeAspect implements Aspect
         if ($this->next) {
             $callback = $this->getNextCallee($callee, $params);
         }
-
         return $this->aspect->applyOn($callback, $params);
     }
-
-    private function getNextCallee($callee, array $params = []): \Closure
+    private function getNextCallee($callee, array $params = []) : \Closure
     {
-        return function () use ($callee, $params) {
+        return function () use($callee, $params) {
             return $this->next->applyOn($callee, $params);
         };
     }
