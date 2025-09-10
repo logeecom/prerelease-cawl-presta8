@@ -39,6 +39,9 @@ class RedirectModuleFrontController extends \ModuleFrontController
         if (!\in_array($action, self::ACTIONS)) {
             \Tools::redirect($this->context->link->getPageLink('order', null, null, ['step' => 3]));
         }
+        if (\in_array($action, ['redirectReturnHosted', 'redirectReturnPaymentLink', 'redirectReturnIframe'])) {
+            $this->startWaitingForOutcomeInBackground();
+        }
         $this->context->smarty->assign(['module' => $this->module->name, 'img_path' => \sprintf(__PS_BASE_URI__ . 'modules/%s/views/img/', $this->module->name), 'redirectController' => $this->context->link->getModuleLink($this->module->name, 'redirect', ['action' => $action, 'merchantReference' => $merchantReference]), 'returnMac' => \Tools::getValue('RETURNMAC'), 'hostedCheckoutId' => \Tools::getValue('hostedCheckoutId'), 'paymentId' => \Tools::getValue('paymentId'), 'merchantReference' => \Tools::getValue('merchantReference'), 'customerToken' => \Tools::getToken()]);
         return parent::display();
     }
@@ -53,17 +56,10 @@ class RedirectModuleFrontController extends \ModuleFrontController
     }
     public function displayAjaxRedirectReturnHosted()
     {
-        $paymentId = \Tools::getValue('paymentId', '');
-        if (empty($paymentId)) {
-            $paymentId = \Tools::getValue('hostedCheckoutId', '');
-        }
-        CheckoutAPI::get()->payment((string) $this->context->shop->id)->startWaitingForOutcomeInBackground(PaymentId::parse($paymentId), \Tools::getValue('RETURNMAC', null));
         $this->displayAjaxRedirectReturnInternalIframe();
     }
     public function displayAjaxRedirectReturnPaymentLink()
     {
-        $merchantReference = \Tools::getValue('merchantReference', '');
-        CheckoutAPI::get()->payment((string) $this->context->shop->id)->startWaitingForOutcomeInBackground(null, null, $merchantReference);
         $this->displayAjaxRedirectReturnPaymentLinkInternalIframe();
     }
     /**
@@ -82,7 +78,6 @@ class RedirectModuleFrontController extends \ModuleFrontController
      */
     public function displayAjaxRedirectReturnIframe()
     {
-        CheckoutAPI::get()->payment((string) $this->context->shop->id)->startWaitingForOutcomeInBackground(PaymentId::parse(\Tools::getValue('paymentId', '')), \Tools::getValue('RETURNMAC', null));
         $this->displayAjaxRedirectReturnInternalIframe();
     }
     public function displayAjaxRedirectReturnInternalIframe()
@@ -141,5 +136,13 @@ class RedirectModuleFrontController extends \ModuleFrontController
             $this->dieOrderStep3();
         }
         OnlinePaymentsPrestaShopUtility::dieJsonArray(['success' => \false, 'message' => $this->module->l("Order for cart {$this->context->cart->id} not found.", 'payment')]);
+    }
+    private function startWaitingForOutcomeInBackground()
+    {
+        $paymentId = \Tools::getValue('paymentId', null);
+        if (empty($paymentId)) {
+            $paymentId = \Tools::getValue('hostedCheckoutId', null);
+        }
+        CheckoutAPI::get()->payment((string) $this->context->shop->id)->startWaitingForOutcomeInBackground(PaymentId::parse($paymentId), \Tools::getValue('RETURNMAC', null), \Tools::getValue('merchantReference', null));
     }
 }

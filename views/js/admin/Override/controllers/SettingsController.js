@@ -807,11 +807,37 @@ if (!window.OnlinePaymentsFE) {
                     exemptionLimit = utilities.getAncestor(
                         document.querySelector('[name="exemptionLimit"]'),
                         'op-field-wrapper'
-                    );
+                    ),
+                    enableExemption = utilities.getAncestor(
+                        document.querySelector('[name="enable3dsExemption"]'),
+                        'op-field-wrapper'
+                    )
+                ;
                 if (value === true) {
+                    let warning = generator.createElement(
+                        'div',
+                        'ops-warning',
+                        '',
+                        null,
+                        [
+                            generator.createElement(
+                                'span',
+                                'ops-warning-message',
+                                translationService.translate('generalSettings.cardsSettings.3dsExemption.warning')
+                            )
+                        ]
+                    );
+                    enableExemption.append(warning);
+
                     utilities.showElement(exemptionType);
                     utilities.showElement(exemptionLimit);
                 } else {
+                    let warning = enableExemption.querySelector('.ops-warning');
+
+                    if (warning) {
+                        warning.remove();
+                    }
+
                     utilities.hideElement(exemptionType);
                     utilities.hideElement(exemptionLimit);
                 }
@@ -822,11 +848,15 @@ if (!window.OnlinePaymentsFE) {
                 validator.removeError(exemptionLimit);
 
                 if (value === 'low-value') {
-                    exemptionLimit.value = 30;
-                    changedCardsSettings.exemptionLimit = 30.0;
+                    exemptionLimit.value = activeCardsSettings.exemptionType === 'low-value' ?
+                        activeCardsSettings.exemptionLimit : 30;
+                    changedCardsSettings.exemptionLimit = activeCardsSettings.exemptionType === 'low-value' ?
+                        activeCardsSettings.exemptionLimit : 30;
                 } else {
-                    exemptionLimit.value = 100;
-                    changedCardsSettings.exemptionLimit = 100.0;
+                    exemptionLimit.value = activeCardsSettings.exemptionType === 'transaction-risk-analysis' ?
+                        activeCardsSettings.exemptionLimit : 100.0;
+                    changedCardsSettings.exemptionLimit = activeCardsSettings.exemptionType === 'transaction-risk-analysis' ?
+                        activeCardsSettings.exemptionLimit : 100.0;
                 }
             }
 

@@ -45,14 +45,17 @@ class PaymentOptionsService
             return [];
         }
         $locale = \Language::getLocaleByIso(\Language::getIsoById($this->context->cart->id_lang));
-        return \array_merge($this->getStoredTokensOptions($availableMMethodsResponse->getPaymentMethods(), $availableMMethodsResponse->getValidTokensResponse()), $this->getHostedTokenizationOptions($availableMMethodsResponse->getPaymentMethods(), $locale), $this->getHostedCheckoutOptions($availableMMethodsResponse->getPaymentMethods(), $locale), $this->getRedirectOptions($availableMMethodsResponse->getPaymentMethods(), $locale));
+        $locale = \strtoupper(\explode('-', $locale)[0]);
+        return \array_merge($this->getStoredTokensOptions($availableMMethodsResponse->getPaymentMethods(), $availableMMethodsResponse->getValidTokensResponse(), $locale), $this->getHostedTokenizationOptions($availableMMethodsResponse->getPaymentMethods(), $locale), $this->getHostedCheckoutOptions($availableMMethodsResponse->getPaymentMethods(), $locale), $this->getRedirectOptions($availableMMethodsResponse->getPaymentMethods(), $locale));
     }
     /**
      * @param PaymentMethodCollection $availableMethods
-     * @param Token[] $tokens
+     * @param ValidTokensResponse|null $validTokensResponse
+     * @param string $locale
+     *
      * @return PaymentOption[]
      */
-    private function getStoredTokensOptions(PaymentMethodCollection $availableMethods, ?ValidTokensResponse $validTokensResponse) : array
+    private function getStoredTokensOptions(PaymentMethodCollection $availableMethods, ?ValidTokensResponse $validTokensResponse, string $locale) : array
     {
         if (null === $validTokensResponse) {
             return [];
@@ -61,7 +64,7 @@ class PaymentOptionsService
         foreach ($validTokensResponse->getTokens() as $token) {
             if ($availableMethods->has(PaymentProductId::cards())) {
                 $method = $availableMethods->get(PaymentProductId::cards());
-                $result[] = $this->getStoredHostedTokenizationTokenOptions($token, $validTokensResponse->getHostedTokenization(), $method);
+                $result[] = $this->getStoredHostedTokenizationTokenOptions($token, $validTokensResponse->getHostedTokenization(), $method, $locale);
                 continue;
             }
             if ($availableMethods->has(PaymentProductId::hostedCheckout())) {
@@ -73,7 +76,7 @@ class PaymentOptionsService
         }, $validTokensResponse->getTokens()));
         return $result;
     }
-    private function getStoredHostedTokenizationTokenOptions(Token $token, HostedTokenization $hostedTokenization, PaymentMethod $paymentMethod) : PaymentOption
+    private function getStoredHostedTokenizationTokenOptions(Token $token, HostedTokenization $hostedTokenization, PaymentMethod $paymentMethod, string $locale) : PaymentOption
     {
         /** @var GeneralSettingsService $settingsService */
         $settingsService = ServiceRegister::getService(GeneralSettingsService::class);
@@ -99,7 +102,7 @@ class PaymentOptionsService
         $paymentOption = new PaymentOption();
         /** @var TranslationCollection $vaultTitles */
         $vaultTitles = $paymentMethod->getAdditionalData()->getVaultTitles();
-        $vaultName = $vaultTitles->getTranslation($this->context->language->iso_code)->getMessage() ?: $vaultTitles->getDefaultTranslation()->getMessage();
+        $vaultName = $vaultTitles->getTranslation($locale)->getMessage() ?: $vaultTitles->getDefaultTranslation()->getMessage();
         $paymentOption->setCallToActionText($vaultName . ' ' . $token->getCardNumber())->setAdditionalInformation($this->context->smarty->fetch("module:{$this->module->name}/views/templates/front/hostedTokenizationAdditionalInformation_1click.tpl"))->setBinary(\true)->setLogo(\sprintf($this->module->getPathUri() . 'views/assets/images/payment_products/%s.svg', (string) $token->getProductId()))->setModuleName($this->module->name . '-token-htp-' . $token->getTokenId());
         return $paymentOption;
     }

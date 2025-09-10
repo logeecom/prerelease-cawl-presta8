@@ -345,7 +345,8 @@
       },
       "3dsExemption": {
         "title": "Enable 3DS exemption",
-        "description": "By enabling the 3DS Exemption, you allow the card issuer and your acquirer to evaluate the risk level of transactions up to the Exemption Limit you specify in EUR. If the criteria are met, your customers will be exempt from Strong Customer Authentication (SCA).\n\nIf your acquirer rejects the exemption and requires SCA, this is referred to as a soft decline. In such cases, we will attempt to prompt the customer for SCA and reinitiate the transaction if the customer successfully authenticates."
+        "description": "By enabling the 3DS Exemption, you allow the card issuer and your acquirer to evaluate the risk level of transactions up to the Exemption Limit you specify in EUR. If the criteria are met, your customers will be exempt from Strong Customer Authentication (SCA).\n\nIf your acquirer rejects the exemption and requires SCA, this is referred to as a soft decline. In such cases, we will attempt to prompt the customer for SCA and reinitiate the transaction if the customer successfully authenticates.",
+        "warning": "Please be aware that if fraud occurs on a transaction that has been granted an exemption, the liability falls on the merchant!"
       },
       "exemptionType": {
         "title": "Exemption type",
