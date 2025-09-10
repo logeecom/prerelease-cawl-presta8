@@ -816,6 +816,36 @@ if (!window.OnlinePaymentsFE) {
                     utilities.hideElement(exemptionLimit);
                 }
             }
+
+            if (prop === 'exemptionType') {
+                let exemptionLimit = cardsForm.querySelector('[name="exemptionLimit"]');
+                validator.removeError(exemptionLimit);
+
+                if (value === 'low-value') {
+                    exemptionLimit.value = 30;
+                    changedCardsSettings.exemptionLimit = 30.0;
+                } else {
+                    exemptionLimit.value = 100;
+                    changedCardsSettings.exemptionLimit = 100.0;
+                }
+            }
+
+            if (prop === 'exemptionLimit') {
+                let cardsBtn = cardsForm.querySelector('[name="cardSettingsBtn"]');
+                if (changedCardsSettings.exemptionType === 'low-value' && (value < 0 || value > 30)) {
+                    let exemptionLimit = cardsForm.querySelector('[name="exemptionLimit"]');
+                    validator.setError(exemptionLimit, 'generalSettings.cardsSettings.exemptionLimit.errorLowValue');
+                    cardsBtn.disabled = true;
+
+                    return;
+                }
+
+                if (changedCardsSettings.exemptionType === 'transaction-risk-analysis' && (value < 0 || value > 100)) {
+                    let exemptionLimit = cardsForm.querySelector('[name="exemptionLimit"]');
+                    validator.setError(exemptionLimit, 'generalSettings.cardsSettings.exemptionLimit.errorTransactionRisk');
+                    cardsBtn.disabled = true;
+                }
+            }
         }
 
         const renderLogForm = () => {
