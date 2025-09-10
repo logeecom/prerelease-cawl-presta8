@@ -46,8 +46,17 @@ class WebhookLogsService
      */
     public function logWebhook(WebhookData $webhookData) : void
     {
-        $payment = $this->paymentsProxy->getPayment(PaymentId::parse($webhookData->getId()));
-        $webhookLog = new WebhookLog($webhookData->getMerchantReference(), $webhookData->getId(), PaymentMethodDefaultConfigs::getName($payment->getProductId(), $this->activeBrandProvider->getActiveBrand()->getPaymentMethodName())['translation'] ?? '', WebhookStatuses::statusMap[$webhookData->getStatusCategory()], $webhookData->getType(), new DateTime($webhookData->getCreated()), $webhookData->getStatusCode(), $webhookData->getWebhookBody(), $this->activeBrandProvider->getTransactionUrl() . PaymentId::parse((string) $webhookData->getId())->getTransactionId());
+        $webhookPaymentId = PaymentId::parse($webhookData->getId());
+        $payment = $this->paymentsProxy->tryToGetPayment($webhookPaymentId);
+        if (!$payment) {
+            // Default to first payment trtansaction (_0) if payment id from webhook is maintenance transaction
+            $payment = $this->paymentsProxy->tryToGetPayment(PaymentId::parse($webhookPaymentId->getTransactionId()));
+        }
+        $paymentMethodName = '';
+        if ($payment && $payment->getProductId()) {
+            $paymentMethodName = PaymentMethodDefaultConfigs::getName($payment->getProductId(), $this->activeBrandProvider->getActiveBrand()->getPaymentMethodName())['translation'] ?? '';
+        }
+        $webhookLog = new WebhookLog($webhookData->getMerchantReference(), $webhookData->getId(), $paymentMethodName, WebhookStatuses::statusMap[$webhookData->getStatusCategory()], $webhookData->getType(), new DateTime($webhookData->getCreated()), $webhookData->getStatusCode(), $webhookData->getWebhookBody(), $this->activeBrandProvider->getTransactionUrl() . PaymentId::parse((string) $webhookData->getId())->getTransactionId());
         $this->repository->saveWebhookLog($webhookLog);
     }
     /**

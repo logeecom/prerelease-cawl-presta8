@@ -36,7 +36,6 @@ return array(
     'CAWL\\OnlinePayments\\Classes\\Services\\Integration\\ShopPaymentService' => $baseDir . '/classes/Services/Integration/ShopPaymentService.php',
     'CAWL\\OnlinePayments\\Classes\\Services\\Integration\\StoreService' => $baseDir . '/classes/Services/Integration/StoreService.php',
     'CAWL\\OnlinePayments\\Classes\\Services\\Integration\\VersionInfoService' => $baseDir . '/classes/Services/Integration/VersionInfoService.php',
-    'CAWL\\OnlinePayments\\Classes\\Services\\OrderStatusMappingService' => $baseDir . '/classes/Services/OrderStatusMappingService.php',
     'CAWL\\OnlinePayments\\Classes\\Services\\PaymentLink\\OrderProviderService' => $baseDir . '/classes/Services/PaymentLink/OrderProviderService.php',
     'CAWL\\OnlinePayments\\Classes\\Services\\PrestaShop\\CancelService' => $baseDir . '/classes/Services/PrestaShop/CancelService.php',
     'CAWL\\OnlinePayments\\Classes\\Services\\PrestaShop\\CaptureService' => $baseDir . '/classes/Services/PrestaShop/CaptureService.php',

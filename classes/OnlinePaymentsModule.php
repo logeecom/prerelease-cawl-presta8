@@ -5,7 +5,6 @@ namespace CAWL\OnlinePayments\Classes;
 use DateInterval;
 use DateTime;
 use CAWL\OnlinePayments\Classes\Services\Checkout\PaymentOptionsService;
-use CAWL\OnlinePayments\Classes\Services\OrderStatusMappingService;
 use CAWL\OnlinePayments\Classes\Services\PaymentLink\OrderProviderService;
 use CAWL\OnlinePayments\Classes\Services\PrestaShop\CancelService;
 use CAWL\OnlinePayments\Classes\Services\PrestaShop\OrderService;
@@ -338,7 +337,7 @@ class OnlinePaymentsModule extends \PaymentModule
     {
         $order = new \Order($params['id_order']);
         $newOrderStatus = $params['newOrderStatus'];
-        if ($order->module !== $this->name || $newOrderStatus->id == $order->current_state || $newOrderStatus->id != OrderStatusMappingService::PRESTA_CANCELED_ID) {
+        if ($order->module !== $this->name || (string) $newOrderStatus->id === (string) $order->current_state || (string) $newOrderStatus->id !== (string) \Configuration::getGlobalValue('PS_OS_CANCELED')) {
             return;
         }
         $cartId = \Cart::getCartIdByOrderId($order->id);

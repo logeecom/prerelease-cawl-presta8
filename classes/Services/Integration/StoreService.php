@@ -2,8 +2,8 @@
 
 namespace CAWL\OnlinePayments\Classes\Services\Integration;
 
+use CAWL\OnlinePayments\Classes\OnlinePaymentsModule;
 use CAWL\OnlinePayments\Classes\Repositories\ConfigurationRepository;
-use CAWL\OnlinePayments\Classes\Services\OrderStatusMappingService;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Stores\StoreService as StoreServiceInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\OrderStatusMapping\Models\OrderStatusMapping;
@@ -19,12 +19,14 @@ use Shop;
 class StoreService implements StoreServiceInterface
 {
     private ConfigurationRepository $configurationRepository;
+    private OnlinePaymentsModule $module;
     /**
      * @param ConfigurationRepository $configurationRepository
      */
-    public function __construct(ConfigurationRepository $configurationRepository)
+    public function __construct(ConfigurationRepository $configurationRepository, OnlinePaymentsModule $module)
     {
         $this->configurationRepository = $configurationRepository;
+        $this->module = $module;
     }
     /**
      * @inheritDoc
@@ -86,7 +88,7 @@ class StoreService implements StoreServiceInterface
      */
     public function getDefaultOrderStatusMapping() : OrderStatusMapping
     {
-        return new OrderStatusMapping(OrderStatusMappingService::getPrestaShopOrderStatusId(OrderStatusMappingService::PRESTA_PAYMENT_ACCEPTED), OrderStatusMappingService::getPrestaShopOrderStatusId(OrderStatusMappingService::PRESTA_PAYMENT_ERROR), OrderStatusMappingService::getPrestaShopOrderStatusId(OrderStatusMappingService::PRESTA_AWAITING_PAYMENT_CONFIRMATION), OrderStatusMappingService::getPrestaShopOrderStatusId(OrderStatusMappingService::PRESTA_PROCESSING), OrderStatusMappingService::getPrestaShopOrderStatusId(OrderStatusMappingService::PRESTA_CANCELED), OrderStatusMappingService::getPrestaShopOrderStatusId(OrderStatusMappingService::PRESTA_REFUNDED));
+        return new OrderStatusMapping((string) \Configuration::get('PS_OS_PAYMENT'), (string) \Configuration::get('PS_OS_ERROR'), (string) \Configuration::getGlobalValue($this->module->getBrand()->getCode() . '_PENDING_ORDER_STATUS_ID'), (string) \Configuration::getGlobalValue($this->module->getBrand()->getCode() . '_AWAITING_CAPTURE_STATUS_ID'), (string) \Configuration::getGlobalValue('PS_OS_CANCELED'), (string) \Configuration::get('PS_OS_REFUND'));
     }
     /**
      * @inheritDoc

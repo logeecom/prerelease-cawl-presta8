@@ -72,7 +72,6 @@ class ComposerStaticInit048a6967892288a0ad035774ede72698
         'CAWL\\OnlinePayments\\Classes\\Services\\Integration\\ShopPaymentService' => __DIR__ . '/../..' . '/classes/Services/Integration/ShopPaymentService.php',
         'CAWL\\OnlinePayments\\Classes\\Services\\Integration\\StoreService' => __DIR__ . '/../..' . '/classes/Services/Integration/StoreService.php',
         'CAWL\\OnlinePayments\\Classes\\Services\\Integration\\VersionInfoService' => __DIR__ . '/../..' . '/classes/Services/Integration/VersionInfoService.php',
-        'CAWL\\OnlinePayments\\Classes\\Services\\OrderStatusMappingService' => __DIR__ . '/../..' . '/classes/Services/OrderStatusMappingService.php',
         'CAWL\\OnlinePayments\\Classes\\Services\\PaymentLink\\OrderProviderService' => __DIR__ . '/../..' . '/classes/Services/PaymentLink/OrderProviderService.php',
         'CAWL\\OnlinePayments\\Classes\\Services\\PrestaShop\\CancelService' => __DIR__ . '/../..' . '/classes/Services/PrestaShop/CancelService.php',
         'CAWL\\OnlinePayments\\Classes\\Services\\PrestaShop\\CaptureService' => __DIR__ . '/../..' . '/classes/Services/PrestaShop/CaptureService.php',

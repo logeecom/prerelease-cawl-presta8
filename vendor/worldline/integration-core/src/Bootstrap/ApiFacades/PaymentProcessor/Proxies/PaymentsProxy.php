@@ -43,6 +43,14 @@ class PaymentsProxy implements PaymentsProxyInterface
         ContextLogProvider::getInstance()->setPaymentNumber($paymentId->getTransactionId());
         return PaymentDetailsResponseTransformer::transform($this->clientFactory->get()->payments()->getPaymentDetails((string) $paymentId));
     }
+    public function tryToGetPayment(PaymentId $paymentId) : ?Payment
+    {
+        try {
+            return $this->getPayment($paymentId);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
     public function getPayment(PaymentId $paymentId) : Payment
     {
         ContextLogProvider::getInstance()->setPaymentNumber($paymentId->getTransactionId());

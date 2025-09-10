@@ -19,6 +19,7 @@ interface PaymentsProxyInterface
 {
     public function create(PaymentRequest $request, CardsSettings $cardsSettings, PaymentSettings $paymentSettings, ?Token $token = null) : PaymentResponse;
     public function getPaymentDetails(PaymentId $paymentId) : PaymentDetails;
+    public function tryToGetPayment(PaymentId $paymentId) : ?Payment;
     public function getPayment(PaymentId $paymentId) : Payment;
     public function getRefunds(PaymentId $paymentId) : array;
     public function getCaptures(PaymentId $paymentId) : array;

@@ -44,7 +44,7 @@ class OrderService
             if (!\in_array($operation->getStatus(), [self::STATUS_PAYMENT_PENDING_CAPTURE, self::STATUS_PAYMENT_CAPTURED])) {
                 continue;
             }
-            $payment = $this->tryToGetPayment($operation->getId());
+            $payment = $this->paymentsProxy->tryToGetPayment($operation->getId());
             if (!$payment || \array_key_exists($payment->getProductId(), $payments)) {
                 continue;
             }
@@ -74,13 +74,5 @@ class OrderService
             $amount = $amount->plus($payment->getAmount());
         }
         return $amount;
-    }
-    private function tryToGetPayment(PaymentId $paymentId) : ?Payment
-    {
-        try {
-            return $this->paymentsProxy->getPayment($paymentId);
-        } catch (\Exception $e) {
-            return null;
-        }
     }
 }

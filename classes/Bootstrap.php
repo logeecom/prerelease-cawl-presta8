@@ -93,7 +93,7 @@ class Bootstrap extends BootstrapComponent
             return new LoggerService(ServiceRegister::getService(\Module::class));
         });
         ServiceRegister::registerService(StoreService::class, function () {
-            return new Services\Integration\StoreService(new ConfigurationRepository());
+            return new Services\Integration\StoreService(new ConfigurationRepository(), ServiceRegister::getService(\Module::class));
         });
         ServiceRegister::registerService(VersionService::class, function () {
             return new VersionInfoService();

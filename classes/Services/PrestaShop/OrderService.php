@@ -4,7 +4,6 @@ namespace CAWL\OnlinePayments\Classes\Services\PrestaShop;
 
 use Exception;
 use CAWL\OnlinePayments\Classes\OnlinePaymentsModule;
-use CAWL\OnlinePayments\Classes\Services\OrderStatusMappingService;
 use CAWL\OnlinePayments\Classes\Utility\Url;
 use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\AdminAPI\AdminAPI;
 use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\Order\OrderAPI\OrderAPI;
@@ -74,7 +73,7 @@ class OrderService
         }
         $generalSettings = $generalSettingsResponse->toArray();
         $payByLinkEnabled = \array_key_exists('payByLinkSettings', $generalSettings) && $generalSettings['payByLinkSettings']['enabled'];
-        $shouldDisplayPayByLinkButton = $payByLinkEnabled && ($order->current_state == OrderStatusMappingService::PRESTA_CANCELED_ID || $order->current_state == OrderStatusMappingService::PRESTA_PAYMENT_ERROR_ID || $order->current_state == OrderStatusMappingService::PRESTA_ON_BACKORDER_ID);
+        $shouldDisplayPayByLinkButton = $payByLinkEnabled && ((string) $order->current_state === (string) \Configuration::getGlobalValue('PS_OS_CANCELED') || (string) $order->current_state === (string) \Configuration::get('PS_OS_ERROR') || (string) $order->current_state === (string) \Configuration::get('PS_OS_OUTOFSTOCK_UNPAID'));
         $paymentLinkData = ['displayButton' => $shouldDisplayPayByLinkButton];
         if ($payByLinkEnabled) {
             $paymentLinkResponse = AdminAPI::get()->paymentLinks($this->storeId)->get(\Cart::getCartIdByOrderId($order->id));
