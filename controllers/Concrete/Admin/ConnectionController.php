@@ -3,12 +3,14 @@
 namespace CAWL\OnlinePayments\Controllers\Concrete\Admin;
 
 use ModuleAdminController;
+use CAWL\OnlinePayments\Classes\Services\ImageHandler;
 use CAWL\OnlinePayments\Classes\Utility\OnlinePaymentsPrestaShopUtility;
 use CAWL\OnlinePayments\Classes\Utility\Request;
 use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\AdminAPI\AdminAPI;
 use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\ConnectionAPI\Request\ConnectionRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Exceptions\InvalidConnectionDetailsException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Exceptions\InvalidConnectionModeException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 use Tools;
 /**
  * Class ConnectionController
@@ -29,6 +31,9 @@ class ConnectionController extends ModuleAdminController
         $storeId = Tools::getValue('storeId');
         $connectionRequest = new ConnectionRequest($requestData['mode'] ?? '', $requestData['testData']['pspid'] ?? '', $requestData['testData']['apiKey'] ?? '', $requestData['testData']['apiSecret'] ?? '', $requestData['testData']['webhooksKey'] ?? '', $requestData['testData']['webhooksSecret'] ?? '', $requestData['liveData']['pspid'] ?? '', $requestData['liveData']['apiKey'] ?? '', $requestData['liveData']['apiSecret'] ?? '', $requestData['liveData']['webhooksKey'] ?? '', $requestData['liveData']['webhooksSecret'] ?? '');
         $result = AdminAPI::get()->connection($storeId)->connect($connectionRequest);
+        if ($result->isSuccessful()) {
+            ImageHandler::copyHostedCheckoutDefaultImage($this->module->getLocalPath() . 'views/assets/images/payment_products/' . PaymentProductId::HOSTED_CHECKOUT . '.svg', $storeId, $requestData['mode']);
+        }
         OnlinePaymentsPrestaShopUtility::dieJson($result);
     }
     /**

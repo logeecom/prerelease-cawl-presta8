@@ -34,6 +34,21 @@ class ImageHandler
         }
         return \move_uploaded_file($file, \_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png');
     }
+    public static function copyHostedCheckoutDefaultImage(string $path, string $storeId, string $mode) : bool
+    {
+        /** @var Module $module */
+        $module = ServiceRegister::getService(Module::class);
+        if (!\file_exists(\_PS_IMG_DIR_ . $module->name)) {
+            \mkdir(\_PS_IMG_DIR_ . $module->name);
+        }
+        if (!\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId)) {
+            \mkdir(\_PS_IMG_DIR_ . $module->name . '/' . $storeId);
+        }
+        if (!\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode)) {
+            \mkdir(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode);
+        }
+        return \copy($path, \_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/hosted_checkout.png');
+    }
     /**
      * @param string $fileName
      * @param string $storeId
