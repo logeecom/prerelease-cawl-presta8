@@ -48,10 +48,10 @@ class MealvouchersCartProvider implements CartProvider
         $productNames = [];
         $totalQuantity = 0;
         foreach ($lineItems->toArray() as $lineItem) {
-            $totalQuantity += $lineItem->getQuantity();
             if ($lineItem->getProduct()->getId() === 'rounding') {
                 continue;
             }
+            $totalQuantity += $lineItem->getQuantity();
             $productNames[] = $lineItem->getProduct()->getName();
         }
         $mergedName = \join(' + ', $productNames);

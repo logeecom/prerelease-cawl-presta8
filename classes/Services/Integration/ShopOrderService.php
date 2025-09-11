@@ -44,7 +44,7 @@ class ShopOrderService implements ShopOrderServiceInterface
     public function updateStatus(PaymentTransaction $paymentTransaction, PaymentDetails $paymentDetails, string $newState) : void
     {
         $orderId = $this->getIdByCartId($paymentTransaction->getMerchantReference());
-        if (\false === $orderId) {
+        if (null === $orderId) {
             return;
         }
         Order::disableCache();
@@ -68,7 +68,7 @@ class ShopOrderService implements ShopOrderServiceInterface
     public function refundShopOrder(PaymentTransaction $paymentTransaction, PaymentDetails $paymentDetails, string $newState) : void
     {
         $orderId = $this->getIdByCartId($paymentTransaction->getMerchantReference());
-        if (\false === $orderId) {
+        if (null === $orderId) {
             return;
         }
         $order = new Order($orderId);
