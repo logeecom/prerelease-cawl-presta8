@@ -355,8 +355,11 @@ class OnlinePaymentsModule extends \PaymentModule
             return '';
         }
         $generalSettings = AdminAPI::get()->generalSettings($this->context->shop->id)->getGeneralSettings();
+        if (!$generalSettings->isSuccessful()) {
+            return '';
+        }
         $generalSettingsArray = $generalSettings->toArray()['payByLinkSettings'];
-        if (!$generalSettings->isSuccessful() || !$generalSettingsArray || !$generalSettingsArray['enabled']) {
+        if (!$generalSettingsArray || !$generalSettingsArray['enabled']) {
             return '';
         }
         $expirationDate = TimeProvider::getInstance()->getCurrentLocalTime()->add(new DateInterval('P' . $generalSettingsArray['expirationTime'] . 'D'))->format("Y-m-d");
