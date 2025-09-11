@@ -762,13 +762,31 @@ if (!window.OnlinePaymentsFE) {
                     enableExemption = utilities.getAncestor(
                         document.querySelector('[name="enable3dsExemption"]'),
                         'op-field-wrapper'
+                    ),
+                    exemptionType = utilities.getAncestor(
+                        document.querySelector('[name="exemptionType"]'),
+                        'op-field-wrapper'
+                    ),
+                    exemptionLimit = utilities.getAncestor(
+                        document.querySelector('[name="exemptionLimit"]'),
+                        'op-field-wrapper'
                     );
                 if (value === true) {
                     utilities.showElement(enforceStrongAuthentication);
-                    utilities.showElement(enableExemption);
+
+                    if (!changedCardsSettings.enforceStrongAuthentication) {
+                        utilities.showElement(enableExemption);
+
+                        if (changedCardsSettings.enable3dsExemption === true) {
+                            utilities.showElement(exemptionType);
+                            utilities.showElement(exemptionLimit);
+                        }
+                    }
                 } else {
                     utilities.hideElement(enforceStrongAuthentication);
                     utilities.hideElement(enableExemption);
+                    utilities.hideElement(exemptionType);
+                    utilities.hideElement(exemptionLimit);
                 }
             }
 
