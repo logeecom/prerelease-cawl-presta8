@@ -3702,6 +3702,9 @@ ul.op-bullet-list li {
   font-family: op-icons;
   font-size: 24px;
 }
+#op-page .op-header-menu .op-header-menu-content .op-header-tab.ops--disabled {
+  pointer-events: none;
+}
 #op-page .op-header-menu .op-header-menu-content .op-header-tab.op-header-help:before {
   content: "\e911";
   font-family: op-icons;

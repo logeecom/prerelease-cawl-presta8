@@ -63,7 +63,7 @@ if (!window.OnlinePaymentsFE.components) {
                 }
             } else {
                 let mainPage = OnlinePaymentsFE.templateService.getMainPage();
-                let menuBox = OnlinePaymentsFE.components.HeaderMenu.create(linkDropDown);
+                let menuBox = OnlinePaymentsFE.components.HeaderMenu.create(linkDropDown, page);
                 menuBox.classList.add('op-open');
 
                 mainPage.firstChild.appendChild(menuBox);
