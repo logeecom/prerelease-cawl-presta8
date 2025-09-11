@@ -28,6 +28,8 @@ use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\PayByLinkSetti
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\PaymentSettingsConfigEntity;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\PaymentSettingsRepository;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Maintenance\TaskCleanupRepository;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\MonitoringLog;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\MonitoringLogRepository;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentLink\PaymentLinkEntity;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentLink\PaymentLinkRepository;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentMethod\PaymentMethodConfigEntity;
@@ -221,7 +223,7 @@ class BootstrapComponent extends BaseBootstrapComponent
             return new WebhookLogsService(ServiceRegister::getService(WebhookLogRepositoryInterface::class), ServiceRegister::getService(PaymentsProxyInterface::class), ServiceRegister::getService(DisconnectRepositoryInterface::class), ServiceRegister::getService(ActiveBrandProviderInterface::class));
         }));
         ServiceRegister::registerService(PaymentLinksService::class, new SingleInstance(static function () {
-            return new PaymentLinksService(ServiceRegister::getService(PaymentLinksProxyInterface::class), ServiceRegister::getService(CardsSettingsRepositoryInterface::class), ServiceRegister::getService(PaymentSettingsRepositoryInterface::class), ServiceRegister::getService(PayByLinkSettingsRepositoryInterface::class), ServiceRegister::getService(PaymentLinkRepositoryInterface::class), ServiceRegister::getService(PaymentTransactionRepositoryInterface::class));
+            return new PaymentLinksService(ServiceRegister::getService(PaymentLinksProxyInterface::class), ServiceRegister::getService(CardsSettingsRepositoryInterface::class), ServiceRegister::getService(PaymentSettingsRepositoryInterface::class), ServiceRegister::getService(PayByLinkSettingsRepositoryInterface::class), ServiceRegister::getService(PaymentLinkRepositoryInterface::class), ServiceRegister::getService(PaymentTransactionRepositoryInterface::class), ServiceRegister::getService(PaymentMethodService::class));
         }));
         ServiceRegister::registerService(DisconnectTaskEnqueuerInterface::class, new SingleInstance(static function () {
             return new DisconnectTaskEnqueuer(ServiceRegister::getService(DisconnectRepositoryInterface::class), ServiceRegister::getService(QueueService::class));
@@ -301,6 +303,9 @@ class BootstrapComponent extends BaseBootstrapComponent
             /** @var QueueItemRepository $repository */
             $repository = RepositoryRegistry::getRepository(QueueItem::class);
             return new TaskCleanupRepository($repository);
+        }));
+        ServiceRegister::registerService(MonitoringLogRepositoryInterface::class, new SingleInstance(static function () {
+            return new MonitoringLogRepository(RepositoryRegistry::getRepository(MonitoringLog::class), StoreContext::getInstance(), ServiceRegister::getService(ActiveConnectionProvider::class), ServiceRegister::getService(ActiveBrandProviderInterface::class), ServiceRegister::getService(LogSettingsRepositoryInterface::class));
         }));
     }
     /**

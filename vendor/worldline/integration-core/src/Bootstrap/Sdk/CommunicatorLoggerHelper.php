@@ -20,7 +20,7 @@ class CommunicatorLoggerHelper extends SdkCommunicatorLoggerHelper
         if ($this->isDebugEnabled()) {
             parent::logRequest($communicatorLogger, $requestId, $requestMethod, $requestUri, $requestHeaders, $requestBody);
             $obfuscatedRequest = $this->getHttpObfuscator()->getRawObfuscatedRequest($requestMethod, $this->getRelativeUriPathWithRequestParameters($requestUri), $requestHeaders, $requestBody);
-            $message = \sprintf("Request for %s endpoint", $this->getRelativeUriPathWithRequestParameters($requestUri));
+            $message = \sprintf("Request/response for %s endpoint", $this->getRelativeUriPathWithRequestParameters($requestUri));
             $this->getLogRepository()->saveMonitoringLog(new MonitoringLog($requestId, ContextLogProvider::getInstance()->getCurrentOrder() ?? '-', ContextLogProvider::getInstance()->getPaymentNumber() ?? '-', 'DEBUG', $message, new \DateTime(), $requestMethod, $this->getRelativeUriPathWithRequestParameters($requestUri), $obfuscatedRequest, '', '', ContextLogProvider::getInstance()->getPaymentNumber() ? $this->getUrl() . '/' . ContextLogProvider::getInstance()->getPaymentNumber() : ''));
         }
     }

@@ -78,6 +78,10 @@ class CreateHostedCheckoutRequestTransformer
             $redirectPaymentMethodSpecificInput->setPaymentProduct5403SpecificInput($redirectPaymentProduct5403SpecificInput);
             $request->setMobilePaymentMethodSpecificInput(null);
         }
+        if ($input->getPaymentProductId() !== null && $input->getPaymentProductId()->equals(PaymentProductId::intersolve())) {
+            // Reset mobile specific input because it breaks intersolve
+            $request->setMobilePaymentMethodSpecificInput(null);
+        }
         if (null !== $input->getPaymentProductId() && $input->getPaymentProductId()->equals(PaymentProductId::illicado()->getId())) {
             $redirectPaymentMethodSpecificInput->setRequiresApproval(\false);
         }
