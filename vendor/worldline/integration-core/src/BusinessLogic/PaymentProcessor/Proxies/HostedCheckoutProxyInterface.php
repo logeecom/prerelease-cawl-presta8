@@ -15,5 +15,5 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCol
  */
 interface HostedCheckoutProxyInterface
 {
-    public function createSession(HostedCheckoutSessionRequest $request, CardsSettings $cardsSettings, PaymentSettings $paymentSettings, PaymentMethodCollection $paymentMethodCollection, ?Token $token = null) : PaymentResponse;
+    public function createSession(HostedCheckoutSessionRequest $request, CardsSettings $cardsSettings, PaymentSettings $paymentSettings, PaymentMethodCollection $paymentMethodCollection, array $supportedPaymentMethods, ?Token $token = null) : PaymentResponse;
 }

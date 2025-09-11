@@ -18,6 +18,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCol
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodDefaultConfigs;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodResponse;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductService;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Repositories\PaymentConfigRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translation;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslationCollection;
@@ -32,16 +33,19 @@ class PaymentService
     protected PaymentConfigRepositoryInterface $repository;
     protected LogoUrlService $logoUrlService;
     protected ActiveBrandProviderInterface $activeBrandProvider;
+    protected PaymentProductService $paymentProductService;
     /**
      * @param PaymentConfigRepositoryInterface $repository
      * @param LogoUrlService $logoUrlService
      * @param ActiveBrandProviderInterface $activeBrandProvider
+     * @param PaymentProductService $paymentProductService
      */
-    public function __construct(PaymentConfigRepositoryInterface $repository, LogoUrlService $logoUrlService, ActiveBrandProviderInterface $activeBrandProvider)
+    public function __construct(PaymentConfigRepositoryInterface $repository, LogoUrlService $logoUrlService, ActiveBrandProviderInterface $activeBrandProvider, PaymentProductService $paymentProductService)
     {
         $this->repository = $repository;
         $this->logoUrlService = $logoUrlService;
         $this->activeBrandProvider = $activeBrandProvider;
+        $this->paymentProductService = $paymentProductService;
     }
     /**
      * Retrieves payment methods configurations.
@@ -124,7 +128,7 @@ class PaymentService
     }
     protected function getSupportedPaymentProducts() : array
     {
-        return PaymentProductId::SUPPORTED_PAYMENT_PRODUCTS;
+        return $this->paymentProductService->getSupportedPaymentMethods();
     }
     /**
      * @param string $paymentProductId

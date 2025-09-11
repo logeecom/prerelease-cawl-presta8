@@ -14,6 +14,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\PaymentTr
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodDefaultConfigs;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductService;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\HostedCheckoutProxyInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Repositories\ProductTypeRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentMethod\PaymentMethodService;
@@ -31,7 +32,8 @@ class HostedCheckoutService
     private TokensRepositoryInterface $tokensRepository;
     private ProductTypeRepositoryInterface $productTypeRepository;
     private PaymentMethodService $paymentMethodService;
-    public function __construct(HostedCheckoutProxyInterface $hostedCheckoutProxy, PaymentTransactionRepositoryInterface $paymentTransactionRepository, TokensRepositoryInterface $tokensRepository, CardsSettingsRepositoryInterface $cardsSettingsRepository, PaymentSettingsRepositoryInterface $paymentSettingsRepository, ProductTypeRepositoryInterface $productTypeRepository, PaymentMethodService $paymentMethodService)
+    private PaymentProductService $paymentProductService;
+    public function __construct(HostedCheckoutProxyInterface $hostedCheckoutProxy, PaymentTransactionRepositoryInterface $paymentTransactionRepository, TokensRepositoryInterface $tokensRepository, CardsSettingsRepositoryInterface $cardsSettingsRepository, PaymentSettingsRepositoryInterface $paymentSettingsRepository, ProductTypeRepositoryInterface $productTypeRepository, PaymentMethodService $paymentMethodService, PaymentProductService $paymentProductService)
     {
         $this->hostedCheckoutProxy = $hostedCheckoutProxy;
         $this->paymentTransactionRepository = $paymentTransactionRepository;
@@ -40,6 +42,7 @@ class HostedCheckoutService
         $this->paymentSettingsRepository = $paymentSettingsRepository;
         $this->productTypeRepository = $productTypeRepository;
         $this->paymentMethodService = $paymentMethodService;
+        $this->paymentProductService = $paymentProductService;
     }
     public function createSession(HostedCheckoutSessionRequest $request) : PaymentResponse
     {
@@ -48,7 +51,7 @@ class HostedCheckoutService
         if (null !== $request->getTokenId()) {
             $token = $this->tokensRepository->get($request->getCartProvider()->get()->getCustomer()->getMerchantCustomerId(), $request->getTokenId());
         }
-        $paymentResponse = $this->hostedCheckoutProxy->createSession($request, $this->getCardsSettings(), $this->getPaymentSettings(), $this->getPaymentMethodsConfig($request->getCartProvider()), $token);
+        $paymentResponse = $this->hostedCheckoutProxy->createSession($request, $this->getCardsSettings(), $this->getPaymentSettings(), $this->getPaymentMethodsConfig($request->getCartProvider()), $this->paymentProductService->getSupportedPaymentMethods(), $token);
         if (!$request->getCartProvider()->get()->getCustomer()->isGuest()) {
             $paymentResponse->getPaymentTransaction()->setCustomerId($request->getCartProvider()->get()->getCustomer()->getMerchantCustomerId());
         }

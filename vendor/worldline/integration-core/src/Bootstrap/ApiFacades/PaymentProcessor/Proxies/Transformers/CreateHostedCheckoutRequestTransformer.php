@@ -30,7 +30,7 @@ use CAWL\OnlinePayments\Sdk\Domain\SurchargeSpecificInput;
  */
 class CreateHostedCheckoutRequestTransformer
 {
-    public static function transform(HostedCheckoutSessionRequest $input, CardsSettings $cardsSettings, PaymentSettings $paymentSettings, PaymentMethodCollection $paymentMethodCollection, ?Token $token = null) : CreateHostedCheckoutRequest
+    public static function transform(HostedCheckoutSessionRequest $input, CardsSettings $cardsSettings, PaymentSettings $paymentSettings, PaymentMethodCollection $paymentMethodCollection, array $supportedPaymentMethods, ?Token $token = null) : CreateHostedCheckoutRequest
     {
         $cart = $input->getCartProvider()->get();
         $request = new CreateHostedCheckoutRequest();
@@ -42,7 +42,7 @@ class CreateHostedCheckoutRequestTransformer
         }
         $filters = new PaymentProductFiltersHostedCheckout();
         $productFilter = new PaymentProductFilter();
-        $productFilter->setProducts(\array_map('intval', PaymentProductId::getForHostedCheckoutPage()));
+        $productFilter->setProducts(\array_map('intval', $supportedPaymentMethods));
         if (null !== $input->getPaymentProductId()) {
             $productFilter->setProducts([(int) $input->getPaymentProductId()->getId()]);
         }

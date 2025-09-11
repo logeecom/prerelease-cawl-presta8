@@ -53,6 +53,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\Monito
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\WebhookLogRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\PaymentTransactionRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductService;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Repositories\PaymentConfigRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Time\TimeProviderInterface;
 use CAWL\OnlinePayments\Core\Infrastructure\Configuration\ConfigEntity;
@@ -122,11 +123,11 @@ class Bootstrap extends BootstrapComponent
         ServiceRegister::registerService(MetadataProviderInterface::class, function () {
             return new MetadataProvider(ServiceRegister::getService(\Module::class));
         });
-        ServiceRegister::registerService(PaymentService::class, function () {
-            return new Services\Integration\PaymentService(ServiceRegister::getService(PaymentConfigRepositoryInterface::class), ServiceRegister::getService(LogoUrlService::class), ServiceRegister::getService(ActiveBrandProviderInterface::class));
-        });
         ServiceRegister::registerService(LogoUrlService::class, function () {
             return new Services\Integration\LogoUrlService();
+        });
+        ServiceRegister::registerService(PaymentProductService::class, function () {
+            return new Services\Integration\PaymentProductService();
         });
     }
     protected static function initRepositories() : void
