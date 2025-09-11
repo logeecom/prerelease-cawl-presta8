@@ -1933,7 +1933,7 @@ ul.op-bullet-list li {
 }
 #op-page .op-settings-page .op-card .op-card-title {
   flex: 1;
-  padding-right: 5px;
+  padding-right: 10px;
 }
 @media (max-width: 767.98px) {
   #op-page .op-settings-page .op-card .op-card-title {

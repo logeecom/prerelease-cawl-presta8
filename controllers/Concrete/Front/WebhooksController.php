@@ -58,7 +58,7 @@ class WebhooksController extends ModuleFrontController
         }
         $repository = RepositoryRegistry::getRepository(PaymentTransactionEntity::class);
         /** @var ?PaymentTransactionEntity $entity */
-        $entity = $repository->selectOne();
+        $entity = $repository->selectOne($queryFilter);
         return $entity !== null ? $entity->getStoreId() : (string) \Configuration::get('PS_SHOP_DEFAULT');
     }
 }

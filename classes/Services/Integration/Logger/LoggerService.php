@@ -50,7 +50,7 @@ class LoggerService implements ShopLoggerAdapter
         if ($logLevel > $minLogLevel && !$configService->isDebugModeEnabled()) {
             return;
         }
-        $message = 'ONLINE PAYMENTS LOG:' . ' | ' . 'Date: ' . \date('d/m/Y') . ' | ' . 'Time: ' . \date('H:i:s') . ' | ' . 'Log level: ' . self::$logLevelName[$logLevel] . ' | ' . 'Message: ' . $data->getMessage();
+        $message = $this->module->getBrand()->getCode() . ' LOG:' . ' | ' . 'Date: ' . \date('d/m/Y') . ' | ' . 'Time: ' . \date('H:i:s') . ' | ' . 'Log level: ' . self::$logLevelName[$logLevel] . ' | ' . 'Message: ' . $data->getMessage();
         $context = $data->getContext();
         if (!empty($context)) {
             $contextData = [];

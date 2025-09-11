@@ -3,6 +3,7 @@
 namespace CAWL\OnlinePayments\Controllers\Concrete\Admin;
 
 use ModuleAdminController;
+use CAWL\OnlinePayments\Classes\OnlinePaymentsModule;
 use CAWL\OnlinePayments\Classes\Services\PaymentLink\OrderProviderService;
 use CAWL\OnlinePayments\Classes\Services\PrestaShop\CancelService;
 use CAWL\OnlinePayments\Classes\Services\PrestaShop\CaptureService;
@@ -11,6 +12,10 @@ use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\AdminAPI\AdminAPI;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkRequest;
 class TransactionController extends ModuleAdminController
 {
+    /**
+     * @var OnlinePaymentsModule
+     */
+    public $module;
     /**
      * @throws \Exception
      */
@@ -89,7 +94,11 @@ class TransactionController extends ModuleAdminController
             //@formatter:on
             die(\json_encode(['result_html' => $this->module->hookAdminOrderCommon((int) $transaction['idOrder'])]));
         }
-        AdminAPI::get()->paymentLinks($this->context->shop->id)->create(new PaymentLinkRequest(new OrderProviderService($transaction['idOrder']), $this->context->link->getModuleLink($this->module->name, 'redirect', ['action' => 'redirectReturnPaymentLink', 'merchantReference' => \Cart::getCartIdByOrderId((int) $transaction['idOrder'])])));
+        $order = new \Order((int) $transaction['idOrder']);
+        if (!\Validate::isLoadedObject($order)) {
+            return $this->module->l('Unexpected error occurred during payment link creation.', 'TransactionController');
+        }
+        AdminAPI::get()->paymentLinks($this->context->shop->id)->create(new PaymentLinkRequest(new OrderProviderService($transaction['idOrder']), $this->context->link->getModuleLink($this->module->name, 'redirect', ['action' => 'redirectReturnPaymentLink', 'merchantReference' => (string) $order->id_cart])));
         $html = $this->module->hookAdminOrderCommon((int) $transaction['idOrder']);
         die(\json_encode(['result_html' => $html, 'success' => \true]));
     }

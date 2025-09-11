@@ -32,14 +32,17 @@ class CaptureService
     }
     public function handle(array $transaction) : string
     {
+        $order = new \Order((int) $transaction['idOrder']);
+        if (!\Validate::isLoadedObject($order)) {
+            return $this->module->l('Unexpected error occurred during capture.', self::FILE_NAME);
+        }
         try {
-            $captureResponse = OrderAPI::get()->capture($this->storeId)->handle(new CaptureRequest(PaymentId::parse($transaction['id']), Amount::fromFloat($transaction['amountToCapture'], Currency::fromIsoCode($transaction['currencyCode'])), $transaction['idOrder']));
+            $captureResponse = OrderAPI::get()->capture($this->storeId)->handle(new CaptureRequest(PaymentId::parse($transaction['id']), Amount::fromFloat($transaction['amountToCapture'], Currency::fromIsoCode($transaction['currencyCode'])), (string) $order->id_cart));
             if (!$captureResponse->isSuccessful()) {
-                $errorMessage = 'Capture creation failed on ' . $this->module->getBrand()->getName() . '!';
-                return $this->module->l($errorMessage, self::FILE_NAME);
+                return \sprintf($this->module->l('Capture creation failed on %s!', self::FILE_NAME), $this->module->getBrand()->getName());
             }
         } catch (Exception $e) {
-            return $this->module->l('Unexpected error occurred during refund.', self::FILE_NAME);
+            return $this->module->l('Unexpected error occurred during capture.', self::FILE_NAME);
         }
         $capture = $captureResponse->toArray();
         if (!\in_array($capture['statusCode'], \array_merge(StatusCode::CAPTURE_STATUS_CODES, StatusCode::CAPTURE_REQUESTED_STATUS_CODES))) {

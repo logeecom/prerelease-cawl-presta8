@@ -48,11 +48,11 @@ class CartProviderService implements CartProvider
     private function getCustomer(\Address $customerAddress) : Customer
     {
         $cartIsoLang = \Language::getIsoById($this->context->cart->id_lang);
-        return new Customer(new ContactDetails($this->context->customer->email), $this->getAddress($customerAddress), $this->context->customer->id, $this->context->customer->isGuest(), \Language::getLocaleByIso($cartIsoLang));
+        return new Customer(new ContactDetails((string) $this->context->customer->email), $this->getAddress($customerAddress), (string) $this->context->customer->id, $this->context->customer->isGuest(), \Language::getLocaleByIso($cartIsoLang));
     }
     private function getShipping(\Address $shippingAddress, \Currency $currency) : Shipping
     {
-        return new Shipping(TaxableAmount::fromAmounts(Amount::fromFloat($this->context->cart->getOrderTotal(\false, \Cart::ONLY_SHIPPING), Currency::fromIsoCode($currency->iso_code)), Amount::fromFloat($this->context->cart->getOrderTotal(\true, \Cart::ONLY_SHIPPING), Currency::fromIsoCode($currency->iso_code))), $this->getAddress($shippingAddress), new ContactDetails($this->context->customer->email, !empty($shippingAddress->phone) ? $shippingAddress->phone : (string) $shippingAddress->phone_mobile));
+        return new Shipping(TaxableAmount::fromAmounts(Amount::fromFloat($this->context->cart->getOrderTotal(\false, \Cart::ONLY_SHIPPING), Currency::fromIsoCode($currency->iso_code)), Amount::fromFloat($this->context->cart->getOrderTotal(\true, \Cart::ONLY_SHIPPING), Currency::fromIsoCode($currency->iso_code))), $this->getAddress($shippingAddress), new ContactDetails((string) $this->context->customer->email, !empty($shippingAddress->phone) ? $shippingAddress->phone : (string) $shippingAddress->phone_mobile));
     }
     private function getTotalAmount(\Currency $cartCurrency) : Amount
     {
@@ -64,7 +64,7 @@ class CartProviderService implements CartProvider
     }
     private function getAddress(\Address $address) : Address
     {
-        return new Address(Country::fromIsoCode(\Country::getIsoById($address->id_country)), $address->id_state ? \State::getNameById($address->id_state) : '', $address->city, $address->postcode, $address->address1, '', new PersonalInformation($address->firstname, $address->lastname));
+        return new Address(Country::fromIsoCode(\Country::getIsoById($address->id_country)), $address->id_state ? \State::getNameById($address->id_state) : '', (string) $address->city, (string) $address->postcode, (string) $address->address1, '', new PersonalInformation((string) $address->firstname, (string) $address->lastname));
     }
     private function convertAmountInEuros(float $amount, \Currency $fromCurrency) : ?Amount
     {

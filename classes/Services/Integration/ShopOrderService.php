@@ -10,6 +10,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\TaxableAmount;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\ShopOrderService as ShopOrderServiceInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentDetails;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentTransaction;
+use CAWL\OnlinePayments\Core\Infrastructure\Logger\Logger;
 use Order;
 use OrderDetail;
 use PrestaShopDatabaseException;
@@ -42,7 +43,7 @@ class ShopOrderService implements ShopOrderServiceInterface
     }
     public function updateStatus(PaymentTransaction $paymentTransaction, PaymentDetails $paymentDetails, string $newState) : void
     {
-        $orderId = Order::getIdByCartId((int) $paymentTransaction->getMerchantReference());
+        $orderId = $this->getIdByCartId($paymentTransaction->getMerchantReference());
         if (\false === $orderId) {
             return;
         }
@@ -53,6 +54,7 @@ class ShopOrderService implements ShopOrderServiceInterface
         if ((int) $newState === (int) $order->current_state) {
             return;
         }
+        Logger::logInfo('Changing order status from ' . $order->current_state . ' to ' . $newState, 'ShopOrderService', ['orderId' => $orderId, 'paymentId' => (string) $paymentTransaction->getPaymentId(), 'merchantReference' => $paymentTransaction->getMerchantReference()]);
         $history = new \OrderHistory();
         $history->id_order = $orderId;
         $history->id_employee = '0';
@@ -65,7 +67,7 @@ class ShopOrderService implements ShopOrderServiceInterface
     }
     public function refundShopOrder(PaymentTransaction $paymentTransaction, PaymentDetails $paymentDetails, string $newState) : void
     {
-        $orderId = Order::getIdByCartId((int) $paymentTransaction->getMerchantReference());
+        $orderId = $this->getIdByCartId($paymentTransaction->getMerchantReference());
         if (\false === $orderId) {
             return;
         }

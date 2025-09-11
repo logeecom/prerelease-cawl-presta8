@@ -58,14 +58,17 @@ class CancelService
     }
     public function handleFromExtension(array $transaction) : string
     {
+        $order = new \Order((int) $transaction['idOrder']);
+        if (!\Validate::isLoadedObject($order)) {
+            return $this->module->l('Unexpected error occurred during cancellation.', self::FILE_NAME);
+        }
         try {
             $cancelResponse = OrderAPI::get()->cancel($this->storeId)->handle(new CancelRequest(PaymentId::parse($transaction['id']), Amount::fromFloat($transaction['amountToCancel'], Currency::fromIsoCode($transaction['currencyCode']))));
             if (!$cancelResponse->isSuccessful()) {
-                $errorMessage = 'Cancel creation failed on ' . $this->module->getBrand()->getName() . '!';
-                return $this->module->l($errorMessage, self::FILE_NAME);
+                return \sprintf($this->module->l('Cancel creation failed on %s!', self::FILE_NAME), $this->module->getBrand()->getName());
             }
         } catch (Exception $e) {
-            return $this->module->l('Unexpected error occurred during refund.', self::FILE_NAME);
+            return $this->module->l('Unexpected error occurred during cancellation.', self::FILE_NAME);
         }
         $cancel = $cancelResponse->toArray();
         if (!\in_array($cancel['statusCode'], StatusCode::CANCEL_STATUS_CODES)) {

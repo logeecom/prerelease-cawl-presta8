@@ -36,7 +36,7 @@ class OrderProviderService implements CartProvider
         $shippingAddress = new \Address($psOrder->id_address_invoice);
         $cartCurrency = new \Currency($psOrder->id_currency);
         $cartTotal = $this->getTotalAmount($psOrder->getOrdersTotalPaid(), $cartCurrency);
-        return new Cart(\Cart::getCartIdByOrderId($psOrder->id), $cartTotal, $this->convertAmountInEuros((float) $cartTotal->getPriceInCurrencyUnits(), $cartCurrency), $this->getCustomer($psOrder, $customerAddress), $this->getLineItems($psOrder->getProducts(), $cartCurrency), $this->getShipping($psOrder, $shippingAddress, $cartCurrency), $this->getDiscountAmount($psOrder->total_discounts, $cartCurrency));
+        return new Cart((string) $psOrder->id_cart, $cartTotal, $this->convertAmountInEuros((float) $cartTotal->getPriceInCurrencyUnits(), $cartCurrency), $this->getCustomer($psOrder, $customerAddress), $this->getLineItems($psOrder->getProducts(), $cartCurrency), $this->getShipping($psOrder, $shippingAddress, $cartCurrency), $this->getDiscountAmount($psOrder->total_discounts, $cartCurrency));
     }
     private function getLineItems(array $products, \Currency $cartCurrency) : LineItemCollection
     {
@@ -50,11 +50,11 @@ class OrderProviderService implements CartProvider
     {
         $cartIsoLang = \Language::getIsoById($psOrder->id_lang);
         $psCustomer = $psOrder->getCustomer();
-        return new Customer(new ContactDetails($psCustomer->email), $this->getAddress($customerAddress), $psCustomer->id, $psCustomer->isGuest(), \Language::getLocaleByIso($cartIsoLang));
+        return new Customer(new ContactDetails((string) $psCustomer->email), $this->getAddress($customerAddress), (string) $psCustomer->id, $psCustomer->isGuest(), (string) \Language::getLocaleByIso($cartIsoLang));
     }
     private function getShipping(\Order $psOrder, \Address $shippingAddress, \Currency $currency) : Shipping
     {
-        return new Shipping(TaxableAmount::fromAmounts(Amount::fromFloat($psOrder->total_shipping_tax_excl, Currency::fromIsoCode($currency->iso_code)), Amount::fromFloat($psOrder->total_shipping_tax_incl, Currency::fromIsoCode($currency->iso_code))), $this->getAddress($shippingAddress), new ContactDetails($psOrder->getCustomer()->email, !empty($shippingAddress->phone) ? $shippingAddress->phone : (string) $shippingAddress->phone_mobile));
+        return new Shipping(TaxableAmount::fromAmounts(Amount::fromFloat($psOrder->total_shipping_tax_excl, Currency::fromIsoCode($currency->iso_code)), Amount::fromFloat($psOrder->total_shipping_tax_incl, Currency::fromIsoCode($currency->iso_code))), $this->getAddress($shippingAddress), new ContactDetails((string) $psOrder->getCustomer()->email, !empty($shippingAddress->phone) ? $shippingAddress->phone : (string) $shippingAddress->phone_mobile));
     }
     private function getTotalAmount(float $orderTotal, \Currency $cartCurrency) : Amount
     {
@@ -66,7 +66,7 @@ class OrderProviderService implements CartProvider
     }
     private function getAddress(\Address $address) : Address
     {
-        return new Address(Country::fromIsoCode(\Country::getIsoById($address->id_country)), $address->id_state ? \State::getNameById($address->id_state) : '', $address->city, $address->postcode, $address->address1, '', new PersonalInformation($address->firstname, $address->lastname));
+        return new Address(Country::fromIsoCode(\Country::getIsoById($address->id_country)), $address->id_state ? \State::getNameById($address->id_state) : '', (string) $address->city, (string) $address->postcode, (string) $address->address1, '', new PersonalInformation((string) $address->firstname, (string) $address->lastname));
     }
     private function convertAmountInEuros(float $amount, \Currency $fromCurrency) : ?Amount
     {
