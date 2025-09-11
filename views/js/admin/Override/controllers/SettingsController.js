@@ -848,15 +848,17 @@ if (!window.OnlinePaymentsFE) {
                 validator.removeError(exemptionLimit);
 
                 if (value === 'low-value') {
-                    exemptionLimit.value = activeCardsSettings.exemptionType === 'low-value' ?
-                        activeCardsSettings.exemptionLimit : 30;
-                    changedCardsSettings.exemptionLimit = activeCardsSettings.exemptionType === 'low-value' ?
-                        activeCardsSettings.exemptionLimit : 30;
+                    if (exemptionLimit.value > 30) {
+                        exemptionLimit.value = activeCardsSettings.exemptionType === 'low-value' ?
+                            activeCardsSettings.exemptionLimit : 30;
+                        changedCardsSettings.exemptionLimit = activeCardsSettings.exemptionType === 'low-value' ?
+                            activeCardsSettings.exemptionLimit : 30;
+                    }
                 } else {
                     exemptionLimit.value = activeCardsSettings.exemptionType === 'transaction-risk-analysis' ?
-                        activeCardsSettings.exemptionLimit : 100.0;
+                        activeCardsSettings.exemptionLimit : exemptionLimit.value;
                     changedCardsSettings.exemptionLimit = activeCardsSettings.exemptionType === 'transaction-risk-analysis' ?
-                        activeCardsSettings.exemptionLimit : 100.0;
+                        activeCardsSettings.exemptionLimit : exemptionLimit.value;
                 }
             }
 
