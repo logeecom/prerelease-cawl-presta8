@@ -56,9 +56,9 @@ class PaymentResponseTransformer
         }
         return $output ? (string) $output->getPaymentProductId() : null;
     }
-    private static function getPaymentMethodLabel(string $productId, PaymentOutput $paymentOutput) : string
+    private static function getPaymentMethodLabel(?string $productId, PaymentOutput $paymentOutput) : string
     {
-        if (!$productId) {
+        if (empty($productId)) {
             return '';
         }
         return \array_key_exists($productId, PaymentMethodDefaultConfigs::PAYMENT_METHOD_CONFIGS) ? PaymentMethodDefaultConfigs::PAYMENT_METHOD_CONFIGS[$productId]['name']['translation'] : $paymentOutput->getPaymentMethod();

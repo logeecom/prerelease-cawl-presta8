@@ -278,7 +278,7 @@ class OnlinePaymentsModule extends \PaymentModule
             return '';
         }
         $response = CheckoutAPI::get()->payment($order->id_shop)->getPaymentTransaction($order->id_cart);
-        if (!$response->isSuccessful() || null === $response->getPaymentTransaction()) {
+        if (!$response->isSuccessful() || null === $response->getPaymentTransaction() || null === $response->getPaymentTransaction()->getPaymentId()) {
             return '';
         }
         $this->context->smarty->assign(['module' => $this->name, 'title' => $this->getBrand()->getName(), 'transaction_id' => $response->getPaymentTransaction()->getPaymentId()->getTransactionId()]);
