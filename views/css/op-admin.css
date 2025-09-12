@@ -19,7 +19,7 @@
 }
 
 #content.bootstrap #op-page .op-dark-mask {
-    top: 140px;
+    top: 155px;
 }
 
 #op-page .op-field-wrapper .opp-field-component {
@@ -29,4 +29,8 @@
 #op-page .op-notifications-page .op-table-heading .op-search-wrapper .op-search-container .op-search-field-wrapper .op-search-input {
     font-family: "Inter", sans-serif !important;
     border-radius: 6px !important;
+}
+
+body:not(.ps-bo-rebrand) #main {
+    padding-bottom: 10px
 }

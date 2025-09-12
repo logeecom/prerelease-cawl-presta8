@@ -190,7 +190,7 @@
       },
       "paymentProduct": {
         "label": "Payment product",
-        "placeholder": "Type product name"
+        "placeholder": "Enter product name"
       },
       "statuses": {
         "label": "Status",

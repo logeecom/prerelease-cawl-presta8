@@ -289,7 +289,6 @@ ul.op-bullet-list li {
   width: 100%;
   max-height: max-content;
   overflow: auto;
-  padding-right: 24px;
 }
 #op-page > main .opp-content-holder {
   max-width: 100%;
@@ -298,8 +297,6 @@ ul.op-bullet-list li {
   column-gap: 24px;
   row-gap: 24px;
   margin: 0 auto;
-  padding-left: 5px;
-  padding-right: 12px;
 }
 @media (max-width: 767.98px) {
   #op-page > main .opp-content-holder {
@@ -426,8 +423,9 @@ ul.op-bullet-list li {
 }
 .op-file-drop-zone .opp-file-label img {
   max-width: 50px;
-  max-height: 25px;
+  max-height: 50px;
   object-fit: contain;
+  height: 40px;
 }
 .op-file-drop-zone .opp-file-label.ops--empty:before {
   font-family: "op-icons";
@@ -508,9 +506,13 @@ ul.op-bullet-list li {
   background: #dce0e5;
   font-size: 12px;
   padding: 6px;
-  width: max-content;
+  width: 95%;
   border-radius: 4px;
   color: #38544C;
+  overflow: hidden;
+  display: inline-block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .op-connection-page .op-webhooks-url-copy::after {
   content: "\e92c";
@@ -763,7 +765,7 @@ ul.op-bullet-list li {
   background-color: #e5f0ed;
   display: flex;
   width: 100%;
-  height: 65px;
+  height: 55px;
   align-items: center;
   padding: 20px;
 }
@@ -799,10 +801,10 @@ ul.op-bullet-list li {
   padding: 6px 16px;
 }
 #op-page .op-main-header-navigation .op-main-logo {
-  height: 25px;
+  height: max-content;
 }
 #op-page .op-main-header-navigation .op-main-logo img {
-  height: 25px;
+  height: 19px;
 }
 #op-page .op-main-header-navigation .op-main-logo .op-big-logo {
   display: block;
@@ -873,7 +875,7 @@ ul.op-bullet-list li {
   background-color: #38544C;
   display: flex;
   width: 100%;
-  height: 65px;
+  height: 50px;
   align-items: center;
   padding: 20px;
 }
@@ -884,7 +886,7 @@ ul.op-bullet-list li {
 }
 #op-main-header .op-main-title-header .op-main-title {
   color: #fff;
-  font-size: 20px;
+  font-size: 14px;
 }
 #op-main-header .op-main-title-header .op-status {
   display: flex;
@@ -974,14 +976,14 @@ ul.op-bullet-list li {
   background-color: transparent;
   color: #38544C;
   column-gap: 10px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 24px;
 }
 #op-main-header .op-main-title-header .op-status .op-store-selector .opp-dropdown-button.opt--ghost:after {
   content: "\e904";
   font-family: op-icons;
   color: #38544C;
-  font-size: 14px;
+  font-size: 12px;
 }
 #op-main-header .op-main-title-header .op-status .op-store-selector .opp-dropdown-button.opt--ghost:focus {
   border: none;
@@ -1312,15 +1314,13 @@ ul.op-bullet-list li {
   content: "\e90a";
   font-family: op-icons;
   font-weight: 600;
-  color: #38544C;
-  background-color: #fff;
+  color: #fff;
+  background-color: #38544C;
   border-radius: 50%;
-}
-.op-multiselect-filter .opp-filter-button .opp-delete-text-button:hover {
-  background: #fff;
+  font-size: 13px;
 }
 .op-multiselect-filter .opp-filter-button .opp-delete-text-button:hover:after {
-  color: #20304c;
+  color: #dce0e5;
 }
 .op-multiselect-filter .opp-filter-button.ops--selected {
   display: inline-flex;
@@ -1743,6 +1743,10 @@ ul.op-bullet-list li {
   display: flex;
   justify-content: center;
 }
+#op-page .op-payments-page.op-settings-modal-opened {
+  justify-content: flex-start;
+  margin-left: 10%;
+}
 #op-page .op-payments-page form {
   width: 730px;
 }
@@ -1865,6 +1869,10 @@ ul.op-bullet-list li {
   color: #000;
   display: flex;
   gap: 8px;
+  font-weight: 400;
+}
+#op-page .op-payments-page .opp-table-filter-wrapper .op-button.opt--ghost.ops--hidden {
+  display: none;
 }
 #op-page .op-payments-page .opp-table-filter-wrapper .op-button.opt--ghost.opm--icon:before {
   content: "\e90e";
@@ -1990,9 +1998,13 @@ ul.op-bullet-list li {
   background: #dce0e5;
   font-size: 12px;
   padding: 6px;
-  width: max-content;
+  width: 95%;
   border-radius: 4px;
   color: #38544C;
+  overflow: hidden;
+  display: inline-block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 @media (max-width: 767.98px) {
   #op-page .op-settings-page .op-card .op-card-content .op-webhooks-url {
@@ -2070,14 +2082,14 @@ ul.op-bullet-list li {
   background-color: transparent;
   color: #38544C;
   column-gap: 10px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 24px;
 }
 #op-page .op-single-select-dropdown .opp-dropdown-button.opt--ghost:after {
   content: "\e904";
   font-family: op-icons;
   color: #38544C;
-  font-size: 14px;
+  font-size: 12px;
 }
 #op-page .op-single-select-dropdown .opp-dropdown-button.opt--ghost:focus {
   border: none;
@@ -2231,14 +2243,14 @@ ul.op-bullet-list li {
   background-color: transparent;
   color: #38544C;
   column-gap: 10px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 24px;
 }
 #op-page .op-multiselect-dropdown .opp-dropdown-button.opt--ghost:after {
   content: "\e904";
   font-family: op-icons;
   color: #38544C;
-  font-size: 14px;
+  font-size: 12px;
 }
 #op-page .op-multiselect-dropdown .opp-dropdown-button.opt--ghost:focus {
   border: none;
@@ -2423,14 +2435,14 @@ ul.op-bullet-list li {
   background-color: transparent;
   color: #38544C;
   column-gap: 10px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 24px;
 }
 #op-page .op-link-dropdown .opp-dropdown-button.opt--ghost:after {
   content: "\e904";
   font-family: op-icons;
   color: #38544C;
-  font-size: 14px;
+  font-size: 12px;
 }
 #op-page .op-link-dropdown .opp-dropdown-button.opt--ghost:focus {
   border: none;
@@ -2639,15 +2651,13 @@ ul.op-bullet-list li {
   content: "\e90a";
   font-family: op-icons;
   font-weight: 600;
-  color: #38544C;
-  background-color: #fff;
+  color: #fff;
+  background-color: #38544C;
   border-radius: 50%;
-}
-#op-page .op-multiselect-filter .opp-filter-button .opp-delete-text-button:hover {
-  background: #fff;
+  font-size: 13px;
 }
 #op-page .op-multiselect-filter .opp-filter-button .opp-delete-text-button:hover:after {
-  color: #20304c;
+  color: #dce0e5;
 }
 #op-page .op-multiselect-filter .opp-filter-button.ops--selected {
   display: inline-flex;
@@ -3537,12 +3547,12 @@ ul.op-bullet-list li {
 #op-page .op-sliding-modal .op-header-name {
   display: flex;
   gap: 10px;
-  padding: 15px;
+  padding: 8px;
   align-items: center;
 }
 #op-page .op-sliding-modal .op-header-name .op-payment-logo {
-  width: 46px;
-  height: 46px;
+  width: 39px;
+  height: 39px;
 }
 #op-page .op-sliding-modal .op-header-name .op-name-wrapper {
   flex-grow: 1;
@@ -3778,9 +3788,9 @@ ul.op-bullet-list li {
   padding: 12px 9px 12px 16px;
   border-radius: 8px;
   background-color: #000;
-  position: fixed;
-  top: 300px;
-  right: 3%;
+  position: absolute;
+  top: 110px;
+  right: 0;
   gap: 20px;
   align-items: center;
 }
@@ -3791,7 +3801,7 @@ ul.op-bullet-list li {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 15px;
   color: #fff;
   line-height: 21px;
@@ -3804,6 +3814,7 @@ ul.op-bullet-list li {
   border-radius: 50%;
   background-color: #000;
   border: 2px solid #D81B2F;
+  padding-right: 13px;
 }
 #op-page .op-toaster.op-error .op-cross-icon::before,
 #op-page .op-toaster.op-error .op-cross-icon::after {
@@ -4274,6 +4285,7 @@ ul.op-bullet-list li {
   font-weight: bold;
   font-family: "Inter";
   font-size: 14px;
+  margin-left: 30px;
 }
 @media (max-width: 767.98px) {
   #op-page .op-need-help {
@@ -4655,7 +4667,6 @@ ul.op-bullet-list li {
   width: 100%;
   max-height: max-content;
   overflow: auto;
-  padding-right: 24px;
 }
 #op-page > main .opp-content-holder {
   max-width: 100%;
@@ -4664,8 +4675,6 @@ ul.op-bullet-list li {
   column-gap: 24px;
   row-gap: 24px;
   margin: 0 auto;
-  padding-left: 5px;
-  padding-right: 12px;
 }
 @media (max-width: 767.98px) {
   #op-page > main .opp-content-holder {
@@ -4792,8 +4801,9 @@ ul.op-bullet-list li {
 }
 .op-file-drop-zone .opp-file-label img {
   max-width: 50px;
-  max-height: 25px;
+  max-height: 50px;
   object-fit: contain;
+  height: 40px;
 }
 .op-file-drop-zone .opp-file-label.ops--empty:before {
   font-family: "op-icons";
@@ -4874,9 +4884,13 @@ ul.op-bullet-list li {
   background: #dce0e5;
   font-size: 12px;
   padding: 6px;
-  width: max-content;
+  width: 95%;
   border-radius: 4px;
   color: #38544C;
+  overflow: hidden;
+  display: inline-block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .op-connection-page .op-webhooks-url-copy::after {
   content: "\e92c";
@@ -5129,7 +5143,7 @@ ul.op-bullet-list li {
   background-color: #e5f0ed;
   display: flex;
   width: 100%;
-  height: 65px;
+  height: 55px;
   align-items: center;
   padding: 20px;
 }
@@ -5165,10 +5179,10 @@ ul.op-bullet-list li {
   padding: 6px 16px;
 }
 #op-page .op-main-header-navigation .op-main-logo {
-  height: 25px;
+  height: max-content;
 }
 #op-page .op-main-header-navigation .op-main-logo img {
-  height: 25px;
+  height: 19px;
 }
 #op-page .op-main-header-navigation .op-main-logo .op-big-logo {
   display: block;
@@ -5239,7 +5253,7 @@ ul.op-bullet-list li {
   background-color: #38544C;
   display: flex;
   width: 100%;
-  height: 65px;
+  height: 50px;
   align-items: center;
   padding: 20px;
 }
@@ -5250,7 +5264,7 @@ ul.op-bullet-list li {
 }
 #op-main-header .op-main-title-header .op-main-title {
   color: #fff;
-  font-size: 20px;
+  font-size: 14px;
 }
 #op-main-header .op-main-title-header .op-status {
   display: flex;
@@ -5340,14 +5354,14 @@ ul.op-bullet-list li {
   background-color: transparent;
   color: #38544C;
   column-gap: 10px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 24px;
 }
 #op-main-header .op-main-title-header .op-status .op-store-selector .opp-dropdown-button.opt--ghost:after {
   content: "\e904";
   font-family: op-icons;
   color: #38544C;
-  font-size: 14px;
+  font-size: 12px;
 }
 #op-main-header .op-main-title-header .op-status .op-store-selector .opp-dropdown-button.opt--ghost:focus {
   border: none;
@@ -5678,15 +5692,13 @@ ul.op-bullet-list li {
   content: "\e90a";
   font-family: op-icons;
   font-weight: 600;
-  color: #38544C;
-  background-color: #fff;
+  color: #fff;
+  background-color: #38544C;
   border-radius: 50%;
-}
-.op-multiselect-filter .opp-filter-button .opp-delete-text-button:hover {
-  background: #fff;
+  font-size: 13px;
 }
 .op-multiselect-filter .opp-filter-button .opp-delete-text-button:hover:after {
-  color: #20304c;
+  color: #dce0e5;
 }
 .op-multiselect-filter .opp-filter-button.ops--selected {
   display: inline-flex;
