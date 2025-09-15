@@ -17,13 +17,18 @@ use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\CheckoutAPI\C
 use CAWL\OnlinePayments\Core\Branding\Brand\ActiveBrandProvider;
 use CAWL\OnlinePayments\Core\Branding\Brand\ActiveBrandProviderInterface;
 use CAWL\OnlinePayments\Core\Branding\Brand\BrandConfig;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\PaymentTransactionRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ProductTypes\ProductType;
 use CAWL\OnlinePayments\Core\Infrastructure\Logger\Logger;
 use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
 use CAWL\OnlinePayments\Core\Infrastructure\TaskExecution\Interfaces\TaskRunnerWakeup;
 use CAWL\OnlinePayments\Core\Infrastructure\Utility\TimeProvider;
+use Order;
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
+use PrestaShopDatabaseException;
+use PrestaShopException;
 /**
  * Class OnlinePaymentsModule
  *
@@ -105,6 +110,53 @@ class OnlinePaymentsModule extends \PaymentModule
     public function getConfig()
     {
         return \json_decode(\file_get_contents(__DIR__ . '/../config.json'), \true);
+    }
+    /**
+     * @param array $params
+     *
+     * @return void
+     *
+     * @throws PrestaShopDatabaseException
+     * @throws PrestaShopException
+     */
+    public function hookActionOrderGridDefinitionModifier(array $params) : void
+    {
+        $definition = $params['definition'];
+        /** @var \PrestaShop\PrestaShop\Core\Grid\Column\ColumnCollection */
+        $columns = $definition->getColumns();
+        $columnPaymentReference = new \PrestaShop\PrestaShop\Core\Grid\Column\Type\Common\DataColumn('online_payments_payment_reference');
+        $columnPaymentReference->setName($this->getConfig()['PAYMENT_REFERENCE_PREFIX'] . ' ' . $this->trans($this->l('Payment Reference')))->setOptions(array('field' => 'paymentReference', 'sortable' => \false));
+        $columns->addAfter('payment', $columnPaymentReference);
+        $definition->setColumns($columns);
+    }
+    /**
+     * @param array $params
+     *
+     * @return void
+     *
+     * @throws PrestaShopDatabaseException
+     * @throws PrestaShopException
+     */
+    public function hookActionOrderGridPresenterModifier(array $params) : void
+    {
+        $records = $params['presented_grid']['data']['records']->all();
+        $transactionRepository = ServiceRegister::getService(PaymentTransactionRepositoryInterface::class);
+        foreach ($records as &$record) {
+            if ((new Order((int) $record['id_order']))->module !== $this->name) {
+                $record['paymentReference'] = '--';
+                continue;
+            }
+            $order = new Order((int) $record['id_order']);
+            $transaction = StoreContext::doWithStore($order->id_shop, function () use($transactionRepository, $order) {
+                return $transactionRepository->getByMerchantReference($order->id_cart);
+            });
+            if (empty($transaction)) {
+                $record['paymentReference'] = '--';
+                continue;
+            }
+            $record['paymentReference'] = (string) $transaction->getPaymentId();
+        }
+        $params['presented_grid']['data']['records'] = new \PrestaShop\PrestaShop\Core\Grid\Record\RecordCollection($records);
     }
     private function getUrls() : array
     {

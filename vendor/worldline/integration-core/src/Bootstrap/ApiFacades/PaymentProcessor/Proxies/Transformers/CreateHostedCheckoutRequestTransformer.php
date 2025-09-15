@@ -3,6 +3,7 @@
 namespace CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers;
 
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAction;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedCheckout\HostedCheckoutSessionRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
@@ -59,16 +60,19 @@ class CreateHostedCheckoutRequestTransformer
         $cardPaymentMethodSpecificInput = CardPaymentMethodSpecificInputTransformer::transform($cart, $input->getReturnUrl(), $cardsSettings, $paymentSettings, $paymentMethodCollection, $input->getPaymentProductId(), $token);
         $request->setCardPaymentMethodSpecificInput($cardPaymentMethodSpecificInput);
         $mobilePaymentMethodSpecificInput = new MobilePaymentMethodSpecificInput();
+        $mobilePaymentMethodSpecificInput->setAuthorizationMode($paymentSettings->getPaymentAction()->getType());
         if (null !== $input->getPaymentProductId() && $input->getPaymentProductId()->isMobileType()) {
             $mobilePaymentMethodSpecificInput->setPaymentProductId($input->getPaymentProductId()->getId());
         }
         $mobilePaymentMethodSpecificInput->setPaymentProduct320SpecificInput(GooglePaySpecificRequestTransformer::transform($cardPaymentMethodSpecificInput));
         $request->setMobilePaymentMethodSpecificInput($mobilePaymentMethodSpecificInput);
         $redirectPaymentMethodSpecificInput = new RedirectPaymentMethodSpecificInput();
+        $redirectPaymentMethodSpecificInput->setRequiresApproval(PaymentAction::authorize()->equals($paymentSettings->getPaymentAction()));
         if ($input->getPaymentProductId() !== null && $input->getPaymentProductId()->equals(PaymentProductId::mealvouchers())) {
             $redirectPaymentProduct5402SpecificInput = new RedirectPaymentProduct5402SpecificInput();
             $redirectPaymentProduct5402SpecificInput->setCompleteRemainingPaymentAmount(\true);
             $redirectPaymentMethodSpecificInput->setPaymentProduct5402SpecificInput($redirectPaymentProduct5402SpecificInput);
+            $redirectPaymentMethodSpecificInput->setRequiresApproval(\false);
             // Reset mobile specific input because it breaks mealvouchers
             $request->setMobilePaymentMethodSpecificInput(null);
         }
@@ -76,6 +80,7 @@ class CreateHostedCheckoutRequestTransformer
             $redirectPaymentProduct5403SpecificInput = new RedirectPaymentProduct5403SpecificInput();
             $redirectPaymentProduct5403SpecificInput->setCompleteRemainingPaymentAmount(\true);
             $redirectPaymentMethodSpecificInput->setPaymentProduct5403SpecificInput($redirectPaymentProduct5403SpecificInput);
+            $redirectPaymentMethodSpecificInput->setRequiresApproval(\false);
             $request->setMobilePaymentMethodSpecificInput(null);
         }
         if ($input->getPaymentProductId() !== null && $input->getPaymentProductId()->equals(PaymentProductId::intersolve())) {
