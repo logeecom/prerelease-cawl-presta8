@@ -2,13 +2,11 @@
 
 namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings;
 
-use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\CardsSettingsRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\LogSettingsRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\PayByLinkSettingsRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\Repositories\PaymentSettingsRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Repositories\ConnectionConfigRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\AutomaticCapture;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidAutomaticCaptureValueException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidLogRecordsLifetimeException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidPaymentAttemptsNumberException;
@@ -28,23 +26,20 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Stores\StoreServic
 class GeneralSettingsService
 {
     protected ConnectionConfigRepositoryInterface $connectionConfigRepository;
-    protected CardsSettingsRepositoryInterface $cardsSettingsRepository;
     protected LogSettingsRepositoryInterface $logSettingsRepository;
     protected PaymentSettingsRepositoryInterface $paymentSettingsRepository;
     protected StoreService $storeService;
     protected PayByLinkSettingsRepositoryInterface $payByLinkSettingsRepository;
     /**
      * @param ConnectionConfigRepositoryInterface $connectionConfigRepository
-     * @param CardsSettingsRepositoryInterface $cardsSettingsRepository
      * @param LogSettingsRepositoryInterface $logSettingsRepository
      * @param PaymentSettingsRepositoryInterface $paymentSettingsRepository
      * @param StoreService $storeService
      * @param PayByLinkSettingsRepositoryInterface $payByLinkSettingsRepository
      */
-    public function __construct(ConnectionConfigRepositoryInterface $connectionConfigRepository, CardsSettingsRepositoryInterface $cardsSettingsRepository, LogSettingsRepositoryInterface $logSettingsRepository, PaymentSettingsRepositoryInterface $paymentSettingsRepository, StoreService $storeService, PayByLinkSettingsRepositoryInterface $payByLinkSettingsRepository)
+    public function __construct(ConnectionConfigRepositoryInterface $connectionConfigRepository, LogSettingsRepositoryInterface $logSettingsRepository, PaymentSettingsRepositoryInterface $paymentSettingsRepository, StoreService $storeService, PayByLinkSettingsRepositoryInterface $payByLinkSettingsRepository)
     {
         $this->connectionConfigRepository = $connectionConfigRepository;
-        $this->cardsSettingsRepository = $cardsSettingsRepository;
         $this->logSettingsRepository = $logSettingsRepository;
         $this->paymentSettingsRepository = $paymentSettingsRepository;
         $this->storeService = $storeService;
@@ -60,28 +55,10 @@ class GeneralSettingsService
     public function getGeneralSettings() : GeneralSettingsResponse
     {
         $connectionSettings = $this->connectionConfigRepository->getConnection();
-        $cardSettings = $this->getCardsSettings();
         $paymentSettings = $this->getPaymentSettings();
         $logSettings = $this->getLogSettings();
         $payByLinkSettings = $this->getPayByLinkSettings();
-        return new GeneralSettingsResponse($connectionSettings, $cardSettings, $paymentSettings, $logSettings, $payByLinkSettings);
-    }
-    /**
-     * @return CardsSettings
-     */
-    public function getCardsSettings() : CardsSettings
-    {
-        $savedSettings = $this->cardsSettingsRepository->getCardsSettings();
-        return $savedSettings ?: new CardsSettings();
-    }
-    /**
-     * @param CardsSettings $cardsSettings
-     *
-     * @return void
-     */
-    public function saveCardsSettings(CardsSettings $cardsSettings) : void
-    {
-        $this->cardsSettingsRepository->saveCardsSettings($cardsSettings);
+        return new GeneralSettingsResponse($connectionSettings, $paymentSettings, $logSettings, $payByLinkSettings);
     }
     /**
      * @return PaymentSettings

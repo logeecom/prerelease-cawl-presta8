@@ -251,6 +251,11 @@
         "enableGroupCards": {
           "label": "Enable group cards",
           "description": "Group all card payment methods under one single button on the checkout page."
+        },
+        "flowType": {
+          "label": "Type",
+          "redirect": "Redirect",
+          "iframe": "iFrame"
         }
       }
     },
@@ -548,6 +553,9 @@
         "logo": {
           "description": "The logo that will appear next to CAWL payment method on checkout page. Allowed image format is png, jpg and jpeg."
         }
+      },
+      "flowType": {
+        "description": "Defines the type of flow that customers will get when paying with this payment method:\n iFrame - credit card fields will be embedded within an iFrame window on the native shop system checkout page\n Redirect - will be offered as a standard payment method and redirect customers to the CAWL page where they will enter their credit card information"
       }
     },
     "generalSettings": {

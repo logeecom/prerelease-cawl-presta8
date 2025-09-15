@@ -1973,22 +1973,6 @@ ul.op-bullet-list li {
     width: 82%;
   }
 }
-#op-page .op-settings-page .op-card .op-card-content .op-field-wrapper .ops-warning {
-  background-color: #fffbd3;
-  border: 1px solid #fab000;
-  border-radius: 10px;
-  font-size: 13px;
-  padding: 10px;
-}
-#op-page .op-settings-page .op-card .op-card-content .op-field-wrapper .ops-warning .ops-warning-message {
-  color: #000;
-}
-#op-page .op-settings-page .op-card .op-card-content .op-field-wrapper .ops-warning .ops-warning-message:before {
-  font-family: "op-icons";
-  content: "\ea08";
-  color: #fab000;
-  padding-right: 7px;
-}
 #op-page .op-settings-page .op-card .op-card-content .op-webhooks-url-wrapper {
   display: flex;
   column-gap: 5px;
@@ -3525,13 +3509,14 @@ ul.op-bullet-list li {
   position: fixed;
   top: 0;
   right: 0;
-  height: 100vh;
+  height: 84vh;
   width: 580px;
   background-color: #fff;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
   transform: translateX(100%);
   transition: transform 0.6s ease;
   z-index: 5;
+  overflow: scroll;
 }
 @media (max-width: 767.98px) {
   #op-page .op-sliding-modal {
@@ -3543,6 +3528,22 @@ ul.op-bullet-list li {
 }
 #op-page .op-sliding-modal.op-open {
   transform: translateX(0);
+}
+#op-page .op-sliding-modal .ops-warning {
+  background-color: #fffbd3;
+  border: 1px solid #fab000;
+  border-radius: 10px;
+  font-size: 13px;
+  padding: 10px;
+}
+#op-page .op-sliding-modal .ops-warning .ops-warning-message {
+  color: #000;
+}
+#op-page .op-sliding-modal .ops-warning .ops-warning-message:before {
+  font-family: "op-icons";
+  content: "\ea08";
+  color: #fab000;
+  padding-right: 7px;
 }
 #op-page .op-sliding-modal .op-header-name {
   display: flex;

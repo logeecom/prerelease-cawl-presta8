@@ -117,7 +117,10 @@ class OrderService
             }
         }
         $payments = $orderDetails->getPayments();
-        $paymentId = \reset($payments)->getId()->getTransactionId();
+        $paymentId = '';
+        if (!empty($payments)) {
+            $paymentId = \reset($payments)->getId()->getTransactionId();
+        }
         return ['orderId' => $orderId, 'payment' => ['id' => $paymentId, 'currencyCode' => $currencyIsoCode, 'hasSurcharge' => $orderHasSurcharge, 'surchargeAmount' => $orderSurchargeAmount->getPriceInCurrencyUnits(), 'amount' => $orderDetails->getAmount()->getPriceInCurrencyUnits(), 'amountWithoutSurcharge' => $orderDetails->getAmount()->minus($orderSurchargeAmount)->getPriceInCurrencyUnits()], 'payments' => \array_map(function ($payment) {
             return ['amount' => $payment->getAmount()->getPriceInCurrencyUnits(), 'hasSurcharge' => $payment->getSurcharge() && $payment->getSurcharge()->getValue() !== 0, 'surchargeAmount' => $payment->getSurcharge() ? $payment->getSurcharge()->getPriceInCurrencyUnits() : 0, 'amountWithoutSurcharge' => $payment->getAmount()->getPriceInCurrencyUnits(), 'currencyCode' => $payment->getAmount()->getCurrency()->getIsoCode(), 'id' => (string) $payment->getId(), 'status' => $payment->getStatus(), 'productId' => $payment->getPaymentMethodId(), 'productName' => $payment->getPaymentMethodName(), 'fraudResult' => $payment->getFraudResult() ?? '', 'liability' => $payment->getLiability() ?? '', 'exemptionType' => $payment->getExemptionType() ?? ''];
         }, $orderDetails->getPayments()), 'psOrderAmountMatch' => $psOrderAmountMatch, 'errors' => \array_map(function ($error) {

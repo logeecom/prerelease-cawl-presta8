@@ -27,9 +27,15 @@ class PaymentMethodCollection
     {
         $this->paymentMethods[(string) $paymentMethod->getProductId()] = $paymentMethod;
     }
-    public function remove(PaymentProductId $id) : void
+    /**
+     * @param PaymentProductId[] $ids
+     * @return void
+     */
+    public function remove(array $ids) : void
     {
-        unset($this->paymentMethods[(string) $id]);
+        foreach ($ids as $id) {
+            unset($this->paymentMethods[(string) $id]);
+        }
     }
     public function get(PaymentProductId $id) : ?PaymentMethod
     {

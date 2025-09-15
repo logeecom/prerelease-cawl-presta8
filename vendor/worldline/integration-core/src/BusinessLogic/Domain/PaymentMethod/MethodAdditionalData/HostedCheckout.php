@@ -2,6 +2,7 @@
 
 namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData;
 
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ThreeDSSettings;
 /**
  * Class HostedCheckout
  *
@@ -11,14 +12,17 @@ class HostedCheckout implements PaymentMethodAdditionalData
 {
     protected string $logo;
     protected bool $enableGroupCards;
+    protected ThreeDSSettings $threeDSSettings;
     /**
      * @param string $logo
      * @param bool $enableGroupCards
+     * @param ThreeDSSettings $threeDSSettings
      */
-    public function __construct(string $logo, bool $enableGroupCards = \true)
+    public function __construct(string $logo, bool $enableGroupCards, ?ThreeDSSettings $threeDSSettings = null)
     {
         $this->logo = $logo;
         $this->enableGroupCards = $enableGroupCards;
+        $this->threeDSSettings = $threeDSSettings ?: new ThreeDSSettings();
     }
     public function getLogo() : string
     {
@@ -31,5 +35,9 @@ class HostedCheckout implements PaymentMethodAdditionalData
     public function isEnableGroupCards() : bool
     {
         return $this->enableGroupCards;
+    }
+    public function getThreeDSSettings() : ThreeDSSettings
+    {
+        return $this->threeDSSettings;
     }
 }

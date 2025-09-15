@@ -5,11 +5,11 @@ namespace CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies
 use DateInterval;
 use DateTime;
 use DateTimeZone;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkExpirationTime;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PayByLinkSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\PaymentLinkRequest;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ThreeDSSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 use CAWL\OnlinePayments\Sdk\Domain\CreatePaymentLinkRequest;
@@ -27,7 +27,7 @@ use CAWL\OnlinePayments\Sdk\Domain\RedirectPaymentProduct5402SpecificInput;
  */
 class CreatePaymentLinkRequestTransformer
 {
-    public static function transform(PaymentLinkRequest $input, CardsSettings $cardsSettings, PaymentSettings $paymentSettings, PayByLinkSettings $payByLinkSettings, PaymentMethodCollection $paymentMethodCollection) : CreatePaymentLinkRequest
+    public static function transform(PaymentLinkRequest $input, ThreeDSSettings $cardsSettings, PaymentSettings $paymentSettings, PayByLinkSettings $payByLinkSettings, PaymentMethodCollection $paymentMethodCollection) : CreatePaymentLinkRequest
     {
         $cart = $input->getCartProvider()->get();
         $request = new CreatePaymentLinkRequest();

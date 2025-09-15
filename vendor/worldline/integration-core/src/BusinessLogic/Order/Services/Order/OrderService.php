@@ -7,8 +7,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Currency;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Order\OrderAction;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Order\OrderDetails;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Order\OrderPayment;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Payment;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\PaymentTransactionRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusCode;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentsProxyInterface;
@@ -19,10 +17,10 @@ use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentsProx
  */
 class OrderService
 {
-    private PaymentTransactionRepositoryInterface $paymentTransactionRepository;
-    private PaymentsProxyInterface $paymentsProxy;
     private const STATUS_PAYMENT_CAPTURED = 'CAPTURED';
     private const STATUS_PAYMENT_PENDING_CAPTURE = 'PENDING_CAPTURE';
+    private PaymentTransactionRepositoryInterface $paymentTransactionRepository;
+    private PaymentsProxyInterface $paymentsProxy;
     public function __construct(PaymentTransactionRepositoryInterface $paymentTransactionRepository, PaymentsProxyInterface $paymentsProxy)
     {
         $this->paymentTransactionRepository = $paymentTransactionRepository;
@@ -50,10 +48,13 @@ class OrderService
             }
             $payments[$payment->getProductId()] = new OrderPayment($operation->getId(), $paymentDetails->getStatus(), $operation->getAmount(), $paymentDetails->getPaymentSpecificOutput()->getSurchargeAmount(), $payment->getPaymentMethodName(), $payment->getProductId(), $paymentDetails->getPaymentSpecificOutput()->getFraudResult(), $paymentDetails->getPaymentSpecificOutput()->getThreeDsLiability(), $paymentDetails->getPaymentSpecificOutput()->getThreeDsExemptionType());
         }
-        $notAvailableAmount = $paymentDetails->getAmounts()->getCapturedAmount()->getValue() + $paymentDetails->getAmounts()->getCaptureRequestedAmount()->getValue() + $paymentDetails->getAmounts()->getCancelledAmount()->getValue();
+        if (empty($payments) && ($payment = $this->paymentsProxy->tryToGetPayment($transaction->getPaymentId()))) {
+            $payments[$payment->getProductId()] = new OrderPayment($transaction->getPaymentId(), $paymentDetails->getStatus(), $paymentDetails->getAmount(), $paymentDetails->getPaymentSpecificOutput()->getSurchargeAmount(), $payment->getPaymentMethodName(), $payment->getProductId(), $paymentDetails->getPaymentSpecificOutput()->getFraudResult(), $paymentDetails->getPaymentSpecificOutput()->getThreeDsLiability(), $paymentDetails->getPaymentSpecificOutput()->getThreeDsExemptionType());
+        }
+        $notAvailableAmount = $paymentDetails->getAmounts()->getCapturedAmount()->plus($paymentDetails->getAmounts()->getCaptureRequestedAmount())->plus($paymentDetails->getAmounts()->getCancelledAmount())->getValue();
         $amountToCapture = $paymentDetails->getAmount()->getValue() - $notAvailableAmount;
         $capturableAmount = Amount::fromInt(!$paymentDetails->getStatusOutput()->isAuthorized() || $amountToCapture < 0 ? 0 : $amountToCapture, $paymentDetails->getAmount()->getCurrency());
-        $amountToRefund = $paymentDetails->getAmounts()->getCapturedAmount()->getValue() - ($paymentDetails->getAmounts()->getRefundedAmount()->getValue() + $paymentDetails->getAmounts()->getRefundRequestedAmount()->getValue());
+        $amountToRefund = $paymentDetails->getAmounts()->getCapturedAmount()->minus($paymentDetails->getAmounts()->getRefundedAmount())->minus($paymentDetails->getAmounts()->getRefundRequestedAmount())->getValue();
         $refundableAmount = Amount::fromInt(!$paymentDetails->getStatusOutput()->isRefundable() || $amountToRefund < 0 ? 0 : $amountToRefund, $paymentDetails->getAmount()->getCurrency());
         $amountToCancel = $paymentDetails->getAmount()->getValue() - $notAvailableAmount;
         $cancellableAmount = Amount::fromInt(!$paymentDetails->getStatusOutput()->isCancellable() || $amountToCancel < 0 ? 0 : $amountToCancel, $paymentDetails->getAmount()->getCurrency());

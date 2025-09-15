@@ -6,9 +6,9 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Request\Request;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Currency;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Exceptions\InvalidCurrencyCode;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidExemptionTypeException;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\ExemptionType;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ThreeDSSettings;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ExemptionType;
 /**
  * Class CardsSettingsRequest
  *
@@ -44,6 +44,6 @@ class CardsSettingsRequest extends Request
      */
     public function transformToDomainModel() : object
     {
-        return new CardsSettings($this->enable3ds, $this->enforceStrongAuthentication, $this->enable3dsExemption, ExemptionType::fromState($this->exemptionType), Amount::fromFloat($this->amount, Currency::fromIsoCode('EUR')));
+        return new ThreeDSSettings($this->enable3ds, $this->enforceStrongAuthentication, $this->enable3dsExemption, ExemptionType::fromState($this->exemptionType), Amount::fromFloat($this->amount, Currency::fromIsoCode('EUR')));
     }
 }

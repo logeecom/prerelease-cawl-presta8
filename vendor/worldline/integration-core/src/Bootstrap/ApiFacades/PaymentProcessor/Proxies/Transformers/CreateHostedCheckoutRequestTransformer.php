@@ -2,11 +2,12 @@
 
 namespace CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers;
 
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAction;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedCheckout\HostedCheckoutSessionRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\CreditCard;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ThreeDSSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 use CAWL\OnlinePayments\Sdk\Domain\CardPaymentMethodSpecificInputForHostedCheckout;
@@ -31,7 +32,7 @@ use CAWL\OnlinePayments\Sdk\Domain\SurchargeSpecificInput;
  */
 class CreateHostedCheckoutRequestTransformer
 {
-    public static function transform(HostedCheckoutSessionRequest $input, CardsSettings $cardsSettings, PaymentSettings $paymentSettings, PaymentMethodCollection $paymentMethodCollection, array $supportedPaymentMethods, ?Token $token = null) : CreateHostedCheckoutRequest
+    public static function transform(HostedCheckoutSessionRequest $input, ThreeDSSettings $cardsSettings, PaymentSettings $paymentSettings, PaymentMethodCollection $paymentMethodCollection, array $supportedPaymentMethods, ?Token $token = null) : CreateHostedCheckoutRequest
     {
         $cart = $input->getCartProvider()->get();
         $request = new CreateHostedCheckoutRequest();
@@ -44,8 +45,12 @@ class CreateHostedCheckoutRequestTransformer
         $filters = new PaymentProductFiltersHostedCheckout();
         $productFilter = new PaymentProductFilter();
         $productFilter->setProducts(\array_map('intval', $supportedPaymentMethods));
-        if (null !== $input->getPaymentProductId()) {
+        if (null !== $input->getPaymentProductId() && !$paymentProductId->equals(PaymentProductId::cards())) {
             $productFilter->setProducts([(int) $input->getPaymentProductId()->getId()]);
+        }
+        if (null !== $input->getPaymentProductId() && $paymentProductId->equals(PaymentProductId::cards())) {
+            $productFilter->setProducts([]);
+            $productFilter->setGroups(['cards']);
         }
         $filters->setRestrictTo($productFilter);
         $hostedCheckoutSpecificInput->setPaymentProductFilters($filters);
@@ -84,6 +89,7 @@ class CreateHostedCheckoutRequestTransformer
             $request->setMobilePaymentMethodSpecificInput(null);
         }
         if ($input->getPaymentProductId() !== null && $input->getPaymentProductId()->equals(PaymentProductId::intersolve())) {
+            $redirectPaymentMethodSpecificInput->setRequiresApproval(\false);
             // Reset mobile specific input because it breaks intersolve
             $request->setMobilePaymentMethodSpecificInput(null);
         }
@@ -93,7 +99,7 @@ class CreateHostedCheckoutRequestTransformer
         if ($input->getPaymentProductId() !== null && $input->getPaymentProductId()->isRedirectType()) {
             $redirectPaymentMethodSpecificInput->setPaymentProductId((int) $input->getPaymentProductId()->getId());
         }
-        self::setHostedCheckoutSpecificInput($paymentMethodCollection, $hostedCheckoutSpecificInput);
+        self::setHostedCheckoutSpecificInput($paymentMethodCollection, $paymentProductId, $hostedCheckoutSpecificInput);
         self::setIntersolveSpecificInput($paymentMethodCollection, $hostedCheckoutSpecificInput);
         self::setSepaSpecificInput($paymentMethodCollection, $order, $request);
         self::setBankTransferSpecificInput($paymentMethodCollection, $redirectPaymentMethodSpecificInput);
@@ -107,11 +113,22 @@ class CreateHostedCheckoutRequestTransformer
      *
      * @return void
      */
-    protected static function setHostedCheckoutSpecificInput(PaymentMethodCollection $paymentMethodCollection, HostedCheckoutSpecificInput $hostedCheckoutSpecificInput) : void
+    protected static function setHostedCheckoutSpecificInput(PaymentMethodCollection $paymentMethodCollection, PaymentProductId $paymentProductId, HostedCheckoutSpecificInput $hostedCheckoutSpecificInput) : void
     {
         if ($config = $paymentMethodCollection->get(PaymentProductId::hostedCheckout())) {
             $cardSpecificInputForHostedCheckout = new CardPaymentMethodSpecificInputForHostedCheckout();
             $cardSpecificInputForHostedCheckout->setGroupCards($config->getAdditionalData()->isEnableGroupCards());
+            $hostedCheckoutSpecificInput->setCardPaymentMethodSpecificInput($cardSpecificInputForHostedCheckout);
+        }
+        if (!$paymentProductId->equals(PaymentProductId::cards())) {
+            return;
+        }
+        $cardsPaymentMethod = $paymentMethodCollection->get(PaymentProductId::cards());
+        /** @var CreditCard|null $cardAdditionalData */
+        $cardAdditionalData = $cardsPaymentMethod ? $cardsPaymentMethod->getAdditionalData() : null;
+        if ($cardsPaymentMethod && $cardAdditionalData && $cardAdditionalData->isEnableGroupCards()) {
+            $cardSpecificInputForHostedCheckout = new CardPaymentMethodSpecificInputForHostedCheckout();
+            $cardSpecificInputForHostedCheckout->setGroupCards(\true);
             $hostedCheckoutSpecificInput->setCardPaymentMethodSpecificInput($cardSpecificInputForHostedCheckout);
         }
     }

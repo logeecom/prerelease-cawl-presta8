@@ -3,10 +3,10 @@
 namespace CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers;
 
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Cart;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAction;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ThreeDSSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 use CAWL\OnlinePayments\Sdk\Domain\CardPaymentMethodSpecificInput;
@@ -21,7 +21,7 @@ use CAWL\OnlinePayments\Sdk\Domain\ThreeDSecure;
  */
 class CardPaymentMethodSpecificInputTransformer
 {
-    public static function transform(Cart $cart, string $getReturnUrl, CardsSettings $cardsSettings, PaymentSettings $paymentSettings, ?PaymentMethodCollection $paymentMethodCollection = null, ?PaymentProductId $paymentProductId = null, ?Token $token = null) : CardPaymentMethodSpecificInput
+    public static function transform(Cart $cart, string $getReturnUrl, ThreeDSSettings $cardsSettings, PaymentSettings $paymentSettings, ?PaymentMethodCollection $paymentMethodCollection = null, ?PaymentProductId $paymentProductId = null, ?Token $token = null) : CardPaymentMethodSpecificInput
     {
         $cardPaymentMethodSpecificInput = new CardPaymentMethodSpecificInput();
         if (null !== $token) {
@@ -63,7 +63,7 @@ class CardPaymentMethodSpecificInputTransformer
         if ($paymentProductId !== null && $paymentProductId->equals(PaymentProductId::chequeVacancesConnect()->getId())) {
             $cardPaymentMethodSpecificInput->setAuthorizationMode(PaymentAction::authorizeCapture()->getType());
         }
-        if ($paymentProductId !== null && $paymentProductId->isCardType()) {
+        if ($paymentProductId !== null && $paymentProductId->isCardType() && !$paymentProductId->equals(PaymentProductId::cards()->getId())) {
             $cardPaymentMethodSpecificInput->setPaymentProductId($paymentProductId->getId());
         }
         if ($paymentProductId !== null && PaymentProductId::intersolve()->equals($paymentProductId->getId())) {

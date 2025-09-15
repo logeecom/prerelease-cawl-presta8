@@ -6,7 +6,6 @@ use Exception;
 use CAWL\OnlinePayments\Core\Branding\Brand\ActiveBrandProviderInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\MemoryCachingCartProvider;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Exceptions\TokenDeletionFailureException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Exceptions\TokenNotFoundException;
@@ -16,10 +15,12 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\PaymentResp
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Repositories\TokensRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\TokenResponse;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Logo\LogoUrlService;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\CardsSettingsRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\PaymentSettingsRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\PaymentTransactionRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ThreeDSSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodDefaultConfigs;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\ThreeDSSettingsService;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\TranslatableLabel;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\BackgroundProcesses\WaitPaymentOutcomeProcess;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\HostedTokenizationProxyInterface;
@@ -34,18 +35,18 @@ class HostedTokenizationService
     private HostedTokenizationProxyInterface $hostedTokenizationProxy;
     private PaymentsProxyInterface $paymentsProxy;
     private PaymentTransactionRepositoryInterface $paymentTransactionRepository;
-    private CardsSettingsRepositoryInterface $cardsSettingsRepository;
+    private ThreeDSSettingsService $threeDSSettingsService;
     private WaitPaymentOutcomeProcess $waitPaymentOutcomeProcess;
     private PaymentSettingsRepositoryInterface $paymentSettingsRepository;
     private TokensRepositoryInterface $tokensRepository;
     private LogoUrlService $logoUrlService;
     protected ActiveBrandProviderInterface $activeBrandProvider;
-    public function __construct(HostedTokenizationProxyInterface $hostedTokenizationProxy, PaymentsProxyInterface $paymentsProxy, PaymentTransactionRepositoryInterface $paymentTransactionRepository, CardsSettingsRepositoryInterface $cardsSettingsRepository, PaymentSettingsRepositoryInterface $paymentSettingsRepository, TokensRepositoryInterface $tokensRepository, WaitPaymentOutcomeProcess $waitPaymentOutcomeProcess, LogoUrlService $logoUrlService, ActiveBrandProviderInterface $activeBrandProvider)
+    public function __construct(HostedTokenizationProxyInterface $hostedTokenizationProxy, PaymentsProxyInterface $paymentsProxy, PaymentTransactionRepositoryInterface $paymentTransactionRepository, ThreeDSSettingsService $threeDSSettingsService, PaymentSettingsRepositoryInterface $paymentSettingsRepository, TokensRepositoryInterface $tokensRepository, WaitPaymentOutcomeProcess $waitPaymentOutcomeProcess, LogoUrlService $logoUrlService, ActiveBrandProviderInterface $activeBrandProvider)
     {
         $this->hostedTokenizationProxy = $hostedTokenizationProxy;
         $this->paymentsProxy = $paymentsProxy;
         $this->paymentTransactionRepository = $paymentTransactionRepository;
-        $this->cardsSettingsRepository = $cardsSettingsRepository;
+        $this->threeDSSettingsService = $threeDSSettingsService;
         $this->paymentSettingsRepository = $paymentSettingsRepository;
         $this->tokensRepository = $tokensRepository;
         $this->waitPaymentOutcomeProcess = $waitPaymentOutcomeProcess;
@@ -93,7 +94,7 @@ class HostedTokenizationService
         if (null !== $paymentRequest->getTokenId()) {
             $token = $this->tokensRepository->get($paymentRequest->getCartProvider()->get()->getCustomer()->getMerchantCustomerId(), $paymentRequest->getTokenId());
         }
-        $paymentResponse = $this->paymentsProxy->create($paymentRequest, $this->getCardsSettings(), $this->getPaymentSettings(), $token);
+        $paymentResponse = $this->paymentsProxy->create($paymentRequest, $this->getThreeDSSettings(), $this->getPaymentSettings(), $token);
         if (!$paymentRequest->getCartProvider()->get()->getCustomer()->isGuest()) {
             $paymentResponse->getPaymentTransaction()->setCustomerId($paymentRequest->getCartProvider()->get()->getCustomer()->getMerchantCustomerId());
         }
@@ -137,10 +138,10 @@ class HostedTokenizationService
             throw new TokenDeletionFailureException(new TranslatableLabel('Failed to delete token.', 'token.deleteFailure'));
         }
     }
-    private function getCardsSettings() : CardsSettings
+    private function getThreeDSSettings() : ThreeDSSettings
     {
-        $savedSettings = $this->cardsSettingsRepository->getCardsSettings();
-        return $savedSettings ?: new CardsSettings();
+        $savedSettings = $this->threeDSSettingsService->getThreeDSSettings(PaymentProductId::cards());
+        return $savedSettings ?: new ThreeDSSettings();
     }
     private function getPaymentSettings() : PaymentSettings
     {

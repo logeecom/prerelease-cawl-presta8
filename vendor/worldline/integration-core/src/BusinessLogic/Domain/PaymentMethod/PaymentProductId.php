@@ -58,6 +58,7 @@ class PaymentProductId
     public const SPIRIT_OF_CADEAU = '3116';
     public const TWINT = '5407';
     public const WECHAT_PAY = '5404';
+    public const CARD_BRANDS = [self::AMERICAN_EXPRESS, self::CARTE_BANCAIRE, self::DINERS_CLUB, self::DISCOVER, self::JCB, self::MASTERCARD, self::MAESTRO, self::UPI, self::VISA];
     private string $id;
     private function __construct(string $id)
     {
@@ -94,6 +95,16 @@ class PaymentProductId
     public static function cards() : PaymentProductId
     {
         return new self(self::CARDS);
+    }
+    /**
+     * @return PaymentProductId[]
+     * @throws InvalidPaymentProductIdException
+     */
+    public static function getAllCardBrands() : array
+    {
+        return \array_map(function ($paymentProductId) {
+            return PaymentProductId::parse($paymentProductId);
+        }, PaymentProductId::CARD_BRANDS);
     }
     public static function hostedCheckout() : PaymentProductId
     {
@@ -273,7 +284,7 @@ class PaymentProductId
     }
     public function isCardType() : bool
     {
-        return \in_array($this->id, [self::AMERICAN_EXPRESS, self::BANCONTACT, self::CARTE_BANCAIRE, self::DINERS_CLUB, self::DISCOVER, self::JCB, self::MASTERCARD, self::MAESTRO, self::UPI, self::VISA, self::INTERSOLVE, self::CPAY], \true);
+        return \in_array($this->id, \array_merge(self::CARD_BRANDS, [self::CARDS, self::INTERSOLVE, self::CPAY, self::BANCONTACT]), \true);
     }
     public function isMobileType() : bool
     {

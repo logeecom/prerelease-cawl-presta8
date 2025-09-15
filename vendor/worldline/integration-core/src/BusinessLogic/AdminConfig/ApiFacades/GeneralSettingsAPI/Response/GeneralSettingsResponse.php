@@ -24,7 +24,7 @@ class GeneralSettingsResponse extends Response
      */
     public function toArray() : array
     {
-        return ['accountSettings' => $this->connectionSettingsToArray(), 'paymentSettings' => $this->paymentSettingsToArray(), 'cardsSettings' => $this->cardsSettingsToArray(), 'logSettings' => $this->logSettingsToArray(), 'payByLinkSettings' => $this->payByLinkSettingsToArray()];
+        return ['accountSettings' => $this->connectionSettingsToArray(), 'paymentSettings' => $this->paymentSettingsToArray(), 'logSettings' => $this->logSettingsToArray(), 'payByLinkSettings' => $this->payByLinkSettingsToArray()];
     }
     protected function connectionSettingsToArray() : array
     {
@@ -33,10 +33,6 @@ class GeneralSettingsResponse extends Response
     protected function paymentSettingsToArray() : array
     {
         return ['paymentAction' => $this->response->getPaymentSettings()->getPaymentAction()->getType(), 'automaticCapture' => $this->response->getPaymentSettings()->getAutomaticCapture()->getValue(), 'numberOfPaymentAttempts' => $this->response->getPaymentSettings()->getPaymentAttemptsNumber()->getPaymentAttemptsNumber(), 'applySurcharge' => $this->response->getPaymentSettings()->isApplySurcharge(), 'paymentCapturedStatus' => $this->response->getPaymentSettings()->getPaymentCapturedStatus(), 'paymentErrorStatus' => $this->response->getPaymentSettings()->getPaymentErrorStatus(), 'paymentPendingStatus' => $this->response->getPaymentSettings()->getPaymentPendingStatus(), 'paymentAuthorizedStatus' => $this->response->getPaymentSettings()->getPaymentAuthorizedStatus(), 'paymentCancelledStatus' => $this->response->getPaymentSettings()->getPaymentCancelledStatus(), 'paymentRefundedStatus' => $this->response->getPaymentSettings()->getPaymentRefundedStatus()];
-    }
-    protected function cardsSettingsToArray() : array
-    {
-        return ['enable3ds' => $this->response->getCardsSettings()->isEnable3ds(), 'enforceStrongAuthentication' => $this->response->getCardsSettings()->isEnforceStrongAuthentication(), 'enable3dsExemption' => $this->response->getCardsSettings()->isEnable3dsExemption(), 'exemptionType' => $this->response->getCardsSettings()->getExemptionType()->getType(), 'exemptionLimit' => $this->response->getCardsSettings()->getExemptionLimit()->getPriceInCurrencyUnits()];
     }
     protected function logSettingsToArray() : array
     {

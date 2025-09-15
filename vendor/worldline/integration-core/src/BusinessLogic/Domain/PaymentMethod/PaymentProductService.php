@@ -9,8 +9,11 @@ namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod;
  */
 class PaymentProductService
 {
-    public function getSupportedPaymentMethods() : array
+    public function getSupportedPaymentMethods(bool $withCards = \true) : array
     {
-        return PaymentProductId::SUPPORTED_PAYMENT_PRODUCTS;
+        if ($withCards) {
+            return PaymentProductId::SUPPORTED_PAYMENT_PRODUCTS;
+        }
+        return \array_diff(PaymentProductId::SUPPORTED_PAYMENT_PRODUCTS, PaymentProductId::CARD_BRANDS);
     }
 }

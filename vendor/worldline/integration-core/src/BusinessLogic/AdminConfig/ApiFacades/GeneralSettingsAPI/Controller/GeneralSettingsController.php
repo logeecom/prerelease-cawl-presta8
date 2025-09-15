@@ -48,19 +48,6 @@ class GeneralSettingsController
         return new GeneralSettingsResponse($this->generalSettingsService->getGeneralSettings());
     }
     /**
-     * @param CardsSettingsRequest $request
-     *
-     * @return SaveSettingsResponse
-     *
-     * @throws InvalidCurrencyCode
-     * @throws InvalidExemptionTypeException
-     */
-    public function saveCardsSettings(CardsSettingsRequest $request) : SaveSettingsResponse
-    {
-        $this->generalSettingsService->saveCardsSettings($request->transformToDomainModel());
-        return new SaveSettingsResponse();
-    }
-    /**
      * @param PaymentSettingsRequest $request
      *
      * @return SaveSettingsResponse

@@ -11,21 +11,18 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionDetails;
 class GeneralSettingsResponse
 {
     protected ConnectionDetails $connectionDetails;
-    protected CardsSettings $cardsSettings;
     protected PaymentSettings $paymentSettings;
     protected LogSettings $logSettings;
     protected PayByLinkSettings $payByLinkSettings;
     /**
      * @param ConnectionDetails $connectionDetails
-     * @param CardsSettings $cardsSettings
      * @param PaymentSettings $paymentSettings
      * @param LogSettings $logSettings
      * @param PayByLinkSettings $payByLinkSettings
      */
-    public function __construct(ConnectionDetails $connectionDetails, CardsSettings $cardsSettings, PaymentSettings $paymentSettings, LogSettings $logSettings, PayByLinkSettings $payByLinkSettings)
+    public function __construct(ConnectionDetails $connectionDetails, PaymentSettings $paymentSettings, LogSettings $logSettings, PayByLinkSettings $payByLinkSettings)
     {
         $this->connectionDetails = $connectionDetails;
-        $this->cardsSettings = $cardsSettings;
         $this->paymentSettings = $paymentSettings;
         $this->logSettings = $logSettings;
         $this->payByLinkSettings = $payByLinkSettings;
@@ -36,13 +33,6 @@ class GeneralSettingsResponse
     public function getConnectionDetails() : ConnectionDetails
     {
         return $this->connectionDetails;
-    }
-    /**
-     * @return CardsSettings
-     */
-    public function getCardsSettings() : CardsSettings
-    {
-        return $this->cardsSettings;
     }
     /**
      * @return PaymentSettings

@@ -3,18 +3,18 @@
 namespace CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\HostedCheckout;
 
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedCheckout\HostedCheckoutSessionRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\PaymentResponse;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Repositories\TokensRepositoryInterface;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\CardsSettingsRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\PaymentSettingsRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\Repositories\PaymentTransactionRepositoryInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ThreeDSSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodDefaultConfigs;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductService;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\ThreeDSSettingsService;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\HostedCheckoutProxyInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Repositories\ProductTypeRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentMethod\PaymentMethodService;
@@ -27,18 +27,18 @@ class HostedCheckoutService
 {
     private HostedCheckoutProxyInterface $hostedCheckoutProxy;
     private PaymentTransactionRepositoryInterface $paymentTransactionRepository;
-    private CardsSettingsRepositoryInterface $cardsSettingsRepository;
+    private ThreeDSSettingsService $threeDSSettingsService;
     private PaymentSettingsRepositoryInterface $paymentSettingsRepository;
     private TokensRepositoryInterface $tokensRepository;
     private ProductTypeRepositoryInterface $productTypeRepository;
     private PaymentMethodService $paymentMethodService;
     private PaymentProductService $paymentProductService;
-    public function __construct(HostedCheckoutProxyInterface $hostedCheckoutProxy, PaymentTransactionRepositoryInterface $paymentTransactionRepository, TokensRepositoryInterface $tokensRepository, CardsSettingsRepositoryInterface $cardsSettingsRepository, PaymentSettingsRepositoryInterface $paymentSettingsRepository, ProductTypeRepositoryInterface $productTypeRepository, PaymentMethodService $paymentMethodService, PaymentProductService $paymentProductService)
+    public function __construct(HostedCheckoutProxyInterface $hostedCheckoutProxy, PaymentTransactionRepositoryInterface $paymentTransactionRepository, TokensRepositoryInterface $tokensRepository, ThreeDSSettingsService $threeDSSettingsService, PaymentSettingsRepositoryInterface $paymentSettingsRepository, ProductTypeRepositoryInterface $productTypeRepository, PaymentMethodService $paymentMethodService, PaymentProductService $paymentProductService)
     {
         $this->hostedCheckoutProxy = $hostedCheckoutProxy;
         $this->paymentTransactionRepository = $paymentTransactionRepository;
         $this->tokensRepository = $tokensRepository;
-        $this->cardsSettingsRepository = $cardsSettingsRepository;
+        $this->threeDSSettingsService = $threeDSSettingsService;
         $this->paymentSettingsRepository = $paymentSettingsRepository;
         $this->productTypeRepository = $productTypeRepository;
         $this->paymentMethodService = $paymentMethodService;
@@ -51,7 +51,7 @@ class HostedCheckoutService
         if (null !== $request->getTokenId()) {
             $token = $this->tokensRepository->get($request->getCartProvider()->get()->getCustomer()->getMerchantCustomerId(), $request->getTokenId());
         }
-        $paymentResponse = $this->hostedCheckoutProxy->createSession($request, $this->getCardsSettings(), $this->getPaymentSettings(), $this->getPaymentMethodsConfig($request->getCartProvider()), $this->paymentProductService->getSupportedPaymentMethods(), $token);
+        $paymentResponse = $this->hostedCheckoutProxy->createSession($request, $this->getThreeDSSettings($request->getPaymentProductId() ?: PaymentProductId::hostedCheckout()), $this->getPaymentSettings(), $this->getPaymentMethodsConfig($request->getCartProvider()), $this->paymentProductService->getSupportedPaymentMethods(), $token);
         if (!$request->getCartProvider()->get()->getCustomer()->isGuest()) {
             $paymentResponse->getPaymentTransaction()->setCustomerId($request->getCartProvider()->get()->getCustomer()->getMerchantCustomerId());
         }
@@ -61,10 +61,10 @@ class HostedCheckoutService
         $this->paymentTransactionRepository->save($paymentResponse->getPaymentTransaction());
         return $paymentResponse;
     }
-    public function getCardsSettings() : CardsSettings
+    public function getThreeDSSettings(PaymentProductId $paymentProductId) : ThreeDSSettings
     {
-        $savedSettings = $this->cardsSettingsRepository->getCardsSettings();
-        return $savedSettings ?: new CardsSettings();
+        $savedSettings = $this->threeDSSettingsService->getThreeDSSettings($paymentProductId);
+        return $savedSettings ?: new ThreeDSSettings();
     }
     public function getPaymentSettings() : PaymentSettings
     {

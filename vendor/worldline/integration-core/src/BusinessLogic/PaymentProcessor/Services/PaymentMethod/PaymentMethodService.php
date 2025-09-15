@@ -6,6 +6,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\MemoryCachingCartProvider;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\SurchargeRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\SurchargeResponse;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\CreditCard;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentMethodProxyInterface;
@@ -40,14 +41,29 @@ class PaymentMethodService
         $enabledPaymentMethods = $this->paymentMethodConfigRepository->getEnabled();
         $availablePaymentMethods = $this->paymentMethodProxy->getAvailablePaymentMethods($cartProvider->get());
         $result = $enabledPaymentMethods->intersect($availablePaymentMethods);
-        if ($cardsPaymentMethod = $enabledPaymentMethods->get(PaymentProductId::cards())) {
+        $cardsPaymentMethod = $enabledPaymentMethods->get(PaymentProductId::cards());
+        /** @var CreditCard|null $cardAdditionalData */
+        $cardAdditionalData = $cardsPaymentMethod ? $cardsPaymentMethod->getAdditionalData() : null;
+        if ($cardsPaymentMethod && $cardAdditionalData && $cardAdditionalData->isEnableGroupCards()) {
             $result->add($cardsPaymentMethod);
+            $result->remove(PaymentProductId::getAllCardBrands());
+        }
+        if ($cardsPaymentMethod && $cardAdditionalData && !$cardAdditionalData->isEnableGroupCards()) {
+            foreach (PaymentProductId::getAllCardBrands() as $cardBrandProductId) {
+                if ($cardBrandPaymentMethod = $availablePaymentMethods->get($cardBrandProductId)) {
+                    $result->add($cardBrandPaymentMethod);
+                }
+            }
+        }
+        // Remove all cards if cards are disabled
+        if (!$cardsPaymentMethod) {
+            $result->remove(PaymentProductId::getAllCardBrands());
         }
         if ($hostedCheckout = $enabledPaymentMethods->get(PaymentProductId::hostedCheckout())) {
             $result->add($hostedCheckout);
         }
         if ($result->has(PaymentProductId::mealvouchers()) && !$this->isMealvouchersEligible($cartProvider)) {
-            $result->remove(PaymentProductId::mealvouchers());
+            $result->remove([PaymentProductId::mealvouchers()]);
         }
         return $result;
     }

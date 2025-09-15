@@ -2,10 +2,10 @@
 
 namespace CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers;
 
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\PaymentRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ThreeDSSettings;
 use CAWL\OnlinePayments\Sdk\Domain\CreatePaymentRequest;
 use CAWL\OnlinePayments\Sdk\Domain\SurchargeSpecificInput;
 /**
@@ -15,7 +15,7 @@ use CAWL\OnlinePayments\Sdk\Domain\SurchargeSpecificInput;
  */
 class CreatePaymentRequestTransformer
 {
-    public static function transform(PaymentRequest $input, CardsSettings $cardsSettings, PaymentSettings $paymentSettings, ?Token $token = null) : CreatePaymentRequest
+    public static function transform(PaymentRequest $input, ThreeDSSettings $cardsSettings, PaymentSettings $paymentSettings, ?Token $token = null) : CreatePaymentRequest
     {
         $cart = $input->getCartProvider()->get();
         $request = new CreatePaymentRequest();

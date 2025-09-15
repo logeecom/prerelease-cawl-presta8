@@ -1,15 +1,15 @@
 <?php
 
-namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings;
+namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings;
 
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Currency;
 /**
- * Class CardsSettings
+ * Class ThreeDSSettings
  *
- * @package OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings
+ * @package OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings
  */
-class CardsSettings
+class ThreeDSSettings
 {
     protected bool $enable3ds;
     protected bool $enforceStrongAuthentication;

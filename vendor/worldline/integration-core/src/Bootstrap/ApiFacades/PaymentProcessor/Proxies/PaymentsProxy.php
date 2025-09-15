@@ -9,7 +9,6 @@ use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Trans
 use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers\PaymentRefundResponseTransformer;
 use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers\PaymentResponseTransformer;
 use CAWL\OnlinePayments\Core\Bootstrap\Sdk\MerchantClientFactory;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\PaymentRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\PaymentResponse;
@@ -20,6 +19,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentCapture;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentDetails;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentRefund;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ThreeDSSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentsProxyInterface;
 /**
  * Class PaymentsProxy.
@@ -33,7 +33,7 @@ class PaymentsProxy implements PaymentsProxyInterface
     {
         $this->clientFactory = $clientFactory;
     }
-    public function create(PaymentRequest $request, CardsSettings $cardsSettings, PaymentSettings $paymentSettings, ?Token $token = null) : PaymentResponse
+    public function create(PaymentRequest $request, ThreeDSSettings $cardsSettings, PaymentSettings $paymentSettings, ?Token $token = null) : PaymentResponse
     {
         ContextLogProvider::getInstance()->setCurrentOrder($request->getCartProvider()->get()->getMerchantReference());
         return CreatePaymentResponseTransformer::transform($this->clientFactory->get()->payments()->createPayment(CreatePaymentRequestTransformer::transform($request, $cardsSettings, $paymentSettings, $token)));

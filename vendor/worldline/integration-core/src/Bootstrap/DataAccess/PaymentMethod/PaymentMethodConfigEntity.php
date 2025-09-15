@@ -2,17 +2,25 @@
 
 namespace CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentMethod;
 
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Exceptions\InvalidCurrencyCode;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidExemptionTypeException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidFlowTypeException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidPaymentProductIdException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidRecurrenceTypeException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidSessionTimeoutException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidSignatureTypeException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\BankTransfer;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Cards\FlowType;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\CreditCard;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\GooglePay;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\HostedCheckout;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Intersolve;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Oney;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\PaymentMethodAdditionalData;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Sepa;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ExemptionType;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ThreeDSSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethod;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translation;
@@ -117,6 +125,9 @@ class PaymentMethodConfigEntity extends Entity
      *
      * @return PaymentMethodAdditionalData|null
      *
+     * @throws InvalidCurrencyCode
+     * @throws InvalidExemptionTypeException
+     * @throws InvalidFlowTypeException
      * @throws InvalidPaymentProductIdException
      * @throws InvalidRecurrenceTypeException
      * @throws InvalidSessionTimeoutException
@@ -141,10 +152,10 @@ class PaymentMethodConfigEntity extends Entity
             foreach ($additionalData['vaultTitleCollection'] as $vaultTitle) {
                 $vaultTitles->addTranslation(new Translation($vaultTitle['languageCode'], $vaultTitle['title']));
             }
-            return new CreditCard($vaultTitles);
+            return new CreditCard($vaultTitles, $this->threeDsFromArray($additionalData['threeDSSettings']), $additionalData['flowType'] ? FlowType::fromState($additionalData['flowType']) : null, $additionalData['enableGroupCards'] ?? \false);
         }
         if (PaymentProductId::hostedCheckout()->equals($data['paymentProductId'])) {
-            return new HostedCheckout($additionalData['logo'] ?? '', $additionalData['enableGroupCards'] ?? \false);
+            return new HostedCheckout($additionalData['logo'] ?? '', $additionalData['enableGroupCards'] ?? \false, $this->threeDsFromArray($additionalData['threeDSSettings']));
         }
         if (PaymentProductId::intersolve()->equals($data['paymentProductId'])) {
             return new Intersolve($additionalData['sessionTimeout'] ? new Intersolve\SessionTimeout($additionalData['sessionTimeout']) : null, $additionalData['paymentProductId'] ? Intersolve\PaymentProductId::parse($additionalData['paymentProductId']) : null);
@@ -155,7 +166,18 @@ class PaymentMethodConfigEntity extends Entity
         if (PaymentProductId::sepaDirectDebit()->equals($data['paymentProductId'])) {
             return new Sepa(isset($additionalData['recurrenceType']) ? Sepa\RecurrenceType::parse($additionalData['recurrenceType']) : null, isset($additionalData['signatureType']) ? Sepa\SignatureType::parse($additionalData['signatureType']) : null);
         }
+        if (PaymentProductId::googlePay()->equals($data['paymentProductId'])) {
+            return new GooglePay($this->threeDsFromArray($additionalData['threeDSSettings']));
+        }
         return null;
+    }
+    /**
+     * @throws InvalidExemptionTypeException
+     * @throws InvalidCurrencyCode
+     */
+    protected function threeDsFromArray(array $data) : ThreeDSSettings
+    {
+        return new ThreeDSSettings($data['enable3ds'], $data['enforceStrongAuthentication'], $data['enable3dsExemption'], !empty($data['exemptionType']) ? ExemptionType::fromState($data['exemptionType']) : null, !empty($data['exemptionLimit']) ? Amount::fromArray($data['exemptionLimit']) : null);
     }
     /**
      * @return array
@@ -174,10 +196,10 @@ class PaymentMethodConfigEntity extends Entity
             foreach ($additionalData->getVaultTitles()->getTranslations() as $vaultTitle) {
                 $vaultTitles[] = ['languageCode' => $vaultTitle->getLocaleCode(), 'title' => $vaultTitle->getMessage()];
             }
-            return ['vaultTitleCollection' => $vaultTitles];
+            return ['vaultTitleCollection' => $vaultTitles, 'threeDSSettings' => $this->threeDsToArray($additionalData->getThreeDSSettings()), 'flowType' => $additionalData->getType()->getType(), 'enableGroupCards' => $additionalData->isEnableGroupCards()];
         }
         if ($this->paymentMethod->getProductId()->equals(PaymentProductId::hostedCheckout()->getId())) {
-            return ['logo' => $additionalData->getLogo(), 'enableGroupCards' => $additionalData->isEnableGroupCards()];
+            return ['logo' => $additionalData->getLogo(), 'enableGroupCards' => $additionalData->isEnableGroupCards(), 'threeDSSettings' => $this->threeDsToArray($additionalData->getThreeDSSettings())];
         }
         if ($this->paymentMethod->getProductId()->equals(PaymentProductId::intersolve()->getId())) {
             return ['sessionTimeout' => $additionalData->getSessionTimeout()->getDuration(), 'paymentProductId' => $additionalData->getProductId() ? $additionalData->getProductId()->getId() : null];
@@ -188,6 +210,13 @@ class PaymentMethodConfigEntity extends Entity
         if ($this->paymentMethod->getProductId()->equals(PaymentProductId::sepaDirectDebit()->getId())) {
             return ['recurrenceType' => $additionalData->getRecurrenceType()->getType(), 'signatureType' => $additionalData->getSignatureType()->getType()];
         }
+        if ($this->paymentMethod->getProductId()->equals(PaymentProductId::googlePay()->getId())) {
+            return ['threeDSSettings' => $this->threeDsToArray($additionalData->getThreeDSSettings())];
+        }
         return [];
+    }
+    protected function threeDsToArray(ThreeDSSettings $threeDSSettings) : array
+    {
+        return ['enable3ds' => $threeDSSettings->isEnable3ds(), 'enforceStrongAuthentication' => $threeDSSettings->isEnforceStrongAuthentication(), 'enable3dsExemption' => $threeDSSettings->isEnable3dsExemption(), 'exemptionType' => $threeDSSettings->getExemptionType() ? $threeDSSettings->getExemptionType()->getType() : '', 'exemptionLimit' => $threeDSSettings->getExemptionLimit() ? $threeDSSettings->getExemptionLimit()->toArray() : ''];
     }
 }
