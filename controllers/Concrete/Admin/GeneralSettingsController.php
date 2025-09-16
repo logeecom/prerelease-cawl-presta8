@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Classes\Services\ImageHandler;
 use CAWL\OnlinePayments\Classes\Utility\OnlinePaymentsPrestaShopUtility;
 use CAWL\OnlinePayments\Classes\Utility\Request;
 use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\AdminAPI\AdminAPI;
-use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Request\CardsSettingsRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Request\LogSettingsRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Request\PayByLinkSettingsRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Request\PaymentSettingsRequest;
@@ -33,18 +32,11 @@ class GeneralSettingsController extends ModuleAdminController
         $result = AdminAPI::get()->generalSettings($storeId)->getGeneralSettings();
         OnlinePaymentsPrestaShopUtility::dieJson($result);
     }
-    public function displayAjaxSaveCardsSettings()
-    {
-        $storeId = Tools::getValue('storeId');
-        $requestData = Request::getPostData();
-        $result = AdminAPI::get()->generalSettings($storeId)->saveCardsSettings(new CardsSettingsRequest($requestData['enable3ds'] ?? null, $requestData['enforceStrongAuthentication'] ?? null, $requestData['enable3dsExemption'] ?? null, $requestData['exemptionType'] ?? null, (float) $requestData['exemptionLimit'] ?? null));
-        OnlinePaymentsPrestaShopUtility::dieJson($result);
-    }
     public function displayAjaxSavePaymentSettings()
     {
         $storeId = Tools::getValue('storeId');
         $requestData = Request::getPostData();
-        $result = AdminAPI::get()->generalSettings($storeId)->savePaymentSettings(new PaymentSettingsRequest($requestData['paymentAction'] ?? null, $requestData['automaticCapture'] ?? null, $requestData['numberOfPaymentAttempts'] ?? null, $requestData['applySurcharge'] ?? null, $requestData['paymentCapturedStatus'] ?? (string) \Configuration::get('PS_OS_PAYMENT'), $requestData['paymentErrorStatus'] ?? (string) \Configuration::get('PS_OS_ERROR'), $requestData['paymentPendingStatus'] ?? (string) \Configuration::getGlobalValue($this->module->getBrand()->getCode() . '_PENDING_ORDER_STATUS_ID'), (string) \Configuration::getGlobalValue($this->module->getBrand()->getCode() . '_AWAITING_CAPTURE_STATUS_ID'), (string) \Configuration::getGlobalValue('PS_OS_CANCELED'), (string) \Configuration::get('PS_OS_REFUND')));
+        $result = AdminAPI::get()->generalSettings($storeId)->savePaymentSettings(new PaymentSettingsRequest($requestData['paymentAction'] ?? null, $requestData['automaticCapture'] ?? null, $requestData['numberOfPaymentAttempts'] ?? null, $requestData['applySurcharge'] ?? null, $requestData['paymentCapturedStatus'] ?? (string) \Configuration::get('PS_OS_PAYMENT'), $requestData['paymentErrorStatus'] ?? (string) \Configuration::get('PS_OS_ERROR'), $requestData['paymentPendingStatus'] ?? (string) \Configuration::getGlobalValue($this->module->getBrand()->getCode() . '_PENDING_ORDER_STATUS_ID'), (string) \Configuration::getGlobalValue($this->module->getBrand()->getCode() . '_AWAITING_CAPTURE_STATUS_ID'), (string) \Configuration::getGlobalValue('PS_OS_CANCELED'), (string) \Configuration::get('PS_OS_REFUND'), $requestData['template'] ?? ''));
         OnlinePaymentsPrestaShopUtility::dieJson($result);
     }
     public function displayAjaxSaveLogSettings()

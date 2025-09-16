@@ -40,6 +40,7 @@ if (!window.OnlinePaymentsFE) {
      * @property {string} paymentAuthorizedStatus
      * @property {string} paymentCancelledStatus
      * @property {string} paymentRefundedStatus
+     * @property {string} template
      */
 
     /**
@@ -505,6 +506,16 @@ if (!window.OnlinePaymentsFE) {
                                 ],
                                 onChange: (value) => handlePaymentsSettingsChange('paymentAction', value)
                             }),
+                            generator.createTextField(
+                                {
+                                    name: 'template',
+                                    value: activePaymentSettings.template,
+                                    type: 'text',
+                                    label: 'payments.configure.fields.templateName.label',
+                                    description: 'payments.configure.fields.templateName.description',
+                                    onChange: (value) => handlePaymentsSettingsChange('template', value, false)
+                                }
+                            ),
                             generator.createDropdownField({
                                 name: 'automaticCapture',
                                 value: activePaymentSettings.automaticCapture || -1,
@@ -598,7 +609,7 @@ if (!window.OnlinePaymentsFE) {
             }
 
             if (prop === 'paymentAction') {
-                let automaticCapture =  utilities.getAncestor(
+                let automaticCapture = utilities.getAncestor(
                     paymentForm.querySelector('[name="automaticCapture"]'), 'op-field-wrapper'
                 );
                 if (value === 'FINAL_AUTHORIZATION') {
@@ -616,7 +627,8 @@ if (!window.OnlinePaymentsFE) {
                 changedPaymentSettings.paymentErrorStatus === activePaymentSettings.paymentErrorStatus &&
                 changedPaymentSettings.numberOfPaymentAttempts === activePaymentSettings.numberOfPaymentAttempts &&
                 changedPaymentSettings.applySurcharge === activePaymentSettings.applySurcharge &&
-                changedPaymentSettings.automaticCapture === activePaymentSettings.automaticCapture;
+                changedPaymentSettings.automaticCapture === activePaymentSettings.automaticCapture &&
+                changedPaymentSettings.template === activePaymentSettings.template;
         }
 
         const renderLogForm = () => {

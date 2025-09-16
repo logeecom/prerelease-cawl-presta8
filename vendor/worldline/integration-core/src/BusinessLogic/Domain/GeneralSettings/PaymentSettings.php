@@ -14,6 +14,7 @@ class PaymentSettings
     protected AutomaticCapture $automaticCapture;
     protected PaymentAttemptsNumber $paymentAttemptsNumber;
     protected bool $applySurcharge;
+    protected string $template;
     /**
      * Status 9.
      *
@@ -61,10 +62,11 @@ class PaymentSettings
      * @param string $paymentAuthorizedStatus
      * @param string $paymentCancelledStatus
      * @param string $paymentRefundedStatus
+     * @param string $template
      *
      * @throws InvalidPaymentAttemptsNumberException
      */
-    public function __construct(?PaymentAction $paymentAction = null, ?AutomaticCapture $automaticCapture = null, ?PaymentAttemptsNumber $paymentAttemptsNumber = null, bool $applySurcharge = \false, string $paymentCapturedStatus = '', string $paymentErrorStatus = '', string $paymentPendingStatus = '', string $paymentAuthorizedStatus = '', string $paymentCancelledStatus = '', string $paymentRefundedStatus = '')
+    public function __construct(?PaymentAction $paymentAction = null, ?AutomaticCapture $automaticCapture = null, ?PaymentAttemptsNumber $paymentAttemptsNumber = null, bool $applySurcharge = \false, string $paymentCapturedStatus = '', string $paymentErrorStatus = '', string $paymentPendingStatus = '', string $paymentAuthorizedStatus = '', string $paymentCancelledStatus = '', string $paymentRefundedStatus = '', string $template = '')
     {
         $this->paymentAction = $paymentAction ?? PaymentAction::authorizeCapture();
         $this->automaticCapture = $automaticCapture ?? AutomaticCapture::never();
@@ -76,6 +78,7 @@ class PaymentSettings
         $this->paymentAuthorizedStatus = $paymentAuthorizedStatus;
         $this->paymentCancelledStatus = $paymentCancelledStatus;
         $this->paymentRefundedStatus = $paymentRefundedStatus;
+        $this->template = $template;
     }
     /**
      * @return PaymentAction
@@ -146,5 +149,9 @@ class PaymentSettings
     public function getPaymentRefundedStatus() : string
     {
         return $this->paymentRefundedStatus;
+    }
+    public function getTemplate() : string
+    {
+        return $this->template;
     }
 }

@@ -40,7 +40,7 @@ class CreateHostedCheckoutRequestTransformer
         $hostedCheckoutSpecificInput->setReturnUrl($input->getReturnUrl());
         $paymentProductId = $input->getPaymentProductId() ?: PaymentProductId::hostedCheckout();
         if ($config = $paymentMethodCollection->get($paymentProductId)) {
-            $hostedCheckoutSpecificInput->setVariant($config->getTemplate());
+            $hostedCheckoutSpecificInput->setVariant($config->getTemplate() ?: $paymentSettings->getTemplate());
         }
         $filters = new PaymentProductFiltersHostedCheckout();
         $productFilter = new PaymentProductFilter();
