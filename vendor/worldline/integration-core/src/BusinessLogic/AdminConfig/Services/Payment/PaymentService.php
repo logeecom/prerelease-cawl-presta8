@@ -3,18 +3,19 @@
 namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Payment;
 
 use CAWL\OnlinePayments\Core\Branding\Brand\ActiveBrandProviderInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\GeneralSettings\GeneralSettingsService;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidAutomaticCaptureValueException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidPaymentAttemptsNumberException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Logo\LogoUrlService;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidPaymentProductIdException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidSessionTimeoutException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\BankTransfer;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Cards\FlowType;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\CreditCard;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\HostedCheckout;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Intersolve;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Oney;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\PaymentMethodAdditionalData;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Sepa;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ThreeDSSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethod;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodDefaultConfigs;
@@ -36,23 +37,31 @@ class PaymentService
     protected LogoUrlService $logoUrlService;
     protected ActiveBrandProviderInterface $activeBrandProvider;
     protected PaymentProductService $paymentProductService;
+    protected GeneralSettingsService $generalSettingsService;
     /**
      * @param PaymentConfigRepositoryInterface $repository
      * @param LogoUrlService $logoUrlService
      * @param ActiveBrandProviderInterface $activeBrandProvider
      * @param PaymentProductService $paymentProductService
+     * @param GeneralSettingsService $generalSettingsService
      */
-    public function __construct(PaymentConfigRepositoryInterface $repository, LogoUrlService $logoUrlService, ActiveBrandProviderInterface $activeBrandProvider, PaymentProductService $paymentProductService)
+    public function __construct(PaymentConfigRepositoryInterface $repository, LogoUrlService $logoUrlService, ActiveBrandProviderInterface $activeBrandProvider, PaymentProductService $paymentProductService, GeneralSettingsService $generalSettingsService)
     {
         $this->repository = $repository;
         $this->logoUrlService = $logoUrlService;
         $this->activeBrandProvider = $activeBrandProvider;
         $this->paymentProductService = $paymentProductService;
+        $this->generalSettingsService = $generalSettingsService;
     }
     /**
      * Retrieves payment methods configurations.
      *
      * @return PaymentMethodResponse[]
+     *
+     * @throws InvalidAutomaticCaptureValueException
+     * @throws InvalidPaymentAttemptsNumberException
+     * @throws InvalidPaymentProductIdException
+     * @throws InvalidSessionTimeoutException
      */
     public function getPaymentMethods() : array
     {
@@ -79,6 +88,8 @@ class PaymentService
      *
      * @return PaymentMethod|null
      *
+     * @throws InvalidAutomaticCaptureValueException
+     * @throws InvalidPaymentAttemptsNumberException
      * @throws InvalidPaymentProductIdException
      * @throws InvalidSessionTimeoutException
      */
@@ -96,6 +107,8 @@ class PaymentService
      *
      * @return void
      *
+     * @throws InvalidAutomaticCaptureValueException
+     * @throws InvalidPaymentAttemptsNumberException
      * @throws InvalidPaymentProductIdException
      * @throws InvalidSessionTimeoutException
      */
@@ -105,7 +118,7 @@ class PaymentService
         if (!$method) {
             $method = $this->getDefaultPaymentMethodConfig((string) $productId);
         }
-        $this->repository->savePaymentMethod(new PaymentMethod($method->getProductId(), $method->getName(), $enabled, $method->getTemplate(), $method->getAdditionalData()));
+        $this->repository->savePaymentMethod(new PaymentMethod($method->getProductId(), $method->getName(), $enabled, $method->getTemplate(), $method->getAdditionalData(), $method->getPaymentAction()));
     }
     /**
      * @param PaymentMethodCollection $collection
@@ -120,6 +133,13 @@ class PaymentService
         }
         return $result;
     }
+    /**
+     * @return PaymentMethodCollection
+     * @throws InvalidAutomaticCaptureValueException
+     * @throws InvalidPaymentAttemptsNumberException
+     * @throws InvalidPaymentProductIdException
+     * @throws InvalidSessionTimeoutException
+     */
     protected function getSupportedPaymentMethods() : PaymentMethodCollection
     {
         $methods = [];
@@ -139,12 +159,20 @@ class PaymentService
      *
      * @throws InvalidPaymentProductIdException
      * @throws InvalidSessionTimeoutException
+     * @throws InvalidAutomaticCaptureValueException
+     * @throws InvalidPaymentAttemptsNumberException
      */
     protected function getDefaultPaymentMethodConfig(string $paymentProductId) : PaymentMethod
     {
         $defaultName = PaymentMethodDefaultConfigs::getName($paymentProductId, $this->activeBrandProvider->getActiveBrand()->getPaymentMethodName());
         $name = new Translation($defaultName['language'], $defaultName['translation']);
-        return new PaymentMethod(PaymentProductId::parse($paymentProductId), new TranslationCollection($name), \false, '', $this->getAdditionalData($paymentProductId));
+        $paymentProductId = PaymentProductId::parse($paymentProductId);
+        $paymentAction = null;
+        if ($paymentProductId->isSeparateCaptureSupported()) {
+            $paymentSettings = $this->generalSettingsService->getPaymentSettings();
+            $paymentAction = $paymentSettings->getPaymentAction();
+        }
+        return new PaymentMethod($paymentProductId, new TranslationCollection($name), \false, '', $this->getAdditionalData($paymentProductId), $paymentAction);
     }
     /**
      * @throws InvalidSessionTimeoutException

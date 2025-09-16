@@ -32,7 +32,7 @@ class PaymentMethodResponse extends Response
      */
     public function toArray() : array
     {
-        return ['paymentProductId' => (string) $this->paymentMethod->getProductId(), 'name' => $this->paymentMethod->getName()->toArray(), 'enabled' => $this->paymentMethod->isEnabled(), 'template' => $this->paymentMethod->getTemplate(), 'additionalData' => $this->additionalDataToArray()];
+        return ['paymentProductId' => (string) $this->paymentMethod->getProductId(), 'name' => $this->paymentMethod->getName()->toArray(), 'enabled' => $this->paymentMethod->isEnabled(), 'template' => $this->paymentMethod->getTemplate(), 'additionalData' => $this->additionalDataToArray(), 'paymentAction' => $this->paymentMethod->getPaymentAction() ? $this->paymentMethod->getPaymentAction()->getType() : ''];
     }
     /**
      * @return array

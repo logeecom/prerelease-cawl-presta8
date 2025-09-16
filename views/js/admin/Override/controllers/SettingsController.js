@@ -506,16 +506,6 @@ if (!window.OnlinePaymentsFE) {
                                 ],
                                 onChange: (value) => handlePaymentsSettingsChange('paymentAction', value)
                             }),
-                            generator.createTextField(
-                                {
-                                    name: 'template',
-                                    value: activePaymentSettings.template,
-                                    type: 'text',
-                                    label: 'payments.configure.fields.templateName.label',
-                                    description: 'payments.configure.fields.templateName.description',
-                                    onChange: (value) => handlePaymentsSettingsChange('template', value, false)
-                                }
-                            ),
                             generator.createDropdownField({
                                 name: 'automaticCapture',
                                 value: activePaymentSettings.automaticCapture || -1,
@@ -542,6 +532,16 @@ if (!window.OnlinePaymentsFE) {
                                 ],
                                 onChange: (value) => handlePaymentsSettingsChange('automaticCapture', value)
                             }),
+                            generator.createTextField(
+                                {
+                                    name: 'template',
+                                    value: activePaymentSettings.template,
+                                    type: 'text',
+                                    label: 'payments.configure.fields.templateName.label',
+                                    description: 'payments.configure.fields.templateName.description',
+                                    onChange: (value) => handlePaymentsSettingsChange('template', value, false)
+                                }
+                            ),
                             generator.createNumberField({
                                 name: 'numberOfPaymentAttempts',
                                 value: activePaymentSettings.numberOfPaymentAttempts || 10,

@@ -8,7 +8,13 @@ use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\PaymentAPI\Res
 use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\PaymentAPI\Response\PaymentMethodSaveResponse;
 use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\PaymentAPI\Response\PaymentMethodsResponse;
 use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Payment\PaymentService;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Exceptions\InvalidCurrencyCode;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidActionTypeException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidAutomaticCaptureValueException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidExemptionTypeException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidPaymentAttemptsNumberException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Payment\ShopPaymentService;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidFlowTypeException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidPaymentProductIdException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidRecurrenceTypeException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidSessionTimeoutException;
@@ -33,6 +39,10 @@ class PaymentController
     }
     /**
      * @return PaymentMethodsResponse
+     * @throws InvalidPaymentProductIdException
+     * @throws InvalidSessionTimeoutException
+     * @throws InvalidAutomaticCaptureValueException
+     * @throws InvalidPaymentAttemptsNumberException
      */
     public function list() : PaymentMethodsResponse
     {
@@ -44,6 +54,8 @@ class PaymentController
      *
      * @return PaymentMethodEnableResponse
      *
+     * @throws InvalidAutomaticCaptureValueException
+     * @throws InvalidPaymentAttemptsNumberException
      * @throws InvalidPaymentProductIdException
      * @throws InvalidSessionTimeoutException
      */
@@ -59,9 +71,13 @@ class PaymentController
      * @return PaymentMethodSaveResponse
      *
      * @throws InvalidPaymentProductIdException
-     * @throws InvalidSessionTimeoutException
      * @throws InvalidRecurrenceTypeException
+     * @throws InvalidSessionTimeoutException
      * @throws InvalidSignatureTypeException
+     * @throws InvalidCurrencyCode
+     * @throws InvalidActionTypeException
+     * @throws InvalidExemptionTypeException
+     * @throws InvalidFlowTypeException
      */
     public function save(PaymentMethodRequest $paymentMethodRequest) : PaymentMethodSaveResponse
     {
@@ -74,6 +90,10 @@ class PaymentController
      * @param string $paymentProductId
      *
      * @return ApiPaymentMethodResponse
+     * @throws InvalidAutomaticCaptureValueException
+     * @throws InvalidPaymentAttemptsNumberException
+     * @throws InvalidPaymentProductIdException
+     * @throws InvalidSessionTimeoutException
      */
     public function getPaymentMethod(string $paymentProductId) : ApiPaymentMethodResponse
     {

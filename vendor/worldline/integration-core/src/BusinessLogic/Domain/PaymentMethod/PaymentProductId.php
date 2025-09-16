@@ -59,6 +59,7 @@ class PaymentProductId
     public const TWINT = '5407';
     public const WECHAT_PAY = '5404';
     public const CARD_BRANDS = [self::AMERICAN_EXPRESS, self::CARTE_BANCAIRE, self::DINERS_CLUB, self::DISCOVER, self::JCB, self::MASTERCARD, self::MAESTRO, self::UPI, self::VISA];
+    public const SEPARATE_CAPTURE_SUPPORTED = [self::HOSTED_CHECKOUT, self::APPLE_PAY, self::BIZUM, self::CETELEM, self::COFIDIS, self::CPAY, self::CARDS, self::GOOGLE_PAY, self::KLARNA, self::MB_WAY, self::ONEY_BANK_CARD, self::PAYPAL, self::POSTFINANCE_PAY, self::SOFINCO, self::TWINT, self::WECHAT_PAY];
     private string $id;
     private function __construct(string $id)
     {
@@ -289,6 +290,10 @@ class PaymentProductId
     public function isMobileType() : bool
     {
         return \in_array($this->id, [self::APPLE_PAY, self::GOOGLE_PAY], \true);
+    }
+    public function isSeparateCaptureSupported() : bool
+    {
+        return \in_array($this->id, self::SEPARATE_CAPTURE_SUPPORTED, \true);
     }
     public function isRedirectType() : bool
     {

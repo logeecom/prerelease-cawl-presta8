@@ -5,6 +5,7 @@ namespace CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentMethod;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Exceptions\InvalidCurrencyCode;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidExemptionTypeException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAction;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidFlowTypeException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidPaymentProductIdException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidRecurrenceTypeException;
@@ -64,7 +65,7 @@ class PaymentMethodConfigEntity extends Entity
         foreach ($paymentMethod['nameTranslations'] as $translation) {
             $nameTranslations->addTranslation(new Translation($translation['language'], $translation['translation']));
         }
-        $this->paymentMethod = new PaymentMethod(PaymentProductId::parse($paymentMethod['paymentProductId']), $nameTranslations, $paymentMethod['enabled'] ?? \false, $paymentMethod['template'] ?? '', $this->additionalDataFromArray($paymentMethod));
+        $this->paymentMethod = new PaymentMethod(PaymentProductId::parse($paymentMethod['paymentProductId']), $nameTranslations, $paymentMethod['enabled'] ?? \false, $paymentMethod['template'] ?? '', $this->additionalDataFromArray($paymentMethod), !empty($paymentMethod['paymentAction']) ? PaymentAction::fromState($paymentMethod['paymentAction']) : null);
     }
     public function toArray() : array
     {
@@ -77,7 +78,7 @@ class PaymentMethodConfigEntity extends Entity
         foreach ($this->paymentMethod->getName()->getTranslations() as $item) {
             $nameTranslations[] = ['language' => $item->getLocaleCode(), 'translation' => $item->getMessage()];
         }
-        $data['paymentMethod'] = ['paymentProductId' => (string) $this->paymentMethod->getProductId(), 'nameTranslations' => $nameTranslations, 'enabled' => $this->paymentMethod->isEnabled(), 'template' => $this->paymentMethod->getTemplate(), 'additionalData' => $this->additionalDataToArray()];
+        $data['paymentMethod'] = ['paymentProductId' => (string) $this->paymentMethod->getProductId(), 'nameTranslations' => $nameTranslations, 'enabled' => $this->paymentMethod->isEnabled(), 'template' => $this->paymentMethod->getTemplate(), 'paymentAction' => $this->paymentMethod->getPaymentAction() ? $this->paymentMethod->getPaymentAction()->getType() : '', 'additionalData' => $this->additionalDataToArray()];
         return $data;
     }
     public function getStoreId() : string

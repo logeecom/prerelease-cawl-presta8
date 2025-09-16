@@ -6,7 +6,9 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Request\Request;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Amount;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Currency;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Exceptions\InvalidCurrencyCode;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidActionTypeException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidExemptionTypeException;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAction;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidFlowTypeException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidPaymentProductIdException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidRecurrenceTypeException;
@@ -40,6 +42,7 @@ class PaymentMethodRequest extends Request
     protected array $name;
     protected bool $enabled;
     protected string $template;
+    protected ?string $paymentAction;
     // credit card additional data
     /**
      * @var array<string, string> | null
@@ -70,6 +73,7 @@ class PaymentMethodRequest extends Request
      * @param array $name
      * @param bool $enabled
      * @param string $template
+     * @param string|null $paymentAction
      * @param string[]|null $vaultTitles
      * @param string|null $logo
      * @param bool|null $enableGroupCards
@@ -86,12 +90,13 @@ class PaymentMethodRequest extends Request
      * @param float|null $amount
      * @param string|null $flowType
      */
-    public function __construct(string $productId, array $name, bool $enabled, string $template, ?array $vaultTitles = [], ?string $logo = null, ?bool $enableGroupCards = null, ?string $paymentOption = null, ?int $sessionTimeout = null, ?string $intersolveProductId = null, ?string $recurrenceType = null, ?string $signatureType = null, ?bool $instantPayment = null, ?bool $enable3ds = null, ?bool $enforceStrongAuthentication = null, ?bool $enable3dsExemption = null, ?string $exemptionType = null, ?float $amount = null, ?string $flowType = null)
+    public function __construct(string $productId, array $name, bool $enabled, string $template, ?string $paymentAction = null, ?array $vaultTitles = [], ?string $logo = null, ?bool $enableGroupCards = null, ?string $paymentOption = null, ?int $sessionTimeout = null, ?string $intersolveProductId = null, ?string $recurrenceType = null, ?string $signatureType = null, ?bool $instantPayment = null, ?bool $enable3ds = null, ?bool $enforceStrongAuthentication = null, ?bool $enable3dsExemption = null, ?string $exemptionType = null, ?float $amount = null, ?string $flowType = null)
     {
         $this->productId = $productId;
         $this->name = $name;
         $this->enabled = $enabled;
         $this->template = $template;
+        $this->paymentAction = $paymentAction;
         $this->vaultTitles = $vaultTitles;
         $this->logo = $logo;
         $this->enableGroupCards = $enableGroupCards;
@@ -110,13 +115,15 @@ class PaymentMethodRequest extends Request
     }
     /**
      * @inheritDoc
-     * @throws InvalidRecurrenceTypeException
-     * @throws InvalidSignatureTypeException
-     * @throws InvalidSessionTimeoutException
-     * @throws InvalidPaymentProductIdException
-     * @throws InvalidExemptionTypeException
+     * @return object
      * @throws InvalidCurrencyCode
+     * @throws InvalidExemptionTypeException
      * @throws InvalidFlowTypeException
+     * @throws InvalidPaymentProductIdException
+     * @throws InvalidRecurrenceTypeException
+     * @throws InvalidSessionTimeoutException
+     * @throws InvalidSignatureTypeException
+     * @throws InvalidActionTypeException
      */
     public function transformToDomainModel() : object
     {
@@ -160,6 +167,6 @@ class PaymentMethodRequest extends Request
         foreach ($this->name as $language => $name) {
             $nameCollection->addTranslation(new Translation($language, $name));
         }
-        return new PaymentMethod(PaymentProductId::parse($this->productId), $nameCollection, $this->enabled, $this->template, $additionalData);
+        return new PaymentMethod(PaymentProductId::parse($this->productId), $nameCollection, $this->enabled, $this->template, $additionalData, $this->paymentAction ? PaymentAction::fromState($this->paymentAction) : null);
     }
 }

@@ -59,7 +59,11 @@ if (!window.OnlinePaymentsFE) {
         this.display = () => {
             utilities.showLoader();
             templateService.setTemplates(configuration.templates || {});
-            document.querySelector('.bootstrap .panel').style.display = "none";
+            let prestaPanel = document.querySelector('.bootstrap .panel');
+
+            if (prestaPanel) {
+                prestaPanel.style.display = "none";
+            }
 
             window.addEventListener('hashchange', updateStateOnHashChange, false);
 
