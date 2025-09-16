@@ -2,7 +2,8 @@
 
 namespace CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod;
 
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Cart;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Cards\FlowType;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\CreditCard;
 /**
  * Class PaymentMethodCollection.
  *
@@ -65,6 +66,16 @@ class PaymentMethodCollection
         }
         return $result;
     }
+    public function isCardsGroupingEnabled() : bool
+    {
+        $cardAdditionalData = $this->getCardMethodAdditionalData();
+        return $cardAdditionalData && $cardAdditionalData->isEnableGroupCards();
+    }
+    public function isCardsTokenizationEnabled() : bool
+    {
+        $cardAdditionalData = $this->getCardMethodAdditionalData();
+        return $cardAdditionalData && $cardAdditionalData->getType()->equals(FlowType::iframe());
+    }
     public function isEmpty() : bool
     {
         return empty($this->paymentMethods);
@@ -75,5 +86,15 @@ class PaymentMethodCollection
     public function toArray() : array
     {
         return $this->paymentMethods;
+    }
+    private function getCardMethodAdditionalData() : ?CreditCard
+    {
+        $cardsPaymentMethod = $this->get(PaymentProductId::cards());
+        if (!$cardsPaymentMethod) {
+            return null;
+        }
+        /** @var CreditCard|null $cardAdditionalData */
+        $cardAdditionalData = $cardsPaymentMethod->getAdditionalData();
+        return $cardAdditionalData;
     }
 }

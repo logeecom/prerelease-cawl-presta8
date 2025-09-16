@@ -47,7 +47,7 @@ class ImageHandler
         if (!\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode)) {
             \mkdir(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode);
         }
-        return \copy($path, \_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/hosted_checkout.png');
+        return \copy($path, \_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/hosted_checkout.svg');
     }
     /**
      * @param string $fileName

@@ -8,7 +8,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\PaymentAPI\Res
 use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\PaymentAPI\Response\PaymentMethodSaveResponse;
 use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\PaymentAPI\Response\PaymentMethodsResponse;
 use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\Services\Payment\PaymentService;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\Exceptions\InvalidActionTypeException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Integration\Payment\ShopPaymentService;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidPaymentProductIdException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidRecurrenceTypeException;
@@ -61,7 +60,6 @@ class PaymentController
      *
      * @throws InvalidPaymentProductIdException
      * @throws InvalidSessionTimeoutException
-     * @throws InvalidActionTypeException
      * @throws InvalidRecurrenceTypeException
      * @throws InvalidSignatureTypeException
      */

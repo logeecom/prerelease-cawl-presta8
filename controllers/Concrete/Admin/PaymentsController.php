@@ -70,6 +70,12 @@ class PaymentsController extends ModuleAdminController
         $signatureType = null;
         $paymentProductId = null;
         $sessionTimeout = null;
+        $enable3ds = null;
+        $enforceStrongAuthentication = null;
+        $enable3dsExemption = null;
+        $exemptionType = null;
+        $exemptionLimit = null;
+        $flowType = null;
         if (isset($requestData['additionalData'])) {
             $additionalData = \json_decode($requestData['additionalData'], \true);
             $instantPayment = $additionalData['instantPayment'] ?? null;
@@ -78,6 +84,12 @@ class PaymentsController extends ModuleAdminController
             $paymentProductId = $additionalData['paymentProductId'] ?? null;
             $sessionTimeout = $additionalData['sessionTimeout'] ?? null;
             $enableGroupCards = $additionalData['enableGroupCards'] ?? null;
+            $enable3ds = $additionalData['enable3ds'] ?? null;
+            $enforceStrongAuthentication = $additionalData['enforceStrongAuthentication'] ?? null;
+            $enable3dsExemption = $additionalData['enable3dsExemption'] ?? null;
+            $exemptionType = $additionalData['exemptionType'] ?? null;
+            $exemptionLimit = $additionalData['exemptionLimit'] ?? null;
+            $flowType = $additionalData['flowType'] ?? null;
             $vaultTitles = $additionalData['vaultTitleCollection'] ?? [];
             $titles = [];
             foreach ($vaultTitles as $vaultTitle) {
@@ -91,6 +103,6 @@ class PaymentsController extends ModuleAdminController
         if (!$logo && isset($additionalData['logo'])) {
             $logo = $additionalData['logo'];
         }
-        return new PaymentMethodRequest($requestData['paymentProductId'], $names, \filter_var($requestData['enabled'], \FILTER_VALIDATE_BOOLEAN), $requestData['templateName'] ?? '', $titles, $logo, $enableGroupCards, null, $sessionTimeout, $paymentProductId, $recurrenceType, $signatureType, $instantPayment);
+        return new PaymentMethodRequest($requestData['paymentProductId'], $names, \filter_var($requestData['enabled'], \FILTER_VALIDATE_BOOLEAN), $requestData['templateName'] ?? '', $titles, $logo, $enableGroupCards, null, $sessionTimeout, $paymentProductId, $recurrenceType, $signatureType, $instantPayment, $enable3ds, $enforceStrongAuthentication, $enable3dsExemption, $exemptionType, $exemptionLimit, $flowType);
     }
 }

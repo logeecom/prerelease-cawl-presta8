@@ -3,6 +3,13 @@
 namespace CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\PaymentAPI\Response;
 
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ApiFacades\Response\Response;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\BankTransfer;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\CreditCard;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\GooglePay;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\HostedCheckout;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Intersolve;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Oney;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Sepa;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethod;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 /**
@@ -37,22 +44,32 @@ class PaymentMethodResponse extends Response
             return [];
         }
         if ($this->paymentMethod->getProductId()->equals(PaymentProductId::bankTransfer()->getId())) {
+            /** @var BankTransfer $additionalData */
             return ['instantPayment' => $additionalData->isInstantPayment()];
         }
         if ($this->paymentMethod->getProductId()->equals(PaymentProductId::cards()->getId())) {
-            return ['vaultTitleCollection' => $this->paymentMethod->getAdditionalData()->getVaultTitles()->toArray()];
+            /** @var CreditCard $additionalData */
+            return ['vaultTitleCollection' => $additionalData->getVaultTitles()->toArray(), 'enableGroupCards' => $additionalData->isEnableGroupCards(), 'enable3ds' => $additionalData->getThreeDSSettings()->isEnable3ds(), 'enforceStrongAuthentication' => $additionalData->getThreeDSSettings()->isEnforceStrongAuthentication(), 'enable3dsExemption' => $additionalData->getThreeDSSettings()->isEnable3dsExemption(), 'exemptionType' => $additionalData->getThreeDSSettings()->getExemptionType()->getType(), 'exemptionLimit' => $additionalData->getThreeDSSettings()->getExemptionLimit()->getPriceInCurrencyUnits(), 'flowType' => $additionalData->getType()->getType()];
         }
         if ($this->paymentMethod->getProductId()->equals(PaymentProductId::hostedCheckout()->getId())) {
-            return ['logo' => $additionalData->getLogo(), 'enableGroupCards' => $additionalData->isEnableGroupCards()];
+            /** @var HostedCheckout $additionalData */
+            return ['logo' => $additionalData->getLogo(), 'enableGroupCards' => $additionalData->isEnableGroupCards(), 'enable3ds' => $additionalData->getThreeDSSettings()->isEnable3ds(), 'enforceStrongAuthentication' => $additionalData->getThreeDSSettings()->isEnforceStrongAuthentication(), 'enable3dsExemption' => $additionalData->getThreeDSSettings()->isEnable3dsExemption(), 'exemptionType' => $additionalData->getThreeDSSettings()->getExemptionType()->getType(), 'exemptionLimit' => $additionalData->getThreeDSSettings()->getExemptionLimit()->getPriceInCurrencyUnits()];
         }
         if ($this->paymentMethod->getProductId()->equals(PaymentProductId::intersolve()->getId())) {
+            /** @var Intersolve $additionalData */
             return ['sessionTimeout' => $additionalData->getSessionTimeout()->getDuration(), 'paymentProductId' => $additionalData->getProductId() ? $additionalData->getProductId()->getId() : null];
         }
         if ($this->paymentMethod->getProductId()->equals(PaymentProductId::oney3x()->getId()) || $this->paymentMethod->getProductId()->equals(PaymentProductId::oney4x()->getId()) || $this->paymentMethod->getProductId()->equals(PaymentProductId::oneyBankCard()->getId()) || $this->paymentMethod->getProductId()->equals(PaymentProductId::oneyFinancementLong()->getId()) || $this->paymentMethod->getProductId()->equals(PaymentProductId::oneyBrandedGiftCard()->getId())) {
+            /** @var Oney $additionalData */
             return ['paymentOption' => $additionalData->getPaymentOption()];
         }
         if ($this->paymentMethod->getProductId()->equals(PaymentProductId::sepaDirectDebit()->getId())) {
+            /** @var Sepa $additionalData */
             return ['recurrenceType' => $additionalData->getRecurrenceType()->getType(), 'signatureType' => $additionalData->getSignatureType()->getType()];
+        }
+        if ($this->paymentMethod->getProductId()->equals(PaymentProductId::googlePay()->getId())) {
+            /** @var GooglePay $additionalData */
+            return ['enable3ds' => $additionalData->getThreeDSSettings()->isEnable3ds(), 'enforceStrongAuthentication' => $additionalData->getThreeDSSettings()->isEnforceStrongAuthentication(), 'enable3dsExemption' => $additionalData->getThreeDSSettings()->isEnable3dsExemption(), 'exemptionType' => $additionalData->getThreeDSSettings()->getExemptionType()->getType(), 'exemptionLimit' => $additionalData->getThreeDSSettings()->getExemptionLimit()->getPriceInCurrencyUnits()];
         }
         return [];
     }

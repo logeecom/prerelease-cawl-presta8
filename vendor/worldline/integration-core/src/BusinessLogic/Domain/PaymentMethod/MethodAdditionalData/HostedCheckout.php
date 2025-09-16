@@ -16,7 +16,7 @@ class HostedCheckout implements PaymentMethodAdditionalData
     /**
      * @param string $logo
      * @param bool $enableGroupCards
-     * @param ThreeDSSettings $threeDSSettings
+     * @param ThreeDSSettings|null $threeDSSettings
      */
     public function __construct(string $logo, bool $enableGroupCards, ?ThreeDSSettings $threeDSSettings = null)
     {

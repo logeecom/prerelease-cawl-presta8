@@ -43,22 +43,11 @@ if (!window.OnlinePaymentsFE) {
      */
 
     /**
-     * @typedef CardsSettings
-     *
-     * @property {boolean} enable3ds
-     * @property {boolean} enforceStrongAuthentication
-     * @property {boolean} enable3dsExemption
-     * @property {'low-value' | 'transaction-risk-analysis'} exemptionType
-     * @property {float} exemptionLimit
-     */
-
-    /**
      * @typedef LogSettings
      *
      * @property {boolean} debugMode
      * @property {int} logDays
      */
-
 
     /**
      * @typedef PayByLinkSettings
@@ -73,7 +62,6 @@ if (!window.OnlinePaymentsFE) {
      *
      * @property {AccountSettings} accountSettings
      * @property {PaymentSettings} paymentSettings
-     * @property {CardsSettings} cardsSettings
      * @property {LogSettings} logSettings
      * @property {PayByLinkSettings} payByLinkSettings
      */
@@ -85,7 +73,6 @@ if (!window.OnlinePaymentsFE) {
      *  getGeneralSettingsUrl: string,
      *  getPaymentStatusesUrl: string,
      *  saveConnectionUrl: string,
-     *  saveCardsSettingsUrl: string,
      *  savePaymentSettingsUrl: string,
      *  saveLogSettingsUrl: string,
      *  savePayByLinkSettingsUrl: string,
@@ -112,8 +99,6 @@ if (!window.OnlinePaymentsFE) {
         /** @type HTMLElement | null */
         let paymentForm = null;
         /** @type HTMLElement | null */
-        let cardsForm = null;
-        /** @type HTMLElement | null */
         let logForm = null;
         /** @type HTMLElement | null */
         let payByLinkForm = null;
@@ -124,10 +109,6 @@ if (!window.OnlinePaymentsFE) {
         let activeAccountSettings;
         /** @type AccountSettings */
         let changedAccountSettings;
-        /** @type CardsSettings */
-        let activeCardsSettings;
-        /** @type CardsSettings */
-        let changedCardsSettings;
         /** @type PaymentSettings */
         let activePaymentSettings;
         /** @type PaymentSettings */
@@ -156,7 +137,6 @@ if (!window.OnlinePaymentsFE) {
                 'getGeneralSettingsUrl',
                 'getPaymentStatusesUrl',
                 'saveConnectionUrl',
-                'saveCardsSettingsUrl',
                 'savePaymentSettingsUrl',
                 'saveLogSettingsUrl',
                 'savePayByLinkSettingsUrl',
@@ -207,13 +187,11 @@ if (!window.OnlinePaymentsFE) {
 
                     activeAccountSettings = utilities.cloneObject(settings.accountSettings);
                     activePaymentSettings = utilities.cloneObject(settings.paymentSettings);
-                    activeCardsSettings = utilities.cloneObject(settings.cardsSettings);
                     activeLogSettings = utilities.cloneObject(settings.logSettings);
                     activePayByLinkSettings = utilities.cloneObject(settings.payByLinkSettings);
 
                     changedAccountSettings = utilities.cloneObject(settings.accountSettings);
                     changedPaymentSettings = utilities.cloneObject(settings.paymentSettings);
-                    changedCardsSettings = utilities.cloneObject(settings.cardsSettings);
                     changedLogSettings = utilities.cloneObject(settings.logSettings);
                     changedPayByLinkSettings = utilities.cloneObject(settings.payByLinkSettings);
 
@@ -224,8 +202,6 @@ if (!window.OnlinePaymentsFE) {
                     content.appendChild(renderPaymentSettingsForm());
                     handlePaymentsSettingsChange('paymentAction', activePaymentSettings.paymentAction || 'authorize-capture');
                     content.appendChild(generator.createElement('div', 'op-divider'));
-                    content.appendChild(renderCardsForm());
-                    content.appendChild(generator.createElement('div', 'op-divider'));
                     content.appendChild(renderLogForm());
                     content.appendChild(generator.createElement('div', 'op-divider'));
                     content.appendChild(renderPayByLinkForm());
@@ -234,9 +210,6 @@ if (!window.OnlinePaymentsFE) {
 
                     templateService.getMainPage().appendChild(content);
 
-                    handleDependencies('enable3ds', activeCardsSettings.enable3ds);
-                    handleDependencies('enforceStrongAuthentication', activeCardsSettings.enforceStrongAuthentication);
-                    handleDependencies('enable3dsExemption', activeCardsSettings.enable3dsExemption);
                     handlePayByLinkDependencies('enabled', activePayByLinkSettings.enabled);
                 })
                 .finally(() => {
@@ -646,258 +619,6 @@ if (!window.OnlinePaymentsFE) {
                 changedPaymentSettings.automaticCapture === activePaymentSettings.automaticCapture;
         }
 
-        const renderCardsForm = () => {
-            if (cardsForm) {
-                templateService.clearComponent(cardsForm);
-            }
-
-            let saveButton = generator.createButton({
-                    type: 'primary',
-                    name: 'cardSettingsBtn',
-                    disabled: true,
-                    label: 'general.saveChanges',
-                    onClick: () => {
-                        let exemptionType = cardsForm.querySelector('[name="exemptionType"]'),
-                            exemptionLimit = cardsForm.querySelector('[name="exemptionLimit"]');
-                        let isValid = true;
-
-                        if (changedCardsSettings.enable3dsExemption) {
-                            isValid = validator.validateRequiredField(exemptionType) &&
-                                validator.validateRequiredField(exemptionLimit);
-                        }
-
-                        if (isValid) {
-                            utilities.showLoader();
-                            api.post(configuration.saveCardsSettingsUrl, changedCardsSettings)
-                                .then(() => handleSaveSuccess('cardsSettings'))
-                                .catch(() => handleSaveFailure('cardsSettings'))
-                                .finally(() => {
-                                    utilities.hideLoader();
-                                });
-                        }
-                    }
-                }
-            );
-            const buttonWrapper = generator.createElement('div', 'op-button-wrapper');
-            buttonWrapper.append(saveButton);
-
-            cardsForm = generator.createElement('div', 'op-card', '', null, [
-                generator.createElement('div', 'op-card-title', '', null, [
-                    generator.createElement(
-                        'h1',
-                        '',
-                        translationService.translate('generalSettings.cardsSettings.title')
-                    ),
-                    generator.createElement(
-                        'p',
-                        '',
-                        translationService.translate('generalSettings.cardsSettings.description')
-                    )
-                ]),
-                generator.createElement('div', 'op-card-content', '', null, [
-                    ...generator.createFormFields([
-                        {
-                            name: 'enable3ds',
-                            value: activeCardsSettings.enable3ds,
-                            type: 'checkbox',
-                            className: '',
-                            label: `generalSettings.cardsSettings.enable3ds.title`,
-                            description: `generalSettings.cardsSettings.enable3ds.description`,
-                            onChange: (value) => handleCardsSettingsChange('enable3ds', value)
-                        },
-                        {
-                            name: 'enforceStrongAuthentication',
-                            value: activeCardsSettings.enforceStrongAuthentication,
-                            type: 'checkbox',
-                            className: '',
-                            label: `generalSettings.cardsSettings.enforceStrongAuthentication.title`,
-                            description: `generalSettings.cardsSettings.enforceStrongAuthentication.description`,
-                            onChange: (value) => handleCardsSettingsChange('enforceStrongAuthentication', value)
-                        },
-                        {
-                            name: 'enable3dsExemption',
-                            value: activeCardsSettings.enable3dsExemption,
-                            type: 'checkbox',
-                            className: '',
-                            label: `generalSettings.cardsSettings.3dsExemption.title`,
-                            description: `generalSettings.cardsSettings.3dsExemption.description`,
-                            onChange: (value) => handleCardsSettingsChange('enable3dsExemption', value)
-                        }
-                    ]),
-                    generator.createDropdownField({
-                        name: 'exemptionType',
-                        value: activeCardsSettings.exemptionType,
-                        label: 'generalSettings.cardsSettings.exemptionType.title',
-                        description: 'generalSettings.cardsSettings.exemptionType.description',
-                        options: [
-                            {
-                                label: 'generalSettings.cardsSettings.exemptionType.values.lowValue',
-                                value: 'low-value'
-                            },
-                            {
-                                label: 'generalSettings.cardsSettings.exemptionType.values.transactionRisk',
-                                value: 'transaction-risk-analysis'
-                            }
-                        ],
-                        onChange: (value) => handleCardsSettingsChange('exemptionType', value)
-                    }),
-                    generator.createNumberField({
-                        name: 'exemptionLimit',
-                        value: activeCardsSettings.exemptionLimit,
-                        label: 'generalSettings.cardsSettings.exemptionLimit.title',
-                        description: 'generalSettings.cardsSettings.exemptionLimit.description',
-                        onChange: (value) => handleCardsSettingsChange('exemptionLimit', value)
-                    }),
-                    buttonWrapper
-                ])
-            ]);
-
-            return cardsForm;
-        }
-
-        const handleDependencies = (prop, value) => {
-            if (prop === 'enable3ds') {
-                let enforceStrongAuthentication = utilities.getAncestor(document.querySelector(
-                        '[name="enforceStrongAuthentication"]'), 'op-field-wrapper'),
-                    enableExemption = utilities.getAncestor(
-                        document.querySelector('[name="enable3dsExemption"]'),
-                        'op-field-wrapper'
-                    ),
-                    exemptionType = utilities.getAncestor(
-                        document.querySelector('[name="exemptionType"]'),
-                        'op-field-wrapper'
-                    ),
-                    exemptionLimit = utilities.getAncestor(
-                        document.querySelector('[name="exemptionLimit"]'),
-                        'op-field-wrapper'
-                    );
-                if (value === true) {
-                    utilities.showElement(enforceStrongAuthentication);
-
-                    if (!changedCardsSettings.enforceStrongAuthentication) {
-                        utilities.showElement(enableExemption);
-
-                        if (changedCardsSettings.enable3dsExemption === true) {
-                            utilities.showElement(exemptionType);
-                            utilities.showElement(exemptionLimit);
-                        }
-                    }
-                } else {
-                    utilities.hideElement(enforceStrongAuthentication);
-                    utilities.hideElement(enableExemption);
-                    utilities.hideElement(exemptionType);
-                    utilities.hideElement(exemptionLimit);
-                }
-            }
-
-            if (prop === 'enforceStrongAuthentication') {
-                let enableExemption = utilities.getAncestor(
-                    document.querySelector('[name="enable3dsExemption"]'),
-                    'op-field-wrapper'
-                );
-                let exemptionType = utilities.getAncestor(
-                    document.querySelector('[name="exemptionType"]'),
-                    'op-field-wrapper'
-                );
-                let exemptionLimit = utilities.getAncestor(
-                    document.querySelector('[name="exemptionLimit"]'),
-                    'op-field-wrapper'
-                );
-                if (value === true) {
-                    utilities.hideElement(enableExemption);
-                    utilities.hideElement(exemptionType);
-                    utilities.hideElement(exemptionLimit);
-                } else {
-                    utilities.showElement(enableExemption);
-
-                    if (changedCardsSettings.enable3dsExemption === true) {
-                        utilities.showElement(exemptionType);
-                        utilities.showElement(exemptionLimit);
-                    }
-                }
-            }
-
-            if (prop === 'enable3dsExemption') {
-                let exemptionType = utilities.getAncestor(
-                        document.querySelector('[name="exemptionType"]'),
-                        'op-field-wrapper'
-                    ),
-                    exemptionLimit = utilities.getAncestor(
-                        document.querySelector('[name="exemptionLimit"]'),
-                        'op-field-wrapper'
-                    ),
-                    enableExemption = utilities.getAncestor(
-                        document.querySelector('[name="enable3dsExemption"]'),
-                        'op-field-wrapper'
-                    )
-                ;
-                if (value === true) {
-                    let warning = generator.createElement(
-                        'div',
-                        'ops-warning',
-                        '',
-                        null,
-                        [
-                            generator.createElement(
-                                'span',
-                                'ops-warning-message',
-                                translationService.translate('generalSettings.cardsSettings.3dsExemption.warning')
-                            )
-                        ]
-                    );
-                    enableExemption.append(warning);
-
-                    utilities.showElement(exemptionType);
-                    utilities.showElement(exemptionLimit);
-                } else {
-                    let warning = enableExemption.querySelector('.ops-warning');
-
-                    if (warning) {
-                        warning.remove();
-                    }
-
-                    utilities.hideElement(exemptionType);
-                    utilities.hideElement(exemptionLimit);
-                }
-            }
-
-            if (prop === 'exemptionType') {
-                let exemptionLimit = cardsForm.querySelector('[name="exemptionLimit"]');
-                validator.removeError(exemptionLimit);
-
-                if (value === 'low-value') {
-                    if (exemptionLimit.value > 30) {
-                        exemptionLimit.value = activeCardsSettings.exemptionType === 'low-value' ?
-                            activeCardsSettings.exemptionLimit : 30;
-                        changedCardsSettings.exemptionLimit = activeCardsSettings.exemptionType === 'low-value' ?
-                            activeCardsSettings.exemptionLimit : 30;
-                    }
-                } else {
-                    exemptionLimit.value = activeCardsSettings.exemptionType === 'transaction-risk-analysis' ?
-                        activeCardsSettings.exemptionLimit : exemptionLimit.value;
-                    changedCardsSettings.exemptionLimit = activeCardsSettings.exemptionType === 'transaction-risk-analysis' ?
-                        activeCardsSettings.exemptionLimit : exemptionLimit.value;
-                }
-            }
-
-            if (prop === 'exemptionLimit') {
-                let cardsBtn = cardsForm.querySelector('[name="cardSettingsBtn"]');
-                if (changedCardsSettings.exemptionType === 'low-value' && (value < 0 || value > 30)) {
-                    let exemptionLimit = cardsForm.querySelector('[name="exemptionLimit"]');
-                    validator.setError(exemptionLimit, 'generalSettings.cardsSettings.exemptionLimit.errorLowValue');
-                    cardsBtn.disabled = true;
-
-                    return;
-                }
-
-                if (changedCardsSettings.exemptionType === 'transaction-risk-analysis' && (value < 0 || value > 100)) {
-                    let exemptionLimit = cardsForm.querySelector('[name="exemptionLimit"]');
-                    validator.setError(exemptionLimit, 'generalSettings.cardsSettings.exemptionLimit.errorTransactionRisk');
-                    cardsBtn.disabled = true;
-                }
-            }
-        }
-
         const renderLogForm = () => {
             if (logForm) {
                 templateService.clearComponent(logForm);
@@ -1138,19 +859,6 @@ if (!window.OnlinePaymentsFE) {
             ]);
 
             return disconnectForm;
-        }
-
-        const handleCardsSettingsChange = (prop, value) => {
-            changedCardsSettings[prop] = value;
-            let cardSettingsBtn = cardsForm.querySelector('[name="cardSettingsBtn"]');
-
-            cardSettingsBtn.disabled = changedCardsSettings.enable3ds === activeCardsSettings.enable3ds &&
-                changedCardsSettings.enforceStrongAuthentication === activeCardsSettings.enforceStrongAuthentication &&
-                changedCardsSettings.enable3dsExemption === activeCardsSettings.enable3dsExemption &&
-                changedCardsSettings.exemptionType === activeCardsSettings.exemptionType &&
-                changedCardsSettings.exemptionLimit === activeCardsSettings.exemptionLimit;
-
-            handleDependencies(prop, value);
         }
 
         const handleLogSettingsChange = (prop, value) => {
