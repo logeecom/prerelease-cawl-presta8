@@ -60,6 +60,7 @@ if (!window.OnlinePaymentsFE.components) {
 
                 if (menu) {
                     menu.remove();
+                    document.getElementsByTagName('body')[0].style.overflow = 'scroll';
                 }
             } else {
                 let mainPage = OnlinePaymentsFE.templateService.getMainPage();

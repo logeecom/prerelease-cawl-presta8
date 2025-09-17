@@ -201,7 +201,6 @@ if (!window.OnlinePaymentsFE) {
                     content.appendChild(renderAccountForm());
                     content.appendChild(generator.createElement('div', 'op-divider'));
                     content.appendChild(renderPaymentSettingsForm());
-                    handlePaymentsSettingsChange('paymentAction', activePaymentSettings.paymentAction || 'authorize-capture');
                     content.appendChild(generator.createElement('div', 'op-divider'));
                     content.appendChild(renderLogForm());
                     content.appendChild(generator.createElement('div', 'op-divider'));
@@ -605,17 +604,6 @@ if (!window.OnlinePaymentsFE) {
                     return;
                 } else {
                     validator.removeError(numberOfAttempts);
-                }
-            }
-
-            if (prop === 'paymentAction') {
-                let automaticCapture = utilities.getAncestor(
-                    paymentForm.querySelector('[name="automaticCapture"]'), 'op-field-wrapper'
-                );
-                if (value === 'FINAL_AUTHORIZATION') {
-                    utilities.showElement(automaticCapture);
-                } else {
-                    utilities.hideElement(automaticCapture);
                 }
             }
 

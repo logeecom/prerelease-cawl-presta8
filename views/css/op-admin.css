@@ -10,16 +10,8 @@
     margin: 0 0 10px 0;
 }
 
-#content.bootstrap #op-page .op-sliding-modal {
-    top: 155px;
-}
-
 #content.bootstrap #op-page .op-header-menu {
     top: 338px;
-}
-
-#content.bootstrap #op-page .op-dark-mask {
-    top: 155px;
 }
 
 #op-page .op-field-wrapper .opp-field-component {

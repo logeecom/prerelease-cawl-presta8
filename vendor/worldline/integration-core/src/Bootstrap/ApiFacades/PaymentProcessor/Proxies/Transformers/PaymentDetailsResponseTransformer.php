@@ -52,7 +52,7 @@ class PaymentDetailsResponseTransformer
         $redirectOutput = $paymentOutput->getRedirectPaymentMethodSpecificOutput();
         $mobileOutput = $paymentOutput->getMobilePaymentMethodSpecificOutput();
         $sepaOutput = $paymentOutput->getSepaDirectDebitPaymentMethodSpecificOutput();
-        $id = $cardOutput ? $cardOutput->getPaymentProductId() : ($redirectOutput ? $redirectOutput->getPaymentProductId() : ($mobileOutput ? $mobileOutput->getPaymentProductId() : ($sepaOutput ? $sepaOutput->getPaymentProductId() : '')));
+        $id = $cardOutput && $cardOutput->getPaymentProductId() ? $cardOutput->getPaymentProductId() : ($redirectOutput ? $redirectOutput->getPaymentProductId() : ($mobileOutput ? $mobileOutput->getPaymentProductId() : ($sepaOutput ? $sepaOutput->getPaymentProductId() : '')));
         if (!$id) {
             return '';
         }

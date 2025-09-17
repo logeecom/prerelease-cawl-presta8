@@ -4306,6 +4306,7 @@ ul.op-bullet-list li {
   z-index: 4;
   opacity: 60%;
   pointer-events: all;
+  top: 0;
 }
 #op-page .opp-status {
   display: flex;

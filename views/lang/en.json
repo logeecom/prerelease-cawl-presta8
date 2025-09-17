@@ -289,7 +289,7 @@
       },
       "automaticCapture": {
         "title": "Automatic capture",
-        "description": "",
+        "description": "Automatic capture will be applied for all payment methods with Authorization Only payment action.",
         "values": {
           "never": "Never",
           "oneHour": "1 hour",
