@@ -2,6 +2,7 @@
 
 namespace CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies;
 
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAction;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\PaymentRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\PaymentResponse;
@@ -17,7 +18,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditional
  */
 interface PaymentsProxyInterface
 {
-    public function create(PaymentRequest $request, ThreeDSSettings $cardsSettings, PaymentSettings $paymentSettings, ?Token $token = null) : PaymentResponse;
+    public function create(PaymentRequest $request, ThreeDSSettings $cardsSettings, PaymentSettings $paymentSettings, ?Token $token = null, ?PaymentAction $paymentAction = null) : PaymentResponse;
     public function getPaymentDetails(PaymentId $paymentId) : PaymentDetails;
     public function tryToGetPayment(PaymentId $paymentId) : ?Payment;
     public function getPayment(PaymentId $paymentId) : Payment;

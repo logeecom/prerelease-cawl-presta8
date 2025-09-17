@@ -21,8 +21,9 @@ use CAWL\OnlinePayments\Sdk\Domain\ThreeDSecure;
  */
 class CardPaymentMethodSpecificInputTransformer
 {
-    public static function transform(Cart $cart, string $getReturnUrl, ThreeDSSettings $cardsSettings, PaymentSettings $paymentSettings, ?PaymentMethodCollection $paymentMethodCollection = null, ?PaymentProductId $paymentProductId = null, ?Token $token = null) : CardPaymentMethodSpecificInput
+    public static function transform(Cart $cart, string $getReturnUrl, ThreeDSSettings $cardsSettings, PaymentSettings $paymentSettings, ?PaymentMethodCollection $paymentMethodCollection = null, ?PaymentProductId $paymentProductId = null, ?Token $token = null, ?PaymentAction $paymentAction = null) : CardPaymentMethodSpecificInput
     {
+        $paymentMethodConfig = $paymentProductId !== null ? $paymentMethodCollection->get($paymentProductId) : null;
         $cardPaymentMethodSpecificInput = new CardPaymentMethodSpecificInput();
         if (null !== $token) {
             $cardPaymentMethodSpecificInput->setToken($token->getTokenId());
@@ -57,6 +58,12 @@ class CardPaymentMethodSpecificInputTransformer
             return $cardPaymentMethodSpecificInput;
         }
         $cardPaymentMethodSpecificInput->setAuthorizationMode($paymentSettings->getPaymentAction()->getType());
+        if ($paymentAction) {
+            $cardPaymentMethodSpecificInput->setAuthorizationMode($paymentAction->getType());
+        }
+        if ($paymentMethodConfig && $paymentMethodConfig->getPaymentAction()) {
+            $cardPaymentMethodSpecificInput->setAuthorizationMode($paymentMethodConfig->getPaymentAction()->getType());
+        }
         if ($paymentProductId !== null && $paymentProductId->equals(PaymentProductId::mealvouchers()->getId())) {
             $cardPaymentMethodSpecificInput->setAuthorizationMode(PaymentAction::authorizeCapture()->getType());
         }

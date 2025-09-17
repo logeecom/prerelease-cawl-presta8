@@ -50,22 +50,24 @@
 </div>
 
 <script type="text/javascript">
-  hostedTokenizationObj = new htpPrototype(document, '{$module|escape:'javascript':'UTF-8'}');
+  (function () {
+    hostedTokenizationObj = new htpPrototype(document, '{$module|escape:'javascript':'UTF-8'}');
 
-  hostedTokenizationObj.elems = {
-    iframeContainer: document.querySelector(".js-{$module|escape:'javascript':'UTF-8'}-1click-container-{$tokenId|escape:'javascript':'UTF-8'}"),
-    payBtnId: "js-{$module|escape:'javascript':'UTF-8'}-token-btn-submit-{$tokenId|escape:'javascript':'UTF-8'}",
-  };
-  hostedTokenizationObj.urls = {
-    htp: "{$hostedTokenizationPageUrl|escape:'javascript':'UTF-8'|replace:'&amp;':'&'}",
-    paymentController: "{$createPaymentUrl|escape:'javascript':'UTF-8'|replace:'&amp;':'&'}",
-  };
-  hostedTokenizationObj.dynamicSurcharge = false;
-  hostedTokenizationObj.cartDetails = {
-    totalCents: "{$totalCartCents|intval}",
-    currencyCode: "{$cartCurrencyCode|escape:'javascript':'UTF-8'}",
-    customerToken: "{$customerToken|escape:'javascript':'UTF-8'}",
-    cardToken: "{$cardToken|escape:'javascript':'UTF-8'}",
-  };
-  hostedTokenizationObj.init();
+    hostedTokenizationObj.elems = {
+      iframeContainer: document.querySelector(".js-{$module|escape:'javascript':'UTF-8'}-1click-container-{$tokenId|escape:'javascript':'UTF-8'}"),
+      payBtnId: "js-{$module|escape:'javascript':'UTF-8'}-token-btn-submit-{$tokenId|escape:'javascript':'UTF-8'}",
+    };
+    hostedTokenizationObj.urls = {
+      htp: "{$hostedTokenizationPageUrl|escape:'javascript':'UTF-8'|replace:'&amp;':'&'}",
+      paymentController: "{$paymentControllerUrl|escape:'javascript':'UTF-8'|replace:'&amp;':'&'}",
+    };
+    hostedTokenizationObj.dynamicSurcharge = false;
+    hostedTokenizationObj.cartDetails = {
+      totalCents: "{$totalCartCents|intval}",
+      currencyCode: "{$cartCurrencyCode|escape:'javascript':'UTF-8'}",
+      customerToken: "{$customerToken|escape:'javascript':'UTF-8'}",
+      cardToken: "{$cardToken|escape:'javascript':'UTF-8'}",
+    };
+    hostedTokenizationObj.init();
+  })()
 </script>

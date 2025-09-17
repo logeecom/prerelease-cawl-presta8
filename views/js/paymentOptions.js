@@ -61,6 +61,28 @@ const htpPrototype = function (e, module) {
 
   }
 
+  async function crateHostedTokenizationSession(htp) {
+    const controller = htp.urls.paymentController.replace(/\amp;/g, '');
+
+    return new Promise(function (resolve, reject) {
+      const form = new FormData();
+
+      form.append('ajax', true);
+      form.append('action', 'createHostedTokenizationSession');
+      form.append('productId', htp.productId);
+      form.append('token', htp.cartDetails.customerToken);
+
+      fetch(controller, {
+        body: form,
+        method: 'post',
+      }).then((response) => {
+        resolve(response.json());
+      }).catch((err) => {
+        reject(err);
+      });
+    });
+  }
+
   async function createPayment(hostedTokenizationId, htp) {
     const controller = htp.urls.paymentController.replace(/\amp;/g, '');
 
@@ -92,10 +114,12 @@ const htpPrototype = function (e, module) {
 
 //adding this code to make sure that submit button stays disabled in case when credit card information is not valid
   function setSubmitButtonStatus (buttonId) {
+    const self = this;
     document.addEventListener('DOMContentLoaded', function (){
       const wlPayments = document.querySelectorAll(`input[type="radio"][data-module-name*="${module}-"]`);
       wlPayments.forEach(function (el) {
         el.addEventListener('change', function (event) {
+          initClientOnSelection.bind(self)();
           const submitBtn = document.querySelector('#'+ buttonId);
 
           let wlPayment = getSelectedHtpPaymentMethod();
@@ -185,7 +209,7 @@ const htpPrototype = function (e, module) {
     });
   };
 
-  this.init = function () {
+  function initClient() {
     this.client = new Tokenizer(
         this.urls.htp,
         this.elems.iframeContainer.querySelector(`.js-${module}-htp`).id,
@@ -193,7 +217,7 @@ const htpPrototype = function (e, module) {
           hideCardholderName: false,
           validationCallback: this.validationCallback,
           storePermanently: false,
-          surchargeCallback: this.surchargeCallback,
+          surchargeCallback: this.surchargeCallback.bind(this),
         }
     );
     this.client.initialize();
@@ -220,8 +244,36 @@ const htpPrototype = function (e, module) {
         paymentMethodsForm.prepend(completelyPaid);
       }
     }
+  }
 
-    setSubmitButtonStatus(this.elems.payBtnId);
+  function initClientOnSelection() {
+    if (this.client) {
+      return;
+    }
+
+    const isThisHtpInstanceSelected = document.querySelector(
+        `input[type="radio"][data-module-name="${module}-htp-${this.productId}"]:checked`
+    );
+    if (isThisHtpInstanceSelected) {
+      crateHostedTokenizationSession(this).then((result) => {
+        if (result.success && result.hostedTokenizationPageUrl) {
+          this.urls.htp = result.hostedTokenizationPageUrl;
+          initClient.bind(this)();
+        }
+      }).catch(() => {
+        const genericErrorDivElem = this.elems.iframeContainer.querySelector(`.js-${module}-generic-error`);
+        genericErrorDivElem.style.display = 'block';
+        this.client?.destroy();
+      });
+    }
+  }
+
+  this.init = function () {
+    if (this.urls.htp !== '') {
+      initClient.bind(this)();
+    }
+
+    setSubmitButtonStatus.bind(this)(this.elems.payBtnId);
   };
 
   this.validationCallback = function (result) {
@@ -239,12 +291,12 @@ const htpPrototype = function (e, module) {
 
   this.surchargeCallback = function (result) {
     if (true === result.surcharge.success && 'OK' === result.surcharge.result.status) {
-      formatSurchargeAmounts(self.hostedTokenizationObj, result.surcharge.result).then((result) => {
+      formatSurchargeAmounts(this, result.surcharge.result).then((result) => {
         if (result.success) {
-          document.querySelector(`.js-${module}-surcharge-initial-amount`).textContent = result.formattedInitialAmount;
-          document.querySelector(`.js-${module}-surcharge-amount`).textContent = result.formattedSurchargeAmount;
-          document.querySelector(`.js-${module}-surcharge-total-amount`).textContent = result.formattedTotalAmount;
-          document.querySelector(`.js-${module}-1click-surcharge`).style.display = 'block';
+          this.elems.iframeContainer.querySelector(`.js-${module}-surcharge-initial-amount`).textContent = result.formattedInitialAmount;
+          this.elems.iframeContainer.querySelector(`.js-${module}-surcharge-amount`).textContent = result.formattedSurchargeAmount;
+          this.elems.iframeContainer.querySelector(`.js-${module}-surcharge-total-amount`).textContent = result.formattedTotalAmount;
+          this.elems.iframeContainer.querySelector(`.js-${module}-surcharge`).style.display = 'block';
         }
       })
     }

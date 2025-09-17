@@ -34,6 +34,6 @@ class ThreeDSSettingsService
             return $config ? $config->getAdditionalData()->getThreeDSSettings() : null;
         }
         $config = $this->paymentConfigRepository->getPaymentMethod($paymentProductId->getId());
-        return $config ? $config->getAdditionalData()->getThreeDSSettings() : null;
+        return $config && $config->getAdditionalData() ? $config->getAdditionalData()->getThreeDSSettings() : null;
     }
 }

@@ -10,6 +10,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Customer\Device;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Currency;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\PaymentRequest;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
 /**
  * Class PaymentModuleFrontController.
@@ -18,6 +19,15 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  */
 class PaymentModuleFrontController extends \ModuleFrontController
 {
+    public function displayAjaxCreateHostedTokenizationSession()
+    {
+        $productId = \Tools::getValue('productId', null);
+        $hostedTokenizationResponse = CheckoutAPI::get()->hostedTokenization((string) $this->context->shop->id)->crate(ServiceRegister::getService(CartProvider::class), $productId ? PaymentProductId::parse($productId) : null);
+        if (!$hostedTokenizationResponse->isSuccessful()) {
+            OnlinePaymentsPrestaShopUtility::dieJsonArray(['success' => \false]);
+        }
+        OnlinePaymentsPrestaShopUtility::dieJsonArray(['success' => \true, 'hostedTokenizationPageUrl' => $hostedTokenizationResponse->getHostedTokenization()->getUrl()]);
+    }
     /**
      * @throws \Exception
      */

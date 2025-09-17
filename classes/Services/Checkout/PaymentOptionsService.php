@@ -14,8 +14,6 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\SurchargeRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\HostedTokenization;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Cards\FlowType;
-use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\CreditCard;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethod;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
@@ -48,7 +46,7 @@ class PaymentOptionsService
         }
         $locale = \Language::getLocaleByIso(\Language::getIsoById($this->context->cart->id_lang));
         $locale = \strtoupper(\explode('-', $locale)[0]);
-        return \array_merge($this->getStoredTokensOptions($availableMMethodsResponse->getPaymentMethods(), $availableMMethodsResponse->getValidTokensResponse(), $locale), $this->getUngroupedHostedTokenizationOptions($availableMMethodsResponse->getPaymentMethods(), $locale), $this->getGroupedHostedTokenizationOptions($availableMMethodsResponse->getPaymentMethods(), $locale), $this->getHostedCheckoutOptions($availableMMethodsResponse->getPaymentMethods(), $locale), $this->getRedirectOptions($availableMMethodsResponse->getPaymentMethods(), $locale));
+        return \array_merge($this->getStoredTokensOptions($availableMMethodsResponse->getPaymentMethods(), $availableMMethodsResponse->getValidTokensResponse(), $locale), $this->getGroupedHostedTokenizationOptions($availableMMethodsResponse->getPaymentMethods(), $locale), $this->getGenericHostedCheckoutOptions($availableMMethodsResponse->getPaymentMethods(), $locale), $this->getIndividualPaymentOptions($availableMMethodsResponse->getPaymentMethods(), $locale));
     }
     /**
      * @param PaymentMethodCollection $availableMethods
@@ -99,8 +97,8 @@ class PaymentOptionsService
         if ($surcharge) {
             $tokenSurcharge = ['amountWithoutSurcharge' => $surcharge->getNetAmount()->getPriceInCurrencyUnits(), 'amountWithSurcharge' => $surcharge->getTotalAmount()->getPriceInCurrencyUnits(), 'surchargeAmount' => $surcharge->getSurchargeAmount()->getPriceInCurrencyUnits(), 'currencyIso' => $surcharge->getNetAmount()->getCurrency()->getIsoCode()];
         }
-        $createPaymentUrl = $this->context->link->getModuleLink($this->module->name, 'payment');
-        $this->context->smarty->assign(['module' => $this->module->name, 'tokenId' => $token->getTokenId(), 'tokenSurcharge' => $tokenSurcharge, 'hostedTokenizationPageUrl' => $hostedTokenization->getUrl(), 'createPaymentUrl' => $createPaymentUrl, 'cardToken' => $token->getTokenId(), 'totalCartCents' => $amount->getValue(), 'cartCurrencyCode' => Tools::getIsoCurrencyCodeById((int) $this->context->cart->id_currency), 'customerToken' => \Tools::getToken(), 'surchargeEnabled' => $paymentSettings->isApplySurcharge()]);
+        $paymentControllerUrl = $this->context->link->getModuleLink($this->module->name, 'payment');
+        $this->context->smarty->assign(['module' => $this->module->name, 'tokenId' => $token->getTokenId(), 'tokenSurcharge' => $tokenSurcharge, 'hostedTokenizationPageUrl' => $hostedTokenization->getUrl(), 'paymentControllerUrl' => $paymentControllerUrl, 'cardToken' => $token->getTokenId(), 'totalCartCents' => $amount->getValue(), 'cartCurrencyCode' => Tools::getIsoCurrencyCodeById((int) $this->context->cart->id_currency), 'customerToken' => \Tools::getToken(), 'surchargeEnabled' => $paymentSettings->isApplySurcharge()]);
         $paymentOption = new PaymentOption();
         /** @var TranslationCollection $vaultTitles */
         $vaultTitles = $paymentMethod->getAdditionalData()->getVaultTitles();
@@ -114,10 +112,6 @@ class PaymentOptionsService
         $paymentOption->setAction($this->context->link->getModuleLink($this->module->name, 'redirect', ['action' => 'redirectExternal', 'ajax' => \true, 'productId' => $token->getProductId(), 'tokenId' => $token->getTokenId()]))->setLogo(\sprintf($this->module->getPathUri() . 'views/assets/images/payment_products/%s.svg', (string) $token->getProductId()))->setCallToActionText(\sprintf($this->module->l('Pay with my previously saved card %s', 'PaymentOptionsPresenter'), $token->getCardNumber()));
         return $paymentOption;
     }
-    private function getUngroupedHostedTokenizationOptions(PaymentMethodCollection $availableMethods, string $locale) : array
-    {
-        return [];
-    }
     /**
      * @param PaymentMethodCollection $availableMethods
      * @param string $locale
@@ -126,15 +120,10 @@ class PaymentOptionsService
     private function getGroupedHostedTokenizationOptions(PaymentMethodCollection $availableMethods, string $locale) : array
     {
         $cardsPaymentMethod = $availableMethods->get(PaymentProductId::cards());
-        if (!$cardsPaymentMethod) {
+        if (!$cardsPaymentMethod || !$availableMethods->isCardsGroupingEnabled()) {
             return [];
         }
-        /** @var CreditCard|null $cardAdditionalData */
-        $cardAdditionalData = $cardsPaymentMethod->getAdditionalData();
-        if (!$cardAdditionalData || !$cardAdditionalData->isEnableGroupCards()) {
-            return [];
-        }
-        if ($cardAdditionalData->getType()->equals(FlowType::iframe())) {
+        if ($availableMethods->isCardsTokenizationEnabled()) {
             return [$this->getGroupedCardsHostedTokenizationOption($cardsPaymentMethod->getName()->getTranslationMessage($locale))];
         }
         return [$this->getGroupedCardsHostedCheckoutOption($cardsPaymentMethod->getName()->getTranslationMessage($locale))];
@@ -151,15 +140,14 @@ class PaymentOptionsService
             return $settingsService->getPaymentSettings();
         });
         $redirectUrl = $hostedTokenizationResponse->getHostedTokenization()->getUrl();
-        $createPaymentUrl = $this->context->link->getModuleLink($this->module->name, 'payment');
-        $this->context->smarty->assign(['module' => $this->module->name, 'displayHTP' => \true, 'hostedTokenizationPageUrl' => $redirectUrl, 'createPaymentUrl' => $createPaymentUrl, 'totalCartCents' => Amount::fromFloat($this->context->cart->getOrderTotal(), Currency::fromIsoCode(Tools::getIsoCurrencyCodeById((int) $this->context->cart->id_currency)))->getValue(), 'cartCurrencyCode' => Tools::getIsoCurrencyCodeById((int) $this->context->cart->id_currency), 'customerToken' => \Tools::getToken(), 'surchargeEnabled' => $paymentSettings->isApplySurcharge()]);
+        $paymentControllerUrl = $this->context->link->getModuleLink($this->module->name, 'payment');
+        $this->context->smarty->assign(['module' => $this->module->name, 'displayHTP' => \true, 'tokenizationProductIds' => [['id' => (string) PaymentProductId::cards()]], 'productId' => (string) PaymentProductId::cards(), 'hostedTokenizationPageUrl' => $redirectUrl, 'paymentControllerUrl' => $paymentControllerUrl, 'totalCartCents' => Amount::fromFloat($this->context->cart->getOrderTotal(), Currency::fromIsoCode(Tools::getIsoCurrencyCodeById((int) $this->context->cart->id_currency)))->getValue(), 'cartCurrencyCode' => Tools::getIsoCurrencyCodeById((int) $this->context->cart->id_currency), 'customerToken' => \Tools::getToken(), 'surchargeEnabled' => $paymentSettings->isApplySurcharge()]);
         $paymentOption = new PaymentOption();
         $paymentOption->setCallToActionText($callToActionLabel)->setAdditionalInformation($this->context->smarty->fetch("module:{$this->module->name}/views/templates/front/hostedTokenizationAdditionalInformation.tpl"))->setBinary(\true)->setLogo($this->module->getPathUri() . 'views/assets/images/payment_products/cb_visa_mc_amex.svg')->setModuleName($this->module->name . '-htp');
         return $paymentOption;
     }
     private function getGroupedCardsHostedCheckoutOption(string $callToActionLabel) : ?PaymentOption
     {
-        $cardsProductId = (string) PaymentProductId::cards();
         $paymentOption = new PaymentOption();
         $paymentOption->setAction($this->context->link->getModuleLink($this->module->name, 'redirect', ['action' => 'redirectExternal', 'ajax' => \true, 'productId' => (string) PaymentProductId::cards()]))->setLogo($this->module->getPathUri() . 'views/assets/images/payment_products/cb_visa_mc_amex.svg')->setCallToActionText($callToActionLabel);
         return $paymentOption;
@@ -169,7 +157,7 @@ class PaymentOptionsService
      * @param string $locale
      * @return PaymentOption[]
      */
-    private function getHostedCheckoutOptions(PaymentMethodCollection $availableMethods, string $locale) : array
+    private function getGenericHostedCheckoutOptions(PaymentMethodCollection $availableMethods, string $locale) : array
     {
         if (!$availableMethods->has(PaymentProductId::hostedCheckout())) {
             return [];
@@ -185,21 +173,49 @@ class PaymentOptionsService
         return [$paymentOption];
     }
     /**
-     * @param PaymentMethodCollection $getPaymentMethods
+     * @param PaymentMethodCollection $availableMethods
      * @param string $locale
      * @return PaymentOption[]
      */
-    private function getRedirectOptions(PaymentMethodCollection $getPaymentMethods, string $locale) : array
+    private function getIndividualPaymentOptions(PaymentMethodCollection $availableMethods, string $locale) : array
     {
         $result = [];
-        foreach ($getPaymentMethods->toArray() as $paymentMethod) {
+        $tokenizationProductIds = [];
+        foreach ($availableMethods->toArray() as $paymentMethod) {
             if ($paymentMethod->getProductId()->equals(PaymentProductId::cards()) || $paymentMethod->getProductId()->equals(PaymentProductId::hostedCheckout())) {
                 continue;
             }
-            $paymentOption = new PaymentOption();
-            $paymentOption->setAction($this->context->link->getModuleLink($this->module->name, 'redirect', ['action' => 'redirectExternal', 'ajax' => \true, 'productId' => (string) $paymentMethod->getProductId()]))->setLogo(\sprintf($this->module->getPathUri() . 'views/assets/images/payment_products/%s.svg', (string) $paymentMethod->getProductId()))->setCallToActionText($paymentMethod->getName()->getTranslationMessage($locale));
-            $result[] = $paymentOption;
+            if ($paymentMethod->getProductId()->isCardType() && $availableMethods->isCardsTokenizationEnabled()) {
+                $result[] = $this->getUngroupedCardsHostedTokenizationOption($paymentMethod, $paymentMethod->getName()->getTranslationMessage($locale));
+                $tokenizationProductIds[] = $paymentMethod->getProductId();
+                continue;
+            }
+            $result[] = $this->getHostedCheckoutPaymentOption($paymentMethod, $paymentMethod->getName()->getTranslationMessage($locale));
+        }
+        if (!empty($tokenizationProductIds)) {
+            $this->context->smarty->assign('tokenizationProductIds', \array_map(function (PaymentProductId $productId) {
+                return ['id' => (string) $productId];
+            }, $tokenizationProductIds));
         }
         return $result;
+    }
+    private function getUngroupedCardsHostedTokenizationOption(PaymentMethod $paymentMethod, string $callToActionLabel) : ?PaymentOption
+    {
+        /** @var GeneralSettingsService $settingsService */
+        $settingsService = ServiceRegister::getService(GeneralSettingsService::class);
+        $paymentSettings = StoreContext::doWithStore((string) $this->context->shop->id, function () use($settingsService) {
+            return $settingsService->getPaymentSettings();
+        });
+        $paymentControllerUrl = $this->context->link->getModuleLink($this->module->name, 'payment');
+        $this->context->smarty->assign(['module' => $this->module->name, 'displayHTP' => \true, 'productId' => (string) $paymentMethod->getProductId(), 'hostedTokenizationPageUrl' => null, 'paymentControllerUrl' => $paymentControllerUrl, 'totalCartCents' => Amount::fromFloat($this->context->cart->getOrderTotal(), Currency::fromIsoCode(Tools::getIsoCurrencyCodeById((int) $this->context->cart->id_currency)))->getValue(), 'cartCurrencyCode' => Tools::getIsoCurrencyCodeById((int) $this->context->cart->id_currency), 'customerToken' => \Tools::getToken(), 'surchargeEnabled' => $paymentSettings->isApplySurcharge()]);
+        $paymentOption = new PaymentOption();
+        $paymentOption->setCallToActionText($callToActionLabel)->setAdditionalInformation($this->context->smarty->fetch("module:{$this->module->name}/views/templates/front/hostedTokenizationAdditionalInformation.tpl"))->setBinary(\true)->setLogo(\sprintf($this->module->getPathUri() . 'views/assets/images/payment_products/%s.svg', (string) $paymentMethod->getProductId()))->setModuleName($this->module->name . '-htp-' . (string) $paymentMethod->getProductId());
+        return $paymentOption;
+    }
+    private function getHostedCheckoutPaymentOption(PaymentMethod $paymentMethod, string $callToActionLabel) : PaymentOption
+    {
+        $paymentOption = new PaymentOption();
+        $paymentOption->setAction($this->context->link->getModuleLink($this->module->name, 'redirect', ['action' => 'redirectExternal', 'ajax' => \true, 'productId' => (string) $paymentMethod->getProductId()]))->setLogo(\sprintf($this->module->getPathUri() . 'views/assets/images/payment_products/%s.svg', (string) $paymentMethod->getProductId()))->setCallToActionText($callToActionLabel);
+        return $paymentOption;
     }
 }

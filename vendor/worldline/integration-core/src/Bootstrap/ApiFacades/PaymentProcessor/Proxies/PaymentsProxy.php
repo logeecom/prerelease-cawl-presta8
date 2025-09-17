@@ -9,6 +9,7 @@ use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Trans
 use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers\PaymentRefundResponseTransformer;
 use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\PaymentProcessor\Proxies\Transformers\PaymentResponseTransformer;
 use CAWL\OnlinePayments\Core\Bootstrap\Sdk\MerchantClientFactory;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAction;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\PaymentRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\PaymentResponse;
@@ -33,10 +34,10 @@ class PaymentsProxy implements PaymentsProxyInterface
     {
         $this->clientFactory = $clientFactory;
     }
-    public function create(PaymentRequest $request, ThreeDSSettings $cardsSettings, PaymentSettings $paymentSettings, ?Token $token = null) : PaymentResponse
+    public function create(PaymentRequest $request, ThreeDSSettings $cardsSettings, PaymentSettings $paymentSettings, ?Token $token = null, ?PaymentAction $paymentAction = null) : PaymentResponse
     {
         ContextLogProvider::getInstance()->setCurrentOrder($request->getCartProvider()->get()->getMerchantReference());
-        return CreatePaymentResponseTransformer::transform($this->clientFactory->get()->payments()->createPayment(CreatePaymentRequestTransformer::transform($request, $cardsSettings, $paymentSettings, $token)));
+        return CreatePaymentResponseTransformer::transform($this->clientFactory->get()->payments()->createPayment(CreatePaymentRequestTransformer::transform($request, $cardsSettings, $paymentSettings, $token, $paymentAction)));
     }
     public function getPaymentDetails(PaymentId $paymentId) : PaymentDetails
     {

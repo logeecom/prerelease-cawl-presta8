@@ -6,6 +6,7 @@ use Exception;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\Cart;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\HostedTokenization;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 /**
  * Interface HostedTokenizationProxyInterface.
  *
@@ -19,7 +20,7 @@ interface HostedTokenizationProxyInterface
      *
      * @return HostedTokenization
      */
-    public function create(Cart $cart, array $savedTokens = []) : HostedTokenization;
+    public function create(Cart $cart, array $savedTokens = [], ?PaymentProductId $productId = null, string $template = '') : HostedTokenization;
     /**
      * @param string $customerId
      * @param string $tokenId

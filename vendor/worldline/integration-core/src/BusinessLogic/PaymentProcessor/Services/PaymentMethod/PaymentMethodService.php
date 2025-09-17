@@ -6,6 +6,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\CartProvider;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\Cart\MemoryCachingCartProvider;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\SurchargeRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Checkout\SurchargeResponse;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAction;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentMethodProxyInterface;
@@ -29,6 +30,16 @@ class PaymentMethodService
         $this->productTypeRepository = $productTypeRepository;
         $this->paymentMethodProxy = $paymentMethodProxy;
         $this->surchargeProxy = $surchargeProxy;
+    }
+    public function getCardsPaymentAction() : ?PaymentAction
+    {
+        $cardConfig = $this->paymentMethodConfigRepository->getPaymentMethod((string) PaymentProductId::cards());
+        return $cardConfig ? $cardConfig->getPaymentAction() : null;
+    }
+    public function getCardsTemplate() : string
+    {
+        $cardConfig = $this->paymentMethodConfigRepository->getPaymentMethod((string) PaymentProductId::cards());
+        return $cardConfig ? $cardConfig->getTemplate() : '';
     }
     /**
      * @param CartProvider $cartProvider

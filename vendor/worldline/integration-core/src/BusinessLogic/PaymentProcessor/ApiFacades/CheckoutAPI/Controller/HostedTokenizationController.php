@@ -7,6 +7,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Exceptions\
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Exceptions\TokenNotFoundException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\PaymentRequest;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\CheckoutAPI\Response\HostedTokenizationResponse;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\CheckoutAPI\Response\PayResponse;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\ApiFacades\CheckoutAPI\Response\TokenDeleteResponse;
@@ -24,10 +25,10 @@ class HostedTokenizationController
     {
         $this->hostedTokenizationService = $hostedTokenizationService;
     }
-    public function crate(CartProvider $cartProvider) : HostedTokenizationResponse
+    public function crate(CartProvider $cartProvider, ?PaymentProductId $productId = null) : HostedTokenizationResponse
     {
         StoreContext::getInstance()->setOrigin('checkoutHtp');
-        return new HostedTokenizationResponse($this->hostedTokenizationService->create($cartProvider));
+        return new HostedTokenizationResponse($this->hostedTokenizationService->create($cartProvider, $productId));
     }
     public function pay(PaymentRequest $paymentRequest) : PayResponse
     {

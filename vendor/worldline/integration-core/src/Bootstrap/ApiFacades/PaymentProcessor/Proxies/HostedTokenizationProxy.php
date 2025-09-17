@@ -11,6 +11,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Exceptions\InvalidC
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\HostedTokenization;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\ContextLogProvider;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\HostedTokenizationProxyInterface;
 use Throwable;
 /**
@@ -25,10 +26,10 @@ class HostedTokenizationProxy implements HostedTokenizationProxyInterface
     {
         $this->clientFactory = $clientFactory;
     }
-    public function create(Cart $cart, array $savedTokens = []) : HostedTokenization
+    public function create(Cart $cart, array $savedTokens = [], ?PaymentProductId $productId = null, string $template = '') : HostedTokenization
     {
         ContextLogProvider::getInstance()->setCurrentOrder($cart->getMerchantReference());
-        return CreateHostedTokenizationResponseTransformer::transform($this->clientFactory->get()->hostedTokenization()->createHostedTokenization(CreateHostedTokenizationRequestTransformer::transform($cart, $savedTokens)));
+        return CreateHostedTokenizationResponseTransformer::transform($this->clientFactory->get()->hostedTokenization()->createHostedTokenization(CreateHostedTokenizationRequestTransformer::transform($cart, $savedTokens, $productId, $template)));
     }
     public function getToken(string $customerId, string $tokenId) : ?Token
     {

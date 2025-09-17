@@ -12,8 +12,8 @@
  *
  *}
 
-<div class="js-{$module}-iframe-container">
-  <div class="alert alert-info js-{$module}-1click-surcharge" style="display:none">
+<div class="js-{$module}-iframe-container-{$productId|escape:'htmlall':'UTF-8'}">
+  <div class="alert alert-info js-{$module}-surcharge" style="display:none">
     <p>{l s='Please note that a surcharge will be applied to the total amount:' mod=$module}</p>
     <ul>
       <li>
@@ -32,7 +32,7 @@
       </li>
     </ul>
   </div>
-  <div id="js-{$module}-iframe" class="js-{$module}-htp {$module}-htp online-payments-htp"></div>
+  <div id="js-{$module}-iframe-{$productId|escape:'htmlall':'UTF-8'}" class="js-{$module}-htp {$module}-htp online-payments-htp"></div>
 
   <div class="js-{$module}-generic-error alert alert-danger" style="display: none">
     {l s='An error occurred while processing the payment.' mod=$module}
@@ -47,22 +47,25 @@
 </div>
 
 <script type="text/javascript">
-  hostedTokenizationObj = new htpPrototype(document, '{$module|escape:'javascript':'UTF-8'}');
+  (function () {
+    hostedTokenizationObj = new htpPrototype(document, '{$module|escape:'javascript':'UTF-8'}');
 
-  hostedTokenizationObj.elems = {
-    iframeContainer: document.querySelector(".js-{$module|escape:'javascript':'UTF-8'}-iframe-container"),
-    payBtnId: "js-{$module|escape:'javascript':'UTF-8'}-btn-submit",
-  };
-  hostedTokenizationObj.urls = {
-    htp: "{$hostedTokenizationPageUrl|escape:'javascript':'UTF-8'|replace:'&amp;':'&'}",
-    paymentController: "{$createPaymentUrl|escape:'javascript':'UTF-8'|replace:'&amp;':'&'}",
-  };
-  hostedTokenizationObj.dynamicSurcharge = true;
-  hostedTokenizationObj.surchargeEnabled = {$surchargeEnabled|intval};
-  hostedTokenizationObj.cartDetails = {
-    totalCents: "{$totalCartCents|intval}",
-    currencyCode: "{$cartCurrencyCode|escape:'javascript':'UTF-8'}",
-    customerToken: "{$customerToken|escape:'javascript':'UTF-8'}",
-  };
-  hostedTokenizationObj.init();
+    hostedTokenizationObj.elems = {
+      iframeContainer: document.querySelector(".js-{$module|escape:'javascript':'UTF-8'}-iframe-container-{$productId|escape:'javascript':'UTF-8'}"),
+      payBtnId: "js-{$module|escape:'javascript':'UTF-8'}-btn-submit-{$productId|escape:'javascript':'UTF-8'}",
+    };
+    hostedTokenizationObj.urls = {
+      htp: "{$hostedTokenizationPageUrl|escape:'javascript':'UTF-8'|replace:'&amp;':'&'}",
+      paymentController: "{$paymentControllerUrl|escape:'javascript':'UTF-8'|replace:'&amp;':'&'}",
+    };
+    hostedTokenizationObj.productId = "{$productId|escape:'javascript':'UTF-8'|replace:'&amp;':'&'}";
+    hostedTokenizationObj.dynamicSurcharge = true;
+    hostedTokenizationObj.surchargeEnabled = {$surchargeEnabled|intval};
+    hostedTokenizationObj.cartDetails = {
+      totalCents: "{$totalCartCents|intval}",
+      currencyCode: "{$cartCurrencyCode|escape:'javascript':'UTF-8'}",
+      customerToken: "{$customerToken|escape:'javascript':'UTF-8'}",
+    };
+    hostedTokenizationObj.init();
+  })()
 </script>

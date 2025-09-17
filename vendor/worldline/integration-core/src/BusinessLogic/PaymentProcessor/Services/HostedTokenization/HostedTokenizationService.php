@@ -25,6 +25,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Translations\Model\Translatabl
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\BackgroundProcesses\WaitPaymentOutcomeProcess;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\HostedTokenizationProxyInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentsProxyInterface;
+use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentMethod\PaymentMethodService;
 /**
  * Class HostedTokenizationService.
  *
@@ -41,7 +42,8 @@ class HostedTokenizationService
     private TokensRepositoryInterface $tokensRepository;
     private LogoUrlService $logoUrlService;
     protected ActiveBrandProviderInterface $activeBrandProvider;
-    public function __construct(HostedTokenizationProxyInterface $hostedTokenizationProxy, PaymentsProxyInterface $paymentsProxy, PaymentTransactionRepositoryInterface $paymentTransactionRepository, ThreeDSSettingsService $threeDSSettingsService, PaymentSettingsRepositoryInterface $paymentSettingsRepository, TokensRepositoryInterface $tokensRepository, WaitPaymentOutcomeProcess $waitPaymentOutcomeProcess, LogoUrlService $logoUrlService, ActiveBrandProviderInterface $activeBrandProvider)
+    private PaymentMethodService $paymentMethodService;
+    public function __construct(HostedTokenizationProxyInterface $hostedTokenizationProxy, PaymentsProxyInterface $paymentsProxy, PaymentTransactionRepositoryInterface $paymentTransactionRepository, ThreeDSSettingsService $threeDSSettingsService, PaymentSettingsRepositoryInterface $paymentSettingsRepository, TokensRepositoryInterface $tokensRepository, WaitPaymentOutcomeProcess $waitPaymentOutcomeProcess, LogoUrlService $logoUrlService, ActiveBrandProviderInterface $activeBrandProvider, PaymentMethodService $paymentMethodService)
     {
         $this->hostedTokenizationProxy = $hostedTokenizationProxy;
         $this->paymentsProxy = $paymentsProxy;
@@ -52,10 +54,11 @@ class HostedTokenizationService
         $this->waitPaymentOutcomeProcess = $waitPaymentOutcomeProcess;
         $this->logoUrlService = $logoUrlService;
         $this->activeBrandProvider = $activeBrandProvider;
+        $this->paymentMethodService = $paymentMethodService;
     }
-    public function create(CartProvider $cartProvider) : HostedTokenization
+    public function create(CartProvider $cartProvider, ?PaymentProductId $productId = null) : HostedTokenization
     {
-        return $this->hostedTokenizationProxy->create($cartProvider->get());
+        return $this->hostedTokenizationProxy->create($cartProvider->get(), [], $productId, $this->paymentMethodService->getCardsTemplate());
     }
     /**
      * Gets valid stored token for a provided cart
@@ -94,7 +97,7 @@ class HostedTokenizationService
         if (null !== $paymentRequest->getTokenId()) {
             $token = $this->tokensRepository->get($paymentRequest->getCartProvider()->get()->getCustomer()->getMerchantCustomerId(), $paymentRequest->getTokenId());
         }
-        $paymentResponse = $this->paymentsProxy->create($paymentRequest, $this->getThreeDSSettings(), $this->getPaymentSettings(), $token);
+        $paymentResponse = $this->paymentsProxy->create($paymentRequest, $this->getThreeDSSettings(), $this->getPaymentSettings(), $token, $this->paymentMethodService->getCardsPaymentAction());
         if (!$paymentRequest->getCartProvider()->get()->getCustomer()->isGuest()) {
             $paymentResponse->getPaymentTransaction()->setCustomerId($paymentRequest->getCartProvider()->get()->getCustomer()->getMerchantCustomerId());
         }

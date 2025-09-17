@@ -65,7 +65,7 @@ class CreateHostedCheckoutRequestTransformer
         $cardPaymentMethodSpecificInput = CardPaymentMethodSpecificInputTransformer::transform($cart, $input->getReturnUrl(), $cardsSettings, $paymentSettings, $paymentMethodCollection, $input->getPaymentProductId(), $token);
         $request->setCardPaymentMethodSpecificInput($cardPaymentMethodSpecificInput);
         $mobilePaymentMethodSpecificInput = new MobilePaymentMethodSpecificInput();
-        $mobilePaymentMethodSpecificInput->setAuthorizationMode($paymentSettings->getPaymentAction()->getType());
+        $mobilePaymentMethodSpecificInput->setAuthorizationMode($config->getPaymentAction() ? $config->getPaymentAction()->getType() : $paymentSettings->getPaymentAction()->getType());
         if (null !== $input->getPaymentProductId() && $input->getPaymentProductId()->isMobileType()) {
             $mobilePaymentMethodSpecificInput->setPaymentProductId($input->getPaymentProductId()->getId());
         }

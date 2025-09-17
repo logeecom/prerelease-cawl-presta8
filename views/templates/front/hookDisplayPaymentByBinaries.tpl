@@ -14,11 +14,13 @@
 
 <!-- Single HTP -->
 {if isset($displayHTP) && $displayHTP}
-<div class="js-payment-binary js-payment-{$module}-htp {$module}-htp-btn online-payments-htp-btn">
-  <button id="js-{$module}-btn-submit" type="submit" disabled="disabled" class="btn btn-primary center-block">
-    {l s='Place order' mod=$module}
-  </button>
-</div>
+  {foreach $tokenizationProductIds as $htp}
+    <div class="js-payment-binary js-payment-{$module}-htp-{$htp.id} {$module}-htp-btn online-payments-htp-btn">
+      <button id="js-{$module}-btn-submit-{$htp.id}" type="submit" disabled="disabled" class="btn btn-primary center-block">
+        {l s='Place order' mod=$module}
+      </button>
+    </div>
+  {/foreach}
 {/if}
 <!-- /Single HTP -->
 
