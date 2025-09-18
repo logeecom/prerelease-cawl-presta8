@@ -11,6 +11,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\Inval
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\Exceptions\InvalidSessionTimeoutException;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\BankTransfer;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\CreditCard;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\GooglePay;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\HostedCheckout;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Intersolve;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Oney;
@@ -185,6 +186,9 @@ class PaymentService
         }
         if (PaymentProductId::cards()->equals($paymentProductId)) {
             return new CreditCard($this->getCreditCardVaultTitles());
+        }
+        if (PaymentProductId::googlePay()->equals($paymentProductId)) {
+            return new GooglePay();
         }
         if (PaymentProductId::hostedCheckout()->equals($paymentProductId)) {
             return new HostedCheckout($this->logoUrlService->getHostedCheckoutLogoUrl(), \true);

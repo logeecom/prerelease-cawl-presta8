@@ -10,15 +10,15 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditional
  */
 class GooglePay implements PaymentMethodAdditionalData
 {
-    protected ThreeDSSettings $threeDSSettings;
+    protected ?ThreeDSSettings $threeDSSettings;
     /**
-     * @param ThreeDSSettings $threeDSSettings
+     * @param ThreeDSSettings|null $threeDSSettings
      */
-    public function __construct(ThreeDSSettings $threeDSSettings)
+    public function __construct(?ThreeDSSettings $threeDSSettings = null)
     {
-        $this->threeDSSettings = $threeDSSettings;
+        $this->threeDSSettings = $threeDSSettings ?: new ThreeDSSettings();
     }
-    public function getThreeDSSettings() : ThreeDSSettings
+    public function getThreeDSSettings() : ?ThreeDSSettings
     {
         return $this->threeDSSettings;
     }
