@@ -7,7 +7,7 @@
     "cancel": "Cancel",
     "yes": "Yes",
     "no": "No",
-    "ok": "Ok",
+    "ok": "OK",
     "back": "Back",
     "confirm": "Confirm",
     "enable": "Enable",
@@ -35,6 +35,10 @@
     "monitoring": "Monitoring",
     "settings": "Settings",
     "copied": "Copied!",
+    "mode": {
+      "test": "Sandbox mode",
+      "live": "Live mode"
+    },
     "version": {
       "update": "Please update to the latest %s version."
     },

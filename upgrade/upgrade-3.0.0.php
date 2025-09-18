@@ -5,12 +5,12 @@ namespace {
     use CAWL\OnlinePayments\Classes\Repositories\PaymentTransactionsRepository;
     use CAWL\OnlinePayments\Classes\Repositories\ProductTypesRepository;
     use CAWL\OnlinePayments\Classes\Repositories\TokensRepository;
+    use CAWL\OnlinePayments\Classes\Services\ImageHandler;
     use CAWL\OnlinePayments\Classes\Utility\DatabaseHandler;
     use CAWL\OnlinePayments\Core\Bootstrap\ApiFacades\AdminConfig\AdminAPI\AdminAPI;
     use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentTransaction\PaymentTransactionEntity;
     use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\ProductTypes\ProductTypeEntity;
     use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Tokens\TokenEntity;
-    use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Request\CardsSettingsRequest;
     use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Request\LogSettingsRequest;
     use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\GeneralSettingsAPI\Request\PaymentSettingsRequest;
     use CAWL\OnlinePayments\Core\BusinessLogic\AdminConfig\ApiFacades\PaymentAPI\Request\PaymentMethodRequest;
@@ -18,8 +18,6 @@ namespace {
     use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\ConnectionMode;
     use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Credentials;
     use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\Repositories\ConnectionConfigRepositoryInterface;
-    use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\CardsSettings;
-    use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\ExemptionType;
     use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentAction;
     use CAWL\OnlinePayments\Core\BusinessLogic\Domain\GeneralSettings\PaymentSettings;
     use CAWL\OnlinePayments\Core\BusinessLogic\Domain\HostedTokenization\Token;
@@ -28,7 +26,11 @@ namespace {
     use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentId;
     use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\PaymentTransaction;
     use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Payment\StatusCode;
+    use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\Cards\FlowType;
+    use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ExemptionType;
+    use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ThreeDSSettings;
     use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
+    use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductService;
     use CAWL\OnlinePayments\Core\BusinessLogic\Domain\ProductTypes\ProductType;
     use CAWL\OnlinePayments\Core\Infrastructure\Logger\Logger;
     use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
@@ -37,8 +39,6 @@ namespace {
     if (!\defined('_PS_VERSION_')) {
         exit;
     }
-    //require_once rtrim(dirname(dirname(__FILE__), '/')) . '/vendor/autoload.php';
-    //require_once rtrim(dirname(dirname(__FILE__), '/')) . '/old-vendor/autoload.php';
     /**
      * Updates module from previous versions to the version 3.0.0
      * Major update that upgrades module to a core library usage
@@ -76,6 +76,7 @@ namespace {
         try {
             $module->getInstaller()->removeControllers();
             $module->getInstaller()->removeHooks();
+            \removeOldVersionLeftoverFiles($module);
             $module->getInstaller()->install();
         } catch (\Throwable $e) {
             Logger::logError('Failed to initialize new plugin', "[{$module->name}]_upgrade_module_3_0_0", ['message' => $e->getMessage(), 'type' => \get_class($e), 'trace' => $e->getTraceAsString()]);
@@ -105,24 +106,16 @@ namespace {
         /** @var ConnectionConfigRepositoryInterface $connectionConfigRepository */
         $connectionConfigRepository = ServiceRegister::getService(ConnectionConfigRepositoryInterface::class);
         $connectionConfigRepository->saveConnection(new ConnectionDetails($mode, $liveCredentials, $testCredentials));
+        ImageHandler::copyHostedCheckoutDefaultImage($module->getLocalPath() . 'views/assets/images/payment_products/' . PaymentProductId::HOSTED_CHECKOUT . '.svg', (string) $idShop, (string) $mode);
     }
     function migrateAdvancedSettings(OnlinePaymentsModule $module, int $idShop) : void
     {
+        $paymentMethodsSettings = \json_decode(\Configuration::get(\strtoupper($module->name) . '_PAYMENT_METHODS_SETTINGS', null, null, $idShop), \true);
+        $paymentMethodsSettings = \is_array($paymentMethodsSettings) ? $paymentMethodsSettings : [];
         $advancedSettings = \json_decode(\Configuration::get(\strtoupper($module->name) . '_ADVANCED_SETTINGS', null, null, $idShop), \true);
         if (!$advancedSettings) {
             return;
         }
-        $defaultCardsSettings = new CardsSettings();
-        try {
-            $exemptionType = ExemptionType::fromState((string) $advancedSettings['threeDSExemptedType']);
-        } catch (\Throwable $e) {
-            $exemptionType = $defaultCardsSettings->getExemptionType();
-        }
-        $exemptionLimit = $defaultCardsSettings->getExemptionLimit()->getPriceInCurrencyUnits();
-        if (!empty($advancedSettings['threeDSExemptedValue'])) {
-            $exemptionLimit = $advancedSettings['threeDSExemptedValue'];
-        }
-        AdminAPI::get()->generalSettings($idShop)->saveCardsSettings(new CardsSettingsRequest(\array_key_exists('force3DsV2', $advancedSettings) ? (bool) $advancedSettings['force3DsV2'] : $defaultCardsSettings->isEnable3ds(), \array_key_exists('enforce3DS', $advancedSettings) ? (bool) $advancedSettings['enforce3DS'] : $defaultCardsSettings->isEnforceStrongAuthentication(), \array_key_exists('threeDSExempted', $advancedSettings) ? (bool) $advancedSettings['threeDSExempted'] : $defaultCardsSettings->isEnable3dsExemption(), $exemptionType->getType(), $exemptionLimit));
         /** @var StoreService $storeService */
         $storeService = ServiceRegister::getService(StoreService::class);
         $defaultMapping = $storeService->getDefaultOrderStatusMapping();
@@ -140,13 +133,18 @@ namespace {
             // Convert days to minutes
             $autocapture *= 1440;
         }
-        AdminAPI::get()->generalSettings($idShop)->savePaymentSettings(new PaymentSettingsRequest($paymentActionType->getType(), $autocapture, $defaultPaymentSettings->getPaymentAttemptsNumber()->getPaymentAttemptsNumber(), \array_key_exists('surchargingEnabled', $paymentSettings) ? (bool) $paymentSettings['surchargingEnabled'] : $defaultPaymentSettings->isApplySurcharge(), \array_key_exists('successOrderStateId', $paymentSettings) ? (string) $paymentSettings['successOrderStateId'] : $defaultMapping->getPaymentCapturedStatus(), \array_key_exists('errorOrderStateId', $paymentSettings) ? (string) $paymentSettings['errorOrderStateId'] : $defaultMapping->getPaymentErrorStatus(), \array_key_exists('pendingOrderStateId', $paymentSettings) ? (string) $paymentSettings['pendingOrderStateId'] : $defaultMapping->getPaymentPendingStatus(), $defaultMapping->getPaymentAuthorizedStatus(), $defaultMapping->getPaymentCancelledStatus(), $defaultMapping->getPaymentRefundedStatus()));
-        AdminAPI::get()->generalSettings($idShop)->saveLogSettings(new LogSettingsRequest(\array_key_exists('logsEnabled', $paymentSettings) ? (bool) $paymentSettings['logsEnabled'] : \false, 10));
+        $defaultTemplateName = '';
+        if ($paymentMethodsSettings && !empty($paymentMethodsSettings['redirectTemplateFilename'])) {
+            $defaultTemplateName = $paymentMethodsSettings['redirectTemplateFilename'];
+        }
+        AdminAPI::get()->generalSettings($idShop)->savePaymentSettings(new PaymentSettingsRequest($paymentActionType->getType(), $autocapture, $defaultPaymentSettings->getPaymentAttemptsNumber()->getPaymentAttemptsNumber(), \array_key_exists('surchargingEnabled', $advancedSettings) ? (bool) $advancedSettings['surchargingEnabled'] : $defaultPaymentSettings->isApplySurcharge(), \array_key_exists('successOrderStateId', $paymentSettings) ? (string) $paymentSettings['successOrderStateId'] : $defaultMapping->getPaymentCapturedStatus(), \array_key_exists('errorOrderStateId', $paymentSettings) ? (string) $paymentSettings['errorOrderStateId'] : $defaultMapping->getPaymentErrorStatus(), \array_key_exists('pendingOrderStateId', $paymentSettings) ? (string) $paymentSettings['pendingOrderStateId'] : $defaultMapping->getPaymentPendingStatus(), $defaultMapping->getPaymentAuthorizedStatus(), $defaultMapping->getPaymentCancelledStatus(), $defaultMapping->getPaymentRefundedStatus(), $defaultTemplateName));
+        AdminAPI::get()->generalSettings($idShop)->saveLogSettings(new LogSettingsRequest(\array_key_exists('logsEnabled', $advancedSettings) ? (bool) $advancedSettings['logsEnabled'] : \false, 10));
     }
     function migratePaymentMethodsSettings(OnlinePaymentsModule $module, int $idShop) : void
     {
         $paymentMethodsSettings = \json_decode(\Configuration::get(\strtoupper($module->name) . '_PAYMENT_METHODS_SETTINGS', null, null, $idShop), \true);
         $advancedSettings = \json_decode(\Configuration::get(\strtoupper($module->name) . '_ADVANCED_SETTINGS', null, null, $idShop), \true);
+        $advancedSettings = \is_array($advancedSettings) ? $advancedSettings : [];
         $groupCardPaymentOptions = \array_key_exists('groupCardPaymentOptions', $advancedSettings) ? (bool) $advancedSettings['groupCardPaymentOptions'] : \true;
         if (!$paymentMethodsSettings) {
             return;
@@ -173,7 +171,39 @@ namespace {
         if (!empty($paymentMethodsSettings['iframeTemplateFilename'])) {
             $hostedCheckoutMethod['template'] = $paymentMethodsSettings['iframeTemplateFilename'];
         }
-        AdminAPI::get()->payment($idShop)->save(new PaymentMethodRequest(PaymentProductId::cards()->getId(), $cardsMethod['name'], $cardsMethod['enabled'], $cardsMethod['template'], $cardsMethod['additionalData']['vaultTitleCollection']));
+        /** @var PaymentProductService $paymentProductService */
+        $paymentProductService = ServiceRegister::getService(PaymentProductService::class);
+        $groupCreditCards = \true;
+        $creditCardsFlowType = FlowType::iframe()->getType();
+        if (!$cardsMethod['enabled'] && \array_key_exists('redirectPaymentMethods', $paymentMethodsSettings)) {
+            $supportedPaymentMethods = $paymentProductService->getSupportedPaymentMethods(\true);
+            foreach ($paymentMethodsSettings['redirectPaymentMethods'] as $paymentMethodConfig) {
+                if (\in_array((string) $paymentMethodConfig['productId'], $supportedPaymentMethods, \true) && PaymentProductId::parse((string) $paymentMethodConfig['productId'])->isCardType() && \array_key_exists('enabled', $paymentMethodConfig) && $paymentMethodConfig['enabled']) {
+                    $cardsMethod['enabled'] = \true;
+                    $groupCreditCards = \false;
+                    $creditCardsFlowType = FlowType::redirect()->getType();
+                    break;
+                }
+            }
+        }
+        $paymentSettings = \array_key_exists('paymentSettings', $advancedSettings) ? $advancedSettings['paymentSettings'] : [];
+        $defaultPaymentSettings = new PaymentSettings();
+        try {
+            $paymentActionType = PaymentAction::fromState((string) $paymentSettings['transactionType']);
+        } catch (\Throwable $e) {
+            $paymentActionType = $defaultPaymentSettings->getPaymentAction();
+        }
+        $defaultThreeDSSettings = new ThreeDSSettings();
+        try {
+            $exemptionType = ExemptionType::fromState((string) $advancedSettings['threeDSExemptedType']);
+        } catch (\Throwable $e) {
+            $exemptionType = $defaultThreeDSSettings->getExemptionType();
+        }
+        $exemptionLimit = $defaultThreeDSSettings->getExemptionLimit()->getPriceInCurrencyUnits();
+        if (!empty($advancedSettings['threeDSExemptedValue'])) {
+            $exemptionLimit = $advancedSettings['threeDSExemptedValue'];
+        }
+        AdminAPI::get()->payment($idShop)->save(new PaymentMethodRequest(PaymentProductId::cards()->getId(), $cardsMethod['name'], $cardsMethod['enabled'], $cardsMethod['template'], $paymentActionType->getType(), $cardsMethod['additionalData']['vaultTitleCollection'], null, $groupCreditCards, null, null, null, null, null, null, \array_key_exists('force3DsV2', $advancedSettings) ? (bool) $advancedSettings['force3DsV2'] : $defaultThreeDSSettings->isEnable3ds(), \array_key_exists('enforce3DS', $advancedSettings) ? (bool) $advancedSettings['enforce3DS'] : $defaultThreeDSSettings->isEnforceStrongAuthentication(), \array_key_exists('threeDSExempted', $advancedSettings) ? (bool) $advancedSettings['threeDSExempted'] : $defaultThreeDSSettings->isEnable3dsExemption(), $exemptionType->getType(), $exemptionLimit, $creditCardsFlowType));
         $hostedCheckoutMethod = AdminAPI::get()->payment($idShop)->getPaymentMethod(PaymentProductId::hostedCheckout()->getId())->toArray();
         $names = [];
         foreach ($hostedCheckoutMethod['name'] as $translation) {
@@ -191,10 +221,24 @@ namespace {
         if (!empty($paymentMethodsSettings['redirectTemplateFilename'])) {
             $hostedCheckoutMethod['template'] = $paymentMethodsSettings['redirectTemplateFilename'];
         }
-        AdminAPI::get()->payment($idShop)->save(new PaymentMethodRequest(PaymentProductId::hostedCheckout()->getId(), $hostedCheckoutMethod['name'], $hostedCheckoutMethod['enabled'], $hostedCheckoutMethod['template'], [], null, $groupCardPaymentOptions));
+        $genericLogo = null;
+        $accountSettings = \json_decode(\Configuration::get(\strtoupper($module->name) . '_ACCOUNT_SETTINGS', null, null, $idShop), \true);
+        if (!empty($paymentMethodsSettings['genericLogoFilename']) && $accountSettings && !empty($accountSettings['environment'])) {
+            $mode = $accountSettings['environment'] === 'prod' ? 'live' : 'test';
+            $logoFilePath = $module->getLocalPath() . 'views/img/payment_logos/' . $paymentMethodsSettings['genericLogoFilename'];
+            if (\file_exists($logoFilePath)) {
+                list($width, $height, $logoFileType) = \getimagesize($logoFilePath);
+                if (\in_array($logoFileType, ImageHandler::AUTHORIZED_LOGO_EXTENSION)) {
+                    ImageHandler::copyHostedCheckoutDefaultImage($logoFilePath, (string) $idShop, $accountSettings['environment'] === 'prod' ? 'live' : 'test', \array_search($logoFileType, ImageHandler::AUTHORIZED_LOGO_EXTENSION));
+                    $genericLogo = ImageHandler::getImageUrl((string) PaymentProductId::hostedCheckout(), (string) $idShop, $mode);
+                }
+            }
+        }
+        AdminAPI::get()->payment($idShop)->save(new PaymentMethodRequest(PaymentProductId::hostedCheckout()->getId(), $hostedCheckoutMethod['name'], $hostedCheckoutMethod['enabled'], $hostedCheckoutMethod['template'], $paymentActionType->getType(), [], $genericLogo, $groupCardPaymentOptions, null, null, null, null, null, null, \array_key_exists('force3DsV2', $advancedSettings) ? (bool) $advancedSettings['force3DsV2'] : $defaultThreeDSSettings->isEnable3ds(), \array_key_exists('enforce3DS', $advancedSettings) ? (bool) $advancedSettings['enforce3DS'] : $defaultThreeDSSettings->isEnforceStrongAuthentication(), \array_key_exists('threeDSExempted', $advancedSettings) ? (bool) $advancedSettings['threeDSExempted'] : $defaultThreeDSSettings->isEnable3dsExemption(), $exemptionType->getType(), $exemptionLimit));
         if (\array_key_exists('redirectPaymentMethods', $paymentMethodsSettings)) {
+            $supportedPaymentMethods = $paymentProductService->getSupportedPaymentMethods(\false);
             foreach ($paymentMethodsSettings['redirectPaymentMethods'] as $paymentMethodConfig) {
-                if (!PaymentProductId::isSupported((string) $paymentMethodConfig['productId'])) {
+                if (!\in_array((string) $paymentMethodConfig['productId'], $supportedPaymentMethods, \true)) {
                     continue;
                 }
                 $paymentMethod = AdminAPI::get()->payment($idShop)->getPaymentMethod((string) $paymentMethodConfig['productId'])->toArray();
@@ -206,7 +250,40 @@ namespace {
                 if (\array_key_exists('enabled', $paymentMethodConfig) && $paymentMethodConfig['enabled']) {
                     $paymentMethod['enabled'] = \true;
                 }
-                AdminAPI::get()->payment($idShop)->save(new PaymentMethodRequest((string) $paymentMethodConfig['productId'], $paymentMethod['name'], $paymentMethod['enabled'], $hostedCheckoutMethod['template']));
+                $paymentProductId = PaymentProductId::parse((string) $paymentMethodConfig['productId']);
+                $paymentMethodRequest = new PaymentMethodRequest(
+                    (string) $paymentProductId,
+                    $paymentMethod['name'],
+                    $paymentMethod['enabled'],
+                    $hostedCheckoutMethod['template'],
+                    // Reuse hosted checkout template for all redirect payments
+                    $paymentProductId->isSeparateCaptureSupported() ? $paymentActionType->getType() : PaymentAction::authorizeCapture()->getType()
+                );
+                if (PaymentProductId::googlePay()->equals((string) $paymentMethodConfig['productId'])) {
+                    $paymentMethodRequest = new PaymentMethodRequest(
+                        (string) $paymentProductId,
+                        $paymentMethod['name'],
+                        $paymentMethod['enabled'],
+                        $hostedCheckoutMethod['template'],
+                        // Reuse hosted checkout template for all redirect payments
+                        $paymentProductId->isSeparateCaptureSupported() ? $paymentActionType->getType() : PaymentAction::authorizeCapture()->getType(),
+                        [],
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        \array_key_exists('force3DsV2', $advancedSettings) ? (bool) $advancedSettings['force3DsV2'] : $defaultThreeDSSettings->isEnable3ds(),
+                        \array_key_exists('enforce3DS', $advancedSettings) ? (bool) $advancedSettings['enforce3DS'] : $defaultThreeDSSettings->isEnforceStrongAuthentication(),
+                        \array_key_exists('threeDSExempted', $advancedSettings) ? (bool) $advancedSettings['threeDSExempted'] : $defaultThreeDSSettings->isEnable3dsExemption(),
+                        $exemptionType->getType(),
+                        $exemptionLimit
+                    );
+                }
+                AdminAPI::get()->payment($idShop)->save($paymentMethodRequest);
             }
         }
     }
@@ -354,5 +431,25 @@ namespace {
             $record['index_' . $index] = $value !== null ? \pSQL($value, \true) : null;
         }
         return $record;
+    }
+    function removeOldVersionLeftoverFiles(OnlinePaymentsModule $module)
+    {
+        \deleteLeftoverDirectories($module);
+        \deleteLeftoverFiles($module);
+    }
+    function deleteLeftoverDirectories(OnlinePaymentsModule $module)
+    {
+        $directories = ['config', 'install', 'src', "views/templates/admin/{$module->name}_configuration"];
+        foreach ($directories as $directory) {
+            \Tools::deleteDirectory($module->getLocalPath() . $directory);
+        }
+    }
+    function deleteLeftoverFiles(OnlinePaymentsModule $module)
+    {
+        $adminControllerPrefix = \ucfirst($module->name);
+        $files = ['classes/CreatedPayment.php', 'classes/HostedCheckout.php', 'classes/WorldlineopCartChecksum.php', 'classes/WorldlineopToken.php', 'classes/WorldlineopTransaction.php', "controllers/admin/Admin{$adminControllerPrefix}AjaxController.php", "controllers/admin/Admin{$adminControllerPrefix}AjaxTransactionController.php", "controllers/admin/Admin{$adminControllerPrefix}ConfigurationController.php", "controllers/admin/Admin{$adminControllerPrefix}LogsController.php", 'controllers/front/croncapture.php', 'controllers/front/cronpending.php', 'controllers/front/rejected.php', 'upgrade/upgrade-1.1.0.php', 'upgrade/upgrade-1.2.0.php', 'upgrade/upgrade-1.3.1.php', 'upgrade/upgrade-1.4.0.php', 'upgrade/upgrade-2.0.2.php', 'views/assets/_advancedSettings.scss', 'views/assets/_header.scss', 'views/assets/_paymentMethodsSettings.scss', 'views/assets/_upload.scss', 'views/assets/config.scss', 'views/assets/front.scss', 'views/assets/storedcards.scss', 'views/css/config.css', 'views/templates/front/rejected.tpl'];
+        foreach ($files as $file) {
+            \Tools::deleteFile($module->getLocalPath() . $file);
+        }
     }
 }

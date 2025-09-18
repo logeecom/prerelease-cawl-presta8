@@ -11,7 +11,7 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  */
 class ImageHandler
 {
-    protected const AUTHORIZED_LOGO_EXTENSION = ['png' => \IMAGETYPE_PNG, 'gif' => \IMAGETYPE_GIF, 'jpg' => \IMAGETYPE_JPEG];
+    public const AUTHORIZED_LOGO_EXTENSION = ['png' => \IMAGETYPE_PNG, 'gif' => \IMAGETYPE_GIF, 'jpg' => \IMAGETYPE_JPEG];
     /**
      * @param string $file
      * @param string $fileName
@@ -43,7 +43,7 @@ class ImageHandler
         }
         return \move_uploaded_file($file, \_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.' . $fileType);
     }
-    public static function copyHostedCheckoutDefaultImage(string $path, string $storeId, string $mode) : bool
+    public static function copyHostedCheckoutDefaultImage(string $path, string $storeId, string $mode, string $fileType = 'svg') : bool
     {
         /** @var Module $module */
         $module = ServiceRegister::getService(Module::class);
@@ -56,7 +56,7 @@ class ImageHandler
         if (!\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode)) {
             \mkdir(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode);
         }
-        return \copy($path, \_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/hosted_checkout.svg');
+        return \copy($path, \_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/hosted_checkout.' . $fileType);
     }
     /**
      * @param string $fileName
@@ -125,8 +125,6 @@ class ImageHandler
     public static function removeOnlinePaymentsDirectory() : void
     {
         $module = ServiceRegister::getService(Module::class);
-        if (\file_exists(\_PS_IMG_DIR_ . $module->name)) {
-            \rmdir(\_PS_IMG_DIR_ . $module->name);
-        }
+        \Tools::deleteDirectory(\_PS_IMG_DIR_ . $module->name);
     }
 }
