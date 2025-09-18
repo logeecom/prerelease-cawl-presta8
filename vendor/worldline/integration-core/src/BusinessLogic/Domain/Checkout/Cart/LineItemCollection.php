@@ -41,6 +41,18 @@ class LineItemCollection
     {
         return \count($this->lineItems);
     }
+    public function getQuantitySum() : int
+    {
+        if (empty($this->lineItems)) {
+            return 0;
+        }
+        return \array_reduce($this->lineItems, function (?int $quantitySum, LineItem $lineItem) {
+            if (null === $quantitySum) {
+                return $lineItem->getQuantity();
+            }
+            return $quantitySum + $lineItem->getQuantity();
+        });
+    }
     public function isEmpty() : bool
     {
         return empty($this->lineItems);

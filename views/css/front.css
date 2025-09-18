@@ -7,14 +7,6 @@
     width: 100%
 }
 
-#checkout-payment-step .online-payments-htp-btn.disabled button {
-    display: none
-}
-
-#checkout-payment-step .online-payments-token-htp-btn.disabled button {
-    display: none
-}
-
 #checkout-payment-step .payment-option img[src*="payment_products"] {
     height: 20px;
 }

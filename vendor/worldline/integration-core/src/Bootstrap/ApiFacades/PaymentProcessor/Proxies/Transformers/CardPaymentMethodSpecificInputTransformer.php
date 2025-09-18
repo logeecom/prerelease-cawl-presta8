@@ -48,7 +48,7 @@ class CardPaymentMethodSpecificInputTransformer
             $paymentProduct130SpecificInput = new PaymentProduct130SpecificInput();
             $paymentProduct130ThreeDSecure = new PaymentProduct130SpecificThreeDSecure();
             $paymentProduct130ThreeDSecure->setUsecase('single-amount');
-            $paymentProduct130ThreeDSecure->setNumberOfItems(\min($cart->getLineItems()->getCount(), 99));
+            $paymentProduct130ThreeDSecure->setNumberOfItems(\min($cart->getLineItems()->getQuantitySum(), 99));
             $paymentProduct130ThreeDSecure->setAcquirerExemption($threeDSecure->getSkipAuthentication());
             $paymentProduct130SpecificInput->setThreeDSecure($paymentProduct130ThreeDSecure);
             $cardPaymentMethodSpecificInput->setPaymentProduct130SpecificInput($paymentProduct130SpecificInput);
