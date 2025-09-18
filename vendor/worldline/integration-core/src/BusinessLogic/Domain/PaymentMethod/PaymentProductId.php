@@ -81,9 +81,9 @@ class PaymentProductId
         }
         return new self($id);
     }
-    public static function getForHostedCheckoutPage() : array
+    public static function getForHostedCheckoutPage(array $supportedPaymentProducts) : array
     {
-        return \array_diff(self::SUPPORTED_PAYMENT_PRODUCTS, [self::CARDS, self::HOSTED_CHECKOUT, self::MEALVOUCHERS]);
+        return \array_diff($supportedPaymentProducts, [self::CARDS, self::HOSTED_CHECKOUT, self::MEALVOUCHERS]);
     }
     public static function isSupported(string $id) : bool
     {

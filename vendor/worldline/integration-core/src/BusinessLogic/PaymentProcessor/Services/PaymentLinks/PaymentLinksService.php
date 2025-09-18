@@ -15,6 +15,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentLinks\Repositories\Paym
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\MethodAdditionalData\ThreeDSSettings\ThreeDSSettings;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentMethodCollection;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductId;
+use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\PaymentProductService;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\PaymentMethod\ThreeDSSettingsService;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Proxies\PaymentLinksProxyInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\PaymentProcessor\Services\PaymentMethod\PaymentMethodService;
@@ -32,7 +33,8 @@ class PaymentLinksService
     private PaymentLinkRepositoryInterface $paymentLinkRepository;
     private PaymentTransactionRepositoryInterface $paymentTransactionRepository;
     private PaymentMethodService $paymentMethodService;
-    public function __construct(PaymentLinksProxyInterface $paymentLinksProxy, ThreeDSSettingsService $threeDSSettingsService, PaymentSettingsRepositoryInterface $paymentSettingsRepository, PayByLinkSettingsRepositoryInterface $payByLinkSettingsRepository, PaymentLinkRepositoryInterface $paymentLinkRepository, PaymentTransactionRepositoryInterface $paymentTransactionRepository, PaymentMethodService $paymentMethodService)
+    private PaymentProductService $paymentProductService;
+    public function __construct(PaymentLinksProxyInterface $paymentLinksProxy, ThreeDSSettingsService $threeDSSettingsService, PaymentSettingsRepositoryInterface $paymentSettingsRepository, PayByLinkSettingsRepositoryInterface $payByLinkSettingsRepository, PaymentLinkRepositoryInterface $paymentLinkRepository, PaymentTransactionRepositoryInterface $paymentTransactionRepository, PaymentMethodService $paymentMethodService, PaymentProductService $paymentProductService)
     {
         $this->paymentLinksProxy = $paymentLinksProxy;
         $this->threeDSSettingsService = $threeDSSettingsService;
@@ -41,10 +43,11 @@ class PaymentLinksService
         $this->paymentLinkRepository = $paymentLinkRepository;
         $this->paymentTransactionRepository = $paymentTransactionRepository;
         $this->paymentMethodService = $paymentMethodService;
+        $this->paymentProductService = $paymentProductService;
     }
     public function create(PaymentLinkRequest $request) : PaymentLinkResponse
     {
-        $response = $this->paymentLinksProxy->create($request, $this->getThreeDSSettings(), $this->getPaymentSettings(), $this->getPayByLinkSettings(), $this->getPaymentMethods($request->getCartProvider()));
+        $response = $this->paymentLinksProxy->create($request, $this->getThreeDSSettings(), $this->getPaymentSettings(), $this->getPayByLinkSettings(), $this->getPaymentMethods($request->getCartProvider()), $this->paymentProductService->getSupportedPaymentMethods());
         $this->paymentLinkRepository->save($response->getPaymentLink());
         $this->paymentTransactionRepository->save(PaymentTransaction::createFromPaymentLink($response->getPaymentLink()));
         return $response;

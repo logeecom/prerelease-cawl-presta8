@@ -44,7 +44,7 @@ class CreateHostedCheckoutRequestTransformer
         }
         $filters = new PaymentProductFiltersHostedCheckout();
         $productFilter = new PaymentProductFilter();
-        $productFilter->setProducts(\array_map('intval', $supportedPaymentMethods));
+        $productFilter->setProducts(\array_map('intval', PaymentProductId::getForHostedCheckoutPage($supportedPaymentMethods)));
         if (null !== $input->getPaymentProductId() && !$paymentProductId->equals(PaymentProductId::cards())) {
             $productFilter->setProducts([(int) $input->getPaymentProductId()->getId()]);
         }
