@@ -19,6 +19,7 @@ use Tools;
  */
 class PaymentsController extends ModuleAdminController
 {
+    protected const AUTHORIZED_LOGO_EXTENSION = ['png' => \IMAGETYPE_PNG, 'gif' => \IMAGETYPE_GIF, 'jpg' => \IMAGETYPE_JPEG];
     public function displayAjaxList()
     {
         $storeId = Tools::getValue('storeId');
@@ -54,7 +55,11 @@ class PaymentsController extends ModuleAdminController
         $mode = StoreContext::doWithStore($storeId, function () use($activeConnectionProvider) {
             return (string) $activeConnectionProvider->get()->getMode();
         });
-        if ($file && !ImageHandler::saveImage($file['tmp_name'], $requestData['paymentProductId'], $storeId, $mode)) {
+        list($width, $height, $fileType) = \getimagesize($file['tmp_name']);
+        if (!\in_array($fileType, self::AUTHORIZED_LOGO_EXTENSION)) {
+            throw new \Exception($this->module->l('Logo: You must submit .png, .gif, or .jpg files only.', 'PaymentMethodsSettingsUpdater'));
+        }
+        if ($file && !ImageHandler::saveImage($file['tmp_name'], $requestData['paymentProductId'], $storeId, $mode, \array_search($fileType, self::AUTHORIZED_LOGO_EXTENSION))) {
             OnlinePaymentsPrestaShopUtility::die400(['message' => 'Error occurred while saving a payment method image']);
         }
         $translations = \json_decode($requestData['name'], \true);

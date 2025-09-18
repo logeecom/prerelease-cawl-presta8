@@ -19,7 +19,7 @@ class ImageHandler
      *
      * @return bool
      */
-    public static function saveImage(string $file, string $fileName, string $storeId, string $mode) : bool
+    public static function saveImage(string $file, string $fileName, string $storeId, string $mode, string $fileType) : bool
     {
         /** @var Module $module */
         $module = ServiceRegister::getService(Module::class);
@@ -32,7 +32,10 @@ class ImageHandler
         if (!\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode)) {
             \mkdir(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode);
         }
-        return \move_uploaded_file($file, \_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png');
+        if (static::getImageUrl($fileName, $storeId, $mode)) {
+            static::removeImage($fileName, $storeId, $mode);
+        }
+        return \move_uploaded_file($file, \_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.' . $fileType);
     }
     public static function copyHostedCheckoutDefaultImage(string $path, string $storeId, string $mode) : bool
     {
@@ -61,10 +64,17 @@ class ImageHandler
         /** @var Module $module */
         $module = ServiceRegister::getService(Module::class);
         $shop = new \Shop($storeId);
-        if (!\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png')) {
-            return '';
+        $url = '';
+        if (\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png')) {
+            return $url = $shop->getBaseURL() . 'img/' . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png';
         }
-        return $shop->getBaseURL() . 'img/' . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png';
+        if (\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.jpg')) {
+            return $url = $shop->getBaseURL() . 'img/' . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.jpg';
+        }
+        if (\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.gif')) {
+            return $url = $shop->getBaseURL() . 'img/' . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.gif';
+        }
+        return $url;
     }
     /**
      * @param string $fileName
@@ -78,6 +88,12 @@ class ImageHandler
         $module = ServiceRegister::getService(Module::class);
         if (\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png')) {
             \unlink(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.png');
+        }
+        if (\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.jpg')) {
+            \unlink(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.jpg');
+        }
+        if (\file_exists(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.gif')) {
+            \unlink(\_PS_IMG_DIR_ . $module->name . '/' . $storeId . '/' . $mode . '/' . $fileName . '.gif');
         }
     }
     /**

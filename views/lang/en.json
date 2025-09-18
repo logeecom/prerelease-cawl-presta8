@@ -35,10 +35,6 @@
     "monitoring": "Monitoring",
     "settings": "Settings",
     "copied": "Copied!",
-    "mode": {
-      "test": "Sandbox mode",
-      "live": "Live mode"
-    },
     "version": {
       "update": "Please update to the latest %s version."
     },
@@ -66,42 +62,18 @@
         "invalidSettings": "Connection settings are not valid.",
         "testKeyChanged": "Test api key has been changed.",
         "liveKeyChanged": "Live api key has been changed."
-      },
-      "payments": {
-        "requiredFieldsError": "Method id and code fields are required.",
-        "notConfigured": "Payment method with id %s is not configured",
-        "emptyDataError": "Empty payment method data.",
-        "failedToRetrieveMethods": "Failed to retrieve payment methods.",
-        "saveFailed": "Failed to save payment method.",
-        "updateFailed": "Failed to update payment method.",
-        "deleteFailed": "Failed to remove payment method."
-      },
-      "generalSettings": {
-        "captureDelayError": "Number of days must be between 1 and 7.",
-        "retentionPeriodError": "Minimum number of retention period is 60."
       }
-    },
-    "selectedItems": "%s items selected"
-  },
-  "maintenance": {
-    "title": "Store maintenance mode has been detected"
+    }
   },
   "validation": {
     "requiredField": "This field is required.",
-    "invalidField": "This field is invalid.",
-    "invalidEmail": "This field must be a valid email.",
     "maxLength": "The field cannot have more than %s characters.",
-    "numeric": "Value must be a valid number with max two decimals.",
     "greaterThanZero": "Value must be greater than 0.",
     "nonNegative": "Field cannot have a negative value.",
-    "numberOfDecimalPlaces": "Field must have 2 decimal places.",
     "integer": "Field must be an integer.",
     "invalidNumberInList": "Each value must be a positive number.",
     "invalidWholeNumberInList": "Each value must be a positive whole number.",
     "duplicateNumberInList": "The list cannot contain duplicate values.",
-    "invalidUrl": "Field must be a valid URL.",
-    "invalidFieldValue": "Field must be set to \"%s\".",
-    "invalidMaxValue": "Maximal allowed value is %s.",
     "invalidImageType": "Provide a file in one of the supported image types (PNG, JPG, SVG).",
     "invalidImageSize": "The provided file exceeds the limit of 10MB."
   },
