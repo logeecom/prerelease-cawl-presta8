@@ -112,7 +112,7 @@
                                     <p class="text-muted mb-0"><strong>{l s='Payment Method' mod="{$settingsData.moduleName}"}</strong></p>
                                     <img src="{$settingsData.pathImg|escape:'htmlall':'UTF-8'}payment_products/{$payment.productId|intval}.svg"
                                          alt="{$payment.productName}"
-                                         style="height: 30px;"/>
+                                         style="height:{($payment.productId|intval == 320) ? 25 : 30}px;"/>
                                 </div>
                                 <div id="" class="col-sm text-center">
                                     <p class="text-muted mb-0"><strong>{l s='Fraud result' mod="{$settingsData.moduleName}"}</strong></p>

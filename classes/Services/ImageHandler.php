@@ -11,6 +11,7 @@ use CAWL\OnlinePayments\Core\Infrastructure\ServiceRegister;
  */
 class ImageHandler
 {
+    protected const AUTHORIZED_LOGO_EXTENSION = ['png' => \IMAGETYPE_PNG, 'gif' => \IMAGETYPE_GIF, 'jpg' => \IMAGETYPE_JPEG];
     /**
      * @param string $file
      * @param string $fileName
@@ -19,8 +20,13 @@ class ImageHandler
      *
      * @return bool
      */
-    public static function saveImage(string $file, string $fileName, string $storeId, string $mode, string $fileType) : bool
+    public static function saveImage(string $file, string $fileName, string $storeId, string $mode) : bool
     {
+        list($width, $height, $fileTypeKey) = \getimagesize($file);
+        if (!\in_array($fileTypeKey, self::AUTHORIZED_LOGO_EXTENSION)) {
+            return \false;
+        }
+        $fileType = \array_search($fileTypeKey, self::AUTHORIZED_LOGO_EXTENSION);
         /** @var Module $module */
         $module = ServiceRegister::getService(Module::class);
         if (!\file_exists(\_PS_IMG_DIR_ . $module->name)) {

@@ -65,14 +65,20 @@ class CreateHostedCheckoutRequestTransformer
         $cardPaymentMethodSpecificInput = CardPaymentMethodSpecificInputTransformer::transform($cart, $input->getReturnUrl(), $cardsSettings, $paymentSettings, $paymentMethodCollection, $input->getPaymentProductId(), $token);
         $request->setCardPaymentMethodSpecificInput($cardPaymentMethodSpecificInput);
         $mobilePaymentMethodSpecificInput = new MobilePaymentMethodSpecificInput();
-        $mobilePaymentMethodSpecificInput->setAuthorizationMode($config->getPaymentAction() ? $config->getPaymentAction()->getType() : $paymentSettings->getPaymentAction()->getType());
+        $mobilePaymentMethodSpecificInput->setAuthorizationMode(PaymentAction::authorizeCapture()->getType());
+        if ($paymentProductId !== null && $paymentProductId->isSeparateCaptureSupported()) {
+            $mobilePaymentMethodSpecificInput->setAuthorizationMode($config->getPaymentAction() ? $config->getPaymentAction()->getType() : $paymentSettings->getPaymentAction()->getType());
+        }
         if (null !== $input->getPaymentProductId() && $input->getPaymentProductId()->isMobileType()) {
             $mobilePaymentMethodSpecificInput->setPaymentProductId($input->getPaymentProductId()->getId());
         }
         $mobilePaymentMethodSpecificInput->setPaymentProduct320SpecificInput(GooglePaySpecificRequestTransformer::transform($cardPaymentMethodSpecificInput));
         $request->setMobilePaymentMethodSpecificInput($mobilePaymentMethodSpecificInput);
         $redirectPaymentMethodSpecificInput = new RedirectPaymentMethodSpecificInput();
-        $redirectPaymentMethodSpecificInput->setRequiresApproval(PaymentAction::authorize()->equals($paymentSettings->getPaymentAction()));
+        $redirectPaymentMethodSpecificInput->setRequiresApproval(\false);
+        if ($paymentProductId !== null && $paymentProductId->isSeparateCaptureSupported()) {
+            $redirectPaymentMethodSpecificInput->setRequiresApproval(PaymentAction::authorize()->equals($config->getPaymentAction() ?: $paymentSettings->getPaymentAction()));
+        }
         if ($input->getPaymentProductId() !== null && $input->getPaymentProductId()->equals(PaymentProductId::mealvouchers())) {
             $redirectPaymentProduct5402SpecificInput = new RedirectPaymentProduct5402SpecificInput();
             $redirectPaymentProduct5402SpecificInput->setCompleteRemainingPaymentAmount(\true);
