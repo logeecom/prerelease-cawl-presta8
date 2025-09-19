@@ -11,8 +11,7 @@
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *
  *}
-
-{if isset($transactionData.payment) || isset($paymentLinkData.redirectUrl) || isset($paymentLinkData.displayButton) || !empty($errorMessages)}
+{if isset($transactionData.payment) || isset($paymentLinkData.redirectUrl) || $paymentLinkData.displayButton || !empty($errorMessages)}
     <div id="{$settingsData.moduleName}-admin-order" class="card">
         <h3 class="card-header">
             <img style="height: 22px;"
