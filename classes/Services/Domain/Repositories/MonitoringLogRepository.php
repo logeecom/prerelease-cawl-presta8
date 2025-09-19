@@ -3,6 +3,7 @@
 namespace CAWL\OnlinePayments\Classes\Services\Domain\Repositories;
 
 use Context;
+use DateTime;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\MonitoringLogRepository as CoreMonitoringLogRepository;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\MonitoringLog;
 use Order;
@@ -39,5 +40,9 @@ class MonitoringLogRepository extends CoreMonitoringLogRepository
     public function getOrderIdByCartId(string $cartId) : string
     {
         return Order::getIdByCartId((int) $cartId);
+    }
+    public function count(?DateTime $disconnectTime = null, string $searchTerm = '') : int
+    {
+        return $this->repository->countLogs($disconnectTime, $searchTerm);
     }
 }

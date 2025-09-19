@@ -115,12 +115,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:logeecom\/worldline-direct-core.git",
-                "reference": "bc7ed1b88095e69465a216f22eb9d7b2e8d460a2"
+                "reference": "2b5da41fc0e727f30afce17eede12e5fc690d94a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https:\/\/api.github.com\/repos\/logeecom\/worldline-direct-core\/zipball\/bc7ed1b88095e69465a216f22eb9d7b2e8d460a2",
-                "reference": "bc7ed1b88095e69465a216f22eb9d7b2e8d460a2",
+                "url": "https:\/\/api.github.com\/repos\/logeecom\/worldline-direct-core\/zipball\/2b5da41fc0e727f30afce17eede12e5fc690d94a",
+                "reference": "2b5da41fc0e727f30afce17eede12e5fc690d94a",
                 "shasum": ""
             },
             "require": {
@@ -136,7 +136,7 @@
                 "phpunit\/phpunit": "^8.5",
                 "symfony\/console": "^5.4"
             },
-            "time": "2025-09-19T09:05:07+00:00",
+            "time": "2025-09-19T08:06:38+00:00",
             "default-branch": true,
             "type": "library",
             "installation-source": "dist",

@@ -3,8 +3,11 @@
 namespace CAWL\OnlinePayments\Classes\Services\Domain\Repositories;
 
 use Context;
+use DateTime;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\WebhookLogRepository as CoreWebhookLogRepository;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\WebhookLog;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\EntityClassException;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
 use Order;
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 /**
@@ -39,5 +42,19 @@ class WebhookLogRepository extends CoreWebhookLogRepository
     public function getOrderIdByCartId(string $cartId) : string
     {
         return Order::getIdByCartId((int) $cartId);
+    }
+    /**
+     *
+     * @param DateTime|null $disconnectTime
+     * @param string $searchTerm
+     *
+     * @return int
+     *
+     * @throws QueryFilterInvalidParamException
+     * @throws EntityClassException
+     */
+    public function count(?DateTime $disconnectTime = null, string $searchTerm = '') : int
+    {
+        return $this->repository->countLogs($disconnectTime, $searchTerm);
     }
 }
