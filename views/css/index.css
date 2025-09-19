@@ -3302,6 +3302,10 @@ ul.op-bullet-list li {
   display: inline-block;
   width: 34px;
   height: 17px;
+  margin-top: 4px;
+}
+#op-page .op-toggle.op-has-description {
+  margin-top: 14px;
 }
 #op-page .op-toggle input {
   opacity: 0;
@@ -3407,7 +3411,6 @@ ul.op-bullet-list li {
 #op-page .op-field-wrapper.opt--checkbox .op-checkbox-field-wrapper {
   display: flex;
   flex-direction: row;
-  align-items: center;
   width: 100%;
 }
 #op-page .op-field-wrapper.opt--checkbox .opp-field-title {

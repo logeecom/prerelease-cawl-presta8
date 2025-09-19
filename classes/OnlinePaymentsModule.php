@@ -124,8 +124,9 @@ class OnlinePaymentsModule extends \PaymentModule
         $definition = $params['definition'];
         /** @var \PrestaShop\PrestaShop\Core\Grid\Column\ColumnCollection */
         $columns = $definition->getColumns();
-        $columnPaymentReference = new \PrestaShop\PrestaShop\Core\Grid\Column\Type\Common\DataColumn('online_payments_payment_reference');
-        $columnPaymentReference->setName($this->getConfig()['PAYMENT_REFERENCE_PREFIX'] . ' ' . $this->trans($this->l('Payment Reference')))->setOptions(array('field' => 'paymentReference', 'sortable' => \false));
+        $config = $this->getConfig();
+        $columnPaymentReference = new \PrestaShop\PrestaShop\Core\Grid\Column\Type\Common\DataColumn($config['MODULE_NAME'] . '_payment_reference');
+        $columnPaymentReference->setName($this->getConfig()['PAYMENT_REFERENCE_PREFIX'] . ' ' . $this->trans($this->l('Payment Reference')))->setOptions(array('field' => $config['MODULE_NAME'] . 'paymentReference', 'sortable' => \false));
         $columns->addAfter('payment', $columnPaymentReference);
         $definition->setColumns($columns);
     }
@@ -141,9 +142,10 @@ class OnlinePaymentsModule extends \PaymentModule
     {
         $records = $params['presented_grid']['data']['records']->all();
         $transactionRepository = ServiceRegister::getService(PaymentTransactionRepositoryInterface::class);
+        $config = $this->getConfig();
         foreach ($records as &$record) {
             if ((new Order((int) $record['id_order']))->module !== $this->name) {
-                $record['paymentReference'] = '--';
+                $record[$config['MODULE_NAME'] . 'paymentReference'] = '--';
                 continue;
             }
             $order = new Order((int) $record['id_order']);
@@ -151,10 +153,10 @@ class OnlinePaymentsModule extends \PaymentModule
                 return $transactionRepository->getByMerchantReference($order->id_cart);
             });
             if (empty($transaction)) {
-                $record['paymentReference'] = '--';
+                $record[$config['MODULE_NAME'] . 'paymentReference'] = '--';
                 continue;
             }
-            $record['paymentReference'] = (string) $transaction->getPaymentId();
+            $record[$config['MODULE_NAME'] . 'paymentReference'] = (string) $transaction->getPaymentId();
         }
         $params['presented_grid']['data']['records'] = new \PrestaShop\PrestaShop\Core\Grid\Record\RecordCollection($records);
     }
@@ -303,7 +305,7 @@ class OnlinePaymentsModule extends \PaymentModule
         if (!\Validate::isLoadedObject($order)) {
             throw new \Exception("Module {$this->name}: Cannot load order");
         }
-        if ($order->id_shop != $this->context->shop->id || \Shop::getContext() !== \Shop::CONTEXT_SHOP) {
+        if ($order->module === $this->name && ($order->id_shop != $this->context->shop->id || \Shop::getContext() !== \Shop::CONTEXT_SHOP)) {
             return $this->displayError(\sprintf($this->l('Please change shop context to shop ID %d'), $order->id_shop));
         }
         try {

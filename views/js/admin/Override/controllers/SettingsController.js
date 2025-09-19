@@ -670,7 +670,6 @@ if (!window.OnlinePaymentsFE) {
                                     type: 'checkbox',
                                     className: '',
                                     label: `generalSettings.logSettings.debugMode.title`,
-                                    description: `generalSettings.logSettings.debugMode.description`,
                                     onChange: (value) => handleLogSettingsChange('debugMode', value)
                                 },
                                 {
