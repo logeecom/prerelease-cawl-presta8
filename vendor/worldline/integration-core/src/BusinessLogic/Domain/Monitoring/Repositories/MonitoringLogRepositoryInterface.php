@@ -31,10 +31,11 @@ interface MonitoringLogRepositoryInterface
     public function getAllLogs() : array;
     /**
      * @param DateTime|null $disconnectTime
+     * @param string $searchTerm
      *
      * @return int
      */
-    public function count(?DateTime $disconnectTime = null) : int;
+    public function count(?DateTime $disconnectTime = null, string $searchTerm = '') : int;
     /**
      * @param DateTime $beforeDate
      * @param string $mode

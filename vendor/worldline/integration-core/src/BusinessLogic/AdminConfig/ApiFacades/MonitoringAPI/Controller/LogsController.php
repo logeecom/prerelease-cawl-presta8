@@ -38,7 +38,7 @@ class LogsController
      */
     public function getMonitoringLogs(int $pageNumber = 1, int $pageSize = 10, string $searchTerm = '') : MonitoringLogsResponse
     {
-        $numberOfItems = $this->monitoringLogsService->count();
+        $numberOfItems = $this->monitoringLogsService->count($searchTerm);
         return new MonitoringLogsResponse($this->monitoringLogsService->getLogs($pageNumber, $pageSize, $searchTerm), $this->hasNextPage($pageNumber, $pageSize, $numberOfItems), ($pageNumber - 1) * $pageSize + 1, $pageNumber * $pageSize > $numberOfItems ? $numberOfItems : $pageNumber * $pageSize, $numberOfItems);
     }
     /**
@@ -59,7 +59,7 @@ class LogsController
      */
     public function getWebhookLogs(int $pageNumber = 1, int $pageSize = 10, string $searchTerm = '') : WebhookLogsResponse
     {
-        $numberOfItems = $this->webhookLogsService->count();
+        $numberOfItems = $this->webhookLogsService->count($searchTerm);
         return new WebhookLogsResponse($this->webhookLogsService->getLogs($pageNumber, $pageSize, $searchTerm), $this->hasNextPage($pageNumber, $pageSize, $numberOfItems), ($pageNumber - 1) * $pageSize + 1, $pageNumber * $pageSize > $numberOfItems ? $numberOfItems : $pageNumber * $pageSize, $numberOfItems);
     }
     /**

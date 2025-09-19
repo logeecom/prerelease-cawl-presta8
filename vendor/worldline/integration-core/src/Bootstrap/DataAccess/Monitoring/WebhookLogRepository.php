@@ -12,6 +12,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\Reposi
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\WebhookLogRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\WebhookLog;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\EntityClassException;
 use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
 use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\Operators;
 use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
@@ -22,10 +23,10 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
  */
 class WebhookLogRepository implements WebhookLogRepositoryInterface
 {
-    private RepositoryWithAdvancedSearchInterface $repository;
-    private StoreContext $storeContext;
-    private ActiveConnectionProvider $activeConnectionProvider;
-    private LogSettingsRepositoryInterface $logSettingsRepository;
+    protected RepositoryWithAdvancedSearchInterface $repository;
+    protected StoreContext $storeContext;
+    protected ActiveConnectionProvider $activeConnectionProvider;
+    protected LogSettingsRepositoryInterface $logSettingsRepository;
     /**
      * @param RepositoryWithAdvancedSearchInterface $repository
      * @param StoreContext $storeContext
@@ -108,13 +109,16 @@ class WebhookLogRepository implements WebhookLogRepositoryInterface
         return $result;
     }
     /**
+     *
      * @param DateTime|null $disconnectTime
+     * @param string $searchTerm
      *
      * @return int
      *
      * @throws QueryFilterInvalidParamException
+     * @throws EntityClassException
      */
-    public function count(?DateTime $disconnectTime = null) : int
+    public function count(?DateTime $disconnectTime = null, string $searchTerm = '') : int
     {
         $activeConnection = $this->activeConnectionProvider->get();
         if (null === $activeConnection) {
@@ -124,6 +128,9 @@ class WebhookLogRepository implements WebhookLogRepositoryInterface
         $queryFilter->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())->where('mode', Operators::EQUALS, (string) $activeConnection->getMode());
         if ($disconnectTime) {
             $queryFilter->where('createdAt', Operators::GREATER_THAN, $disconnectTime->getTimestamp());
+        }
+        if ($searchTerm) {
+            $queryFilter->where('orderId', Operators::LIKE, '%' . $searchTerm . '%')->where('paymentNumber', Operators::LIKE, '%' . $searchTerm . '%');
         }
         return $this->repository->count($queryFilter);
     }

@@ -14,6 +14,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\MonitoringLog;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\MonitoringLogRepositoryInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\RepositoryWithAdvancedSearchInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\EntityClassException;
 use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
 use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\Operators;
 use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
@@ -24,11 +25,11 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
  */
 class MonitoringLogRepository implements MonitoringLogRepositoryInterface
 {
-    private RepositoryWithAdvancedSearchInterface $repository;
-    private StoreContext $storeContext;
-    private ActiveConnectionProvider $activeConnectionProvider;
-    private ActiveBrandProviderInterface $activeBrandProvider;
-    private LogSettingsRepositoryInterface $logSettingsRepository;
+    protected RepositoryWithAdvancedSearchInterface $repository;
+    protected StoreContext $storeContext;
+    protected ActiveConnectionProvider $activeConnectionProvider;
+    protected ActiveBrandProviderInterface $activeBrandProvider;
+    protected LogSettingsRepositoryInterface $logSettingsRepository;
     /**
      * @param RepositoryWithAdvancedSearchInterface $repository
      * @param StoreContext $storeContext
@@ -135,12 +136,14 @@ class MonitoringLogRepository implements MonitoringLogRepositoryInterface
     }
     /**
      * @param DateTime|null $disconnectTime
+     * @param string $searchTerm
      *
      * @return int
      *
      * @throws QueryFilterInvalidParamException
+     * @throws EntityClassException
      */
-    public function count(?DateTime $disconnectTime = null) : int
+    public function count(?DateTime $disconnectTime = null, string $searchTerm = '') : int
     {
         $activeConnection = $this->activeConnectionProvider->get();
         if (null === $activeConnection) {
@@ -150,6 +153,9 @@ class MonitoringLogRepository implements MonitoringLogRepositoryInterface
         $queryFilter->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())->where('mode', Operators::EQUALS, (string) $activeConnection->getMode());
         if ($disconnectTime) {
             $queryFilter->where('createdAt', Operators::LESS_THAN, $disconnectTime->getTimestamp());
+        }
+        if ($searchTerm) {
+            $queryFilter->where('orderId', Operators::LIKE, '%' . $searchTerm . '%')->where('paymentNumber', Operators::LIKE, '%' . $searchTerm . '%')->where('message', Operators::LIKE, '%' . $searchTerm . '%');
         }
         return $this->repository->count($queryFilter);
     }
