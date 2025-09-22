@@ -8,6 +8,7 @@ use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Connection\ActiveConnectionPro
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Monitoring\Repositories\RepositoryWithAdvancedSearchInterface;
 use CAWL\OnlinePayments\Core\BusinessLogic\Domain\Multistore\StoreContext;
 use CAWL\OnlinePayments\Core\Infrastructure\ORM\Entity;
+use CAWL\OnlinePayments\Core\Infrastructure\ORM\Exceptions\QueryFilterInvalidParamException;
 use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\Operators;
 use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
 use CAWL\OnlinePayments\Core\Infrastructure\ORM\Utility\IndexHelper;
@@ -35,15 +36,13 @@ class MonitoringLogsRepository extends BaseRepositoryWithConditionalDelete imple
         $provider = ServiceRegister::getService(ActiveBrandProviderInterface::class);
         return \strtolower($provider->getActiveBrand()->getCode()) . '_' . self::TABLE_NAME;
     }
-    public function getLogs(int $pageNumber, int $pageSize, string $searchTerm) : array
+    public function getLogs(int $pageNumber, int $pageSize, string $searchTerm, ?DateTime $disconnectTime = null) : array
     {
         /** @var Entity $entity */
         $entity = new $this->entityClass();
         $cartId = \Cart::getCartIdByOrderId(pSQL($searchTerm));
-        /** @var ActiveConnectionProvider $activeConnectionProvider */
-        $activeConnectionProvider = ServiceRegister::getService(ActiveConnectionProvider::class);
-        $queryFilter = new QueryFilter();
-        $queryFilter->where('storeId', Operators::EQUALS, StoreContext::getInstance()->getStoreId())->where('mode', Operators::EQUALS, (string) $activeConnectionProvider->get()->getMode())->setOffset(($pageNumber - 1) * $pageSize)->setLimit($pageSize)->orderBy('createdAt', 'DESC');
+        $queryFilter = $this->getLogsQuery($disconnectTime);
+        $queryFilter->setOffset(($pageNumber - 1) * $pageSize)->setLimit($pageSize);
         $fieldIndexMap = IndexHelper::mapFieldsToIndexes($entity);
         $groups = $this->buildConditionGroups($queryFilter, $fieldIndexMap);
         $type = $entity->getConfig()->getType();
@@ -62,13 +61,7 @@ class MonitoringLogsRepository extends BaseRepositoryWithConditionalDelete imple
         /** @var Entity $entity */
         $entity = new $this->entityClass();
         $cartId = \Cart::getCartIdByOrderId(pSQL($searchTerm));
-        /** @var ActiveConnectionProvider $activeConnectionProvider */
-        $activeConnectionProvider = ServiceRegister::getService(ActiveConnectionProvider::class);
-        $queryFilter = new QueryFilter();
-        $queryFilter->where('storeId', Operators::EQUALS, StoreContext::getInstance()->getStoreId())->where('mode', Operators::EQUALS, (string) $activeConnectionProvider->get()->getMode())->orderBy('createdAt', 'DESC');
-        if ($disconnectTime) {
-            $queryFilter->where('createdAt', Operators::LESS_THAN, $disconnectTime->getTimestamp());
-        }
+        $queryFilter = $this->getLogsQuery($disconnectTime);
         $fieldIndexMap = IndexHelper::mapFieldsToIndexes($entity);
         $groups = $this->buildConditionGroups($queryFilter, $fieldIndexMap);
         $type = $entity->getConfig()->getType();
@@ -81,5 +74,23 @@ class MonitoringLogsRepository extends BaseRepositoryWithConditionalDelete imple
                 index_5 LIKE \'%' . pSQL($searchTerm) . '%\'
             )', $queryFilter);
         return \count($result);
+    }
+    /**
+     * @param DateTime|null $disconnectTime
+     *
+     * @return QueryFilter
+     *
+     * @throws QueryFilterInvalidParamException
+     */
+    public function getLogsQuery(?DateTime $disconnectTime) : QueryFilter
+    {
+        /** @var ActiveConnectionProvider $activeConnectionProvider */
+        $activeConnectionProvider = ServiceRegister::getService(ActiveConnectionProvider::class);
+        $queryFilter = new QueryFilter();
+        $queryFilter->where('storeId', Operators::EQUALS, StoreContext::getInstance()->getStoreId())->where('mode', Operators::EQUALS, (string) $activeConnectionProvider->get()->getMode())->orderBy('createdAt', 'DESC');
+        if ($disconnectTime) {
+            $queryFilter->where('createdAt', Operators::GREATER_THAN, $disconnectTime->getTimestamp());
+        }
+        return $queryFilter;
     }
 }

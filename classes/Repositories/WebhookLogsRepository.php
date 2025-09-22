@@ -35,15 +35,13 @@ class WebhookLogsRepository extends BaseRepositoryWithConditionalDelete implemen
         $provider = ServiceRegister::getService(ActiveBrandProviderInterface::class);
         return \strtolower($provider->getActiveBrand()->getCode()) . '_' . self::TABLE_NAME;
     }
-    public function getLogs(int $pageNumber, int $pageSize, string $searchTerm) : array
+    public function getLogs(int $pageNumber, int $pageSize, string $searchTerm, ?DateTime $disconnectTime = null) : array
     {
         /** @var Entity $entity */
         $entity = new $this->entityClass();
         $cartId = \Cart::getCartIdByOrderId(pSQL($searchTerm));
-        /** @var ActiveConnectionProvider $activeConnectionProvider */
-        $activeConnectionProvider = ServiceRegister::getService(ActiveConnectionProvider::class);
-        $queryFilter = new QueryFilter();
-        $queryFilter->where('storeId', Operators::EQUALS, StoreContext::getInstance()->getStoreId())->where('mode', Operators::EQUALS, (string) $activeConnectionProvider->get()->getMode())->setOffset(($pageNumber - 1) * $pageSize)->setLimit($pageSize)->orderBy('createdAt', 'DESC');
+        $queryFilter = $this->getQuery($disconnectTime);
+        $queryFilter->setOffset(($pageNumber - 1) * $pageSize)->setLimit($pageSize);
         $fieldIndexMap = IndexHelper::mapFieldsToIndexes($entity);
         $groups = $this->buildConditionGroups($queryFilter, $fieldIndexMap);
         $type = $entity->getConfig()->getType();
@@ -61,13 +59,7 @@ class WebhookLogsRepository extends BaseRepositoryWithConditionalDelete implemen
         /** @var Entity $entity */
         $entity = new $this->entityClass();
         $cartId = \Cart::getCartIdByOrderId(pSQL($searchTerm));
-        /** @var ActiveConnectionProvider $activeConnectionProvider */
-        $activeConnectionProvider = ServiceRegister::getService(ActiveConnectionProvider::class);
-        $queryFilter = new QueryFilter();
-        $queryFilter->where('storeId', Operators::EQUALS, StoreContext::getInstance()->getStoreId())->where('mode', Operators::EQUALS, (string) $activeConnectionProvider->get()->getMode())->orderBy('createdAt', 'DESC');
-        if ($disconnectTime) {
-            $queryFilter->where('createdAt', Operators::LESS_THAN, $disconnectTime->getTimestamp());
-        }
+        $queryFilter = $this->getQuery($disconnectTime);
         $fieldIndexMap = IndexHelper::mapFieldsToIndexes($entity);
         $groups = $this->buildConditionGroups($queryFilter, $fieldIndexMap);
         $type = $entity->getConfig()->getType();
@@ -79,5 +71,16 @@ class WebhookLogsRepository extends BaseRepositoryWithConditionalDelete implemen
                 index_4 LIKE \'%' . pSQL($searchTerm) . '%\'
             )', $queryFilter);
         return \count($result);
+    }
+    protected function getQuery(?DateTime $disconnectTime = null) : QueryFilter
+    {
+        /** @var ActiveConnectionProvider $activeConnectionProvider */
+        $activeConnectionProvider = ServiceRegister::getService(ActiveConnectionProvider::class);
+        $queryFilter = new QueryFilter();
+        $queryFilter->where('storeId', Operators::EQUALS, StoreContext::getInstance()->getStoreId())->where('mode', Operators::EQUALS, (string) $activeConnectionProvider->get()->getMode())->orderBy('createdAt', 'DESC');
+        if ($disconnectTime) {
+            $queryFilter->where('createdAt', Operators::GREATER_THAN, $disconnectTime->getTimestamp());
+        }
+        return $queryFilter;
     }
 }
