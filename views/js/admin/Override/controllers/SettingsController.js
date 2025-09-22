@@ -91,6 +91,7 @@ if (!window.OnlinePaymentsFE) {
             templateService,
             elementGenerator: generator,
             validationService: validator,
+            components,
             utilities
         } = OnlinePaymentsFE;
         /** @type string */
@@ -807,6 +808,53 @@ if (!window.OnlinePaymentsFE) {
             }
         }
 
+        const showDisconnectModal = () => {
+            showConfirmModal().then((confirmed) => confirmed && handleDisconnect());
+        }
+
+        const showConfirmModal = () => {
+            return new Promise((resolve) => {
+                const modal = components.Modal.create({
+                    title: `generalSettings.disconnect.disconnectModal.title`,
+                    className: `op-disconnect-modal`,
+                    content: [generator.createElement('p', '', `generalSettings.disconnect.disconnectModal.message`)],
+                    footer: true,
+                    buttons: [
+                        {
+                            type: 'secondary',
+                            label: 'general.cancel',
+                            onClick: () => {
+                                modal.close();
+                                resolve(false);
+                            }
+                        },
+                        {
+                            type: 'primary',
+                            className: 'opm--destructive',
+                            label: 'general.confirm',
+                            onClick: () => {
+                                modal.close();
+                                resolve(true);
+                            }
+                        }
+                    ]
+                });
+
+                modal.open();
+            });
+        }
+
+        function handleDisconnect() {
+            utilities.showLoader();
+            api.get(configuration.disconnectUrl).then((response) => {
+                    OnlinePaymentsFE.state.display();
+                }
+            )
+                .finally(() => {
+                    utilities.hideLoader();
+                });
+        }
+
         const renderDisconnectForm = () => {
             if (disconnectForm) {
                 templateService.clearComponent(disconnectForm);
@@ -819,14 +867,7 @@ if (!window.OnlinePaymentsFE) {
                     disabled: false,
                     label: 'generalSettings.disconnect.disconnect',
                     onClick: () => {
-                        utilities.showLoader();
-                        api.get(configuration.disconnectUrl).then((response) => {
-                                OnlinePaymentsFE.state.display();
-                            }
-                        )
-                            .finally(() => {
-                                utilities.hideLoader();
-                            });
+                        showDisconnectModal();
                     }
                 }
             );

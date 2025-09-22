@@ -185,7 +185,7 @@ class PaymentOptionsService
             if ($paymentMethod->getProductId()->equals(PaymentProductId::cards()) || $paymentMethod->getProductId()->equals(PaymentProductId::hostedCheckout())) {
                 continue;
             }
-            if ($paymentMethod->getProductId()->isCardType() && $availableMethods->isCardsTokenizationEnabled()) {
+            if ($paymentMethod->getProductId()->isCardBrand() && $availableMethods->isCardsTokenizationEnabled()) {
                 $result[] = $this->getUngroupedCardsHostedTokenizationOption($paymentMethod, $paymentMethod->getName()->getTranslationMessage($locale));
                 $tokenizationProductIds[] = $paymentMethod->getProductId();
                 continue;
