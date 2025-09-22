@@ -90,9 +90,13 @@ class PaymentOptionsService
             $surchargeRequest = new SurchargeRequest($amount, $token->getTokenId());
             /** @var PaymentMethodService $paymentService */
             $paymentService = ServiceRegister::getService(PaymentMethodService::class);
-            $surcharge = StoreContext::doWithStore((string) $this->context->shop->id, function () use($surchargeRequest, $paymentService) {
-                return $paymentService->calculateSurcharge($surchargeRequest);
-            });
+            try {
+                $surcharge = StoreContext::doWithStore((string) $this->context->shop->id, function () use($surchargeRequest, $paymentService) {
+                    return $paymentService->calculateSurcharge($surchargeRequest);
+                });
+            } catch (\Throwable $e) {
+                $surcharge = \false;
+            }
         }
         if ($surcharge) {
             $tokenSurcharge = ['amountWithoutSurcharge' => $surcharge->getNetAmount()->getPriceInCurrencyUnits(), 'amountWithSurcharge' => $surcharge->getTotalAmount()->getPriceInCurrencyUnits(), 'surchargeAmount' => $surcharge->getSurchargeAmount()->getPriceInCurrencyUnits(), 'currencyIso' => $surcharge->getNetAmount()->getCurrency()->getIsoCode()];
