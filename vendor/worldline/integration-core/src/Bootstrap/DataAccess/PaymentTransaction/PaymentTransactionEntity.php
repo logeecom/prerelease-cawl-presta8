@@ -19,8 +19,6 @@ class PaymentTransactionEntity extends Entity
 {
     public const CLASS_NAME = __CLASS__;
     protected string $storeId;
-    protected int $lockVersion = 0;
-    protected float $lockTimestamp = 0;
     protected PaymentTransaction $paymentTransaction;
     public function getConfig() : EntityConfiguration
     {
@@ -29,8 +27,6 @@ class PaymentTransactionEntity extends Entity
         $indexMap->addStringIndex('transactionId');
         $indexMap->addStringIndex('merchantReference');
         $indexMap->addStringIndex('returnHmac');
-        $indexMap->addIntegerIndex('lockVersion');
-        $indexMap->addDoubleIndex('lockTimestamp');
         $indexMap->addIntegerIndex('statusCode');
         $indexMap->addIntegerIndex('createdAtTimestamp');
         $indexMap->addIntegerIndex('captureAtTimestamp');
@@ -42,8 +38,6 @@ class PaymentTransactionEntity extends Entity
     {
         parent::inflate($data);
         $this->storeId = $data['storeId'];
-        $this->lockVersion = $data['lockVersion'];
-        $this->lockTimestamp = $data['lockTimestamp'];
         /** @var TimeProviderInterface $timeProvider */
         $timeProvider = ServiceRegister::getService(TimeProviderInterface::class);
         $paymentTransaction = $data['paymentTransaction'] ?? [];
@@ -53,8 +47,6 @@ class PaymentTransactionEntity extends Entity
     {
         $data = parent::toArray();
         $data['storeId'] = $this->storeId;
-        $data['lockVersion'] = $this->lockVersion;
-        $data['lockTimestamp'] = $this->lockTimestamp;
         $createdAt = $this->paymentTransaction->getCreatedAt();
         $updatedAt = $this->paymentTransaction->getUpdatedAt();
         $returnedAt = $this->paymentTransaction->getReturnedAt();
@@ -112,21 +104,5 @@ class PaymentTransactionEntity extends Entity
     public function getPaymentLinkId() : string
     {
         return (string) $this->paymentTransaction->getPaymentLinkId();
-    }
-    public function getLockVersion() : int
-    {
-        return $this->lockVersion;
-    }
-    public function setLockVersion(int $lockVersion) : void
-    {
-        $this->lockVersion = $lockVersion;
-    }
-    public function getLockTimestamp() : float
-    {
-        return $this->lockTimestamp;
-    }
-    public function setLockTimestamp(float $lockTimestamp) : void
-    {
-        $this->lockTimestamp = $lockTimestamp;
     }
 }

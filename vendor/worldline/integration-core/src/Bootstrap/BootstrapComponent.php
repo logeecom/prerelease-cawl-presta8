@@ -36,6 +36,7 @@ use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentMethod\PaymentMethodCon
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentMethod\PaymentMethodConfigRepository;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentTransaction\AuthorizedTransactionsRepository;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentTransaction\PaymentTransactionEntity;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentTransaction\PaymentTransactionLockEntity;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentTransaction\PaymentTransactionRepository;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentTransaction\PendingTransactionsRepository;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\ProductTypes\ProductTypeEntity;
@@ -261,7 +262,7 @@ class BootstrapComponent extends BaseBootstrapComponent
     {
         parent::initRepositories();
         ServiceRegister::registerService(PaymentTransactionRepositoryInterface::class, new SingleInstance(static function () {
-            return new PaymentTransactionRepository(RepositoryRegistry::getRepository(PaymentTransactionEntity::class), StoreContext::getInstance(), ServiceRegister::getService(TimeProviderInterface::class));
+            return new PaymentTransactionRepository(RepositoryRegistry::getRepository(PaymentTransactionEntity::class), RepositoryRegistry::getRepository(PaymentTransactionLockEntity::class), StoreContext::getInstance(), ServiceRegister::getService(TimeProviderInterface::class));
         }));
         ServiceRegister::registerService(PendingTransactionsRepository::class, new SingleInstance(static function () {
             return new PendingTransactionsRepository(RepositoryRegistry::getRepository(PaymentTransactionEntity::class), ServiceRegister::getService(TimeProviderInterface::class));

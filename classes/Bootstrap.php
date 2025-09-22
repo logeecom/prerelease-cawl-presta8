@@ -22,7 +22,6 @@ use CAWL\OnlinePayments\Classes\Services\Integration\MetadataProvider;
 use CAWL\OnlinePayments\Classes\Services\Integration\VersionInfoService;
 use CAWL\OnlinePayments\Core\Bootstrap\BootstrapComponent;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Connection\ConnectionConfigEntity;
-use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\CardsSettingsEntity;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\PayByLinkSettingsEntity;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\GeneralSettings\PaymentSettingsConfigEntity;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Disconnect\DisconnectTime;
@@ -31,6 +30,7 @@ use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\MonitoringLog;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Monitoring\WebhookLog;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentLink\PaymentLinkEntity;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentTransaction\PaymentTransactionEntity;
+use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\PaymentTransaction\PaymentTransactionLockEntity;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\ProductTypes\ProductTypeEntity;
 use CAWL\OnlinePayments\Core\Bootstrap\DataAccess\Tokens\TokenEntity;
 use CAWL\OnlinePayments\Core\Bootstrap\SingleInstance;
@@ -134,7 +134,7 @@ class Bootstrap extends BootstrapComponent
     {
         parent::initRepositories();
         ServiceRegister::registerService(PaymentTransactionRepositoryInterface::class, new SingleInstance(static function () {
-            return new PaymentTransactionRepository(RepositoryRegistry::getRepository(PaymentTransactionEntity::class), StoreContext::getInstance(), ServiceRegister::getService(TimeProviderInterface::class));
+            return new PaymentTransactionRepository(RepositoryRegistry::getRepository(PaymentTransactionEntity::class), RepositoryRegistry::getRepository(PaymentTransactionLockEntity::class), StoreContext::getInstance(), ServiceRegister::getService(TimeProviderInterface::class));
         }));
         ServiceRegister::registerService(MonitoringLogRepositoryInterface::class, new SingleInstance(static function () {
             return new MonitoringLogRepository(RepositoryRegistry::getRepository(MonitoringLog::class), StoreContext::getInstance(), ServiceRegister::getService(ActiveConnectionProvider::class), ServiceRegister::getService(ActiveBrandProviderInterface::class), ServiceRegister::getService(LogSettingsRepositoryInterface::class));
@@ -147,8 +147,8 @@ class Bootstrap extends BootstrapComponent
         RepositoryRegistry::registerRepository(ConnectionConfigEntity::class, BaseRepositoryWithConditionalDelete::getClassName());
         RepositoryRegistry::registerRepository(PaymentMethodConfigEntity::class, BaseRepositoryWithConditionalDelete::getClassName());
         RepositoryRegistry::registerRepository(PaymentTransactionEntity::class, PaymentTransactionsRepository::getClassName());
+        RepositoryRegistry::registerRepository(PaymentTransactionLockEntity::class, PaymentTransactionsRepository::getClassName());
         RepositoryRegistry::registerRepository(TokenEntity::class, TokensRepository::getClassName());
-        RepositoryRegistry::registerRepository(CardsSettingsEntity::class, BaseRepositoryWithConditionalDelete::getClassName());
         RepositoryRegistry::registerRepository(PaymentSettingsConfigEntity::class, BaseRepositoryWithConditionalDelete::getClassName());
         RepositoryRegistry::registerRepository(LogSettingsEntity::class, BaseRepositoryWithConditionalDelete::getClassName());
         RepositoryRegistry::registerRepository(DisconnectTime::class, BaseRepositoryWithConditionalDelete::getClassName());

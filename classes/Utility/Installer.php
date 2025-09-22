@@ -8,6 +8,7 @@ use Language;
 use CAWL\OnlinePayments\Classes\OnlinePaymentsModule;
 use CAWL\OnlinePayments\Classes\Repositories\BaseRepository;
 use CAWL\OnlinePayments\Classes\Repositories\MonitoringLogsRepository;
+use CAWL\OnlinePayments\Classes\Repositories\PaymentTransactionLocksRepository;
 use CAWL\OnlinePayments\Classes\Repositories\PaymentTransactionsRepository;
 use CAWL\OnlinePayments\Classes\Repositories\ProductTypesRepository;
 use CAWL\OnlinePayments\Classes\Repositories\QueueItemRepository;
@@ -160,6 +161,7 @@ class Installer
         $this->createTable(\strtolower($this->module->getBrand()->getCode()) . '_' . TokensRepository::TABLE_NAME, 9);
         $this->createTable(\strtolower($this->module->getBrand()->getCode()) . '_' . ProductTypesRepository::TABLE_NAME, 9);
         $this->createTable(\strtolower($this->module->getBrand()->getCode()) . '_' . PaymentTransactionsRepository::TABLE_NAME, 11);
+        $this->createTable(\strtolower($this->module->getBrand()->getCode()) . '_' . PaymentTransactionLocksRepository::TABLE_NAME, 9, ['index_1', 'index_2', 'index_3']);
     }
     /**
      * @return void
@@ -197,9 +199,9 @@ class Installer
      *
      * @throws Exception
      */
-    private function createTable(string $tableName, int $indexNumber) : void
+    private function createTable(string $tableName, int $indexNumber, array $uniqueKeys = []) : void
     {
-        $createdTable = DatabaseHandler::createTable($tableName, $indexNumber);
+        $createdTable = DatabaseHandler::createTable($tableName, $indexNumber, $uniqueKeys);
         if (!$createdTable) {
             throw new Exception('Online Payments plugin failed to create table: ' . $tableName);
         }

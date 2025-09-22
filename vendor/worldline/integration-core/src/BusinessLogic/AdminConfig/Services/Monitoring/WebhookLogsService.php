@@ -65,10 +65,13 @@ class WebhookLogsService
      * @param string $searchTerm
      *
      * @return array
+     *
+     * @throws Exception
      */
     public function getLogs(int $pageNumber, int $pageSize, string $searchTerm) : array
     {
-        return $this->repository->getWebhookLogs($pageNumber, $pageSize, $searchTerm);
+        $disconnectTime = $this->disconnectRepository->getDisconnectTime();
+        return $this->repository->getWebhookLogs($pageNumber, $pageSize, $searchTerm, $disconnectTime);
     }
     /**
      * @return array

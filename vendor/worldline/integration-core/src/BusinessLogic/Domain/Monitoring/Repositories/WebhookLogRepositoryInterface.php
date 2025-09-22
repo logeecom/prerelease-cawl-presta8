@@ -21,10 +21,11 @@ interface WebhookLogRepositoryInterface
      * @param int $pageNumber
      * @param int $pageSize
      * @param string $searchTerm
+     * @param DateTime|null $disconnectTime
      *
      * @return WebhookLog[]
      */
-    public function getWebhookLogs(int $pageNumber, int $pageSize, string $searchTerm) : array;
+    public function getWebhookLogs(int $pageNumber, int $pageSize, string $searchTerm, ?DateTime $disconnectTime = null) : array;
     /**
      * @return WebhookLog[]
      */

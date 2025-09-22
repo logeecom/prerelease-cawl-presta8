@@ -19,11 +19,13 @@ use CAWL\OnlinePayments\Core\Infrastructure\ORM\QueryFilter\QueryFilter;
 class PaymentTransactionRepository implements PaymentTransactionRepositoryInterface
 {
     private RepositoryInterface $repository;
+    private RepositoryInterface $lockRepository;
     private StoreContext $storeContext;
     private TimeProviderInterface $timeProvider;
-    public function __construct(RepositoryInterface $repository, StoreContext $storeContext, TimeProviderInterface $timeProvider)
+    public function __construct(RepositoryInterface $repository, RepositoryInterface $lockRepository, StoreContext $storeContext, TimeProviderInterface $timeProvider)
     {
         $this->repository = $repository;
+        $this->lockRepository = $lockRepository;
         $this->storeContext = $storeContext;
         $this->timeProvider = $timeProvider;
     }
@@ -104,16 +106,23 @@ class PaymentTransactionRepository implements PaymentTransactionRepositoryInterf
         if (null === $entity) {
             return \false;
         }
-        $queryFilter = new QueryFilter();
-        $lockTimestampCutoff = $this->timeProvider->getMicroTimestamp() - 30;
-        $queryFilter->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())->where('transactionId', Operators::EQUALS, $paymentId->getTransactionId())->where('lockVersion', Operators::EQUALS, $entity->getLockVersion())->where('lockTimestamp', Operators::LESS_THAN, $lockTimestampCutoff);
-        $entity->setLockVersion($entity->getLockVersion() + 1);
-        $entity->setLockTimestamp($this->timeProvider->getMicroTimestamp());
-        $this->repository->update($entity, $queryFilter);
-        // Make sure that actual lock version and time match what is expected for successful lock
-        $this->timeProvider->sleep(1);
-        $entityAfterLock = $this->getPaymentTransactionEntity($paymentId);
-        if (null === $entityAfterLock || \abs($entityAfterLock->getLockTimestamp() - $entity->getLockTimestamp()) > 1.0E-5 || $entityAfterLock->getLockVersion() !== $entity->getLockVersion()) {
+        $lockTimestampCutoff = $this->timeProvider->getCurrentLocalTime()->getTimestamp() - 30;
+        $paymentTransactionLock = $this->getPaymentTransactionLockEntity($entity->getPaymentTransaction());
+        if (null !== $paymentTransactionLock && $paymentTransactionLock->getLockTimestamp() >= $lockTimestampCutoff) {
+            return \false;
+        }
+        // Remove expired lock record
+        if (null !== $paymentTransactionLock) {
+            $this->lockRepository->delete($paymentTransactionLock);
+        }
+        try {
+            $lock = new PaymentTransactionLockEntity();
+            $lock->setStoreId($this->storeContext->getStoreId());
+            $lock->setTransactionId($entity->getPaymentTransaction()->getPaymentId()->getTransactionId());
+            $lock->setMerchantReference($entity->getPaymentTransaction()->getMerchantReference());
+            $lock->setLockTimestamp($this->timeProvider->getCurrentLocalTime()->getTimestamp());
+            $this->lockRepository->save($lock);
+        } catch (\Throwable $e) {
             return \false;
         }
         return \true;
@@ -124,16 +133,18 @@ class PaymentTransactionRepository implements PaymentTransactionRepositoryInterf
         if (null === $entity) {
             return \false;
         }
-        $queryFilter = new QueryFilter();
-        $queryFilter->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())->where('transactionId', Operators::EQUALS, $paymentId->getTransactionId())->where('lockVersion', Operators::EQUALS, $entity->getLockVersion());
-        $entity->setLockVersion($entity->getLockVersion() + 1);
-        $entity->setLockTimestamp(0);
-        $this->repository->update($entity, $queryFilter);
-        // Make sure that actual lock version and time match what is expected for successful lock
-        $entityAfterUnlock = $this->getPaymentTransactionEntity($paymentId);
-        if (null === $entityAfterUnlock || \abs($entityAfterUnlock->getLockTimestamp() - $entity->getLockTimestamp()) > 1.0E-5 || $entityAfterUnlock->getLockVersion() !== $entity->getLockVersion()) {
-            return \false;
+        $paymentTransactionLock = $this->getPaymentTransactionLockEntity($entity->getPaymentTransaction());
+        if (null !== $paymentTransactionLock) {
+            $this->lockRepository->delete($paymentTransactionLock);
         }
         return \true;
+    }
+    private function getPaymentTransactionLockEntity(PaymentTransaction $paymentTransaction) : ?PaymentTransactionLockEntity
+    {
+        $queryFilter = new QueryFilter();
+        $queryFilter->where('storeId', Operators::EQUALS, $this->storeContext->getStoreId())->where('transactionId', Operators::EQUALS, $paymentTransaction->getPaymentId()->getTransactionId())->where('merchantReference', Operators::EQUALS, $paymentTransaction->getMerchantReference());
+        /** @var PaymentTransactionLockEntity|null $entity */
+        $entity = $this->lockRepository->selectOne($queryFilter);
+        return $entity;
     }
 }

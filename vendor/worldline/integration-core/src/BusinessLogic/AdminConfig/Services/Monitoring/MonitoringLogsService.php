@@ -30,10 +30,13 @@ class MonitoringLogsService
      * @param string $searchTerm
      *
      * @return MonitoringLog[]
+     *
+     * @throws Exception
      */
     public function getLogs(int $pageNumber, int $pageSize, string $searchTerm) : array
     {
-        return $this->monitoringLogRepository->getLogs($pageNumber, $pageSize, $searchTerm);
+        $disconnectTime = $this->repository->getDisconnectTime();
+        return $this->monitoringLogRepository->getLogs($pageNumber, $pageSize, $searchTerm, $disconnectTime);
     }
     /**
      * @return array

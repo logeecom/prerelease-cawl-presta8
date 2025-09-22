@@ -21,7 +21,7 @@ class CommunicatorLoggerHelper extends SdkCommunicatorLoggerHelper
             parent::logRequest($communicatorLogger, $requestId, $requestMethod, $requestUri, $requestHeaders, $requestBody);
             $obfuscatedRequest = $this->getHttpObfuscator()->getRawObfuscatedRequest($requestMethod, $this->getRelativeUriPathWithRequestParameters($requestUri), $requestHeaders, $requestBody);
             $message = \sprintf("Request/response for %s endpoint", $this->getRelativeUriPathWithRequestParameters($requestUri));
-            $this->getLogRepository()->saveMonitoringLog(new MonitoringLog($requestId, ContextLogProvider::getInstance()->getCurrentOrder() ?? '-', ContextLogProvider::getInstance()->getPaymentNumber() ?? '-', 'DEBUG', $message, new \DateTime(), $requestMethod, $this->getRelativeUriPathWithRequestParameters($requestUri), $obfuscatedRequest, '', '', ContextLogProvider::getInstance()->getPaymentNumber() ? $this->getUrl() . '/' . ContextLogProvider::getInstance()->getPaymentNumber() : ''));
+            $this->getLogRepository()->saveMonitoringLog(new MonitoringLog($requestId, ContextLogProvider::getInstance()->getCurrentOrder() ?? '-', ContextLogProvider::getInstance()->getPaymentNumber() ?? '-', 'DEBUG', $message, new \DateTime(), $requestMethod, $this->getRelativeUriPathWithRequestParameters($requestUri), $obfuscatedRequest, '', '', ContextLogProvider::getInstance()->getPaymentNumber() ? $this->getUrl() . ContextLogProvider::getInstance()->getPaymentNumber() : ''));
         }
     }
     public function logResponse(CommunicatorLogger $communicatorLogger, $requestId, $requestUri, ConnectionResponseInterface $response) : void
@@ -30,14 +30,14 @@ class CommunicatorLoggerHelper extends SdkCommunicatorLoggerHelper
             parent::logResponse($communicatorLogger, $requestId, $requestUri, $response);
             $obfuscatedResponse = $this->getHttpObfuscator()->getRawObfuscatedResponse($response);
             $message = \sprintf("Response from %s", $this->getRelativeUriPathWithRequestParameters($requestUri));
-            $this->getLogRepository()->saveMonitoringLog(new MonitoringLog($requestId, ContextLogProvider::getInstance()->getCurrentOrder() ?? '-', ContextLogProvider::getInstance()->getPaymentNumber() ?? '-', 'DEBUG', $message, new \DateTime(), '', $this->getRelativeUriPathWithRequestParameters($requestUri), '', (string) $response->getHttpStatusCode(), $obfuscatedResponse, ContextLogProvider::getInstance()->getPaymentNumber() ? $this->getUrl() . '/' . ContextLogProvider::getInstance()->getPaymentNumber() : ''));
+            $this->getLogRepository()->saveMonitoringLog(new MonitoringLog($requestId, ContextLogProvider::getInstance()->getCurrentOrder() ?? '-', ContextLogProvider::getInstance()->getPaymentNumber() ?? '-', 'DEBUG', $message, new \DateTime(), '', $this->getRelativeUriPathWithRequestParameters($requestUri), '', (string) $response->getHttpStatusCode(), $obfuscatedResponse, ContextLogProvider::getInstance()->getPaymentNumber() ? $this->getUrl() . ContextLogProvider::getInstance()->getPaymentNumber() : ''));
         }
     }
     public function logException(CommunicatorLogger $communicatorLogger, $requestId, $requestUri, Exception $exception) : void
     {
         parent::logException($communicatorLogger, $requestId, $requestUri, $exception);
         $message = \sprintf("Error occurred while executing request to %s ", $this->getRelativeUriPathWithRequestParameters($requestUri));
-        $this->getLogRepository()->saveMonitoringLog(new MonitoringLog($requestId, ContextLogProvider::getInstance()->getCurrentOrder() ?? '-', ContextLogProvider::getInstance()->getPaymentNumber() ?? '-', 'ERROR', $message, new \DateTime(), '', $this->getRelativeUriPathWithRequestParameters($requestUri), '', '', '', ContextLogProvider::getInstance()->getPaymentNumber() ? $this->getUrl() . '/' . ContextLogProvider::getInstance()->getPaymentNumber() : ''));
+        $this->getLogRepository()->saveMonitoringLog(new MonitoringLog($requestId, ContextLogProvider::getInstance()->getCurrentOrder() ?? '-', ContextLogProvider::getInstance()->getPaymentNumber() ?? '-', 'ERROR', $message, new \DateTime(), '', $this->getRelativeUriPathWithRequestParameters($requestUri), '', '', '', ContextLogProvider::getInstance()->getPaymentNumber() ? $this->getUrl() . ContextLogProvider::getInstance()->getPaymentNumber() : ''));
     }
     private function getUrl() : string
     {

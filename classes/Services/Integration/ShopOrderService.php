@@ -39,6 +39,7 @@ class ShopOrderService implements ShopOrderServiceInterface
         }
         $paymentMethodText = $this->module->getBrand()->getName();
         $paymentMethodText .= $paymentTransaction->getPaymentMethod() ? ' [' . \sprintf($paymentTransaction->getPaymentMethod(), $this->module->getConfig()['PAYMENT_REFERENCE_PREFIX']) . ']' : '';
+        Logger::logInfo('Creating order from cart ' . $paymentTransaction->getMerchantReference(), 'ShopOrderService', ['paymentId' => (string) $paymentTransaction->getPaymentId(), 'merchantReference' => $paymentTransaction->getMerchantReference()]);
         $this->module->validateOrder((int) $paymentTransaction->getMerchantReference(), (int) $newState, (float) $paymentDetails->getAmount()->getPriceInCurrencyUnits(), $paymentMethodText, null, ['transaction_id' => $paymentTransaction->getPaymentId()->getTransactionId()], null, \false, $cart->secure_key);
     }
     public function updateStatus(PaymentTransaction $paymentTransaction, PaymentDetails $paymentDetails, string $newState) : void

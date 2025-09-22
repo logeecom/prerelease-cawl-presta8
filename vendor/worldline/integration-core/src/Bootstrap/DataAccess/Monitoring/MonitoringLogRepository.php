@@ -93,20 +93,22 @@ class MonitoringLogRepository implements MonitoringLogRepositoryInterface
         $this->repository->save($entity);
     }
     /**
+     *
      * @param int $pageNumber
      * @param int $pageSize
      * @param string $searchTerm
+     * @param DateTime|null $disconnectTime
      *
      * @return array
      */
-    public function getLogs(int $pageNumber, int $pageSize, string $searchTerm) : array
+    public function getLogs(int $pageNumber, int $pageSize, string $searchTerm, ?DateTime $disconnectTime = null) : array
     {
         $activeConnection = $this->activeConnectionProvider->get();
         if (null === $activeConnection) {
             return [];
         }
         /** @var MonitoringLogEntity[] $entities */
-        $entities = $this->repository->getLogs($pageNumber, $pageSize, $searchTerm);
+        $entities = $this->repository->getLogs($pageNumber, $pageSize, $searchTerm, $disconnectTime);
         $result = [];
         foreach ($entities as $entity) {
             $result[] = $entity->getMonitoringLog();

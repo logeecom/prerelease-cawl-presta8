@@ -21,10 +21,11 @@ interface MonitoringLogRepositoryInterface
      * @param int $pageNumber
      * @param int $pageSize
      * @param string $searchTerm
+     * @param DateTime|null $disconnectTime
      *
      * @return MonitoringLog[]
      */
-    public function getLogs(int $pageNumber, int $pageSize, string $searchTerm) : array;
+    public function getLogs(int $pageNumber, int $pageSize, string $searchTerm, ?DateTime $disconnectTime = null) : array;
     /**
      * @return MonitoringLog[]
      */

@@ -73,14 +73,14 @@ class WebhookLogRepository implements WebhookLogRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getWebhookLogs(int $pageNumber, int $pageSize, string $searchTerm) : array
+    public function getWebhookLogs(int $pageNumber, int $pageSize, string $searchTerm, ?DateTime $disconnectTime = null) : array
     {
         $activeConnection = $this->activeConnectionProvider->get();
         if (null === $activeConnection) {
             return [];
         }
         /** @var WebhookLogEntity[] $entities */
-        $entities = $this->repository->getLogs($pageNumber, $pageSize, $searchTerm);
+        $entities = $this->repository->getLogs($pageNumber, $pageSize, $searchTerm, $disconnectTime);
         $result = [];
         foreach ($entities as $entity) {
             $result[] = $entity->getWebhookLog();
