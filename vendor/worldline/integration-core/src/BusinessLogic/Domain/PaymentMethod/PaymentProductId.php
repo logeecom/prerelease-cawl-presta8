@@ -283,6 +283,10 @@ class PaymentProductId
     {
         return $this->id;
     }
+    public function isCardBrand() : bool
+    {
+        return \in_array($this->id, self::CARD_BRANDS);
+    }
     public function isCardType() : bool
     {
         return \in_array($this->id, \array_merge(self::CARD_BRANDS, [self::CARDS, self::INTERSOLVE, self::CPAY, self::BANCONTACT]), \true);

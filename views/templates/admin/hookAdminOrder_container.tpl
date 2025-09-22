@@ -19,6 +19,8 @@
 <script type="text/javascript">
   (function () {
     const onlinePaymentsAdminOrderContainer = document.querySelector(`#{$moduleName}-admin-order-container`);
+    const onlinePaymentsAjaxTransactionUrl = "{$onlinePaymentsAjaxTransactionUrl|escape:'javascript':'UTF-8'|replace:'&amp;':'&'}";
+
 
     onlinePaymentsAdminOrderContainer.addEventListener('click', function (e) {
       if (e.target.matches(`#{$moduleName}-btn-capture`) ||
@@ -69,6 +71,7 @@
 
       return new Promise(function (resolve, reject) {
         const form = new FormData(formSent);
+        form.append('ajax', true);
 
         fetch(controller, {
           body: form,

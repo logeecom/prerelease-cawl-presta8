@@ -380,7 +380,11 @@
     "disconnect": {
       "title": "Disconnect",
       "warning": "Please note that configuration and data will be deleted.",
-      "disconnect": "Disconnect"
+      "disconnect": "Disconnect",
+      "disconnectModal": {
+        "title": "Disconnect?",
+        "message": "Are you sure you want to disconnect your shop? This will remove all configured payment methods and settings, and shoppers will not be able to complete purchases on your shop."
+      }
     }
   },
   "monitoring": {

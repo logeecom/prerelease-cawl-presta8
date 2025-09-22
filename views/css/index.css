@@ -525,26 +525,13 @@ ul.op-bullet-list li {
   color: #38544C;
 }
 
-.op-confirm-modal .opp-modal-content {
-  max-width: 600px;
-}
-.op-confirm-modal .opp-modal-content .opp-body {
-  padding: 24px 24px 40px;
-  font-size: 16px;
-}
-.op-confirm-modal .opp-modal-content ul {
-  list-style: disc;
-  padding-left: 15px;
-  margin-top: 16px;
-}
-.op-confirm-modal .opp-modal-content ul li {
-  padding-left: 5px;
-}
-
 .opp-merchant-account-description {
   margin-bottom: -12px;
 }
 
+#op-page .op-notifications-page {
+  padding: 0 10px;
+}
 #op-page .op-notifications-page .op-title {
   display: flex;
   align-items: center;
@@ -744,7 +731,7 @@ ul.op-bullet-list li {
 }
 
 .opp-no-items-wrapper {
-  margin: 80px auto;
+  margin: 80px auto 25% auto;
   max-width: 330px;
   display: flex;
   flex-direction: column;
@@ -765,7 +752,7 @@ ul.op-bullet-list li {
   background-color: #e5f0ed;
   display: flex;
   width: 100%;
-  height: 55px;
+  height: 50px;
   align-items: center;
   padding: 20px;
 }
@@ -875,7 +862,7 @@ ul.op-bullet-list li {
   background-color: #38544C;
   display: flex;
   width: 100%;
-  height: 50px;
+  height: 35px;
   align-items: center;
   padding: 20px;
 }
@@ -1410,14 +1397,18 @@ ul.op-bullet-list li {
   font-size: 15px;
   color: #000;
   font-weight: 300;
+  align-items: center;
+  display: flex;
 }
 .op-multiselect-filter .opp-selected-data-item:first-child {
   margin-top: 16px;
 }
 .op-multiselect-filter .opp-selected-data-item .opt--remove-item {
-  margin: 4px 8px 4px 0;
+  margin: 0 5px 0 0;
 }
 .op-multiselect-filter .opp-selected-data-item .opt--remove-item:before {
+  font-family: "op-icons";
+  content: "\e90c";
   font-family: "op-icons";
   line-height: 1;
   font-weight: 400;
@@ -2010,6 +2001,15 @@ ul.op-bullet-list li {
 #op-page .op-settings-page .op-divider {
   border: 1px #E1E1E1 solid;
   margin: 30px 0;
+}
+#op-page .op-settings-page .op-confirm-modal .opp-modal-content {
+  max-width: 600px;
+  position: fixed;
+  top: 45%;
+}
+#op-page .op-settings-page .op-confirm-modal .opp-modal-content .opp-body {
+  padding: 24px 24px 40px;
+  font-size: 16px;
 }
 #op-page .op-single-select-dropdown {
   position: relative;
@@ -2731,14 +2731,18 @@ ul.op-bullet-list li {
   font-size: 15px;
   color: #000;
   font-weight: 300;
+  align-items: center;
+  display: flex;
 }
 #op-page .op-multiselect-filter .opp-selected-data-item:first-child {
   margin-top: 16px;
 }
 #op-page .op-multiselect-filter .opp-selected-data-item .opt--remove-item {
-  margin: 4px 8px 4px 0;
+  margin: 0 5px 0 0;
 }
 #op-page .op-multiselect-filter .opp-selected-data-item .opt--remove-item:before {
+  font-family: "op-icons";
+  content: "\e90c";
   font-family: "op-icons";
   line-height: 1;
   font-weight: 400;
@@ -3561,7 +3565,7 @@ ul.op-bullet-list li {
 #op-page .op-sliding-modal .op-header-name {
   display: flex;
   gap: 10px;
-  padding: 8px;
+  padding: 5.5px 8px;
   align-items: center;
 }
 #op-page .op-sliding-modal .op-header-name .op-payment-logo {
@@ -3603,7 +3607,7 @@ ul.op-bullet-list li {
   color: #fff;
   font-size: 15px;
   background-color: #38544C;
-  padding: 15px;
+  padding: 9.5px 15px;
 }
 #op-page .op-sliding-modal .op-close-button {
   position: relative;
@@ -3672,6 +3676,13 @@ ul.op-bullet-list li {
   height: 16px;
   margin: 6px;
 }
+#op-page .op-translatable-label .op-lang-code {
+  margin-right: 6px;
+}
+#op-page .op-translatable-label .op-lang-btn {
+  display: flex;
+  align-items: center;
+}
 #op-page .op-translatable-label .op-lang-options {
   position: absolute;
   top: 100%;
@@ -3683,7 +3694,7 @@ ul.op-bullet-list li {
   display: none;
 }
 #op-page .op-translatable-label .op-lang-options div {
-  padding: 4px;
+  padding: 4px 0;
   cursor: pointer;
 }
 #op-page .op-translatable-label .op-lang-options div:hover {
@@ -3965,6 +3976,7 @@ ul.op-bullet-list li {
   margin-bottom: 1rem;
   width: max-content;
   gap: 20px;
+  padding: 0 10px;
 }
 #op-page .op-tab .op-tab-item {
   cursor: pointer;
@@ -4198,7 +4210,7 @@ ul.op-bullet-list li {
   align-items: center;
   padding: 10px;
   gap: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 #op-page .op-payment-component .op-payment-logo {
   width: 40px;
@@ -4918,26 +4930,13 @@ ul.op-bullet-list li {
   color: #38544C;
 }
 
-.op-confirm-modal .opp-modal-content {
-  max-width: 600px;
-}
-.op-confirm-modal .opp-modal-content .opp-body {
-  padding: 24px 24px 40px;
-  font-size: 16px;
-}
-.op-confirm-modal .opp-modal-content ul {
-  list-style: disc;
-  padding-left: 15px;
-  margin-top: 16px;
-}
-.op-confirm-modal .opp-modal-content ul li {
-  padding-left: 5px;
-}
-
 .opp-merchant-account-description {
   margin-bottom: -12px;
 }
 
+#op-page .op-notifications-page {
+  padding: 0 10px;
+}
 #op-page .op-notifications-page .op-title {
   display: flex;
   align-items: center;
@@ -5137,7 +5136,7 @@ ul.op-bullet-list li {
 }
 
 .opp-no-items-wrapper {
-  margin: 80px auto;
+  margin: 80px auto 25% auto;
   max-width: 330px;
   display: flex;
   flex-direction: column;
@@ -5158,7 +5157,7 @@ ul.op-bullet-list li {
   background-color: #e5f0ed;
   display: flex;
   width: 100%;
-  height: 55px;
+  height: 50px;
   align-items: center;
   padding: 20px;
 }
@@ -5268,7 +5267,7 @@ ul.op-bullet-list li {
   background-color: #38544C;
   display: flex;
   width: 100%;
-  height: 50px;
+  height: 35px;
   align-items: center;
   padding: 20px;
 }
@@ -5803,14 +5802,18 @@ ul.op-bullet-list li {
   font-size: 15px;
   color: #000;
   font-weight: 300;
+  align-items: center;
+  display: flex;
 }
 .op-multiselect-filter .opp-selected-data-item:first-child {
   margin-top: 16px;
 }
 .op-multiselect-filter .opp-selected-data-item .opt--remove-item {
-  margin: 4px 8px 4px 0;
+  margin: 0 5px 0 0;
 }
 .op-multiselect-filter .opp-selected-data-item .opt--remove-item:before {
+  font-family: "op-icons";
+  content: "\e90c";
   font-family: "op-icons";
   line-height: 1;
   font-weight: 400;

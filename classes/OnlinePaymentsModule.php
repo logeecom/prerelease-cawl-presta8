@@ -228,7 +228,7 @@ class OnlinePaymentsModule extends \PaymentModule
     public function hookActionAdminControllerSetMedia()
     {
         if (\Tools::getValue('controller') == 'AdminOrders') {
-            \Media::addJsDef(['onlinePaymentsAjaxTransactionUrl' => Url::getAdminUrl('Transaction'), 'onlinePaymentsGenericErrorMessage' => $this->l('An error occurred while processing your request. Please try again.'), 'alertRefund' => $this->l('Do you confirm the refund of the funds?'), 'alertCapture' => $this->l('Do you confirm the capture of the transaction?'), 'alertCancel' => $this->l('Do you confirm the cancellation of the transaction?')]);
+            \Media::addJsDef(['onlinePaymentsGenericErrorMessage' => $this->l('An error occurred while processing your request. Please try again.'), 'alertRefund' => $this->l('Do you confirm the refund of the funds?'), 'alertCapture' => $this->l('Do you confirm the capture of the transaction?'), 'alertCancel' => $this->l('Do you confirm the cancellation of the transaction?')]);
             $this->context->controller->addJS([$this->getPathUri() . 'views/js/admin/onlinepayments-payment-link-copy.js', $this->getPathUri() . 'views/js/admin/onlinepayments-backoffice-order-creation.js']);
         }
     }
@@ -289,7 +289,7 @@ class OnlinePaymentsModule extends \PaymentModule
         } catch (\Exception $e) {
             return '';
         }
-        $this->context->smarty->assign(['html' => $html, 'moduleName' => $this->name]);
+        $this->context->smarty->assign(['html' => $html, 'moduleName' => $this->name, 'onlinePaymentsAjaxTransactionUrl' => Url::getAdminUrl('Transaction')]);
         return $this->display($this->getLocalPath(), 'views/templates/admin/hookAdminOrder_container.tpl');
     }
     /**

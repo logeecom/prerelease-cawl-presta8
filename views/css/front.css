@@ -10,3 +10,6 @@
 #checkout-payment-step .payment-option img[src*="payment_products"] {
     height: 20px;
 }
+#checkout-payment-step .payment-option img[src*="img"] {
+    height: 20px;
+}
