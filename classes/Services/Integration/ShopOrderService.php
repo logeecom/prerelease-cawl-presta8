@@ -38,7 +38,7 @@ class ShopOrderService implements ShopOrderServiceInterface
             return;
         }
         $paymentMethodText = $this->module->getBrand()->getName();
-        $paymentMethodText .= $paymentTransaction->getPaymentMethod() ? ' [' . $paymentTransaction->getPaymentMethod() . ']' : '';
+        $paymentMethodText .= $paymentTransaction->getPaymentMethod() ? ' [' . \sprintf($paymentTransaction->getPaymentMethod(), $this->module->getConfig()['PAYMENT_REFERENCE_PREFIX']) . ']' : '';
         $this->module->validateOrder((int) $paymentTransaction->getMerchantReference(), (int) $newState, (float) $paymentDetails->getAmount()->getPriceInCurrencyUnits(), $paymentMethodText, null, ['transaction_id' => $paymentTransaction->getPaymentId()->getTransactionId()], null, \false, $cart->secure_key);
     }
     public function updateStatus(PaymentTransaction $paymentTransaction, PaymentDetails $paymentDetails, string $newState) : void
