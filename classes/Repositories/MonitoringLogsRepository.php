@@ -46,14 +46,10 @@ class MonitoringLogsRepository extends BaseRepositoryWithConditionalDelete imple
         $fieldIndexMap = IndexHelper::mapFieldsToIndexes($entity);
         $groups = $this->buildConditionGroups($queryFilter, $fieldIndexMap);
         $type = $entity->getConfig()->getType();
+        $searchCondition = $this->getSearchCondition($searchTerm, $cartId);
         $typeCondition = "entity_type='" . pSQL($type) . "'";
         $whereCondition = $this->buildWhereCondition($groups, $fieldIndexMap);
-        $result = $this->getRecordsByCondition($typeCondition . ' AND ' . $whereCondition . 'AND
-             (
-                index_3 LIKE \'%' . pSQL($searchTerm) . '%\' OR
-                index_4 LIKE \'%' . pSQL($cartId) . '%\' OR
-                index_5 LIKE \'%' . pSQL($searchTerm) . '%\'
-            )', $queryFilter);
+        $result = $this->getRecordsByCondition($typeCondition . ' AND ' . $whereCondition . $searchCondition, $queryFilter);
         return $this->unserializeEntities($result);
     }
     public function countLogs(?DateTime $disconnectTime = null, string $searchTerm = '') : ?int
@@ -67,12 +63,8 @@ class MonitoringLogsRepository extends BaseRepositoryWithConditionalDelete imple
         $type = $entity->getConfig()->getType();
         $typeCondition = "entity_type='" . pSQL($type) . "'";
         $whereCondition = $this->buildWhereCondition($groups, $fieldIndexMap);
-        $result = $this->getRecordsByCondition($typeCondition . ' AND ' . $whereCondition . 'AND
-             (
-                index_3 LIKE \'%' . pSQL($searchTerm) . '%\' OR
-                index_4 LIKE \'%' . pSQL($cartId) . '%\' OR
-                index_5 LIKE \'%' . pSQL($searchTerm) . '%\'
-            )', $queryFilter);
+        $searchCondition = $this->getSearchCondition($searchTerm, $cartId);
+        $result = $this->getRecordsByCondition($typeCondition . ' AND ' . $whereCondition . $searchCondition, $queryFilter);
         return \count($result);
     }
     /**
@@ -92,5 +84,19 @@ class MonitoringLogsRepository extends BaseRepositoryWithConditionalDelete imple
             $queryFilter->where('createdAt', Operators::GREATER_THAN, $disconnectTime->getTimestamp());
         }
         return $queryFilter;
+    }
+    /**
+     * @param string $searchTerm
+     * @param $cartId
+     * @return string
+     */
+    public function getSearchCondition(string $searchTerm, $cartId) : string
+    {
+        $searchCondition = 'AND (index_3 LIKE \'%' . pSQL($searchTerm) . '%\' OR';
+        if ($cartId) {
+            $searchCondition .= ' index_4 LIKE \'%' . pSQL($cartId) . '%\' OR';
+        }
+        $searchCondition .= ' index_5 LIKE \'%' . pSQL($searchTerm) . '%\')';
+        return $searchCondition;
     }
 }

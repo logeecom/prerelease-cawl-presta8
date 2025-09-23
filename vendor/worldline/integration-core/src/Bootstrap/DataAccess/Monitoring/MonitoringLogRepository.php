@@ -69,7 +69,7 @@ class MonitoringLogRepository implements MonitoringLogRepositoryInterface
         $logSettings = $this->logSettingsRepository->getLogSettings();
         $createdAtDate = clone $monitoringLog->getCreatedAt();
         $createdAt = $monitoringLog->getCreatedAt()->getTimestamp();
-        $expiresAt = $monitoringLog->getCreatedAt()->add(new DateInterval('P14D'))->getTimestamp();
+        $expiresAt = (clone $monitoringLog->getCreatedAt())->add(new DateInterval('P14D'))->getTimestamp();
         if ($logSettings) {
             $expiresAt = $createdAtDate->add(new DateInterval('P' . $logSettings->getLogRecordsLifetime()->getDays() . 'D'))->getTimestamp();
         }

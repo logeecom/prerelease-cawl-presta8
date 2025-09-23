@@ -49,7 +49,7 @@ class WebhookLogsService
         $webhookPaymentId = PaymentId::parse($webhookData->getId());
         $payment = $this->paymentsProxy->tryToGetPayment($webhookPaymentId);
         if (!$payment) {
-            // Default to first payment trtansaction (_0) if payment id from webhook is maintenance transaction
+            // Default to first payment transaction (_0) if payment id from webhook is maintenance transaction
             $payment = $this->paymentsProxy->tryToGetPayment(PaymentId::parse($webhookPaymentId->getTransactionId()));
         }
         $paymentMethodName = '';

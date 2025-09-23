@@ -47,11 +47,8 @@ class WebhookLogsRepository extends BaseRepositoryWithConditionalDelete implemen
         $type = $entity->getConfig()->getType();
         $typeCondition = "entity_type='" . pSQL($type) . "'";
         $whereCondition = $this->buildWhereCondition($groups, $fieldIndexMap);
-        $result = $this->getRecordsByCondition($typeCondition . ' AND ' . $whereCondition . 'AND
-             (
-                index_3 LIKE \'%' . pSQL($cartId) . '%\' OR
-                index_4 LIKE \'%' . pSQL($searchTerm) . '%\'
-            )', $queryFilter);
+        $searchCondition = $this->getSearchCondition($cartId, $searchTerm);
+        $result = $this->getRecordsByCondition($typeCondition . ' AND ' . $whereCondition . $searchCondition, $queryFilter);
         return $this->unserializeEntities($result);
     }
     public function countLogs(?DateTime $disconnectTime = null, string $searchTerm = '') : ?int
@@ -65,11 +62,8 @@ class WebhookLogsRepository extends BaseRepositoryWithConditionalDelete implemen
         $type = $entity->getConfig()->getType();
         $typeCondition = "entity_type='" . pSQL($type) . "'";
         $whereCondition = $this->buildWhereCondition($groups, $fieldIndexMap);
-        $result = $this->getRecordsByCondition($typeCondition . ' AND ' . $whereCondition . 'AND
-             (
-                index_3 LIKE \'%' . pSQL($cartId) . '%\' OR
-                index_4 LIKE \'%' . pSQL($searchTerm) . '%\'
-            )', $queryFilter);
+        $searchCondition = $this->getSearchCondition($cartId, $searchTerm);
+        $result = $this->getRecordsByCondition($typeCondition . ' AND ' . $whereCondition . $searchCondition, $queryFilter);
         return \count($result);
     }
     protected function getQuery(?DateTime $disconnectTime = null) : QueryFilter
@@ -82,5 +76,22 @@ class WebhookLogsRepository extends BaseRepositoryWithConditionalDelete implemen
             $queryFilter->where('createdAt', Operators::GREATER_THAN, $disconnectTime->getTimestamp());
         }
         return $queryFilter;
+    }
+    /**
+     * @param $cartId
+     * @param string $searchTerm
+     * @return string
+     */
+    public function getSearchCondition($cartId, string $searchTerm) : string
+    {
+        $searchCondition = 'AND
+             (
+                index_3 LIKE \'%' . pSQL($cartId) . '%\' OR
+                index_4 LIKE \'%' . pSQL($searchTerm) . '%\'
+            )';
+        if ($cartId === null) {
+            $searchCondition = 'AND index_4 LIKE \'%' . pSQL($searchTerm) . '%\'';
+        }
+        return $searchCondition;
     }
 }
