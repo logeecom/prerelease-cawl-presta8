@@ -530,7 +530,7 @@ ul.op-bullet-list li {
 }
 
 #op-page .op-notifications-page {
-  padding: 0 10px;
+  padding: 0 20px;
 }
 #op-page .op-notifications-page .op-title {
   display: flex;
@@ -3669,6 +3669,7 @@ ul.op-bullet-list li {
 }
 #op-page .op-translatable-label .op-lang-code {
   margin-right: 6px;
+  font-size: 12px;
 }
 #op-page .op-translatable-label .op-lang-btn {
   display: flex;
@@ -3967,7 +3968,7 @@ ul.op-bullet-list li {
   margin-bottom: 1rem;
   width: max-content;
   gap: 20px;
-  padding: 0 10px;
+  padding: 0 20px;
 }
 #op-page .op-tab .op-tab-item {
   cursor: pointer;
@@ -4935,7 +4936,7 @@ ul.op-bullet-list li {
 }
 
 #op-page .op-notifications-page {
-  padding: 0 10px;
+  padding: 0 20px;
 }
 #op-page .op-notifications-page .op-title {
   display: flex;
