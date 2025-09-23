@@ -82,7 +82,7 @@ class StatusUpdateService
             $this->shopOrderService->cancelShopOrder($paymentTransaction, $paymentDetails, $newState);
             return;
         }
-        if ($paymentDetails->getStatusCode()->isRefunded() || $paymentDetails->getAmounts()->getRefundedAmount()->getPriceInCurrencyUnits() > 0) {
+        if ($paymentDetails->getStatusCode()->isRefunded() || $paymentDetails->getAmounts() && $paymentDetails->getAmounts()->getRefundedAmount() && $paymentDetails->getAmounts()->getRefundedAmount()->getPriceInCurrencyUnits() > 0) {
             $newState = $this->mappingService->getStatusMapping(StatusCode::parse(8));
             $this->shopOrderService->refundShopOrder($paymentTransaction, $paymentDetails, $newState);
             return;
