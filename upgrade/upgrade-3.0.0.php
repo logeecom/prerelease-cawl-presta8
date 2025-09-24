@@ -46,6 +46,13 @@ namespace {
     function upgrade_module_3_0_0(OnlinePaymentsModule $module) : bool
     {
         $previousShopContext = \Shop::getContext();
+        $previousShopContextId = null;
+        if ($previousShopContext === \Shop::CONTEXT_SHOP) {
+            $previousShopContextId = \Shop::getContextShopID();
+        }
+        if ($previousShopContext === \Shop::CONTEXT_GROUP) {
+            $previousShopContextId = \Shop::getContextShopGroupID();
+        }
         \Shop::setContext(\Shop::CONTEXT_ALL);
         \initialize_new_plugin_3_0_0($module);
         $shops = \Shop::getShops();
@@ -68,7 +75,7 @@ namespace {
         DatabaseHandler::dropTable($module->name . '_token');
         DatabaseHandler::dropTable($module->name . '_product_gift_card');
         $module->enable(\true);
-        \Shop::setContext($previousShopContext);
+        \Shop::setContext($previousShopContext, $previousShopContextId);
         return \true;
     }
     function initialize_new_plugin_3_0_0(OnlinePaymentsModule $module) : void

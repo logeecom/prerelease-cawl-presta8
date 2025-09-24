@@ -89,7 +89,7 @@ class WebhookLogsRepository extends BaseRepositoryWithConditionalDelete implemen
                 index_3 LIKE \'%' . pSQL($cartId) . '%\' OR
                 index_4 LIKE \'%' . pSQL($searchTerm) . '%\'
             )';
-        if ($cartId === null) {
+        if (!$cartId) {
             $searchCondition = 'AND index_4 LIKE \'%' . pSQL($searchTerm) . '%\'';
         }
         return $searchCondition;
