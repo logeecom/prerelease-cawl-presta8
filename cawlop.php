@@ -19,7 +19,7 @@ namespace {
     }
     require_once __DIR__ . '/bootstrap.php';
     /**
-     * Class Cawlop
+     * Main plugin class
      */
     class Cawlop extends OnlinePaymentsModule
     {
