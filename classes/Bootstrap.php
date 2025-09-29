@@ -5,6 +5,7 @@ namespace CAWL\OnlinePayments\Classes;
 use CAWL\OnlinePayments\Classes\Repositories\BaseRepository;
 use CAWL\OnlinePayments\Classes\Repositories\BaseRepositoryWithConditionalDelete;
 use CAWL\OnlinePayments\Classes\Repositories\MonitoringLogsRepository;
+use CAWL\OnlinePayments\Classes\Repositories\PaymentTransactionLocksRepository;
 use CAWL\OnlinePayments\Classes\Repositories\PaymentTransactionsRepository;
 use CAWL\OnlinePayments\Classes\Repositories\ProductTypesRepository;
 use CAWL\OnlinePayments\Classes\Repositories\QueueItemRepository;
@@ -147,7 +148,7 @@ class Bootstrap extends BootstrapComponent
         RepositoryRegistry::registerRepository(ConnectionConfigEntity::class, BaseRepositoryWithConditionalDelete::getClassName());
         RepositoryRegistry::registerRepository(PaymentMethodConfigEntity::class, BaseRepositoryWithConditionalDelete::getClassName());
         RepositoryRegistry::registerRepository(PaymentTransactionEntity::class, PaymentTransactionsRepository::getClassName());
-        RepositoryRegistry::registerRepository(PaymentTransactionLockEntity::class, PaymentTransactionsRepository::getClassName());
+        RepositoryRegistry::registerRepository(PaymentTransactionLockEntity::class, PaymentTransactionLocksRepository::getClassName());
         RepositoryRegistry::registerRepository(TokenEntity::class, TokensRepository::getClassName());
         RepositoryRegistry::registerRepository(PaymentSettingsConfigEntity::class, BaseRepositoryWithConditionalDelete::getClassName());
         RepositoryRegistry::registerRepository(LogSettingsEntity::class, BaseRepositoryWithConditionalDelete::getClassName());

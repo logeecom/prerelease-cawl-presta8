@@ -1,5 +1,5 @@
 {
-    "name": "worldline\/integration-core",
+    "name": "online-payments\/integration-core",
     "description": "Core Worldline integration library",
     "type": "library",
     "license": "proprietary",

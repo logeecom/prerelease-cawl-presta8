@@ -1,6 +1,54 @@
 {
     "packages": [
         {
+            "name": "online-payments\/integration-core",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:logeecom\/worldline-direct-core.git",
+                "reference": "8eb807ebc903cf1062579f3734414437f9787d68"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https:\/\/api.github.com\/repos\/logeecom\/worldline-direct-core\/zipball\/8eb807ebc903cf1062579f3734414437f9787d68",
+                "reference": "8eb807ebc903cf1062579f3734414437f9787d68",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-json": "*",
+                "php": ">=7.4",
+                "wl-online-payments-direct\/sdk-php": "6.2.0"
+            },
+            "require-dev": {
+                "friendsofphp\/php-cs-fixer": "^3.9",
+                "php-parallel-lint\/php-parallel-lint": "^1.3",
+                "phpstan\/phpstan": "^1.10",
+                "phpunit\/phpunit": "^8.5",
+                "symfony\/console": "^5.4"
+            },
+            "time": "2025-09-24T12:59:54+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "CAWL\\OnlinePayments\\Core\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "CAWL\\OnlinePayments\\Core\\Tests\\": "tests"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "description": "Core Worldline integration library",
+            "install-path": "..\/online-payments\/integration-core"
+        },
+        {
             "name": "robtimus\/multipart",
             "version": "1.0.1",
             "version_normalized": "1.0.1.0",
@@ -107,54 +155,6 @@
                 "source": "https:\/\/github.com\/wl-online-payments-direct\/sdk-php\/tree\/6.2.0"
             },
             "install-path": "..\/wl-online-payments-direct\/sdk-php"
-        },
-        {
-            "name": "worldline\/integration-core",
-            "version": "dev-master",
-            "version_normalized": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:logeecom\/worldline-direct-core.git",
-                "reference": "4089299d9c9fc0be246c88d8cac891aa73e2611a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https:\/\/api.github.com\/repos\/logeecom\/worldline-direct-core\/zipball\/4089299d9c9fc0be246c88d8cac891aa73e2611a",
-                "reference": "4089299d9c9fc0be246c88d8cac891aa73e2611a",
-                "shasum": ""
-            },
-            "require": {
-                "ext-ctype": "*",
-                "ext-json": "*",
-                "php": ">=7.4",
-                "wl-online-payments-direct\/sdk-php": "6.2.0"
-            },
-            "require-dev": {
-                "friendsofphp\/php-cs-fixer": "^3.9",
-                "php-parallel-lint\/php-parallel-lint": "^1.3",
-                "phpstan\/phpstan": "^1.10",
-                "phpunit\/phpunit": "^8.5",
-                "symfony\/console": "^5.4"
-            },
-            "time": "2025-09-23T12:48:11+00:00",
-            "default-branch": true,
-            "type": "library",
-            "installation-source": "dist",
-            "autoload": {
-                "psr-4": {
-                    "CAWL\\OnlinePayments\\Core\\": "src"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "CAWL\\OnlinePayments\\Core\\Tests\\": "tests"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "description": "Core Worldline integration library",
-            "install-path": "..\/worldline\/integration-core"
         }
     ],
     "dev": false,

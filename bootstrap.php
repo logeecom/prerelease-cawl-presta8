@@ -6,7 +6,7 @@ namespace {
     if (!\class_exists('CAWL\\OnlinePayments\\Classes\\Bootstrap')) {
         // During the upgrade it is possible that old vendor is required already, so we need failback autoloader
         require_once __DIR__ . '/upgrade/Autoloader.php';
-        \Autoloader::setCoreLibSourcePath('worldline/integration-core/src/');
+        \Autoloader::setCoreLibSourcePath('online-payments/integration-core/src/');
         \spl_autoload_register('\\Autoloader::loader');
     }
     try {

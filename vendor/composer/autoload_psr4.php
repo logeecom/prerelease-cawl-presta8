@@ -8,7 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'CAWL\\Robtimus\\Multipart\\' => array($vendorDir . '/robtimus/multipart/src/Robtimus/Multipart'),
     'CAWL\\OnlinePayments\\Sdk\\' => array($vendorDir . '/wl-online-payments-direct/sdk-php/src/OnlinePayments/Sdk', $vendorDir . '/wl-online-payments-direct/sdk-php/lib/OnlinePayments/Sdk'),
-    'CAWL\\OnlinePayments\\Core\\' => array($vendorDir . '/worldline/integration-core/src'),
+    'CAWL\\OnlinePayments\\Core\\' => array($vendorDir . '/online-payments/integration-core/src'),
     'CAWL\\OnlinePayments\\Controllers\\' => array($baseDir . '/controllers'),
     'CAWL\\OnlinePayments\\Classes\\' => array($baseDir . '/classes'),
 );

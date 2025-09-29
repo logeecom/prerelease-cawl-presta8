@@ -46,7 +46,6 @@ class WebhooksController extends ModuleFrontController
         }
         if (!empty($request['paymentLink']['paymentLinkOrder']['merchantReference'])) {
             $merchantReference = $request['paymentLink']['paymentLinkOrder']['merchantReference'];
-            $paymentId = (string) $request['paymentLink']['paymentId'];
         }
         if (empty($merchantReference)) {
             return (string) \Configuration::get('PS_SHOP_DEFAULT');
